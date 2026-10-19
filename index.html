@@ -461,8 +461,12 @@
                         <input type="text" id="inputNoKta" class="form-control rounded-3 p-2" required placeholder="Contoh: JB.13.0113769.06.24">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label fw-semibold text-secondary">Masa Berlaku <span class="text-danger">*</span></label>
-                        <input type="text" id="inputMasaBerlaku" class="form-control rounded-3 p-2" required placeholder="Contoh: 01 Juni 2027 atau -">
+                        <label class="form-label fw-semibold text-secondary">Masa Berlaku (Pilih Tanggal Otomatis) <span class="text-danger">*</span></label>
+                        <div class="input-group mb-2">
+                            <input type="date" id="inputMasaBerlakuDate" class="form-control" onchange="syncMasaBerlakuFromPicker(this.value)">
+                            <button class="btn btn-outline-secondary" type="button" onclick="setMasaBerlakuDash()">Isi Strip (-)</button>
+                        </div>
+                        <input type="text" id="inputMasaBerlaku" class="form-control rounded-3 p-2" required placeholder="Format otomatis: 01 Juni 2027 atau -">
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-semibold text-secondary">Keterangan <span class="text-danger">*</span></label>
@@ -612,7 +616,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Konfigurasi Firebase Anda yang sudah dimasukkan
     const firebaseConfig = {
         apiKey: "AIzaSyA-MXfRfLqrRfRlAcCSOcr-FgXWni5ai5I",
         authDomain: "orange-bojong-raya.firebaseapp.com",
@@ -654,7 +657,6 @@
         if(savedLogoRight) document.getElementById('headerLogoRight').src = savedLogoRight;
     });
 
-    // Sinkronisasi data real-time dengan Firebase Firestore
     function initRealtimeListeners() {
         db.collection("kta_aktif").onSnapshot((snapshot) => {
             members = [];
@@ -777,6 +779,19 @@
         const d = new Date(tglStr);
         if(isNaN(d)) return tglStr;
         return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+    }
+
+    function syncMasaBerlakuFromPicker(val) {
+        if (!val) return;
+        const d = new Date(val);
+        if (!isNaN(d)) {
+            document.getElementById('inputMasaBerlaku').value = d.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+        }
+    }
+
+    function setMasaBerlakuDash() {
+        document.getElementById('inputMasaBerlaku').value = "-";
+        document.getElementById('inputMasaBerlakuDate').value = "";
     }
 
     function toggleCicilField(val) {
@@ -910,6 +925,7 @@
             document.getElementById('editDocId').value = '';
             document.getElementById('modalTitle').innerHTML = '<i class="bi bi-person-plus-fill me-2"></i>Tambah Anggota KTA Aktif';
             document.getElementById('memberForm').reset();
+            document.getElementById('inputMasaBerlakuDate').value = '';
             document.getElementById('inputKeterangan').value = 'SUB WILAYAH BOJONG';
             modal.show();
         } else if (currentActiveView === 'prosesKta') {
@@ -929,6 +945,7 @@
         document.getElementById('inputNama').value = item.nama;
         document.getElementById('inputNoKta').value = item.kta;
         document.getElementById('inputMasaBerlaku').value = item.berlaku;
+        document.getElementById('inputMasaBerlakuDate').value = ''; // Reset picker
         document.getElementById('inputKeterangan').value = item.ket;
         document.getElementById('inputHp').value = item.hp;
         modal.show();
