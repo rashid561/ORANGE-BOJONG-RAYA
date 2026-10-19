@@ -102,8 +102,8 @@
         }
         
         .app-logo {
-            width: 100px;
-            height: 100px;
+            width: 90px;
+            height: 90px;
             object-fit: cover;
             border-radius: 50%;
             border: 4px solid #ffffff;
@@ -132,6 +132,21 @@
         .btn-action:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .menu-card {
+            border: 2px solid #fd7e14;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #fff 0%, #fff7f0 100%);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            height: 100%;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(230, 92, 0, 0.25);
+            background: #fff8f3;
         }
 
         .contact-footer {
@@ -171,7 +186,6 @@
             <p class="text-muted small">Orange Bojong Raya - Sub Korwil Cengkareng</p>
         </div>
 
-        <!-- Tab Navigasi Login / Daftar -->
         <ul class="nav nav-pills nav-fill mb-3 bg-light p-1 rounded-pill border" id="authTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active rounded-pill fw-semibold" id="login-tab" data-bs-toggle="pill" data-bs-target="#loginPane" type="button">Masuk</button>
@@ -234,78 +248,183 @@
 <div id="appSection" class="container-fluid max-w-100 py-3 py-md-5 px-2 px-md-4" style="display: none;">
     <div class="card main-card">
         <div class="card-header-persija">
-            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
-                <div class="d-flex align-items-center gap-3">
+            <!-- Header Layout: Logo Kiri, Tengah (Judul Besar), Logo Kanan -->
+            <div class="row align-items-center mb-3 g-2">
+                <div class="col-3 col-md-2 text-start">
                     <img id="headerLogoLeft" src="LOGO OBR.png" alt="Logo Orange Bojong Raya" class="app-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23111\'/><text x=\'50%\' y=\'55%\' fill=\'%23fd7e14\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>OBR</text></svg>'">
+                </div>
+                <div class="col-6 col-md-8 text-center px-1">
+                    <h1 class="fw-extrabold text-uppercase mb-1" style="font-size: clamp(1.4rem, 3vw, 2.4rem); letter-spacing: 1px; text-shadow: 2px 2px 4px rgba(0,0,0,0.4);">
+                        ORANGE BOJONG RAYA
+                    </h1>
                     <div>
-                        <h2 class="mb-1 fw-extrabold text-uppercase tracking-wide" style="font-size: clamp(1.2rem, 2.5vw, 1.8rem); text-shadow: 1px 1px 3px rgba(0,0,0,0.3);">
-                            DAFTAR KTA AKTIF ORANGE BOJONG RAYA
-                        </h2>
-                        <span class="badge bg-dark text-warning border border-warning mt-1 fs-6 px-3 py-1 shadow-sm font-monospace">
-                            <i class="bi bi-geo-alt-fill me-1"></i> Sub Korwil Cengkareng
+                        <span class="badge bg-dark text-warning border border-warning fs-6 px-4 py-2 shadow-sm font-monospace text-uppercase" style="letter-spacing: 0.5px;">
+                            Sub Korwil Cengkareng
                         </span>
                     </div>
                 </div>
-                <div class="d-flex align-items-center gap-2">
+                <div class="col-3 col-md-2 text-end">
                     <img id="headerLogoRight" src="LOGO CKR.jpeg" alt="Logo Jakmania Cengkareng" class="app-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23111\'/><text x=\'50%\' y=\'55%\' fill=\'%23fff\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>CKR</text></svg>'">
                 </div>
             </div>
 
-            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 pt-2 border-top border-white border-opacity-25">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 pt-3 border-top border-white border-opacity-25">
                 <div class="text-white small">
                     <i class="bi bi-person-circle me-1 text-warning"></i> Login: <b id="userRoleBadge" class="text-uppercase text-warning"></b> (<span id="userNameDisplay"></span>)
                 </div>
                 <div class="d-flex gap-2 flex-wrap no-print">
                     <button id="btnGantiLogo" class="btn btn-dark btn-action text-white btn-sm shadow-sm" onclick="showLogoSelectModal()"><i class="bi bi-image me-1 text-warning"></i> Ganti Logo</button>
-                    <button id="btnTambahAnggota" class="btn btn-light btn-action text-dark btn-sm shadow-sm fw-bold" onclick="showAddModal()"><i class="bi bi-plus-circle-fill me-1 text-success"></i> Tambah Anggota</button>
+                    <button id="btnTambahData" class="btn btn-light btn-action text-dark btn-sm shadow-sm fw-bold" onclick="showAddModalDynamic()" style="display: none;"><i class="bi bi-plus-circle-fill me-1 text-success"></i> Tambah Data</button>
                     <button id="btnReset" class="btn btn-outline-dark btn-action text-white border-white btn-sm shadow-sm" onclick="resetToDefault()"><i class="bi bi-arrow-counterclockwise me-1"></i> Reset Data</button>
-                    <button class="btn btn-dark btn-action text-warning btn-sm shadow-sm border border-warning" onclick="window.print()"><i class="bi bi-printer-fill me-1"></i> Cetak / PDF</button>
+                    <button id="btnPrint" class="btn btn-dark btn-action text-warning btn-sm shadow-sm border border-warning" onclick="window.print()" style="display: none;"><i class="bi bi-printer-fill me-1"></i> Cetak / PDF</button>
                     <button class="btn btn-danger btn-action btn-sm shadow-sm" onclick="handleLogout('Anda telah berhasil keluar.')"><i class="bi bi-box-arrow-right me-1"></i> Keluar</button>
                 </div>
             </div>
         </div>
         
         <div class="card-body p-3 p-md-4 bg-light">
-            <div class="row mb-4 align-items-center g-2">
-                <div class="col-md-5">
-                    <div class="input-group input-group-lg shadow-sm">
-                        <span class="input-group-text bg-white border-end-0 text-secondary search-box"><i class="bi bi-search"></i></span>
-                        <input type="text" id="searchInput" class="form-control border-start-0 search-box fs-6" placeholder="Cari Nama, No KTA, Keterangan, HP..." onkeyup="filterData()">
+            
+            <!-- HALAMAN 1: MENU UTAMA / DASHBOARD -->
+            <div id="viewMenuDashboard" class="py-3">
+                <div class="text-center mb-4">
+                    <h3 class="fw-bold text-dark text-uppercase">Pilih Menu Layanan</h3>
+                    <p class="text-muted">Silakan pilih menu di bawah ini untuk melihat data, pengajuan, atau komunitas olahraga</p>
+                </div>
+                <div class="row justify-content-center g-4">
+                    <div class="col-md-4">
+                        <div class="card menu-card p-3 text-center shadow-sm" onclick="switchView('ktaAktif')">
+                            <div class="card-body py-3">
+                                <i class="bi bi-card-heading display-5 text-warning mb-3 d-block"></i>
+                                <h5 class="fw-bold text-dark text-uppercase mb-2">Daftar KTA Aktif</h5>
+                                <p class="text-muted small mb-0">Lihat daftar lengkap anggota sub wilayah Bojong Raya yang memiliki KTA aktif.</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <select id="statusFilter" class="form-select form-select-lg shadow-sm fs-6 rounded-pill px-3" onchange="filterData()">
-                        <option value="all">🔍 Semua Status KTA</option>
-                        <option value="active">🟢 Masa Berlaku Aktif</option>
-                        <option value="expired">🔴 Masa Berlaku Habis (Expired)</option>
-                    </select>
-                </div>
-                <div class="col-md-3 text-md-end">
-                    <div class="d-inline-flex align-items-center bg-white px-4 py-2 rounded-pill shadow-sm border">
-                        <i class="bi bi-people-fill text-warning fs-5 me-2"></i>
-                        <span class="fw-bold text-dark" id="totalCount">Total: 0 Anggota</span>
+                    <div class="col-md-4">
+                        <div class="card menu-card p-3 text-center shadow-sm" onclick="switchView('prosesKta')">
+                            <div class="card-body py-3">
+                                <i class="bi bi-clock-history display-5 text-warning mb-3 d-block"></i>
+                                <h5 class="fw-bold text-dark text-uppercase mb-2">Proses Pembuatan KTA</h5>
+                                <p class="text-muted small mb-0">Pantau status pengajuan pendaftaran & perpanjangan, tipe KTA, serta status pembayaran.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card menu-card p-3 text-center shadow-sm" onclick="window.open('https://chat.whatsapp.com/FuwS4wYHMe7FbnduRr743e', '_blank')">
+                            <div class="card-body py-3">
+                                <i class="bi bi-whatsapp display-5 text-success mb-3 d-block"></i>
+                                <h5 class="fw-bold text-dark text-uppercase mb-2">OBR Sport</h5>
+                                <p class="text-muted small mb-2">Gabung grup WhatsApp khusus anggota yang hobi dan aktif berolahraga bersama.</p>
+                                <span class="badge bg-success px-3 py-2 rounded-pill fw-semibold"><i class="bi bi-box-arrow-up-right me-1"></i> Gabung Grup</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Tabel Data -->
-            <div class="table-responsive shadow-sm bg-white border rounded-3">
-                <table class="table table-hover table-striped align-middle mb-0">
-                    <thead class="sticky-top">
-                        <tr>
-                            <th class="text-center" style="width: 60px;">NO</th>
-                            <th>NAMA ANGGOTA</th>
-                            <th>NOMOR ANGGOTA</th>
-                            <th>MASA BERLAKU</th>
-                            <th>KETERANGAN</th>
-                            <th>NO HP / WA</th>
-                            <th id="thAksi" class="text-center no-print" style="width: 110px;">AKSI</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableBody">
-                        <!-- Data dimasukkan via JS -->
-                    </tbody>
-                </table>
+            <!-- HALAMAN 2: TABEL KTA AKTIF -->
+            <div id="viewKtaAktif" style="display: none;">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <button class="btn btn-dark rounded-pill px-4 fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-2"></i>Kembali ke Menu Utama</button>
+                    <h4 class="fw-bold text-uppercase text-dark mb-0">Daftar KTA Aktif</h4>
+                </div>
+
+                <div class="row mb-4 align-items-center g-2">
+                    <div class="col-md-5">
+                        <div class="input-group input-group-lg shadow-sm">
+                            <span class="input-group-text bg-white border-end-0 text-secondary search-box"><i class="bi bi-search"></i></span>
+                            <input type="text" id="searchInput" class="form-control border-start-0 search-box fs-6" placeholder="Cari Nama, No KTA, Keterangan, HP..." onkeyup="filterData()">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <select id="statusFilter" class="form-select form-select-lg shadow-sm fs-6 rounded-pill px-3" onchange="filterData()">
+                            <option value="all">🔍 Semua Status KTA</option>
+                            <option value="active">🟢 Masa Berlaku Aktif</option>
+                            <option value="expired">🔴 Masa Berlaku Habis (Expired)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 text-md-end">
+                        <div class="d-inline-flex align-items-center bg-white px-4 py-2 rounded-pill shadow-sm border">
+                            <i class="bi bi-people-fill text-warning fs-5 me-2"></i>
+                            <span class="fw-bold text-dark" id="totalCount">Total: 0 Anggota</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive shadow-sm bg-white border rounded-3">
+                    <table class="table table-hover table-striped align-middle mb-0">
+                        <thead class="sticky-top">
+                            <tr>
+                                <th class="text-center" style="width: 60px;">NO</th>
+                                <th>NAMA ANGGOTA</th>
+                                <th>NOMOR ANGGOTA</th>
+                                <th>MASA BERLAKU</th>
+                                <th>KETERANGAN</th>
+                                <th>NO HP / WA</th>
+                                <th id="thAksi" class="text-center no-print" style="width: 110px;">AKSI</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- HALAMAN 3: TABEL PROSES KTA -->
+            <div id="viewProsesKta" style="display: none;">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <button class="btn btn-dark rounded-pill px-4 fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-2"></i>Kembali ke Menu Utama</button>
+                    <h4 class="fw-bold text-uppercase text-dark mb-0">Proses Pembuatan KTA</h4>
+                </div>
+
+                <div class="row mb-4 align-items-center g-2">
+                    <div class="col-md-4">
+                        <div class="input-group input-group-lg shadow-sm">
+                            <span class="input-group-text bg-white border-end-0 text-secondary search-box"><i class="bi bi-search"></i></span>
+                            <input type="text" id="searchProsesInput" class="form-control border-start-0 search-box fs-6" placeholder="Cari Nama, WA..." onkeyup="filterProsesData()">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <select id="statusKtaFilter" class="form-select form-select-lg shadow-sm fs-6 rounded-pill px-3" onchange="filterProsesData()">
+                            <option value="all">🔍 Semua Status (Pendaftaran/Perpanjangan)</option>
+                            <option value="PENDAFTARAN">📁 Pendaftaran</option>
+                            <option value="PERPANJANGAN">🔄 Perpanjangan</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <select id="statusBayarFilter" class="form-select form-select-lg shadow-sm fs-6 rounded-pill px-3" onchange="filterProsesData()">
+                            <option value="all">🔍 Semua Pembayaran</option>
+                            <option value="SUDAH LUNAS">🟢 Sudah Lunas</option>
+                            <option value="BELUM LUNAS">🔴 Belum Lunas</option>
+                            <option value="CICIL">🟡 Cicil</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end mb-3">
+                    <div class="d-inline-flex align-items-center bg-white px-4 py-2 rounded-pill shadow-sm border">
+                        <i class="bi bi-clock-history text-warning fs-5 me-2"></i>
+                        <span class="fw-bold text-dark" id="totalProsesCount">Total: 0 Pengajuan</span>
+                    </div>
+                </div>
+
+                <div class="table-responsive shadow-sm bg-white border rounded-3">
+                    <table class="table table-hover table-striped align-middle mb-0">
+                        <thead class="sticky-top">
+                            <tr>
+                                <th class="text-center" style="width: 60px;">NO</th>
+                                <th>NAMA LENGKAP</th>
+                                <th>STATUS KTA</th>
+                                <th>TIPE KTA</th>
+                                <th>TANGGAL DAFTAR</th>
+                                <th>STATUS PEMBAYARAN</th>
+                                <th>CICIL KTA</th>
+                                <th>NO WHATSAPP</th>
+                                <th id="thAksiProses" class="text-center no-print" style="width: 110px;">AKSI</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableProsesBody"></tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- Info Kontak -->
@@ -340,7 +459,6 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-4">
-                <!-- Tahap 1: Kirim Kode OTP -->
                 <div id="stepOtpRequest">
                     <p class="text-muted small">Masukkan Email atau Nomor WhatsApp terdaftar Anda untuk menerima Kode Verifikasi OTP[cite: 1].</p>
                     <div class="mb-3">
@@ -350,7 +468,6 @@
                     <button class="btn btn-warning w-100 fw-bold rounded-pill" onclick="requestOtpCode()">Kirim Kode Verifikasi OTP</button>
                 </div>
 
-                <!-- Tahap 2: Verifikasi Kode OTP & Password Baru -->
                 <div id="stepOtpVerify" style="display: none;">
                     <div class="alert alert-warning small p-2 mb-3">
                         <i class="bi bi-info-circle me-1"></i> Kode OTP Verifikasi telah dibuat: <b id="generatedOtpDisplay" class="fs-6 text-dark">------</b>
@@ -409,12 +526,12 @@
     </div>
 </div>
 
-<!-- Modal Form Tambah/Edit Anggota -->
+<!-- Modal Form Tambah/Edit Anggota KTA Aktif -->
 <div class="modal fade" id="memberModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded-4">
             <div class="modal-header bg-warning text-dark fw-bold">
-                <h5 class="modal-title" id="modalTitle"><i class="bi bi-person-badge me-2"></i>Tambah Anggota</h5>
+                <h5 class="modal-title" id="modalTitle"><i class="bi bi-person-badge me-2"></i>Tambah Anggota KTA Aktif</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-4">
@@ -444,7 +561,63 @@
                         <label class="form-label fw-semibold text-secondary">No HP / WA <span class="text-danger">*</span></label>
                         <input type="text" id="inputHp" class="form-control rounded-3 p-2" required placeholder="Contoh: 0896-2579-3431">
                     </div>
-                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill mt-3 shadow">Simpan Data Anggota</button>
+                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill mt-3 shadow">Simpan Data KTA Aktif</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Form Tambah/Edit Proses Pembuatan KTA -->
+<div class="modal fade" id="prosesModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header bg-warning text-dark fw-bold">
+                <h5 class="modal-title" id="prosesModalTitle"><i class="bi bi-clock-history me-2"></i>Tambah Pengajuan Proses KTA</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="prosesForm">
+                    <input type="hidden" id="editProsesIndex">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-secondary">Nama Lengkap <span class="text-danger">*</span></label>
+                        <input type="text" id="inputProsesNama" class="form-control rounded-3 p-2" required placeholder="Nama lengkap pemohon">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-secondary">Status KTA <span class="text-danger">*</span></label>
+                        <select id="inputProsesStatusKta" class="form-select rounded-3 p-2" required>
+                            <option value="PENDAFTARAN">PENDAFTARAN</option>
+                            <option value="PERPANJANGAN">PERPANJANGAN</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-secondary">Tipe KTA <span class="text-danger">*</span></label>
+                        <select id="inputProsesTipe" class="form-select rounded-3 p-2" required>
+                            <option value="REGULER">REGULER</option>
+                            <option value="PELAJAR">PELAJAR</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-secondary">Tanggal Daftar <span class="text-danger">*</span></label>
+                        <input type="date" id="inputProsesTanggal" class="form-control rounded-3 p-2" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-secondary">Status Pembayaran <span class="text-danger">*</span></label>
+                        <select id="inputProsesStatus" class="form-select rounded-3 p-2" required onchange="toggleCicilField(this.value)">
+                            <option value="SUDAH LUNAS">SUDAH LUNAS</option>
+                            <option value="BELUM LUNAS">BELUM LUNAS</option>
+                            <option value="CICIL">CICIL</option>
+                        </select>
+                    </div>
+                    <div class="mb-3" id="cicilContainer" style="display: none;">
+                        <label class="form-label fw-semibold text-secondary">Nominal Cicil KTA (Rp)</label>
+                        <input type="number" id="inputProsesCicil" class="form-control rounded-3 p-2" placeholder="Contoh: 50000">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-secondary">No WhatsApp <span class="text-danger">*</span></label>
+                        <input type="text" id="inputProsesWa" class="form-control rounded-3 p-2" required placeholder="Contoh: 089625793431">
+                    </div>
+                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill mt-3 shadow">Simpan Data Proses KTA</button>
                 </form>
             </div>
         </div>
@@ -485,17 +658,25 @@
         { nama: "TIO SETIAWAN", kta: "JB.13.0127089.12.25", berlaku: "-", ket: "SUB WILAYAH BOJONG", hp: "0857-1037-9454" }
     ];
 
+    const initialProsesKta = [
+        { nama: "BAMBANG PAMUNGKAS", statusKta: "PENDAFTARAN", tipe: "REGULER", tgl: "2026-10-15", status: "SUDAH LUNAS", cicil: 0, wa: "081234567890" },
+        { nama: "ANDRITANY ARDHIYASA", statusKta: "PERPANJANGAN", tipe: "PELAJAR", tgl: "2026-10-18", status: "CICIL", cicil: 50000, wa: "089876543210" }
+    ];
+
     let members = JSON.parse(localStorage.getItem('kta_bojong_data')) || initialMembers;
+    let prosesKtaData = JSON.parse(localStorage.getItem('kta_proses_data')) || initialProsesKta;
     
     let usersDb = JSON.parse(localStorage.getItem('kta_users_db')) || [
         { nama: 'Admin OBR', username: 'adminobr', email: 'admin@bojongraya.com', wa: '089625793431', pass: 'adminobr561', role: 'admin' }
     ];
 
     let currentUser = JSON.parse(localStorage.getItem('kta_current_user')) || null;
+    let currentActiveView = 'dashboard';
     let idleTimer = null;
-    const SESSION_TIMEOUT = 10 * 60 * 1000; // 10 Menit AFK
+    const SESSION_TIMEOUT = 10 * 60 * 1000;
 
     const modal = new bootstrap.Modal(document.getElementById('memberModal'));
+    const prosesModal = new bootstrap.Modal(document.getElementById('prosesModal'));
     const logoModal = new bootstrap.Modal(document.getElementById('logoSelectModal'));
     const forgotModal = new bootstrap.Modal(document.getElementById('forgotModal'));
     let activeResetUserIndex = -1;
@@ -540,22 +721,44 @@
 
             if (currentUser.role !== 'admin') {
                 document.getElementById('btnGantiLogo').style.display = 'none';
-                document.getElementById('btnTambahAnggota').style.display = 'none';
                 document.getElementById('btnReset').style.display = 'none';
                 document.getElementById('thAksi').style.display = 'none';
+                document.getElementById('thAksiProses').style.display = 'none';
             } else {
                 document.getElementById('btnGantiLogo').style.display = 'inline-block';
-                document.getElementById('btnTambahAnggota').style.display = 'inline-block';
                 document.getElementById('btnReset').style.display = 'inline-block';
                 document.getElementById('thAksi').style.display = 'table-cell';
+                document.getElementById('thAksiProses').style.display = 'table-cell';
             }
-            filterData();
+            switchView('dashboard');
             resetIdleTimer();
         } else {
             authSec.style.setProperty('display', 'flex', 'important');
             appSec.style.display = 'none';
             clearTimeout(idleTimer);
         }
+    }
+
+    function switchView(viewName) {
+        currentActiveView = viewName;
+        document.getElementById('viewMenuDashboard').style.display = (viewName === 'dashboard') ? 'block' : 'none';
+        document.getElementById('viewKtaAktif').style.display = (viewName === 'ktaAktif') ? 'block' : 'none';
+        document.getElementById('viewProsesKta').style.display = (viewName === 'prosesKta') ? 'block' : 'none';
+
+        const isAdmin = currentUser && currentUser.role === 'admin';
+        const btnTambah = document.getElementById('btnTambahData');
+        const btnPrint = document.getElementById('btnPrint');
+
+        if (viewName === 'dashboard') {
+            btnTambah.style.display = 'none';
+            btnPrint.style.display = 'none';
+        } else {
+            btnPrint.style.display = 'inline-block';
+            if (isAdmin) btnTambah.style.display = 'inline-block';
+        }
+
+        if (viewName === 'ktaAktif') filterData();
+        if (viewName === 'prosesKta') filterProsesData();
     }
 
     function handleLogin(e) {
@@ -582,12 +785,12 @@
         const p = document.getElementById('regPass').value.trim();
 
         if (usersDb.some(x => x.username.toLowerCase() === u.toLowerCase())) {
-            alert('Username sudah digunakan! Gunakan username lain.');
+            alert('Username sudah digunakan!');
             return;
         }
 
         if (usersDb.some(x => x.email && x.email.toLowerCase() === email.toLowerCase())) {
-            alert('Email sudah terdaftar! Silakan gunakan email lain.');
+            alert('Email sudah terdaftar!');
             return;
         }
 
@@ -595,7 +798,7 @@
         usersDb.push(newUser);
         localStorage.setItem('kta_users_db', JSON.stringify(usersDb));
 
-        alert('Pendaftaran akun berhasil! Silakan masuk menggunakan akun baru Anda.');
+        alert('Pendaftaran berhasil! Silakan masuk.');
         document.getElementById('registerForm').reset();
         document.getElementById('login-tab').click();
     }
@@ -607,6 +810,279 @@
         if (msg) alert(msg);
     }
 
+    function formatRupiah(angka) {
+        if(!angka || angka === 0) return "-";
+        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+    }
+
+    function formatTanggalIndo(tglStr) {
+        if(!tglStr) return "-";
+        const d = new Date(tglStr);
+        if(isNaN(d)) return tglStr;
+        return d.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+    }
+
+    function toggleCicilField(val) {
+        const container = document.getElementById('cicilContainer');
+        container.style.display = (val === 'CICIL') ? 'block' : 'none';
+    }
+
+    function renderTable(data = members) {
+        const tbody = document.getElementById('tableBody');
+        tbody.innerHTML = '';
+        const isAdmin = currentUser && currentUser.role === 'admin';
+
+        data.forEach((item, index) => {
+            const isKetua = item.ket.toUpperCase().includes('KETUA');
+            const ketBadge = isKetua 
+                ? `<span class="badge badge-ketua shadow-sm">${item.ket}</span>`
+                : `<span class="badge badge-anggota shadow-sm">${item.ket}</span>`;
+            
+            let displayKta = item.kta;
+            let displayHp = item.hp;
+
+            if (!isAdmin) {
+                if (item.kta && item.kta.length >= 6) {
+                    displayKta = item.kta.substring(0, item.kta.length - 6) + "******";
+                } else {
+                    displayKta = "******";
+                }
+
+                if (item.hp && item.hp !== '-') {
+                    displayHp = "******" + item.hp.slice(-4);
+                } else {
+                    displayHp = "-";
+                }
+            }
+
+            const waClean = item.hp ? item.hp.replace(/[^0-9]/g, '') : '';
+            const hpFormatted = isAdmin && item.hp && item.hp !== '-' ? 
+                `<a href="https://wa.me/62${waClean.replace(/^0/, '')}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-3"><i class="bi bi-whatsapp me-1"></i>${item.hp}</a>` 
+                : `<span class="${!isAdmin ? 'blur-data' : ''}">${displayHp}</span>`;
+
+            let aksiCol = isAdmin ? `
+                <td class="text-center no-print">
+                    <button class="btn btn-outline-warning btn-sm rounded-circle me-1" onclick="editMember(${index})"><i class="bi bi-pencil-fill"></i></button>
+                    <button class="btn btn-outline-danger btn-sm rounded-circle" onclick="deleteMember(${index})"><i class="bi bi-trash-fill"></i></button>
+                </td>
+            ` : '';
+
+            tbody.innerHTML += `
+                <tr>
+                    <td class="text-center font-monospace fw-bold text-secondary">${index + 1}</td>
+                    <td class="fw-bold text-dark">${item.nama}</td>
+                    <td class="font-monospace text-secondary"><span class="${!isAdmin ? 'blur-data' : ''}">${displayKta}</span></td>
+                    <td>${item.berlaku || '-'}</td>
+                    <td>${ketBadge}</td>
+                    <td>${hpFormatted}</td>
+                    ${aksiCol}
+                </tr>
+            `;
+        });
+
+        document.getElementById('totalCount').innerText = `Total: ${data.length} Anggota`;
+    }
+
+    function renderProsesTable(data = prosesKtaData) {
+        const tbody = document.getElementById('tableProsesBody');
+        tbody.innerHTML = '';
+        const isAdmin = currentUser && currentUser.role === 'admin';
+
+        data.forEach((item, index) => {
+            let statusKtaBadge = (item.statusKta === 'PERPANJANGAN') 
+                ? `<span class="badge bg-secondary shadow-sm">PERPANJANGAN</span>`
+                : `<span class="badge bg-primary shadow-sm">PENDAFTARAN</span>`;
+
+            let statusBadge = "";
+            if (item.status === 'SUDAH LUNAS') {
+                statusBadge = `<span class="badge bg-success shadow-sm"><i class="bi bi-check-circle-fill me-1"></i>LUNAS</span>`;
+            } else if (item.status === 'CICIL') {
+                statusBadge = `<span class="badge bg-warning text-dark shadow-sm"><i class="bi bi-hourglass-split me-1"></i>CICIL</span>`;
+            } else {
+                statusBadge = `<span class="badge bg-danger shadow-sm"><i class="bi bi-x-circle-fill me-1"></i>BELUM LUNAS</span>`;
+            }
+
+            let displayWa = item.wa;
+            if (!isAdmin) {
+                if (item.wa && item.wa.length >= 4) {
+                    displayWa = "******" + item.wa.slice(-4);
+                } else {
+                    displayWa = "******";
+                }
+            }
+
+            const waClean = item.wa ? item.wa.replace(/[^0-9]/g, '') : '';
+            const waFormatted = isAdmin && item.wa ? 
+                `<a href="https://wa.me/62${waClean.replace(/^0/, '')}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-3"><i class="bi bi-whatsapp me-1"></i>${item.wa}</a>` 
+                : `<span class="${!isAdmin ? 'blur-data' : ''}">${displayWa}</span>`;
+
+            let aksiCol = isAdmin ? `
+                <td class="text-center no-print">
+                    <button class="btn btn-outline-warning btn-sm rounded-circle me-1" onclick="editProsesKta(${index})"><i class="bi bi-pencil-fill"></i></button>
+                    <button class="btn btn-outline-danger btn-sm rounded-circle" onclick="deleteProsesKta(${index})"><i class="bi bi-trash-fill"></i></button>
+                </td>
+            ` : '';
+
+            tbody.innerHTML += `
+                <tr>
+                    <td class="text-center font-monospace fw-bold text-secondary">${index + 1}</td>
+                    <td class="fw-bold text-dark">${item.nama}</td>
+                    <td>${statusKtaBadge}</td>
+                    <td><span class="badge bg-dark border text-warning px-3 py-1">${item.tipe}</span></td>
+                    <td>${formatTanggalIndo(item.tgl)}</td>
+                    <td>${statusBadge}</td>
+                    <td class="fw-bold text-success font-monospace">${formatRupiah(item.cicil)}</td>
+                    <td>${waFormatted}</td>
+                    ${aksiCol}
+                </tr>
+            `;
+        });
+
+        document.getElementById('totalProsesCount').innerText = `Total: ${data.length} Pengajuan`;
+    }
+
+    function filterData() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = members.filter(m => m.nama.toLowerCase().includes(query) || m.kta.toLowerCase().includes(query) || m.ket.toLowerCase().includes(query) || m.hp.toLowerCase().includes(query));
+        renderTable(filtered);
+    }
+
+    function filterProsesData() {
+        const query = document.getElementById('searchProsesInput').value.toLowerCase();
+        const statusKtaVal = document.getElementById('statusKtaFilter').value;
+        const statusVal = document.getElementById('statusBayarFilter').value;
+
+        const filtered = prosesKtaData.filter(m => {
+            const matchQuery = m.nama.toLowerCase().includes(query) || m.wa.toLowerCase().includes(query);
+            const matchStatusKta = (statusKtaVal === 'all') || (m.statusKta === statusKtaVal);
+            const matchStatus = (statusVal === 'all') || (m.status === statusVal);
+            return matchQuery && matchStatusKta && matchStatus;
+        });
+        renderProsesTable(filtered);
+    }
+
+    function showAddModalDynamic() {
+        if (currentActiveView === 'ktaAktif') {
+            showAddModal();
+        } else if (currentActiveView === 'prosesKta') {
+            showAddProsesModal();
+        }
+    }
+
+    function showAddModal() {
+        document.getElementById('editIndex').value = '';
+        document.getElementById('modalTitle').innerHTML = '<i class="bi bi-person-plus-fill me-2"></i>Tambah Anggota KTA Aktif';
+        document.getElementById('memberForm').reset();
+        document.getElementById('inputKeterangan').value = 'SUB WILAYAH BOJONG';
+        modal.show();
+    }
+
+    function showAddProsesModal() {
+        document.getElementById('editProsesIndex').value = '';
+        document.getElementById('prosesModalTitle').innerHTML = '<i class="bi bi-plus-circle-fill me-2"></i>Tambah Pengajuan Proses KTA';
+        document.getElementById('prosesForm').reset();
+        document.getElementById('inputProsesStatusKta').value = 'PENDAFTARAN';
+        document.getElementById('cicilContainer').style.display = 'none';
+        prosesModal.show();
+    }
+
+    function editMember(index) {
+        const item = members[index];
+        document.getElementById('editIndex').value = index;
+        document.getElementById('modalTitle').innerHTML = '<i class="bi bi-pencil-square me-2"></i>Edit Data Anggota';
+        document.getElementById('inputNama').value = item.nama;
+        document.getElementById('inputNoKta').value = item.kta;
+        document.getElementById('inputMasaBerlaku').value = item.berlaku;
+        document.getElementById('inputKeterangan').value = item.ket;
+        document.getElementById('inputHp').value = item.hp;
+        modal.show();
+    }
+
+    function editProsesKta(index) {
+        const item = prosesKtaData[index];
+        document.getElementById('editProsesIndex').value = index;
+        document.getElementById('prosesModalTitle').innerHTML = '<i class="bi bi-pencil-square me-2"></i>Edit Pengajuan Proses KTA';
+        document.getElementById('inputProsesNama').value = item.nama;
+        document.getElementById('inputProsesStatusKta').value = item.statusKta || 'PENDAFTARAN';
+        document.getElementById('inputProsesTipe').value = item.tipe;
+        document.getElementById('inputProsesTanggal').value = item.tgl;
+        document.getElementById('inputProsesStatus').value = item.status;
+        document.getElementById('inputProsesCicil').value = item.cicil || 0;
+        document.getElementById('inputProsesWa').value = item.wa;
+        toggleCicilField(item.status);
+        prosesModal.show();
+    }
+
+    function deleteMember(index) {
+        if(confirm(`Hapus data ${members[index].nama}?`)) {
+            members.splice(index, 1);
+            localStorage.setItem('kta_bojong_data', JSON.stringify(members));
+            filterData();
+        }
+    }
+
+    function deleteProsesKta(index) {
+        if(confirm(`Hapus pengajuan KTA ${prosesKtaData[index].nama}?`)) {
+            prosesKtaData.splice(index, 1);
+            localStorage.setItem('kta_proses_data', JSON.stringify(prosesKtaData));
+            filterProsesData();
+        }
+    }
+
+    function resetToDefault() {
+        if(confirm("Apakah Anda ingin mengembalikan seluruh data ke default awal?")) {
+            members = [...initialMembers];
+            prosesKtaData = [...initialProsesKta];
+            localStorage.setItem('kta_bojong_data', JSON.stringify(members));
+            localStorage.setItem('kta_proses_data', JSON.stringify(prosesKtaData));
+            filterData();
+            filterProsesData();
+        }
+    }
+
+    document.getElementById('memberForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const index = document.getElementById('editIndex').value;
+        const newData = {
+            nama: document.getElementById('inputNama').value.toUpperCase(),
+            kta: document.getElementById('inputNoKta').value,
+            berlaku: document.getElementById('inputMasaBerlaku').value,
+            ket: document.getElementById('inputKeterangan').value,
+            hp: document.getElementById('inputHp').value
+        };
+
+        if(index === '') members.push(newData);
+        else members[index] = newData;
+
+        localStorage.setItem('kta_bojong_data', JSON.stringify(members));
+        modal.hide();
+        filterData();
+    });
+
+    document.getElementById('prosesForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const index = document.getElementById('editProsesIndex').value;
+        const statusVal = document.getElementById('inputProsesStatus').value;
+        const cicilVal = (statusVal === 'CICIL') ? parseFloat(document.getElementById('inputProsesCicil').value) || 0 : 0;
+
+        const newData = {
+            nama: document.getElementById('inputProsesNama').value.toUpperCase(),
+            statusKta: document.getElementById('inputProsesStatusKta').value,
+            tipe: document.getElementById('inputProsesTipe').value,
+            tgl: document.getElementById('inputProsesTanggal').value,
+            status: statusVal,
+            cicil: cicilVal,
+            wa: document.getElementById('inputProsesWa').value
+        };
+
+        if(index === '') prosesKtaData.push(newData);
+        else prosesKtaData[index] = newData;
+
+        localStorage.setItem('kta_proses_data', JSON.stringify(prosesKtaData));
+        prosesModal.hide();
+        filterProsesData();
+    });
+
     function showForgotPasswordModal() {
         document.getElementById('stepOtpRequest').style.display = 'block';
         document.getElementById('stepOtpVerify').style.display = 'none';
@@ -616,21 +1092,12 @@
 
     function requestOtpCode() {
         const input = document.getElementById('forgotContactInput').value.trim().toLowerCase();
-        if (!input) {
-            alert('Silakan masukkan Email atau Nomor WhatsApp terdaftar Anda.');
-            return;
-        }
+        if (!input) return alert('Masukkan Email/WhatsApp terdaftar Anda[cite: 1].');
 
         const cleanInput = input.replace(/[^0-9]/g, '');
-        activeResetUserIndex = usersDb.findIndex(x => 
-            (x.email && x.email.toLowerCase() === input) || 
-            (x.wa && x.wa.replace(/[^0-9]/g, '') === cleanInput)
-        );
+        activeResetUserIndex = usersDb.findIndex(x => (x.email && x.email.toLowerCase() === input) || (x.wa && x.wa.replace(/[^0-9]/g, '') === cleanInput));
 
-        if (activeResetUserIndex === -1) {
-            alert('Data akun dengan Email/WhatsApp tersebut tidak ditemukan!');
-            return;
-        }
+        if (activeResetUserIndex === -1) return alert('Data akun tidak ditemukan!');
 
         generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
         document.getElementById('generatedOtpDisplay').innerText = generatedOtp;
@@ -642,26 +1109,17 @@
         const otpInput = document.getElementById('inputOtpCode').value.trim();
         const newPass = document.getElementById('inputNewPassword').value.trim();
 
-        if (otpInput !== generatedOtp) {
-            alert('Kode OTP yang Anda masukkan salah!');
-            return;
-        }
-
-        if (newPass.length < 6) {
-            alert('Password baru minimal 6 karakter!');
-            return;
-        }
+        if (otpInput !== generatedOtp) return alert('Kode OTP salah!');
+        if (newPass.length < 6) return alert('Password minimal 6 karakter!');
 
         usersDb[activeResetUserIndex].pass = newPass;
         localStorage.setItem('kta_users_db', JSON.stringify(usersDb));
 
-        alert('Password berhasil diperbarui! Silakan login kembali dengan password baru Anda.');
+        alert('Password berhasil diperbarui!');
         forgotModal.hide();
     }
 
-    function showLogoSelectModal() {
-        logoModal.show();
-    }
+    function showLogoSelectModal() { logoModal.show(); }
 
     function handleLogoUpload(event, position) {
         const file = event.target.files[0];
@@ -682,212 +1140,13 @@
         }
     }
 
-    function saveToLocalStorage() {
-        localStorage.setItem('kta_bojong_data', JSON.stringify(members));
-    }
-
     function syncDateToText(dateVal) {
         if(!dateVal) return;
         const dateObj = new Date(dateVal);
-        const options = { day: '2-digit', month: 'long', year: 'numeric' };
-        document.getElementById('inputMasaBerlaku').value = dateObj.toLocaleDateString('id-ID', options);
+        document.getElementById('inputMasaBerlaku').value = dateObj.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
     }
 
-    function clearDatepicker() {
-        document.getElementById('inputDate').value = '';
-    }
-
-    function isExpired(berlakuStr) {
-        if (!berlakuStr || berlakuStr === '-' || berlakuStr.trim() === '') return false;
-        
-        const monthsID = {
-            'januari': 0, 'februari': 1, 'maret': 2, 'april': 3, 'mei': 4, 'juni': 5,
-            'juli': 6, 'agustus': 7, 'september': 8, 'oktober': 9, 'november': 10, 'desember': 11,
-            'jan': 0, 'feb': 1, 'mar': 2, 'apr': 3, 'jun': 5, 'jul': 6, 'agu': 7, 'sep': 8, 'okt': 9, 'nov': 10, 'des': 11
-        };
-
-        let parts = berlakuStr.toLowerCase().replace(/[^a-z0-9]/g, ' ').trim().split(/\s+/);
-        if (parts.length >= 3) {
-            let day = parseInt(parts[0]);
-            let monthName = parts[1];
-            let year = parseInt(parts[2]);
-            if (year < 100) year += 2000;
-
-            let month = -1;
-            for (let key in monthsID) {
-                if (monthName.startsWith(key)) {
-                    month = monthsID[key];
-                    break;
-                }
-            }
-
-            if (!isNaN(day) && month !== -1 && !isNaN(year)) {
-                let expDate = new Date(year, month, day);
-                let today = new Date();
-                today.setHours(0,0,0,0);
-                return expDate < today;
-            }
-        }
-        
-        let parsed = Date.parse(berlakuStr);
-        if (!isNaN(parsed)) {
-            let expDate = new Date(parsed);
-            let today = new Date();
-            today.setHours(0,0,0,0);
-            return expDate < today;
-        }
-
-        return false;
-    }
-
-    function renderTable(data = members) {
-        const tbody = document.getElementById('tableBody');
-        tbody.innerHTML = '';
-        
-        const isAdmin = currentUser && currentUser.role === 'admin';
-
-        data.forEach((item, index) => {
-            const isKetua = item.ket.toUpperCase().includes('KETUA');
-            const ketBadge = isKetua 
-                ? `<span class="badge badge-ketua shadow-sm">${item.ket}</span>`
-                : `<span class="badge badge-anggota shadow-sm">${item.ket}</span>`;
-            
-            let expiredBadge = '';
-            if (isExpired(item.berlaku)) {
-                expiredBadge = `<br><span class="badge-expired"><i class="bi bi-exclamation-triangle-fill me-1"></i>Masa Berlaku Habis</span>`;
-            }
-
-            let displayKta = item.kta;
-            let displayHp = item.hp;
-
-            if (!isAdmin) {
-                if (item.kta && item.kta.length >= 6) {
-                    let frontPart = item.kta.substring(0, item.kta.length - 6);
-                    displayKta = frontPart + "******";
-                } else {
-                    displayKta = "******";
-                }
-
-                if (item.hp && item.hp !== '-') {
-                    displayHp = "******" + item.hp.slice(-4);
-                } else {
-                    displayHp = "-";
-                }
-            }
-
-            const waClean = item.hp ? item.hp.replace(/[^0-9]/g, '') : '';
-            const hpFormatted = isAdmin && item.hp && item.hp !== '-' ? 
-                `<a href="https://wa.me/62${waClean.replace(/^0/, '')}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-3"><i class="bi bi-whatsapp me-1"></i>${item.hp}</a>` 
-                : `<span class="${!isAdmin ? 'blur-data' : ''}">${displayHp}</span>`;
-
-            let aksiCol = isAdmin ? `
-                <td class="text-center no-print">
-                    <button class="btn btn-outline-warning btn-sm rounded-circle me-1" title="Edit" onclick="editMember(${index})"><i class="bi bi-pencil-fill"></i></button>
-                    <button class="btn btn-outline-danger btn-sm rounded-circle" title="Hapus" onclick="deleteMember(${index})"><i class="bi bi-trash-fill"></i></button>
-                </td>
-            ` : '';
-
-            tbody.innerHTML += `
-                <tr>
-                    <td class="text-center font-monospace fw-bold text-secondary">${index + 1}</td>
-                    <td class="fw-bold text-dark">${item.nama}</td>
-                    <td class="font-monospace text-secondary"><span class="${!isAdmin ? 'blur-data' : ''}">${displayKta}</span></td>
-                    <td>${item.berlaku || '-'}${expiredBadge}</td>
-                    <td>${ketBadge}</td>
-                    <td>${hpFormatted}</td>
-                    ${aksiCol}
-                </tr>
-            `;
-        });
-
-        document.getElementById('totalCount').innerText = `Total: ${data.length} Anggota`;
-    }
-
-    function filterData() {
-        const query = document.getElementById('searchInput').value.toLowerCase();
-        const statusVal = document.getElementById('statusFilter').value;
-
-        const filtered = members.filter(m => {
-            const matchQuery = 
-                m.nama.toLowerCase().includes(query) || 
-                m.kta.toLowerCase().includes(query) ||
-                m.ket.toLowerCase().includes(query) ||
-                m.hp.toLowerCase().includes(query);
-
-            const expired = isExpired(m.berlaku);
-            let matchStatus = true;
-            if (statusVal === 'active') {
-                matchStatus = !expired;
-            } else if (statusVal === 'expired') {
-                matchStatus = expired;
-            }
-
-            return matchQuery && matchStatus;
-        });
-
-        renderTable(filtered);
-    }
-
-    function showAddModal() {
-        document.getElementById('editIndex').value = '';
-        document.getElementById('modalTitle').innerHTML = '<i class="bi bi-person-plus-fill me-2"></i>Tambah Anggota Baru';
-        document.getElementById('memberForm').reset();
-        document.getElementById('inputKeterangan').value = 'SUB WILAYAH BOJONG';
-        modal.show();
-    }
-
-    function editMember(index) {
-        const item = members[index];
-        document.getElementById('editIndex').value = index;
-        document.getElementById('modalTitle').innerHTML = '<i class="bi bi-pencil-square me-2"></i>Edit Data Anggota';
-        document.getElementById('inputNama').value = item.nama;
-        document.getElementById('inputNoKta').value = item.kta;
-        document.getElementById('inputMasaBerlaku').value = item.berlaku;
-        document.getElementById('inputKeterangan').value = item.ket;
-        document.getElementById('inputHp').value = item.hp;
-        document.getElementById('inputDate').value = '';
-        modal.show();
-    }
-
-    function deleteMember(index) {
-        if(confirm(`Hapus data ${members[index].nama}?`)) {
-            members.splice(index, 1);
-            saveToLocalStorage();
-            filterData();
-        }
-    }
-
-    function resetToDefault() {
-        if(confirm("Apakah Anda ingin mengembalikan data ke daftar awal (29 Anggota mula-mula)?")) {
-            members = [...initialMembers];
-            saveToLocalStorage();
-            filterData();
-        }
-    }
-
-    document.getElementById('memberForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const index = document.getElementById('editIndex').value;
-        const newData = {
-            nama: document.getElementById('inputNama').value.toUpperCase(),
-            kta: document.getElementById('inputNoKta').value,
-            berlaku: document.getElementById('inputMasaBerlaku').value,
-            ket: document.getElementById('inputKeterangan').value,
-            hp: document.getElementById('inputHp').value
-        };
-
-        if(index === '') {
-            members.push(newData);
-        } else {
-            members[index] = newData;
-        }
-
-        saveToLocalStorage();
-        modal.hide();
-        filterData();
-    });
-
-    filterData();
+    function clearDatepicker() { document.getElementById('inputDate').value = ''; }
 </script>
 </body>
 </html>
