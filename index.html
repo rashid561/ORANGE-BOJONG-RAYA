@@ -642,7 +642,12 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+
 <script>
+
     const firebaseConfig = {
         apiKey: "AIzaSyA-MXfRfLqrRfRlAcCSOcr-FgXWni5ai5I",
         authDomain: "orange-bojong-raya.firebaseapp.com",
@@ -775,55 +780,43 @@
         }
     }
 
-    // 1. Pastikan menambahkan kata 'async' di depan fungsi
-	async function handleRegister(e) {
-		e.preventDefault();
-		const nama = document.getElementById('regNama').value.trim();
-		const u = document.getElementById('regUser').value.trim();
-		const email = document.getElementById('regEmail').value.trim();
-		const wa = document.getElementById('regWa').value.trim();
-		const p = document.getElementById('regPass').value.trim();
+    async function handleRegister(e) {
+    e.preventDefault();
+    const nama = document.getElementById('regNama').value.trim();
+    const u = document.getElementById('regUser').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const wa = document.getElementById('regWa').value.trim();
+    const p = document.getElementById('regPass').value.trim();
 
-		// Validasi lokal Anda tetap dipertahankan
-		if (usersDb.some(x => x.username.toLowerCase() === u.toLowerCase())) {
-			alert('Username sudah digunakan!');
-			return;
-		}
+    if (usersDb.some(x => x.username.toLowerCase() === u.toLowerCase())) {
+        alert('Username sudah digunakan!');
+        return;
+    }
 
-		try {
-			// 2. Daftarkan email dan password ke Firebase Authentication
-			const userCredential = await createUserWithEmailAndPassword(auth, email, p);
-			const user = userCredential.user;
+    try {
+        // Buat akun baru di Auth
+        const userCredential = await auth.createUserWithEmailAndPassword(email, p);
+        const user = userCredential.user;
 
-			// 3. Simpan data tambahan (Nama, WA, Username) ke Cloud Firestore (Menggantikan localStorage)
-			await setDoc(doc(db, "users", user.uid), {
-				nama: nama,
-				username: u,
-				email: email,
-				wa: wa,
-				role: 'user',
-				uid: user.uid
-			});
+        // Simpan data profil ke Firestore menggunakan sintaks compat db.collection
+        await db.collection("users").doc(user.uid).set({
+            nama: nama,
+            username: u,
+            email: email,
+            wa: wa,
+            role: 'user',
+            uid: user.uid
+        });
 
-			alert('Pendaftaran berhasil! Akun Anda telah aktif di Firebase.');
-			document.getElementById('registerForm').reset();
-			document.getElementById('login-tab').click();
+        alert('Pendaftaran berhasil! Akun Anda telah aktif di Firebase.');
+        document.getElementById('registerForm').reset();
+        document.getElementById('login-tab').click();
+    } catch (error) {
+        console.error("Error Registrasi:", error);
+        alert("Gagal daftar: " + error.message);
+    }
+}
 
-		} catch (error) {
-			// Tangkap error jika pendaftaran Firebase gagal
-			console.error("Error Registrasi Firebase:", error.code, error.message);
-			
-			if (error.code === 'auth/email-already-in-use') {
-				alert('Email sudah digunakan di Firebase!');
-			} else if (error.code === 'auth/weak-password') {
-				alert('Password minimal harus 6 karakter!');
-			} else if (error.code === 'auth/invalid-email') {
-				alert('Format email tidak valid!');
-			} else {
-				alert('Gagal daftar: ' + error.message);
-			}
-		}
-	}
 
 
     function handleLogout(msg = '') {
@@ -1155,38 +1148,23 @@
         forgotModal.show();
     }
 
-		// 1. Tambahkan kata 'async' di depan fungsi
-	async function requestResetViaEmail() {
-		const emailInput = document.getElementById('forgotContactInput').value.trim();
-		if (!emailInput) {
-			alert('Silakan masukkan email terdaftar Anda!');
-			return;
-		}
+		async function requestResetViaEmail() {
+    const emailInput = document.getElementById('forgotContactInput').value.trim();
+    if (!emailInput) {
+        alert('Silakan masukkan email terdaftar Anda!');
+        return;
+    }
 
-		try {
-			// 2. Gunakan pemanggilan modular: sendPasswordResetEmail(auth, email)
-			await sendPasswordResetEmail(auth, emailInput);
-			
-			alert('Link reset password berhasil dikirim! Silakan periksa Inbox atau folder Spam email Anda.');
-			
-			// Sembunyikan modal jika variabel forgotModal terdefinisi
-			if (typeof forgotModal !== 'undefined' && forgotModal.hide) {
-				forgotModal.hide();
-			}
-		} catch (error) {
-			console.error("Error Reset Password:", error);
+    try {
+        await auth.sendPasswordResetEmail(emailInput);
+        alert('Link reset password berhasil dikirim! Periksa Inbox atau Spam.');
+        forgotModal.hide();
+    } catch (error) {
+        console.error("Error Reset Password:", error);
+        alert('Gagal mengirim email reset: ' + error.message);
+    }
+}
 
-			// 3. Penanganan error
-			if (error.code === 'auth/invalid-email') {
-				alert('Format email tidak valid!');
-			} else {
-				alert('Gagal mengirim email reset: ' + error.message);
-			}
-		}
-	}
-
-	// 4. Daftarkan ke global window agar bisa dipanggil lewat onclick="requestResetViaEmail()" di HTML
-	window.requestResetViaEmail = requestResetViaEmail;
 
 
     // Fungsi Kirim Tautan Pemulihan Langsung ke WA Pribadi User
