@@ -870,12 +870,24 @@ async function loadUsersFromFirestore() {
 
 
 
-    function handleLogout(msg = '') {
+async function handleLogout(msg = '') {
+    try {
+        // Keluar secara resmi dari sesi Firebase Auth
+        await auth.signOut(); 
+        
+        // Bersihkan data lokal Anda
         currentUser = null;
         localStorage.removeItem('kta_current_user');
+        
+        // Perbarui tampilan UI
         checkAuthStatus();
+        
         if (msg) alert(msg);
+    } catch (error) {
+        console.error("Gagal melakukan logout:", error);
+        alert("Gagal logout: " + error.message);
     }
+}
 
     // 1. Ubah fungsi menjadi 'async'
 // 1. Ubah fungsi menjadi 'async'
