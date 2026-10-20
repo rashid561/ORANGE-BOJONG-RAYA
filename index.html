@@ -663,6 +663,8 @@
             snapshot.forEach((doc) => {
                 members.push({ id: doc.id, ...doc.data() });
             });
+            // Urutkan abjad berdasarkan nama (A-Z)
+            members.sort((a, b) => a.nama.localeCompare(b.nama));
             if(currentActiveView === 'ktaAktif') filterData();
         });
 
@@ -671,6 +673,8 @@
             snapshot.forEach((doc) => {
                 prosesKtaData.push({ id: doc.id, ...doc.data() });
             });
+            // Urutkan abjad berdasarkan nama (A-Z)
+            prosesKtaData.sort((a, b) => a.nama.localeCompare(b.nama));
             if(currentActiveView === 'prosesKta') filterProsesData();
         });
     }
@@ -902,7 +906,22 @@
 
     function filterData() {
         const query = document.getElementById('searchInput').value.toLowerCase();
-        const filtered = members.filter(m => m.nama.toLowerCase().includes(query) || m.kta.toLowerCase().includes(query) || m.ket.toLowerCase().includes(query) || m.hp.toLowerCase().includes(query));
+        const statusFilter = document.getElementById('statusFilter').value;
+        
+        const filtered = members.filter(m => {
+            const matchQuery = m.nama.toLowerCase().includes(query) || m.kta.toLowerCase().includes(query) || m.ket.toLowerCase().includes(query) || m.hp.toLowerCase().includes(query);
+            
+            // Filter Berdasarkan Status Aktif / Expired
+            if (statusFilter === 'active') {
+                return matchQuery && m.berlaku && m.berlaku !== '-';
+            } else if (statusFilter === 'expired') {
+                return matchQuery && (!m.berlaku || m.berlaku === '-');
+            }
+            return matchQuery;
+        });
+
+        // Pastikan hasil filter tetap terurut abjad (A-Z)
+        filtered.sort((a, b) => a.nama.localeCompare(b.nama));
         renderTable(filtered);
     }
 
@@ -917,6 +936,9 @@
             const matchStatus = (statusVal === 'all') || (m.status === statusVal);
             return matchQuery && matchStatusKta && matchStatus;
         });
+
+        // Pastikan hasil filter tetap terurut abjad (A-Z)
+        filtered.sort((a, b) => a.nama.localeCompare(b.nama));
         renderProsesTable(filtered);
     }
 
@@ -945,7 +967,7 @@
         document.getElementById('inputNama').value = item.nama;
         document.getElementById('inputNoKta').value = item.kta;
         document.getElementById('inputMasaBerlaku').value = item.berlaku;
-        document.getElementById('inputMasaBerlakuDate').value = ''; // Reset picker
+        document.getElementById('inputMasaBerlakuDate').value = '';
         document.getElementById('inputKeterangan').value = item.ket;
         document.getElementById('inputHp').value = item.hp;
         modal.show();
