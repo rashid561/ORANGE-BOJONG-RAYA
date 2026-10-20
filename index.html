@@ -765,20 +765,77 @@
         if (viewName === 'prosesKta') filterProsesData();
     }
 
-    function handleLogin(e) {
-        e.preventDefault();
-        const userInput = document.getElementById('loginUser').value.trim().toLowerCase();
-        const p = document.getElementById('loginPass').value.trim();
+async function handleLogin(e) {
+    e.preventDefault();
+    const userInput = document.getElementById('loginUser').value.trim().toLowerCase();
+    const p = document.getElementById('loginPass').value.trim();
 
-        const found = usersDb.find(x => (x.username.toLowerCase() === userInput || (x.email && x.email.toLowerCase() === userInput)) && x.pass === p);
-        if (found) {
-            currentUser = found;
-            localStorage.setItem('kta_current_user', JSON.stringify(currentUser));
-            checkAuthStatus();
-        } else {
-            alert('Email/Username atau Password salah!');
+    let email = userInput;
+
+    // Jika input adalah username (tidak mengandung '@'), cari email aslinya di Firestore
+    if (!userInput.includes('@')) {
+        try {
+            const snapshot = await db.collection("users").where("username", "==", userInput).get();
+            if (!snapshot.empty) {
+                email = snapshot.docs[0].data().email;
+            } else {
+                alert('Username tidak ditemukan!');
+                return;
+            }
+        } catch (e) {
+            alert('Gagal memeriksa database username!');
+            return;
         }
     }
+
+    try {
+        // Login resmi menggunakan Firebase Auth
+        await auth.signInWithEmailAndPassword(email, p);
+        alert('Login Berhasil!');
+    } catch (error) {
+        alert('Email/Username atau Password salah!');
+    }
+}
+
+	
+	window.addEventListener('DOMContentLoaded', () => {
+    // 1. Pantau status login Firebase Auth
+    auth.onAuthStateChanged(async (user) => {
+        if (user) {
+            try {
+                // Ambil data profil tambahan dari Firestore berdasarkan UID
+                const docRef = await db.collection("users").doc(user.uid).get();
+                if (docRef.exists) {
+                    currentUser = docRef.data();
+                } else {
+                    currentUser = { nama: user.email.split('@')[0], username: user.email.split('@')[0], email: user.email, role: 'user', uid: user.uid };
+                }
+            } catch (error) {
+                console.error("Gagal memuat profil dari Firestore:", error);
+            }
+        } else {
+            currentUser = null;
+        }
+        
+        checkAuthStatus(); // Jalankan fungsi pembaruan UI Anda
+    });
+
+    initRealtimeListeners();
+    loadUsersFromFirestore(); // Muat daftar user untuk validasi pendaftaran
+    
+    // ... pemuatan logo & favicon dari localStorage Anda ...
+});
+
+// Fungsi pembantu untuk memuat semua user (untuk cek keunikan username saat daftar)
+async function loadUsersFromFirestore() {
+    try {
+        const snapshot = await db.collection("users").get();
+        usersDb = [];
+        snapshot.forEach(doc => usersDb.push(doc.data()));
+    } catch (e) { 
+        console.error("Gagal memuat daftar user:", e); 
+    }
+}
 
     async function handleRegister(e) {
     e.preventDefault();
