@@ -449,7 +449,7 @@
                         <h6 class="fw-bold text-warning mb-1 small"><i class="bi bi-info-circle-fill me-1"></i>BUTUH INFORMASI / PERTANYAAN? SILAKAN HUBUNGI KAMI:</h6>
                     </div>
                     <div class="col-md-12 d-flex flex-wrap justify-content-center justify-content-md-start gap-2">
-                        <a href="https://wa.me/089513766307" target="_blank" class="btn btn-success btn-sm rounded-pill px-2 py-1 fw-semibold" style="font-size: 0.75rem;">
+                        <a href="https://wa.me/6289625793431" target="_blank" class="btn btn-success btn-sm rounded-pill px-2 py-1 fw-semibold" style="font-size: 0.75rem;">
                             <i class="bi bi-whatsapp me-1"></i> Andriyanto: 0896-2579-3431
                         </a>
                         <a href="https://wa.me/6289513766307" target="_blank" class="btn btn-success btn-sm rounded-pill px-2 py-1 fw-semibold" style="font-size: 0.75rem;">
@@ -474,7 +474,7 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-4 small">
-                <!-- Informasi Profil User & Password (Langsung Route ke Login setelah ganti password) -->
+                <!-- Informasi Profil User & Password -->
                 <div class="card bg-light border-0 p-3 rounded-3 mb-3">
                     <h6 class="fw-bold text-dark mb-2"><i class="bi bi-person-badge me-1 text-warning"></i> Informasi Profil Akun</h6>
                     <div class="mb-1"><b>Nama:</b> <span id="setProfileNama">-</span></div>
@@ -490,7 +490,7 @@
                     </div>
                 </div>
 
-                <!-- Pengaturan Logo (Browser, Logo Kiri, Logo Kanan) -->
+                <!-- Pengaturan Logo -->
                 <div class="card bg-light border-0 p-3 rounded-3">
                     <h6 class="fw-bold text-dark mb-2"><i class="bi bi-image-fill me-1 text-warning"></i> Pengaturan Pilihan Logo</h6>
                     <p class="text-muted mb-3" style="font-size: 0.8rem;">Silakan pilih bagian logo perangkat atau browser yang ingin Anda ubah:</p>
@@ -614,7 +614,7 @@
     </div>
 </div>
 
-<!-- Modal Lupa Password (Pilihan Kirim via Email atau WhatsApp) -->
+<!-- Modal Lupa Password (Pilihan Kirim via Email atau WhatsApp Pribadi) -->
 <div class="modal fade" id="forgotModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded-4">
@@ -623,17 +623,17 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-4 small">
-                <p class="text-muted mb-3">Pilih metode pengiriman tautan pemulihan kata sandi akun Anda:</p>
+                <p class="text-muted mb-3">Pilih metode pemulihan kata sandi akun Anda:</p>
                 <div class="mb-3">
-                    <label class="form-label fw-semibold text-secondary small">Email / WhatsApp Terdaftar</label>
-                    <input type="text" id="forgotContactInput" class="form-control rounded-3 mb-2" placeholder="email@domain.com atau 08xx">
+                    <label class="form-label fw-semibold text-secondary small">Email / Username / WhatsApp Terdaftar</label>
+                    <input type="text" id="forgotContactInput" class="form-control rounded-3 mb-2" placeholder="email@domain.com atau username / 08xx">
                 </div>
                 <div class="d-grid gap-2">
                     <button class="btn btn-warning fw-bold rounded-pill shadow-sm text-dark btn-sm" onclick="requestResetViaEmail()">
-                        <i class="bi bi-envelope-fill me-1"></i> Kirim Link Reset via Email (Gmail)
+                        <i class="bi bi-envelope-fill me-1"></i> Kirim Link Reset via Email (Firebase Auth)
                     </button>
                     <button class="btn btn-success fw-bold rounded-pill shadow-sm btn-sm" onclick="requestResetViaWhatsApp()">
-                        <i class="bi bi-whatsapp me-1"></i> Kirim Permintaan via WhatsApp Admin
+                        <i class="bi bi-whatsapp me-1"></i> Kirim Tautan Langsung ke WA Pribadi User
                     </button>
                 </div>
             </div>
@@ -814,7 +814,6 @@
         settingsModal.show();
     }
 
-    // Update password dan langsung route kembali ke halaman login
     function updateUserPassword() {
         const newPass = document.getElementById('newAccountPass').value.trim();
         if(newPass.length < 6) return alert('Password minimal 6 karakter!');
@@ -823,11 +822,7 @@
         if(userIndex !== -1) {
             usersDb[userIndex].pass = newPass;
             localStorage.setItem('kta_users_db', JSON.stringify(usersDb));
-            
-            // Tutup modal setting
             settingsModal.hide();
-            
-            // Langsung arahkan ke halaman login (logout session saat ini)
             handleLogout('Password berhasil diperbarui! Silakan masuk kembali menggunakan password baru Anda.');
         }
     }
@@ -1131,6 +1126,7 @@
         forgotModal.show();
     }
 
+    // Fungsi Kirim Link Reset via Email (Firebase Auth)
     function requestResetViaEmail() {
         const emailInput = document.getElementById('forgotContactInput').value.trim();
         if(!emailInput) {
@@ -1148,21 +1144,49 @@
                 if (error.code === 'auth/user-not-found') {
                     alert('Email tidak terdaftar di sistem Firebase Auth!');
                 } else if (error.code === 'auth/invalid-email') {
-                    alert('Format email tidak valid!');
+                    alert('Format email tidak valid atau pastikan method Email/Password di Firebase sudah diaktifkan.');
                 } else {
                     alert('Gagal mengirim email reset: ' + error.message);
                 }
             });
     }
 
+    // Fungsi Kirim Tautan Pemulihan Langsung ke WA Pribadi User
     function requestResetViaWhatsApp() {
         const contactInput = document.getElementById('forgotContactInput').value.trim();
         if(!contactInput) {
-            alert('Silakan masukkan Email atau Nomor WhatsApp Anda!');
+            alert('Silakan masukkan Email, Username, atau Nomor WhatsApp Anda terlebih dahulu!');
             return;
         }
-        const pesan = encodeURIComponent(`Halo Admin Orange Bojong Raya, saya ingin meminta reset password untuk akun dengan data: ${contactInput}. Mohon bantuannya.`);
-        window.open(`https://wa.me/6289625793431?text=${pesan}`, '_blank');
+
+        // Cari data user di database lokal (usersDb)
+        let targetUser = usersDb.find(x => 
+            (x.email && x.email.toLowerCase() === contactInput.toLowerCase()) || 
+            x.username.toLowerCase() === contactInput.toLowerCase() || 
+            x.wa === contactInput
+        );
+
+        if (!targetUser) {
+            alert('Data akun tidak ditemukan! Pastikan Anda memasukkan email/username/nomor WA yang terdaftar.');
+            return;
+        }
+
+        if (!targetUser.wa || targetUser.wa === '-') {
+            alert('Nomor WhatsApp tidak terdaftar pada akun tersebut.');
+            return;
+        }
+
+        // Format nomor WA user (Ubah awalan 08... menjadi 628...)
+        let cleanWa = targetUser.wa.replace(/[^0-9]/g, '');
+        if (cleanWa.startsWith('0')) {
+            cleanWa = '62' + cleanWa.slice(1);
+        }
+
+        const tokenReset = 'OBR-RESET-' + Math.floor(100000 + Math.random() * 900000);
+        const pesan = encodeURIComponent(`Halo *${targetUser.nama}*, berikut adalah tautan pemulihan / token reset password akun KTA Orange Bojong Raya Anda:\n\n🔑 Token / Sandi Pemulihan: *${tokenReset}*\n\nSilakan masuk kembali ke aplikasi dan ubah password Anda melalui menu Settings setelah login.`);
+        
+        // Membuka jendela chat WA pribadi milik user secara langsung
+        window.open(`https://wa.me/${cleanWa}?text=${pesan}`, '_blank');
         forgotModal.hide();
     }
 </script>
