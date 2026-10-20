@@ -288,7 +288,6 @@
             <!-- Action Toolbar -->
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 pt-2 border-top border-white border-opacity-25">
                 <div class="text-white small">
-                    <i class="bi bi-shield-fill-check me-1 text-warning"></i> Sistem KTA Cloud Aktif (0.5ms)
                 </div>
                 <div class="d-flex gap-2 flex-wrap no-print">
                     <button id="btnTambahData" class="btn btn-light btn-action text-dark btn-sm shadow-sm fw-bold" onclick="showAddModalDynamic()" style="display: none;"><i class="bi bi-plus-circle-fill me-1 text-success"></i> Tambah Data</button>
@@ -879,6 +878,7 @@ async function loadUsersFromFirestore() {
     }
 
     // 1. Ubah fungsi menjadi 'async'
+// 1. Ubah fungsi menjadi 'async'
 async function showSettingsModal() {
     const user = auth.currentUser; // Ambil akun aktif langsung dari Firebase Auth
     if (!user) {
@@ -893,18 +893,20 @@ async function showSettingsModal() {
         if (docRef.exists) {
             const data = docRef.data();
             
-            // CETAK LOG INI DI BROWSER:
-            console.log("Data Lengkap dari Firestore:", data);
-            
+            // 3. Masukkan data lengkap ke elemen HTML Anda
             document.getElementById('setProfileNama').innerText = data.nama || '-';
             document.getElementById('setProfileUser').innerText = data.username || '-';
             document.getElementById('setProfileEmail').innerText = data.email || '-';
             document.getElementById('setProfileWa').innerText = data.wa || '-';
             
+            // Sinkronkan ke variabel global currentUser
             currentUser = data; 
         } else {
-            // Log ini akan muncul jika dokumen dengan ID = UID Auth Anda tidak ditemukan di Firestore
-            console.warn("Dokumen tidak ditemukan! Mencari ID Dokumen:", user.uid);
+            // Fallback cadangan jika dokumen belum ada di Firestore
+            document.getElementById('setProfileNama').innerText = user.email.split('@')[0];
+            document.getElementById('setProfileUser').innerText = user.email.split('@')[0];
+            document.getElementById('setProfileEmail').innerText = user.email;
+            document.getElementById('setProfileWa').innerText = '-';
         }
     } catch (error) {
         console.error("Gagal mengambil data profil terbaru:", error);
@@ -924,6 +926,7 @@ async function showSettingsModal() {
 
     settingsModal.show();
 }
+
 
 
     function updateUserPassword() {
