@@ -665,11 +665,6 @@
     let members = [];
     let prosesKtaData = [];
     
-    let usersDb = JSON.parse(localStorage.getItem('kta_users_db')) || [
-        { nama: 'Admin OBR', username: 'adminobr', email: 'admin@bojongraya.com', wa: '089625793431', pass: 'adminobr561', role: 'admin' }
-    ];
-
-    let currentUser = JSON.parse(localStorage.getItem('kta_current_user')) || null;
     let currentActiveView = 'dashboard';
 
     const modal = new bootstrap.Modal(document.getElementById('memberModal'));
@@ -883,23 +878,55 @@ async function loadUsersFromFirestore() {
         if (msg) alert(msg);
     }
 
-    function showSettingsModal() {
-        if(!currentUser) return;
-        document.getElementById('setProfileNama').innerText = currentUser.nama || '-';
-        document.getElementById('setProfileUser').innerText = currentUser.username || '-';
-        document.getElementById('setProfileEmail').innerText = currentUser.email || '-';
-        document.getElementById('setProfileWa').innerText = currentUser.wa || '-';
-        document.getElementById('newAccountPass').value = '';
-		
-		// LOGIKA PEMBATASAN ROLE:
+    // 1. Ubah fungsi menjadi 'async'
+async function showSettingsModal() {
+    const user = auth.currentUser; // Ambil akun aktif langsung dari Firebase Auth
+    if (!user) {
+        alert("Anda belum login!");
+        return;
+    }
+
+    try {
+        // 2. Ambil data profil terbaru langsung dari Firestore
+        const docRef = await db.collection("users").doc(user.uid).get();
+        
+        if (docRef.exists) {
+            const data = docRef.data();
+            
+            // 3. Masukkan data lengkap ke elemen HTML Anda
+            document.getElementById('setProfileNama').innerText = data.nama || '-';
+            document.getElementById('setProfileUser').innerText = data.username || '-';
+            document.getElementById('setProfileEmail').innerText = data.email || '-';
+            document.getElementById('setProfileWa').innerText = data.wa || '-';
+            
+            // Sinkronkan ke variabel global currentUser
+            currentUser = data; 
+        } else {
+            // Fallback cadangan jika dokumen belum ada di Firestore
+            document.getElementById('setProfileNama').innerText = user.email.split('@')[0];
+            document.getElementById('setProfileUser').innerText = user.email.split('@')[0];
+            document.getElementById('setProfileEmail').innerText = user.email;
+            document.getElementById('setProfileWa').innerText = '-';
+        }
+    } catch (error) {
+        console.error("Gagal mengambil data profil terbaru:", error);
+        alert("Gagal memuat profil: " + error.message);
+    }
+
+    // Reset input password di dalam modal
+    document.getElementById('newAccountPass').value = '';
+
+    // 4. Logika batasan Admin untuk menu ganti Logo
     const logoCard = document.getElementById('logoSettingsCard');
-    if (currentUser.role === 'admin') {
-        logoCard.style.display = 'block'; // Tampilkan card logo jika admin
+    if (currentUser && currentUser.role === 'admin') {
+        logoCard.style.display = 'block'; // Tampilkan jika admin
     } else {
         logoCard.style.display = 'none';  // Sembunyikan jika bukan admin
     }
-        settingsModal.show();
-    }
+
+    settingsModal.show();
+}
+
 
     function updateUserPassword() {
         const newPass = document.getElementById('newAccountPass').value.trim();
