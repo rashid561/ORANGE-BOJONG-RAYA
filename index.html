@@ -491,7 +491,7 @@
                 </div>
 
                 <!-- Pengaturan Logo -->
-                <div class="card bg-light border-0 p-3 rounded-3">
+                <div class="card bg-light border-0 p-3 rounded-3" id="logoSettingsCard">
                     <h6 class="fw-bold text-dark mb-2"><i class="bi bi-image-fill me-1 text-warning"></i> Pengaturan Pilihan Logo</h6>
                     <p class="text-muted mb-3" style="font-size: 0.8rem;">Silakan pilih bagian logo perangkat atau browser yang ingin Anda ubah:</p>
                     
@@ -833,6 +833,14 @@
         document.getElementById('setProfileEmail').innerText = currentUser.email || '-';
         document.getElementById('setProfileWa').innerText = currentUser.wa || '-';
         document.getElementById('newAccountPass').value = '';
+		
+		// LOGIKA PEMBATASAN ROLE:
+    const logoCard = document.getElementById('logoSettingsCard');
+    if (currentUser.role === 'admin') {
+        logoCard.style.display = 'block'; // Tampilkan card logo jika admin
+    } else {
+        logoCard.style.display = 'none';  // Sembunyikan jika bukan admin
+    }
         settingsModal.show();
     }
 
@@ -851,6 +859,10 @@
 
     function handleLogoUpload(event, position) {
         const file = event.target.files[0];
+		if (!currentUser || currentUser.role !== 'admin') {
+        alert('Akses Ditolak! Hanya Admin yang diperbolehkan mengubah logo.');
+        return;
+    }
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
