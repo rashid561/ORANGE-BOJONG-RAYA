@@ -233,6 +233,48 @@
             margin-bottom: 6px;
         }
 
+        /* Custom Styling Halaman Panduan KTA */
+        .step-badge {
+            width: 38px;
+            height: 38px;
+            background: #111;
+            color: #ff9900;
+            font-weight: 800;
+            font-size: 1.1rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ff9900;
+            flex-shrink: 0;
+        }
+
+        .step-card {
+            border: 1px solid #ffd8be;
+            border-left: 5px solid #e65c00;
+            border-radius: 12px;
+            background: #ffffff;
+            transition: transform 0.2s;
+        }
+
+        .step-card:hover {
+            transform: translateX(4px);
+        }
+
+        .icon-box-feature {
+            width: 55px;
+            height: 55px;
+            background: #fff3eb;
+            border: 2px solid #fd7e14;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #e65c00;
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+        }
+
         .contact-footer {
             background: #1a1a1a;
             color: #fff;
@@ -384,7 +426,7 @@
             <div id="viewMenuDashboard" class="py-2">
                 <div class="text-center mb-3">
                     <h4 class="fw-bold text-dark text-uppercase">Pilih Menu Layanan</h4>
-                    <p class="text-muted small">Silakan pilih menu di bawah ini untuk melihat data, pengajuan, atau komunitas olahraga</p>
+                    <p class="text-muted small">Silakan pilih menu di bawah ini untuk melihat data, panduan pendaftaran, atau komunitas olahraga</p>
                 </div>
                 <div class="row justify-content-center g-3">
                     <!-- Menu 1: Daftar Anggota -->
@@ -411,16 +453,15 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Menu 3 Baru: Pendaftaran dan Perpanjangan KTA -->
+                    <!-- Menu 3: Pendaftaran dan Perpanjangan KTA -->
                     <div class="col-md-3 col-sm-6">
-                        <div class="card menu-card p-3 text-center shadow-sm" onclick="window.open('https://wa.me/6289625793431?text=Halo%20Admin,%20saya%20ingin%20melakukan%20Pendaftaran%20atau%20Perpanjangan%20KTA%20Orange%20Bojong%20Raya.', '_blank')">
+                        <div class="card menu-card p-3 text-center shadow-sm" onclick="switchView('panduanKta')">
                             <div class="card-body py-2">
                                 <i class="bi bi-file-earmark-plus display-6 text-warning mb-2 d-block"></i>
                                 <h6 class="menu-card-title">
                                     PENDAFTARAN &<br>PERPANJANGAN KTA
                                 </h6>
-                                <p class="text-muted small mb-2">Ajukan pendaftaran kartu anggota baru atau perpanjangan masa berlaku KTA Anda.</p>
-                                <span class="badge bg-warning text-dark px-2 py-1 rounded-pill fw-semibold"><i class="bi bi-whatsapp me-1"></i> Ajukan via WA</span>
+                                <p class="text-muted small mb-0">Petunjuk resmi, alur pendaftaran via aplikasi, diskon pelajar, dan skema cicilan.</p>
                             </div>
                         </div>
                     </div>
@@ -545,6 +586,212 @@
                 </div>
             </div>
 
+            <!-- HALAMAN PANDUAN PENDAFTARAN & PERPANJANGAN KTA (BARU) -->
+            <div id="viewPanduanKta" style="display: none;">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <button class="btn btn-dark rounded-pill px-3 py-1 btn-sm fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-1"></i>Kembali ke Menu Utama</button>
+                    <h5 class="fw-bold text-uppercase text-dark mb-0">Pendaftaran & Perpanjangan E-KTA The Jakmania OBR</h5>
+                </div>
+
+                <!-- Hero Info / Banner Aplikasi Resmi -->
+                <div class="card border-0 rounded-4 bg-dark text-white p-3 p-md-4 mb-4 shadow" style="background: linear-gradient(135deg, #111 0%, #2a1200 100%); border-left: 6px solid #fd7e14 !important;">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <span class="badge bg-warning text-dark fw-bold text-uppercase px-3 py-1 rounded-pill mb-2"><i class="bi bi-phone me-1"></i> Aplikasi Resmi</span>
+                            <h3 class="fw-bold text-warning mb-2">Pendaftaran via Aplikasi The Jakmania</h3>
+                            <p class="text-light mb-3" style="font-size: 0.9rem;">
+                                Saat ini pendaftaran dan perpanjangan e-KTA The Jakmania Orange Bojong Raya Sub Korwil Cengkareng dilakukan langsung melalui Aplikasi Smartphone Resmi The Jakmania[cite: 7, 9].
+                            </p>
+                            <div class="d-flex flex-wrap gap-2">
+                                <a href="https://play.google.com/store/apps/details?id=com.moflip.supporter.jakmania" target="_blank" class="btn btn-outline-light btn-sm rounded-pill fw-semibold px-3">
+                                    <i class="bi bi-google-play text-warning me-1"></i> Android Play Store
+                                </a>
+                                <a href="https://apps.apple.com/id/app/the-jakmania/id6451290983?l=id" target="_blank" class="btn btn-outline-light btn-sm rounded-pill fw-semibold px-3">
+                                    <i class="bi bi-apple me-1"></i> Apple App Store
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-center mt-3 mt-md-0">
+                            <div class="p-3 bg-white bg-opacity-10 rounded-3 border border-warning border-opacity-25">
+                                <i class="bi bi-card-checklist text-warning display-4 mb-2 d-block"></i>
+                                <span class="fw-bold text-white d-block">Biaya Pendaftaran</span>
+                                <span class="fs-4 fw-extrabold text-warning">Rp 150.000</span>
+                                <small class="d-block text-white-50 mt-1" style="font-size: 0.75rem;">(E-KTA Digital, Kartu e-Money Fisik & Kaos Resmi)[cite: 9]</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8 Langkah Pendaftaran -->
+                <div class="mb-4">
+                    <h5 class="fw-bold text-dark text-uppercase mb-3"><i class="bi bi-list-ol text-warning me-2"></i>Langkah-Langkah Pendaftaran KTA</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="p-3 step-card h-100 shadow-sm">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <div class="step-badge">01</div>
+                                    <h6 class="fw-bold m-0 text-dark">Unduh App</h6>
+                                </div>
+                                <p class="text-secondary small mb-0">Unduh aplikasi resmi <b>The Jakmania</b> melalui Play Store (Android) atau App Store (iOS)[cite: 9].</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="p-3 step-card h-100 shadow-sm">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <div class="step-badge">02</div>
+                                    <h6 class="fw-bold m-0 text-dark">Isi Formulir</h6>
+                                </div>
+                                <p class="text-secondary small mb-0">Buka aplikasi, isi data diri lengkap & benar (Nama, NIK KTP, serta alamat domisili)[cite: 9].</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="p-3 step-card h-100 shadow-sm">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <div class="step-badge">03</div>
+                                    <h6 class="fw-bold m-0 text-dark">Pilih Wilayah</h6>
+                                </div>
+                                <p class="text-secondary small mb-0">Pilih wilayah / biro / sub-korwil: <b>Sub Korwil Cengkareng (Orange Bojong Raya)</b>[cite: 7, 9].</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="p-3 step-card h-100 shadow-sm">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <div class="step-badge">04</div>
+                                    <h6 class="fw-bold m-0 text-dark">Unggah Foto</h6>
+                                </div>
+                                <p class="text-secondary small mb-0">Unggah foto diri (pasfoto rapi) dan foto identitas (KTP) sesuai ukuran[cite: 9].</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="p-3 step-card h-100 shadow-sm">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <div class="step-badge">05</div>
+                                    <h6 class="fw-bold m-0 text-dark">Kode Bayar</h6>
+                                </div>
+                                <p class="text-secondary small mb-0">Simpan data pendaftaran dan dapatkan daftar/kode transaksi pembayaran[cite: 9].</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="p-3 step-card h-100 shadow-sm">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <div class="step-badge">06</div>
+                                    <h6 class="fw-bold m-0 text-dark">Pembayaran</h6>
+                                </div>
+                                <p class="text-secondary small mb-0">Lakukan pembayaran sebesar Rp150.000 (mencakup e-KTA, fisik e-Money, & Kaos)[cite: 9].</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="p-3 step-card h-100 shadow-sm">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <div class="step-badge">07</div>
+                                    <h6 class="fw-bold m-0 text-dark">Simpan Bukti</h6>
+                                </div>
+                                <p class="text-secondary small mb-0">Simpan screenshot bukti pendaftaran aplikasi dan bukti transfer pembayaran[cite: 9].</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                            <div class="p-3 step-card h-100 shadow-sm">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <div class="step-badge">08</div>
+                                    <h6 class="fw-bold m-0 text-dark">Verifikasi OBR</h6>
+                                </div>
+                                <p class="text-secondary small mb-0">Kirimkan bukti tersebut kepada Pengurus Sub-Wilayah Bojong Raya untuk verifikasi[cite: 9].</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Program Khusus Pelajar (JakSchool) & Skema Cicilan -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <div class="card h-100 border-warning border-2 rounded-4 p-3 bg-white shadow-sm">
+                            <div class="d-flex align-items-center gap-3 mb-2">
+                                <div class="icon-box-feature mb-0"><i class="bi bi-mortarboard-fill"></i></div>
+                                <div>
+                                    <span class="badge bg-danger text-white mb-1">Diskon 15%</span>
+                                    <h6 class="fw-bold text-dark m-0">E-KTA Khusus Pelajar</h6>
+                                </div>
+                            </div>
+                            <p class="text-secondary small mb-2">
+                                Khusus untuk anggota yang masih berstatus pelajar/siswa, tersedia potongan harga diskon 15%[cite: 12].
+                            </p>
+                            <div class="bg-light p-2 rounded-3 border mb-2 small">
+                                <b>Syarat & Ketentuan:</b> Wajib melampirkan foto Kartu Pelajar yang masih aktif saat pengajuan pendaftaran[cite: 12].
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100 border-success border-2 rounded-4 p-3 bg-white shadow-sm">
+                            <div class="d-flex align-items-center gap-3 mb-2">
+                                <div class="icon-box-feature mb-0 text-success border-success" style="background: #e8f5e9;"><i class="bi bi-cash-stack"></i></div>
+                                <div>
+                                    <span class="badge bg-success text-white mb-1">Program JakSchool</span>
+                                    <h6 class="fw-bold text-dark m-0">Skema Cicilan KTA OBR</h6>
+                                </div>
+                            </div>
+                            <p class="text-secondary small mb-2">
+                                OBR membuka kemudahan pendaftaran & perpanjangan e-KTA JakSchool dengan cara dicicil[cite: 13].
+                            </p>
+                            <ol class="ps-3 mb-0 text-secondary small">
+                                <li>Kirim detail Nama, Alamat, dan Asal Sekolah ke Admin OBR[cite: 14].</li>
+                                <li>Kirim bukti pendaftaran aplikasi & transfer cicilan dengan berita transfer: <b>"CICIL KTA OBR (NAMA)"</b>[cite: 14].</li>
+                                <li>Pengurus akan memasukkan Anda ke grup khusus pemantauan cicilan[cite: 14].</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fungsi e-Money & Baju Merchandise -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <div class="card h-100 border-0 bg-white rounded-4 p-3 shadow-sm border">
+                            <h6 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="bi bi-credit-card-2-front text-warning me-2"></i>Fungsi & Kegunaan E-KTA (e-Money Mandiri)</h6>
+                            <p class="text-secondary small mb-3">
+                                Selain sebagai bukti keanggotaan resmi, e-KTA berupa kartu fisik e-Money Mandiri dapat digunakan sebagai uang elektronik untuk transaksi[cite: 7, 8, 16]:
+                            </p>
+                            <div class="row g-2 text-center small fw-bold">
+                                <div class="col-4"><div class="p-2 bg-light border rounded"><i class="bi bi-car-front text-warning d-block fs-5"></i>TOL[cite: 8, 16]</div></div>
+                                <div class="col-4"><div class="p-2 bg-light border rounded"><i class="bi bi-p-circle text-warning d-block fs-5"></i>PARKIR[cite: 8, 16]</div></div>
+                                <div class="col-4"><div class="p-2 bg-light border rounded"><i class="bi bi-train-front text-warning d-block fs-5"></i>KRL/MRT/LRT[cite: 8, 16]</div></div>
+                                <div class="col-4"><div class="p-2 bg-light border rounded"><i class="bi bi-bus-front text-warning d-block fs-5"></i>BUSWAY[cite: 8]</div></div>
+                                <div class="col-4"><div class="p-2 bg-light border rounded"><i class="bi bi-shop text-warning d-block fs-5"></i>MINIMARKET[cite: 8, 16]</div></div>
+                                <div class="col-4"><div class="p-2 bg-light border rounded"><i class="bi bi-tree text-warning d-block fs-5"></i>WISATA[cite: 8, 16]</div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100 border-0 bg-white rounded-4 p-3 shadow-sm border">
+                            <h6 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="bi bi-tsherts text-warning me-2"></i>Kaos Resmi KTA OBR</h6>
+                            <div class="mb-2">
+                                <span class="badge bg-warning text-dark me-1">Pendaftaran Baru</span>
+                                <span class="small text-secondary fw-semibold">Desain Depan "GUE ANAK JAKARTA"[cite: 10, 15]</span>
+                            </div>
+                            <div class="mb-3">
+                                <span class="badge bg-secondary text-white me-1">Perpanjangan</span>
+                                <span class="small text-secondary fw-semibold">Desain Belakang "SATU JAKARTA SATU"[cite: 10, 15]</span>
+                            </div>
+                            <div class="bg-light p-2 rounded-3 border small">
+                                <b>Pilihan Ukuran (Size Chart):</b> XS, S, M, L, XL, XXL, 3XL, 4XL, 5XL, 6XL[cite: 11].
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tombol Konfirmasi WA Langsung -->
+                <div class="text-center p-3 bg-white border rounded-4 shadow-sm">
+                    <h6 class="fw-bold text-dark mb-2">Sudah Mendaftar di Aplikasi atau Ingin Bertanya?</h6>
+                    <p class="text-muted small mb-3">Hubungi tim pengurus Orange Bojong Raya untuk verifikasi & konfirmasi pembayaran[cite: 9, 14]:</p>
+                    <div class="d-flex justify-content-center flex-wrap gap-2">
+                        <a href="https://wa.me/6289625793431?text=Halo%20Andriyanto,%20saya%20ingin%20konfirmasi%20Pendaftaran/Perpanjangan%20KTA%20Orange%20Bojong%20Raya" target="_blank" class="btn btn-success rounded-pill fw-bold btn-sm px-3">
+                            <i class="bi bi-whatsapp me-1"></i> WhatsApp Andriyanto (0896-2579-3431)[cite: 8, 9, 14]
+                        </a>
+                        <a href="https://wa.me/6289513766307?text=Halo%20Rashid,%20saya%20ingin%20konfirmasi%20Pendaftaran/Perpanjangan%20KTA%20Orange%20Bojong%20Raya" target="_blank" class="btn btn-success rounded-pill fw-bold btn-sm px-3">
+                            <i class="bi bi-whatsapp me-1"></i> WhatsApp Rashid (0895-1376-6307)[cite: 8, 9, 14]
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             <!-- Info Kontak -->
             <div class="contact-footer shadow-sm">
                 <div class="row align-items-center">
@@ -553,13 +800,13 @@
                     </div>
                     <div class="col-md-12 d-flex flex-wrap justify-content-center justify-content-md-start gap-2">
                         <a href="https://wa.me/6289625793431" target="_blank" class="btn btn-success btn-sm rounded-pill px-2 py-1 fw-semibold" style="font-size: 0.75rem;">
-                            <i class="bi bi-whatsapp me-1"></i> Andriyanto: 0896-2579-3431
+                            <i class="bi bi-whatsapp me-1"></i> Andriyanto: 0896-2579-3431[cite: 8, 9, 14]
                         </a>
                         <a href="https://wa.me/6289513766307" target="_blank" class="btn btn-success btn-sm rounded-pill px-2 py-1 fw-semibold" style="font-size: 0.75rem;">
-                            <i class="bi bi-whatsapp me-1"></i> Rashid Al Arshad: 0895-1376-6307
+                            <i class="bi bi-whatsapp me-1"></i> Rashid Al Arshad: 0895-1376-6307[cite: 8, 9, 14]
                         </a>
                         <a href="https://www.instagram.com/jak_bojongraya?vrfl=MjhyYnpwaDFqZG5k" target="_blank" class="btn btn-danger btn-sm rounded-pill px-2 py-1 fw-semibold" style="font-size: 0.75rem;">
-                            <i class="bi bi-instagram me-1"></i> Instagram: @jak_bojongraya
+                            <i class="bi bi-instagram me-1"></i> Instagram: @jak_bojongraya[cite: 8, 9]
                         </a>
                     </div>
                 </div>
@@ -870,12 +1117,13 @@
         document.getElementById('viewMenuDashboard').style.display = (viewName === 'dashboard') ? 'block' : 'none';
         document.getElementById('viewKtaAktif').style.display = (viewName === 'ktaAktif') ? 'block' : 'none';
         document.getElementById('viewProsesKta').style.display = (viewName === 'prosesKta') ? 'block' : 'none';
+        document.getElementById('viewPanduanKta').style.display = (viewName === 'panduanKta') ? 'block' : 'none';
 
         const isAdmin = currentUser && currentUser.role === 'admin';
         const btnTambah = document.getElementById('btnTambahData');
         const btnPrint = document.getElementById('btnPrint');
 
-        if (viewName === 'dashboard') {
+        if (viewName === 'dashboard' || viewName === 'panduanKta') {
             btnTambah.style.display = 'none';
             btnPrint.style.display = 'none';
         } else {
