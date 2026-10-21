@@ -282,15 +282,17 @@
             background: #111;
             color: white;
             transition: transform 0.2s ease;
+            cursor: pointer;
         }
 
         .shirt-preview-card:hover {
             transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(230, 92, 0, 0.3);
         }
 
         .shirt-preview-img {
             width: 100%;
-            max-height: 250px;
+            max-height: 220px;
             object-fit: cover;
             border-bottom: 2px solid #e65c00;
         }
@@ -300,6 +302,23 @@
             border: 2px dashed #0d6efd;
             border-radius: 14px;
             padding: 12px 15px;
+        }
+
+        .emoney-grid-item {
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 12px;
+            padding: 12px 8px;
+            text-align: center;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            height: 100%;
+        }
+
+        .emoney-grid-item:hover {
+            border-color: #fd7e14;
+            transform: translateY(-2px);
+            background: #fff8f3;
         }
 
         .contact-footer {
@@ -659,7 +678,7 @@
                                     <span class="badge bg-primary text-white fw-bold">BANK BCA</span>
                                     <span class="badge bg-dark text-warning">KASUB</span>
                                 </div>
-                                <h5 class="font-monospace fw-bold text-dark my-1" id="reka1">4790479829</h5>
+                                <h5 class="font-monospace fw-bold text-dark my-1">4790479829</h5>
                                 <div class="small text-secondary">a/n <b>ANDRIYANTO</b></div>
                                 <button class="btn btn-sm btn-outline-primary rounded-pill mt-2 py-0 px-3" onclick="copyRek('4790479829')"><i class="bi bi-copy me-1"></i>Salin No Rekening</button>
                             </div>
@@ -670,7 +689,7 @@
                                     <span class="badge bg-primary text-white fw-bold">BANK BCA</span>
                                     <span class="badge bg-dark text-warning">SEKERTARIS</span>
                                 </div>
-                                <h5 class="font-monospace fw-bold text-dark my-1" id="reka2">4790457469</h5>
+                                <h5 class="font-monospace fw-bold text-dark my-1">4790457469</h5>
                                 <div class="small text-secondary">a/n <b>RASHID AL ARSHAD</b></div>
                                 <button class="btn btn-sm btn-outline-primary rounded-pill mt-2 py-0 px-3" onclick="copyRek('4790457469')"><i class="bi bi-copy me-1"></i>Salin No Rekening</button>
                             </div>
@@ -760,24 +779,25 @@
                 <!-- SECTION DESAIN BAJU KTA & SIZE CHART -->
                 <div class="mb-4">
                     <h5 class="fw-bold text-dark text-uppercase mb-3"><i class="bi bi-tshirt text-warning me-2"></i>Desain Baju KTA & Size Chart T-Shirt</h5>
+                    <p class="text-muted small mb-2"><i class="bi bi-info-circle me-1"></i>Klik gambar baju di bawah untuk memperbesar tampilan desain secara penuh.</p>
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
-                            <div class="shirt-preview-card shadow-sm text-center">
+                            <div class="shirt-preview-card shadow-sm text-center" onclick="openImageModal('BAJU KTA PENDAFTARAN BARU.jpeg', 'Baju KTA Pendaftaran Baru (Gue Anak Jakarta)')">
                                 <img src="BAJU KTA PENDAFTARAN BARU.jpeg" alt="Baju KTA Pendaftaran Baru" class="shirt-preview-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%23e65c00\'/><text x=\'50%\' y=\'50%\' fill=\'%23fff\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>BAJU PENDAFTARAN BARU</text></svg>'">
                                 <div class="p-3">
                                     <span class="badge bg-warning text-dark font-monospace mb-1">REGULER & PELAJAR</span>
                                     <h6 class="fw-bold text-white m-0">BAJU KTA PENDAFTARAN BARU</h6>
-                                    <p class="text-white-50 small mb-0 mt-1">Sablon Depan: <b>"GUE ANAK JAKARTA"</b></p>
+                                    <p class="text-white-50 small mb-0 mt-1">Sablon Depan: <b>"GUE ANAK JAKARTA"</b> <i class="bi bi-zoom-in ms-1 text-warning"></i></p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="shirt-preview-card shadow-sm text-center">
+                            <div class="shirt-preview-card shadow-sm text-center" onclick="openImageModal('BAJU KTA PERPANJANGAN.jpeg', 'Baju KTA Perpanjangan (Satu Jakarta Satu)')">
                                 <img src="BAJU KTA PERPANJANGAN.jpeg" alt="Baju KTA Perpanjangan" class="shirt-preview-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%23111\'/><text x=\'50%\' y=\'50%\' fill=\'%23ff9900\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>BAJU PERPANJANGAN</text></svg>'">
                                 <div class="p-3">
                                     <span class="badge bg-secondary font-monospace mb-1">RENEWAL</span>
                                     <h6 class="fw-bold text-white m-0">BAJU KTA PERPANJANGAN</h6>
-                                    <p class="text-white-50 small mb-0 mt-1">Sablon Belakang: <b>"SATU JAKARTA SATU"</b></p>
+                                    <p class="text-white-50 small mb-0 mt-1">Sablon Belakang: <b>"SATU JAKARTA SATU"</b> <i class="bi bi-zoom-in ms-1 text-warning"></i></p>
                                 </div>
                             </div>
                         </div>
@@ -853,19 +873,49 @@
                     </div>
                 </div>
 
-                <!-- Fungsi e-Money -->
-                <div class="card border-0 bg-white rounded-4 p-3 shadow-sm border mb-4">
+                <!-- Fungsi e-Money (Dirapikan untuk HP/iPad dengan Grid Responsif) -->
+                <div class="card border-0 bg-white rounded-4 p-3 p-md-4 shadow-sm border mb-4">
                     <h6 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="bi bi-credit-card-2-front text-warning me-2"></i>Fungsi & Kegunaan E-KTA (e-Money Mandiri)</h6>
                     <p class="text-secondary small mb-3">
-                        Selain sebagai bukti keanggotaan resmi, e-KTA berupa kartu fisik e-Money Mandiri dapat digunakan sebagai uang elektronik untuk transaksi:
+                        Selain sebagai bukti keanggotaan resmi, e-KTA berupa kartu fisik e-Money Mandiri dapat digunakan sebagai uang elektronik untuk berbagai transaksi harian:
                     </p>
                     <div class="row g-2 text-center small fw-bold">
-                        <div class="col-4 col-md-2"><div class="p-2 bg-light border rounded"><i class="bi bi-car-front text-warning d-block fs-5"></i>TOL</div></div>
-                        <div class="col-4 col-md-2"><div class="p-2 bg-light border rounded"><i class="bi bi-p-circle text-warning d-block fs-5"></i>PARKIR</div></div>
-                        <div class="col-4 col-md-2"><div class="p-2 bg-light border rounded"><i class="bi bi-train-front text-warning d-block fs-5"></i>KRL/MRT/LRT</div></div>
-                        <div class="col-4 col-md-2"><div class="p-2 bg-light border rounded"><i class="bi bi-bus-front text-warning d-block fs-5"></i>BUSWAY</div></div>
-                        <div class="col-4 col-md-2"><div class="p-2 bg-light border rounded"><i class="bi bi-shop text-warning d-block fs-5"></i>MINIMARKET</div></div>
-                        <div class="col-4 col-md-2"><div class="p-2 bg-light border rounded"><i class="bi bi-tree text-warning d-block fs-5"></i>WISATA</div></div>
+                        <div class="col-6 col-sm-4 col-md-2">
+                            <div class="emoney-grid-item">
+                                <i class="bi bi-car-front text-warning d-block fs-3 mb-1"></i>
+                                <span>TOL</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-2">
+                            <div class="emoney-grid-item">
+                                <i class="bi bi-p-circle text-warning d-block fs-3 mb-1"></i>
+                                <span>PARKIR</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-2">
+                            <div class="emoney-grid-item">
+                                <i class="bi bi-train-front text-warning d-block fs-3 mb-1"></i>
+                                <span>KRL/MRT/LRT</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-2">
+                            <div class="emoney-grid-item">
+                                <i class="bi bi-bus-front text-warning d-block fs-3 mb-1"></i>
+                                <span>BUSWAY</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-2">
+                            <div class="emoney-grid-item">
+                                <i class="bi bi-shop text-warning d-block fs-3 mb-1"></i>
+                                <span>MINIMARKET</span>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-2">
+                            <div class="emoney-grid-item">
+                                <i class="bi bi-tree text-warning d-block fs-3 mb-1"></i>
+                                <span>WISATA</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -902,6 +952,21 @@
                         </a>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PREVIEW GAMBAR / FOTO DESAIN BAJU -->
+<div class="modal fade" id="imagePreviewModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 bg-dark text-white rounded-4 overflow-hidden shadow-lg">
+            <div class="modal-header border-bottom border-warning py-2">
+                <h6 class="modal-title fw-bold text-warning m-0" id="previewModalTitle"><i class="bi bi-image me-1"></i>Pratinjau Desain Baju</h6>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center p-2 p-md-3 bg-black">
+                <img id="modalPreviewImg" src="" alt="Desain Baju" class="img-fluid rounded shadow" style="max-height: 75vh; object-fit: contain;">
             </div>
         </div>
     </div>
@@ -1109,6 +1174,7 @@
     const prosesModal = new bootstrap.Modal(document.getElementById('prosesModal'));
     const settingsModal = new bootstrap.Modal(document.getElementById('settingsModal'));
     const forgotModal = new bootstrap.Modal(document.getElementById('forgotModal'));
+    const imagePreviewModal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
 
     window.addEventListener('DOMContentLoaded', () => {
         auth.onAuthStateChanged(async (user) => {
@@ -1230,6 +1296,12 @@
     function copyRek(noRek) {
         navigator.clipboard.writeText(noRek);
         alert('Nomor Rekening BCA (' + noRek + ') berhasil disalin!');
+    }
+
+    function openImageModal(imgSrc, title) {
+        document.getElementById('modalPreviewImg').src = imgSrc;
+        document.getElementById('previewModalTitle').innerHTML = '<i class="bi bi-image me-1"></i> ' + title;
+        imagePreviewModal.show();
     }
 
     async function handleLogin(e) {
