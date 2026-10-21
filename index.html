@@ -57,14 +57,16 @@
             margin-bottom: 12px;
         }
 
+        /* Perapihan Responsif Judul Portal Login */
         .portal-title {
             font-family: 'Teko', 'Bebas Neue', sans-serif;
-            font-size: 2.2rem;
-            letter-spacing: 1.5px;
+            font-size: clamp(1.6rem, 5vw, 2.2rem);
+            letter-spacing: 1px;
             line-height: 1.05;
             color: #111;
             text-transform: uppercase;
             font-weight: 700;
+            word-break: break-word;
         }
 
         .portal-subtitle {
@@ -271,7 +273,7 @@
     <div class="card auth-card p-4">
         <div class="text-center mb-3">
             <img src="LOGO OBR.png" alt="Logo OBR" class="portal-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23111\'/><text x=\'50%\' y=\'55%\' fill=\'%23fd7e14\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>OBR</text></svg>'">
-            <!-- Judul Portal Dirapikan Presisi -->
+            <!-- Judul Portal Dirapikan Responsif Mobile -->
             <h3 class="portal-title mb-0">
                 THE JAKMANIA<br>ORANGE BOJONG RAYA
             </h3>
@@ -413,9 +415,9 @@
                         <div class="card menu-card p-3 text-center shadow-sm" onclick="switchView('prosesKta')">
                             <div class="card-body py-2">
                                 <i class="bi bi-clock-history display-6 text-warning mb-2 d-block"></i>
-                                <!-- Judul Menu Proses KTA Diperbarui & Dirapikan -->
+                                <!-- Judul Menu Proses KTA Diperbarui -->
                                 <h6 class="menu-card-title">
-                                    PROSES PEMBUATAN KTA<br>THE JAKMANIA ORANGE BOJONG RAYA
+                                    PROSES PEMBUATAN KTA<br>THE JAKMANIA OBR
                                 </h6>
                                 <p class="text-muted small mb-0">Pantau status pengajuan pendaftaran & perpanjangan, tipe KTA, serta status pembayaran.</p>
                             </div>
@@ -487,7 +489,7 @@
             <div id="viewProsesKta" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                     <button class="btn btn-dark rounded-pill px-3 py-1 btn-sm fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-1"></i>Kembali ke Menu Utama</button>
-                    <h5 class="fw-bold text-uppercase text-dark mb-0">Proses Pembuatan KTA The Jakmania Orange Bojong Raya</h5>
+                    <h5 class="fw-bold text-uppercase text-dark mb-0">Proses Pembuatan KTA The Jakmania OBR</h5>
                 </div>
 
                 <div class="row mb-3 align-items-center g-2">
