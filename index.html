@@ -57,7 +57,6 @@
             margin-bottom: 12px;
         }
 
-        /* Perapihan Responsif Judul Portal Login */
         .portal-title {
             font-family: 'Teko', 'Bebas Neue', sans-serif;
             font-size: clamp(1.6rem, 5vw, 2.2rem);
@@ -92,7 +91,6 @@
             padding: 15px;
         } 
 
-        /* Layout Container Presisi untuk Logo & Judul Header */
         .header-brand-container {
             display: flex;
             align-items: center;
@@ -110,7 +108,6 @@
             justify-content: center;
         }
 
-        /* Typography Supporter Persija Presisi Mobile/Tablet */
         .brand-title {
             font-family: 'Teko', 'Bebas Neue', sans-serif;
             font-size: clamp(1.8rem, 5.5vw, 3.6rem);
@@ -138,7 +135,6 @@
             white-space: nowrap;
         }
 
-        /* Ukuran Logo Header Presisi Responsif */
         .app-logo {
             width: clamp(65px, 14vw, 95px);
             height: clamp(65px, 14vw, 95px);
@@ -227,7 +223,6 @@
             background: #fff8f3;
         }
 
-        /* Style Rapi untuk Judul Menu Layanan */
         .menu-card-title {
             font-weight: 800;
             font-size: clamp(0.9rem, 1.8vw, 1.05rem);
@@ -273,7 +268,6 @@
     <div class="card auth-card p-4">
         <div class="text-center mb-3">
             <img src="LOGO OBR.png" alt="Logo OBR" class="portal-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23111\'/><text x=\'50%\' y=\'55%\' fill=\'%23fd7e14\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>OBR</text></svg>'">
-            <!-- Judul Portal Dirapikan Responsif Mobile -->
             <h3 class="portal-title mb-0">
                 THE JAKMANIA<br>ORANGE BOJONG RAYA
             </h3>
@@ -341,12 +335,9 @@
     <div class="card main-card">
         <div class="card-header-persija">
             
-            <!-- Header Brand Presisi dengan Flexbox untuk HP/iPad -->
             <div class="header-brand-container">
-                <!-- Logo Kiri -->
                 <img id="headerLogoLeft" src="LOGO OBR.png" alt="Logo Orange Bojong Raya" class="app-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23111\'/><text x=\'50%\' y=\'55%\' fill=\'%23fd7e14\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>OBR</text></svg>'">
                 
-                <!-- Judul Tengah -->
                 <div class="header-brand-center px-1">
                     <h1 class="brand-title">
                         ORANGE BOJONG RAYA
@@ -358,14 +349,11 @@
                     </div>
                 </div>
                 
-                <!-- Logo Kanan -->
                 <img id="headerLogoRight" src="LOGO CKR.jpeg" alt="Logo Jakmania Cengkareng" class="app-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23111\'/><text x=\'50%\' y=\'55%\' fill=\'%23fff\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>CKR</text></svg>'">
             </div>
 
-            <!-- Action Toolbar & Dropdown Profile Mandiri di Luar Logo -->
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 pt-2 border-top border-white border-opacity-25 mt-3">
                 
-                <!-- Profile & Settings Dropdown -->
                 <div class="dropdown no-print">
                     <button class="btn btn-dark dropdown-toggle text-warning border-warning d-flex align-items-center gap-2 px-3 py-1 rounded-pill shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.8rem;">
                         <i class="bi bi-person-circle fs-6"></i>
@@ -383,7 +371,6 @@
                     </ul>
                 </div>
 
-                <!-- Tombol Cetak & Tambah Data -->
                 <div class="d-flex gap-2 flex-wrap no-print">
                     <button id="btnTambahData" class="btn btn-light btn-action text-dark btn-sm shadow-sm fw-bold" onclick="showAddModalDynamic()" style="display: none;"><i class="bi bi-plus-circle-fill me-1 text-success"></i> Tambah Data</button>
                     <button id="btnPrint" class="btn btn-dark btn-action text-warning btn-sm shadow-sm border border-warning" onclick="window.print()" style="display: none;"><i class="bi bi-printer-fill me-1"></i> Cetak / PDF</button>
@@ -400,7 +387,8 @@
                     <p class="text-muted small">Silakan pilih menu di bawah ini untuk melihat data, pengajuan, atau komunitas olahraga</p>
                 </div>
                 <div class="row justify-content-center g-3">
-                    <div class="col-md-4">
+                    <!-- Menu 1: Daftar Anggota -->
+                    <div class="col-md-3 col-sm-6">
                         <div class="card menu-card p-3 text-center shadow-sm" onclick="switchView('ktaAktif')">
                             <div class="card-body py-2">
                                 <i class="bi bi-card-heading display-6 text-warning mb-2 d-block"></i>
@@ -411,11 +399,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <!-- Menu 2: Proses Pembuatan KTA -->
+                    <div class="col-md-3 col-sm-6">
                         <div class="card menu-card p-3 text-center shadow-sm" onclick="switchView('prosesKta')">
                             <div class="card-body py-2">
                                 <i class="bi bi-clock-history display-6 text-warning mb-2 d-block"></i>
-                                <!-- Judul Menu Proses KTA Diperbarui -->
                                 <h6 class="menu-card-title">
                                     PROSES PEMBUATAN KTA<br>THE JAKMANIA OBR
                                 </h6>
@@ -423,7 +411,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <!-- Menu 3 Baru: Pendaftaran dan Perpanjangan KTA -->
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card menu-card p-3 text-center shadow-sm" onclick="window.open('https://wa.me/6289625793431?text=Halo%20Admin,%20saya%20ingin%20melakukan%20Pendaftaran%20atau%20Perpanjangan%20KTA%20Orange%20Bojong%20Raya.', '_blank')">
+                            <div class="card-body py-2">
+                                <i class="bi bi-file-earmark-plus display-6 text-warning mb-2 d-block"></i>
+                                <h6 class="menu-card-title">
+                                    PENDAFTARAN &<br>PERPANJANGAN KTA
+                                </h6>
+                                <p class="text-muted small mb-2">Ajukan pendaftaran kartu anggota baru atau perpanjangan masa berlaku KTA Anda.</p>
+                                <span class="badge bg-warning text-dark px-2 py-1 rounded-pill fw-semibold"><i class="bi bi-whatsapp me-1"></i> Ajukan via WA</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Menu 4: OBR Sport -->
+                    <div class="col-md-3 col-sm-6">
                         <div class="card menu-card p-3 text-center shadow-sm" onclick="window.open('https://chat.whatsapp.com/FuwS4wYHMe7FbnduRr743e', '_blank')">
                             <div class="card-body py-2">
                                 <i class="bi bi-whatsapp display-6 text-success mb-2 d-block"></i>
