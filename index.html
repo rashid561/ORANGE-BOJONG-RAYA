@@ -436,7 +436,7 @@
                     </div>
                 </div>
                 
-                <img id="headerLogoRight" src="LOGO CKR.jpeg" alt="Logo Jakmania Cengkareng" class="app-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23111\'/><text x=\'50%\' y=\'55%\' fill=\'%23fff\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>CKR</text></svg>'">
+                <img id="headerLogoRight" src="LOGO CKR.jpeg" alt="Logo Jakmania Cengkareng" class="app-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23111\'/><text x=\'50%\' y=\'55\' fill=\'#fff\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>CKR</text></svg>'">
             </div>
 
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 pt-2 border-top border-white border-opacity-25 mt-3">
@@ -623,7 +623,7 @@
                                 <th>STATUS PEMBAYARAN</th>
                                 <th>CICIL KTA</th>
                                 <th>NO WHATSAPP</th>
-                                <th id="thAksiProses" class="text-center no-print" style="width: 100px;">AKSI</th>
+                                <th id="thAksiProses" class="text-center no-print" style="width: 150px;">AKSI</th>
                             </tr>
                         </thead>
                         <tbody id="tableProsesBody"></tbody>
@@ -1022,7 +1022,30 @@
     </div>
 </div>
 
-<!-- Modal Form Tambah/Edit Anggota -->
+<!-- Modal Pilihan Mode Tambah Data (1 Orang atau Banyak Orang) -->
+<div class="modal fade" id="selectAddModeModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header bg-dark text-white border-bottom border-warning py-3">
+                <h5 class="modal-title fw-bold fs-6"><i class="bi bi-plus-circle-fill text-warning me-2"></i>Pilih Metode Tambah Data</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4 text-center">
+                <p class="text-muted small mb-4">Silakan pilih apakah Anda ingin menambahkan 1 data secara spesifik atau memasukkan banyak data sekaligus (Bulk).</p>
+                <div class="d-grid gap-3">
+                    <button class="btn btn-outline-warning text-dark fw-bold py-3 rounded-pill border-2" onclick="openSingleAddModal()">
+                        <i class="bi bi-person-fill-add fs-4 d-block mb-1"></i> Tambah 1 Orang Saja
+                    </button>
+                    <button class="btn btn-warning text-dark fw-bold py-3 rounded-pill shadow-sm" onclick="openBulkAddModal()">
+                        <i class="bi bi-people-fill fs-4 d-block mb-1"></i> Tambah Lebih dari 1 Orang Sekaligus (Massal)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Form Tambah/Edit Anggota (1 Orang) -->
 <div class="modal fade" id="memberModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded-4">
@@ -1058,6 +1081,32 @@
                         <input type="text" id="inputHp" class="form-control form-control-sm rounded-3" required placeholder="089625793431">
                     </div>
                     <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill shadow">Simpan Data</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Form Tambah Banyak Anggota Sekaligus (Bulk Add) -->
+<div class="modal fade" id="bulkMemberModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header bg-warning text-dark fw-bold py-2">
+                <h6 class="modal-title m-0"><i class="bi bi-people-fill me-1"></i>Tambah Banyak Anggota Sekaligus (Massal)</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-3 small">
+                <p class="text-muted mb-2">Masukkan data anggota per baris dengan format berikut (dipisahkan koma atau tab):<br><b>Nama, No KTA, Masa Berlaku, Keterangan, No HP</b></p>
+                <div class="bg-light p-2 rounded border mb-3 font-monospace" style="font-size: 0.75rem;">
+                    Contoh:<br>
+                    RIKY RAMADHAN, JB.13.0112233.06.26, 01 Juni 2027, SUB WILAYAH BOJONG, 089612345678<br>
+                    DEWI LESTARI, JB.13.0114455.06.26, -, SUB WILAYAH BOJONG, 089587654321
+                </div>
+                <form id="bulkMemberForm">
+                    <div class="mb-3">
+                        <textarea id="bulkInputText" class="form-control font-monospace" rows="8" required placeholder="Tempel (Paste) data anggota di sini..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill shadow">Simpan Semua Data</button>
                 </form>
             </div>
         </div>
@@ -1171,7 +1220,9 @@
     let sessionUnsubscribe = null;
     let afkTimer = null;
 
+    const selectAddModeModal = new bootstrap.Modal(document.getElementById('selectAddModeModal'));
     const modal = new bootstrap.Modal(document.getElementById('memberModal'));
+    const bulkMemberModal = new bootstrap.Modal(document.getElementById('bulkMemberModal'));
     const prosesModal = new bootstrap.Modal(document.getElementById('prosesModal'));
     const settingsModal = new bootstrap.Modal(document.getElementById('settingsModal'));
     const forgotModal = new bootstrap.Modal(document.getElementById('forgotModal'));
@@ -1240,7 +1291,7 @@
                     if (data.activeDeviceToken && data.activeDeviceToken !== currentDeviceToken) {
                         if (auth.currentUser) {
                             auth.signOut().then(() => {
-                                alert("⚠️ Akun Anda telah masuk di perangkat lain (Laptop/PC atau HP/iPad). Sesi di perangkat ini diakhiri.");
+                                alert("⚠️ Akun Anda telah masuk di perangkat lain. Sesi di perangkat ini diakhiri.");
                                 location.reload();
                             });
                         }
@@ -1580,16 +1631,16 @@
         const isAdmin = currentUser && currentUser.role === 'admin';
 
         data.forEach((item, index) => {
-            const isKetua = item.ket.toUpperCase().includes('KETUA');
+            const isKetua = item.ket && item.ket.toUpperCase().includes('KETUA');
             const ketBadge = isKetua 
                 ? `<span class="badge badge-ketua shadow-sm">${item.ket}</span>`
-                : `<span class="badge badge-anggota shadow-sm">${item.ket}</span>`;
+                : `<span class="badge badge-anggota shadow-sm">${item.ket || 'SUB WILAYAH BOJONG'}</span>`;
             
-            let displayKta = item.kta;
-            let displayHp = item.hp;
+            let displayKta = item.kta || '-';
+            let displayHp = item.hp || '-';
 
             if (!isAdmin) {
-                displayKta = item.kta.length >= 6 ? item.kta.substring(0, item.kta.length - 6) + "******" : "******";
+                displayKta = item.kta && item.kta.length >= 6 ? item.kta.substring(0, item.kta.length - 6) + "******" : "******";
                 displayHp = (item.hp && item.hp !== '-') ? "******" + item.hp.slice(-4) : "-";
             }
 
@@ -1640,9 +1691,9 @@
                 statusBadge = `<span class="badge bg-danger shadow-sm">BELUM</span>`;
             }
 
-            let displayWa = item.wa;
+            let displayWa = item.wa || '-';
             if (!isAdmin) {
-                displayWa = item.wa.length >= 4 ? "******" + item.wa.slice(-4) : "******";
+                displayWa = item.wa && item.wa.length >= 4 ? "******" + item.wa.slice(-4) : "******";
             }
 
             const waClean = item.wa ? item.wa.replace(/[^0-9]/g, '') : '';
@@ -1650,8 +1701,10 @@
                 `<a href="https://wa.me/62${waClean.replace(/^0/, '')}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-2 py-0" style="font-size: 0.75rem;"><i class="bi bi-whatsapp me-1"></i>${item.wa}</a>` 
                 : `<span class="${!isAdmin ? 'blur-data' : ''}">${displayWa}</span>`;
 
+            // Tombol Khusus Admin: Pindah ke Daftar Anggota
             let aksiCol = isAdmin ? `
                 <td class="text-center no-print">
+                    <button class="btn btn-outline-success btn-sm rounded-pill px-2 py-1 fw-semibold mb-1" onclick="moveToAnggota('${item.id}')" title="Pindahkan ke Daftar Anggota Aktif" style="font-size: 0.7rem;"><i class="bi bi-box-arrow-right me-1"></i> Pindahkan</button><br>
                     <button class="btn btn-outline-warning btn-sm rounded-circle p-1 lh-1" onclick="editProsesKta('${item.id}')"><i class="bi bi-pencil-fill small"></i></button>
                     <button class="btn btn-outline-danger btn-sm rounded-circle p-1 lh-1" onclick="deleteProsesKta('${item.id}')"><i class="bi bi-trash-fill small"></i></button>
                 </td>
@@ -1675,12 +1728,51 @@
         document.getElementById('totalProsesCount').innerText = `Total: ${data.length} Pengajuan`;
     }
 
+    // Fungsi Admin memindahkan data dari Proses KTA ke Daftar Anggota Aktif
+    async function moveToAnggota(id) {
+        if (!currentUser || currentUser.role !== 'admin') {
+            alert('Akses Ditolak! Hanya Admin yang dapat memindahkan data.');
+            return;
+        }
+
+        const item = prosesKtaData.find(x => x.id === id);
+        if (!item) return;
+
+        let noKtaInput = prompt(`Masukkan Nomor Anggota (KTA) resmi untuk [${item.nama}]:`, "JB.13.01");
+        if (noKtaInput === null) return; // Batal
+
+        let masaBerlakuInput = prompt(`Masukkan Masa Berlaku KTA (Contoh: 01 Juni 2027 atau -):`, "01 Juni 2028");
+        if (masaBerlakuInput === null) return; // Batal
+
+        const newMemberData = {
+            nama: item.nama.toUpperCase(),
+            kta: noKtaInput.trim(),
+            berlaku: masaBerlakuInput.trim(),
+            ket: "SUB WILAYAH BOJONG",
+            hp: item.wa || "-"
+        };
+
+        try {
+            // 1. Tambahkan ke koleksi kta_aktif
+            await db.collection("kta_aktif").add(newMemberData);
+            // 2. Hapus dari koleksi kta_proses
+            await db.collection("kta_proses").doc(id).delete();
+            alert(`Berhasil! Data [${item.nama}] telah dipindahkan ke Daftar Anggota.`);
+        } catch (error) {
+            console.error("Gagal memindahkan data:", error);
+            alert("Terjadi kesalahan: " + error.message);
+        }
+    }
+
     function filterData() {
         const query = document.getElementById('searchInput').value.toLowerCase();
         const statusFilter = document.getElementById('statusFilter').value;
         
         const filtered = members.filter(m => {
-            const matchQuery = m.nama.toLowerCase().includes(query) || m.kta.toLowerCase().includes(query) || m.ket.toLowerCase().includes(query) || m.hp.toLowerCase().includes(query);
+            const matchQuery = (m.nama && m.nama.toLowerCase().includes(query)) || 
+                               (m.kta && m.kta.toLowerCase().includes(query)) || 
+                               (m.ket && m.ket.toLowerCase().includes(query)) || 
+                               (m.hp && m.hp.toLowerCase().includes(query));
             if (statusFilter === 'active') return matchQuery && m.berlaku && m.berlaku !== '-';
             if (statusFilter === 'expired') return matchQuery && (!m.berlaku || m.berlaku === '-');
             return matchQuery;
@@ -1695,7 +1787,7 @@
         const statusVal = document.getElementById('statusBayarFilter').value;
 
         const filtered = prosesKtaData.filter(m => {
-            const matchQuery = m.nama.toLowerCase().includes(query) || m.wa.toLowerCase().includes(query);
+            const matchQuery = (m.nama && m.nama.toLowerCase().includes(query)) || (m.wa && m.wa.toLowerCase().includes(query));
             const matchStatusKta = (statusKtaVal === 'all') || (m.statusKta === statusKtaVal);
             const matchStatus = (statusVal === 'all') || (m.status === statusVal);
             return matchQuery && matchStatusKta && matchStatus;
@@ -1704,22 +1796,74 @@
         renderProsesTable(filtered);
     }
 
+    // Pemicu tombol tambah data (Muncul pilihan 1 orang atau banyak orang)
     function showAddModalDynamic() {
+        if (!currentUser || currentUser.role !== 'admin') {
+            alert('Akses Ditolak! Hanya Admin yang dapat menambah data.');
+            return;
+        }
+
         if (currentActiveView === 'ktaAktif') {
-            document.getElementById('editDocId').value = '';
-            document.getElementById('modalTitle').innerHTML = '<i class="bi bi-person-plus-fill me-1"></i>Tambah Anggota';
-            document.getElementById('memberForm').reset();
-            document.getElementById('inputMasaBerlakuDate').value = '';
-            document.getElementById('inputKeterangan').value = 'SUB WILAYAH BOJONG';
-            modal.show();
+            selectAddModeModal.show(); // Munculkan pilihan mode tambah anggota aktif
         } else if (currentActiveView === 'prosesKta') {
             document.getElementById('editProsesDocId').value = '';
             document.getElementById('prosesModalTitle').innerHTML = '<i class="bi bi-plus-circle-fill me-1"></i>Tambah Pengajuan Proses KTA';
             document.getElementById('prosesForm').reset();
             document.getElementById('cicilContainer').style.display = 'none';
+            document.getElementById('inputProsesTanggal').valueAsDate = new Date();
             prosesModal.show();
         }
     }
+
+    function openSingleAddModal() {
+        selectAddModeModal.hide();
+        document.getElementById('editDocId').value = '';
+        document.getElementById('modalTitle').innerHTML = '<i class="bi bi-person-plus-fill me-1"></i>Tambah 1 Anggota';
+        document.getElementById('memberForm').reset();
+        document.getElementById('inputMasaBerlakuDate').value = '';
+        document.getElementById('inputKeterangan').value = 'SUB WILAYAH BOJONG';
+        modal.show();
+    }
+
+    function openBulkAddModal() {
+        selectAddModeModal.hide();
+        document.getElementById('bulkMemberForm').reset();
+        bulkMemberModal.show();
+    }
+
+    // Submit Tambah Banyak Orang Sekaligus (Bulk)
+    document.getElementById('bulkMemberForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const text = document.getElementById('bulkInputText').value.trim();
+        if (!text) return;
+
+        const lines = text.split('\n');
+        let count = 0;
+
+        try {
+            const batchPromises = lines.map(async (line) => {
+                const parts = line.split(/,|\t/).map(p => p.trim());
+                if (parts.length >= 1 && parts[0]) {
+                    const memberData = {
+                        nama: parts[0].toUpperCase(),
+                        kta: parts[1] || '-',
+                        berlaku: parts[2] || '-',
+                        ket: parts[3] || 'SUB WILAYAH BOJONG',
+                        hp: parts[4] || '-'
+                    };
+                    await db.collection("kta_aktif").add(memberData);
+                    count++;
+                }
+            });
+
+            await Promise.all(batchPromises);
+            bulkMemberModal.hide();
+            alert(`Berhasil menambahkan ${count} anggota baru sekaligus!`);
+        } catch (error) {
+            console.error("Gagal tambah massal:", error);
+            alert("Terjadi kesalahan saat menyimpan data massal: " + error.message);
+        }
+    });
 
     function editMember(id) {
         const item = members.find(x => x.id === id);
