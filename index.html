@@ -436,7 +436,7 @@
                     </div>
                 </div>
                 
-                <img id="headerLogoRight" src="LOGO CKR.jpeg" alt="Logo Jakmania Cengkareng" class="app-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23111\'/><text x=\'50%\' y=\'55\' fill=\'#fff\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>CKR</text></svg>'">
+                <img id="headerLogoRight" src="LOGO CKR.jpeg" alt="Logo Jakmania Cengkareng" class="app-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23111\'/><text x=\'50%\' y=\'55%\' fill=\'%23fff\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>CKR</text></svg>'">
             </div>
 
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 pt-2 border-top border-white border-opacity-25 mt-3">
@@ -1031,13 +1031,36 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-4 text-center">
-                <p class="text-muted small mb-4">Silakan pilih apakah Anda ingin menambahkan 1 data secara spesifik atau memasukkan banyak data sekaligus (Bulk).</p>
+                <p class="text-muted small mb-4">Silakan pilih apakah Anda ingin menambahkan 1 data secara spesifik atau memasukkan banyak data sekaligus (Massal).</p>
                 <div class="d-grid gap-3">
                     <button class="btn btn-outline-warning text-dark fw-bold py-3 rounded-pill border-2" onclick="openSingleAddModal()">
                         <i class="bi bi-person-fill-add fs-4 d-block mb-1"></i> Tambah 1 Orang Saja
                     </button>
                     <button class="btn btn-warning text-dark fw-bold py-3 rounded-pill shadow-sm" onclick="openBulkAddModal()">
                         <i class="bi bi-people-fill fs-4 d-block mb-1"></i> Tambah Lebih dari 1 Orang Sekaligus (Massal)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Pilihan Mode Tambah Proses KTA (1 Orang atau Banyak Orang) -->
+<div class="modal fade" id="selectAddProsesModeModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header bg-dark text-white border-bottom border-warning py-3">
+                <h5 class="modal-title fw-bold fs-6"><i class="bi bi-plus-circle-fill text-warning me-2"></i>Pilih Metode Tambah Pengajuan</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4 text-center">
+                <p class="text-muted small mb-4">Silakan pilih apakah Anda ingin menambahkan 1 pengajuan atau banyak pengajuan sekaligus (Massal).</p>
+                <div class="d-grid gap-3">
+                    <button class="btn btn-outline-warning text-dark fw-bold py-3 rounded-pill border-2" onclick="openSingleProsesAddModal()">
+                        <i class="bi bi-person-fill-add fs-4 d-block mb-1"></i> Tambah 1 Pengajuan Saja
+                    </button>
+                    <button class="btn btn-warning text-dark fw-bold py-3 rounded-pill shadow-sm" onclick="openBulkProsesAddModal()">
+                        <i class="bi bi-people-fill fs-4 d-block mb-1"></i> Tambah Lebih dari 1 Pengajuan Sekaligus (Massal)
                     </button>
                 </div>
             </div>
@@ -1087,33 +1110,40 @@
     </div>
 </div>
 
-<!-- Modal Form Tambah Banyak Anggota Sekaligus (Bulk Add) -->
+<!-- Modal Form Tambah Banyak Anggota Sekaligus (Bulk Add - Seperti Excel) -->
 <div class="modal fade" id="bulkMemberModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content border-0 shadow-lg rounded-4">
             <div class="modal-header bg-warning text-dark fw-bold py-2">
-                <h6 class="modal-title m-0"><i class="bi bi-people-fill me-1"></i>Tambah Banyak Anggota Sekaligus (Massal)</h6>
+                <h6 class="modal-title m-0"><i class="bi bi-file-earmark-spreadsheet-fill me-1"></i>Tambah Banyak Anggota Sekaligus (Format Excel)</h6>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-3 small">
-                <p class="text-muted mb-2">Masukkan data anggota per baris dengan format berikut (dipisahkan koma atau tab):<br><b>Nama, No KTA, Masa Berlaku, Keterangan, No HP</b></p>
-                <div class="bg-light p-2 rounded border mb-3 font-monospace" style="font-size: 0.75rem;">
-                    Contoh:<br>
-                    RIKY RAMADHAN, JB.13.0112233.06.26, 01 Juni 2027, SUB WILAYAH BOJONG, 089612345678<br>
-                    DEWI LESTARI, JB.13.0114455.06.26, -, SUB WILAYAH BOJONG, 089587654321
+                <p class="text-muted mb-2">💡 <b>Cara Penggunaan:</b> Anda bisa langsung menyalin data dari file Excel Anda, lalu <b>Paste (Tempel)</b> di dalam kotak teks besar di bawah. Pastikan urutan kolom sesuai dengan judul tabel di bawah ini:</p>
+                
+                <!-- Judul Kolom Ala Excel -->
+                <div class="bg-dark text-white p-2 rounded-top font-monospace fw-bold small row mx-0 text-center border-bottom border-warning">
+                    <div class="col-3">NAMA ANGGOTA</div>
+                    <div class="col-3">NOMOR ANGGOTA (KTA)</div>
+                    <div class="col-2">MASA BERLAKU</div>
+                    <div class="col-2">KETERANGAN</div>
+                    <div class="col-2">NO HP / WA</div>
                 </div>
+
                 <form id="bulkMemberForm">
                     <div class="mb-3">
-                        <textarea id="bulkInputText" class="form-control font-monospace" rows="8" required placeholder="Tempel (Paste) data anggota di sini..."></textarea>
+                        <textarea id="bulkInputText" class="form-control font-monospace rounded-bottom" rows="8" required placeholder="Contoh Paste dari Excel:
+RIKY RAMADHAN	JB.13.0112233.06.26	01 Juni 2027	SUB WILAYAH BOJONG	089612345678
+DEWI LESTARI	JB.13.0114455.06.26	-	SUB WILAYAH BOJONG	089587654321"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill shadow">Simpan Semua Data</button>
+                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill shadow">Simpan Semua Data Anggota</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal Form Tambah/Edit Proses KTA -->
+<!-- Modal Form Tambah/Edit Proses KTA (1 Orang) -->
 <div class="modal fade" id="prosesModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded-4">
@@ -1163,6 +1193,39 @@
                         <input type="text" id="inputProsesWa" class="form-control form-control-sm rounded-3" required placeholder="089625793431">
                     </div>
                     <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill shadow">Simpan Pengajuan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Form Tambah Banyak Pengajuan Proses KTA Sekaligus (Bulk Add - Seperti Excel) -->
+<div class="modal fade" id="bulkProsesModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header bg-warning text-dark fw-bold py-2">
+                <h6 class="modal-title m-0"><i class="bi bi-file-earmark-spreadsheet-fill me-1"></i>Tambah Banyak Pengajuan KTA Sekaligus (Format Excel)</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-3 small">
+                <p class="text-muted mb-2">💡 <b>Cara Penggunaan:</b> Salin data dari file Excel Anda, lalu <b>Paste (Tempel)</b> di kotak teks di bawah. Pastikan urutan kolom sesuai dengan judul tabel:</p>
+                
+                <!-- Judul Kolom Ala Excel -->
+                <div class="bg-dark text-white p-2 rounded-top font-monospace fw-bold small row mx-0 text-center border-bottom border-warning" style="font-size: 0.75rem !important;">
+                    <div class="col-3">NAMA LENGKAP</div>
+                    <div class="col-2">STATUS KTA (PENDAFTARAN/PERPANJANGAN)</div>
+                    <div class="col-2">TIPE KTA (REGULER/PELAJAR)</div>
+                    <div class="col-2">STATUS PEMBAYARAN (LUNAS/BELUM/CICIL)</div>
+                    <div class="col-3">NO WHATSAPP</div>
+                </div>
+
+                <form id="bulkProsesForm">
+                    <div class="mb-3">
+                        <textarea id="bulkProsesInputText" class="form-control font-monospace rounded-bottom" rows="8" required placeholder="Contoh Paste dari Excel:
+AHMAD FAUZI	PENDAFTARAN	REGULER	SUDAH LUNAS	089612345678
+SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill shadow">Simpan Semua Pengajuan KTA</button>
                 </form>
             </div>
         </div>
@@ -1221,9 +1284,11 @@
     let afkTimer = null;
 
     const selectAddModeModal = new bootstrap.Modal(document.getElementById('selectAddModeModal'));
+    const selectAddProsesModeModal = new bootstrap.Modal(document.getElementById('selectAddProsesModeModal'));
     const modal = new bootstrap.Modal(document.getElementById('memberModal'));
     const bulkMemberModal = new bootstrap.Modal(document.getElementById('bulkMemberModal'));
     const prosesModal = new bootstrap.Modal(document.getElementById('prosesModal'));
+    const bulkProsesModal = new bootstrap.Modal(document.getElementById('bulkProsesModal'));
     const settingsModal = new bootstrap.Modal(document.getElementById('settingsModal'));
     const forgotModal = new bootstrap.Modal(document.getElementById('forgotModal'));
     const imagePreviewModal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
@@ -1739,10 +1804,10 @@
         if (!item) return;
 
         let noKtaInput = prompt(`Masukkan Nomor Anggota (KTA) resmi untuk [${item.nama}]:`, "JB.13.01");
-        if (noKtaInput === null) return; // Batal
+        if (noKtaInput === null) return;
 
         let masaBerlakuInput = prompt(`Masukkan Masa Berlaku KTA (Contoh: 01 Juni 2027 atau -):`, "01 Juni 2028");
-        if (masaBerlakuInput === null) return; // Batal
+        if (masaBerlakuInput === null) return;
 
         const newMemberData = {
             nama: item.nama.toUpperCase(),
@@ -1753,9 +1818,7 @@
         };
 
         try {
-            // 1. Tambahkan ke koleksi kta_aktif
             await db.collection("kta_aktif").add(newMemberData);
-            // 2. Hapus dari koleksi kta_proses
             await db.collection("kta_proses").doc(id).delete();
             alert(`Berhasil! Data [${item.nama}] telah dipindahkan ke Daftar Anggota.`);
         } catch (error) {
@@ -1796,7 +1859,7 @@
         renderProsesTable(filtered);
     }
 
-    // Pemicu tombol tambah data (Muncul pilihan 1 orang atau banyak orang)
+    // Pemicu tombol tambah data utama
     function showAddModalDynamic() {
         if (!currentUser || currentUser.role !== 'admin') {
             alert('Akses Ditolak! Hanya Admin yang dapat menambah data.');
@@ -1804,14 +1867,9 @@
         }
 
         if (currentActiveView === 'ktaAktif') {
-            selectAddModeModal.show(); // Munculkan pilihan mode tambah anggota aktif
+            selectAddModeModal.show();
         } else if (currentActiveView === 'prosesKta') {
-            document.getElementById('editProsesDocId').value = '';
-            document.getElementById('prosesModalTitle').innerHTML = '<i class="bi bi-plus-circle-fill me-1"></i>Tambah Pengajuan Proses KTA';
-            document.getElementById('prosesForm').reset();
-            document.getElementById('cicilContainer').style.display = 'none';
-            document.getElementById('inputProsesTanggal').valueAsDate = new Date();
-            prosesModal.show();
+            selectAddProsesModeModal.show();
         }
     }
 
@@ -1831,7 +1889,23 @@
         bulkMemberModal.show();
     }
 
-    // Submit Tambah Banyak Orang Sekaligus (Bulk)
+    function openSingleProsesAddModal() {
+        selectAddProsesModeModal.hide();
+        document.getElementById('editProsesDocId').value = '';
+        document.getElementById('prosesModalTitle').innerHTML = '<i class="bi bi-plus-circle-fill me-1"></i>Tambah Pengajuan Proses KTA';
+        document.getElementById('prosesForm').reset();
+        document.getElementById('cicilContainer').style.display = 'none';
+        document.getElementById('inputProsesTanggal').valueAsDate = new Date();
+        prosesModal.show();
+    }
+
+    function openBulkProsesAddModal() {
+        selectAddProsesModeModal.hide();
+        document.getElementById('bulkProsesForm').reset();
+        bulkProsesModal.show();
+    }
+
+    // Submit Tambah Banyak Anggota Sekaligus (Bulk)
     document.getElementById('bulkMemberForm').addEventListener('submit', async function(e) {
         e.preventDefault();
         const text = document.getElementById('bulkInputText').value.trim();
@@ -1861,6 +1935,43 @@
             alert(`Berhasil menambahkan ${count} anggota baru sekaligus!`);
         } catch (error) {
             console.error("Gagal tambah massal:", error);
+            alert("Terjadi kesalahan saat menyimpan data massal: " + error.message);
+        }
+    });
+
+    // Submit Tambah Banyak Proses KTA Sekaligus (Bulk)
+    document.getElementById('bulkProsesForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const text = document.getElementById('bulkProsesInputText').value.trim();
+        if (!text) return;
+
+        const lines = text.split('\n');
+        let count = 0;
+        const todayStr = new Date().toISOString().split('T')[0];
+
+        try {
+            const batchPromises = lines.map(async (line) => {
+                const parts = line.split(/,|\t/).map(p => p.trim());
+                if (parts.length >= 1 && parts[0]) {
+                    const prosesData = {
+                        nama: parts[0].toUpperCase(),
+                        statusKta: parts[1] ? parts[1].toUpperCase() : 'PENDAFTARAN',
+                        tipe: parts[2] ? parts[2].toUpperCase() : 'REGULER',
+                        tgl: todayStr,
+                        status: parts[3] ? parts[3].toUpperCase() : 'SUDAH LUNAS',
+                        cicil: 0,
+                        wa: parts[4] || '-'
+                    };
+                    await db.collection("kta_proses").add(prosesData);
+                    count++;
+                }
+            });
+
+            await Promise.all(batchPromises);
+            bulkProsesModal.hide();
+            alert(`Berhasil menambahkan ${count} pengajuan KTA baru sekaligus!`);
+        } catch (error) {
+            console.error("Gagal tambah massal proses KTA:", error);
             alert("Terjadi kesalahan saat menyimpan data massal: " + error.message);
         }
     });
