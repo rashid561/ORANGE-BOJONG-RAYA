@@ -75,6 +75,34 @@
             color: #e65c00;
             margin-top: 4px;
         }
+
+        /* UI/UX Khusus Input Password dengan Tombol Mata */
+        .password-group .form-control {
+            border-right: none;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+        .password-group .form-control:focus {
+            border-color: #fd7e14;
+            box-shadow: none;
+        }
+        .password-group .btn-toggle-pass {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-left: none;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            color: #6c757d;
+            transition: all 0.2s ease;
+            padding: 0 15px;
+        }
+        .password-group .btn-toggle-pass:hover {
+            color: #fd7e14;
+            background-color: #fff8f3;
+        }
+        .password-group:focus-within .btn-toggle-pass {
+            border-color: #fd7e14;
+        }
         
         .main-card {
             border: none;
@@ -379,10 +407,10 @@
                     </div>
                     <div class="mb-2">
                         <label class="form-label fw-semibold text-secondary small">Password</label>
-                        <div class="input-group">
-                            <input type="password" id="loginPass" class="form-control rounded-start-3 p-2 border-end-0" required placeholder="Masukkan password">
-                            <button class="btn btn-outline-secondary bg-white border-start-0 rounded-end-3 px-3 text-secondary" type="button" onclick="togglePasswordVisibility('loginPass', 'eyeLoginIcon')">
-                                <i class="bi bi-eye-slash" id="eyeLoginIcon"></i>
+                        <div class="input-group password-group">
+                            <input type="password" id="loginPass" class="form-control p-2" required placeholder="Masukkan password">
+                            <button class="btn btn-toggle-pass" type="button" onclick="togglePasswordVisibility('loginPass', 'eyeLoginIcon')" title="Lihat/Sembunyikan Password">
+                                <i class="bi bi-eye-slash fs-6" id="eyeLoginIcon"></i>
                             </button>
                         </div>
                     </div>
@@ -413,10 +441,10 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label fw-semibold text-secondary small mb-1">Password</label>
-                        <div class="input-group">
-                            <input type="password" id="regPass" class="form-control rounded-start-3 p-2 border-end-0" required placeholder="Minimal 6 karakter">
-                            <button class="btn btn-outline-secondary bg-white border-start-0 rounded-end-3 px-3 text-secondary" type="button" onclick="togglePasswordVisibility('regPass', 'eyeRegIcon')">
-                                <i class="bi bi-eye-slash" id="eyeRegIcon"></i>
+                        <div class="input-group password-group">
+                            <input type="password" id="regPass" class="form-control p-2" required placeholder="Minimal 6 karakter">
+                            <button class="btn btn-toggle-pass" type="button" onclick="togglePasswordVisibility('regPass', 'eyeRegIcon')" title="Lihat/Sembunyikan Password">
+                                <i class="bi bi-eye-slash fs-6" id="eyeRegIcon"></i>
                             </button>
                         </div>
                     </div>
@@ -1000,9 +1028,9 @@
                     
                     <hr class="my-2">
                     <label class="form-label fw-semibold text-secondary small">Ganti / Reset Password Akun:</label>
-                    <div class="input-group input-group-sm mb-1">
+                    <div class="input-group input-group-sm mb-1 password-group">
                         <input type="password" id="newAccountPass" class="form-control" placeholder="Password baru minimal 6 karakter">
-                        <button class="btn btn-outline-secondary px-3" type="button" onclick="togglePasswordVisibility('newAccountPass', 'eyeNewPassIcon')">
+                        <button class="btn btn-toggle-pass px-3" type="button" onclick="togglePasswordVisibility('newAccountPass', 'eyeNewPassIcon')" title="Lihat/Sembunyikan Password">
                             <i class="bi bi-eye-slash" id="eyeNewPassIcon"></i>
                         </button>
                         <button class="btn btn-warning fw-bold text-dark" type="button" onclick="updateUserPassword()">Simpan Password</button>
@@ -1350,7 +1378,7 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
         }
     });
 
-    // Toggle Lihat/Sembunyikan Password
+    // Toggle Lihat/Sembunyikan Password dengan transisi ikon
     function togglePasswordVisibility(inputId, iconId) {
         const input = document.getElementById(inputId);
         const icon = document.getElementById(iconId);
@@ -1564,13 +1592,12 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
         } catch (error) {
             console.error("Gagal login:", error);
 
-            // Tangani pencatatan salah password
             if (userDocRef) {
                 const currentAttempts = (userData.failedLoginAttempts || 0) + 1;
                 let updatePayload = { failedLoginAttempts: currentAttempts };
 
                 if (currentAttempts >= 5) {
-                    updatePayload.lockoutUntil = Date.now() + (5 * 60 * 1000); // Blokir selama 5 menit
+                    updatePayload.lockoutUntil = Date.now() + (5 * 60 * 1000); // Blokir 5 menit
                     await userDocRef.update(updatePayload);
                     alert('⚠️ Anda telah salah memasukkan password sebanyak 5 kali. Akses login diblokir selama 5 menit.');
                     return;
@@ -1685,7 +1712,7 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
             try {
                 await user.updatePassword(newPass);
                 settingsModal.hide();
-                handleLogout('Password berhasil diperbarui! Silakan masuk kembali menggunakan password baru Anda.');
+                handleLogout('Password berhasil diperbarui! Silakan masuk kembali menggunakan password baru Anda dengan Email atau Username.');
             } catch (error) {
                 alert("Gagal memperbarui password: " + error.message);
             }
@@ -2138,7 +2165,7 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
 
         try {
             await auth.sendPasswordResetEmail(emailInput);
-            alert('Link reset password berhasil dikirim! Periksa Inbox atau Spam.');
+            alert('Link reset password berhasil dikirim! Periksa Inbox atau Spam email Anda.');
             forgotModal.hide();
         } catch (error) {
             console.error("Error Reset Password:", error);
