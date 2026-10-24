@@ -1364,7 +1364,7 @@
                     }
                     
                     enforceSingleSession(user.uid);
-                    initAfkTracker();
+                    initAfkTracker(); // Pelacak AFK 10 Menit Aktif
 
                 } catch (error) {
                     console.error("Gagal memuat profil dari Firestore:", error);
@@ -1464,6 +1464,7 @@
         } catch (e) { console.error(e); }
     }
 
+    // Fungsi Pelacak Aktivitas (AFK Tracker - 10 Menit)
     function initAfkTracker() {
         clearAfkTracker();
         resetAfkTimer();
@@ -1479,7 +1480,7 @@
                     location.reload();
                 });
             }
-        }, 10 * 60 * 1000);
+        }, 10 * 60 * 1000); // 10 Menit
     }
 
     function clearAfkTracker() {
@@ -1574,7 +1575,7 @@
         imagePreviewModal.show();
     }
 
-    // Fungsi Login
+    // Fungsi Login (Mendukung Case-Insensitive Username & Email)
     async function handleLogin(e) {
         e.preventDefault();
         const userInput = document.getElementById('loginUser').value.trim();
