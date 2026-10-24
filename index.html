@@ -1294,7 +1294,7 @@
     </div>
 </div>
 
-<!-- Modal Lupa Password -->
+<!-- Modal Lupa Password (Hanya via Email) -->
 <div class="modal fade" id="forgotModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded-4">
@@ -1303,17 +1303,14 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-4 small">
-                <p class="text-muted mb-3">Pilih metode pemulihan kata sandi akun Anda:</p>
+                <p class="text-muted mb-3">Masukkan email terdaftar Anda untuk menerima tautan pemulihan sandi:</p>
                 <div class="mb-3">
-                    <label class="form-label fw-semibold text-secondary small">Email / Username / WhatsApp Terdaftar</label>
-                    <input type="text" id="forgotContactInput" class="form-control rounded-3 mb-2" placeholder="email@domain.com atau username / 08xx">
+                    <label class="form-label fw-semibold text-secondary small">Email Terdaftar</label>
+                    <input type="email" id="forgotContactInput" class="form-control rounded-3 mb-2" placeholder="email@domain.com">
                 </div>
-                <div class="d-grid gap-2">
-                    <button class="btn btn-warning fw-bold rounded-pill shadow-sm text-dark btn-sm" onclick="requestResetViaEmail()">
-                        <i class="bi bi-envelope-fill me-1"></i> Kirim Link Reset via Email (Firebase Auth)
-                    </button>
-                    <button class="btn btn-success fw-bold rounded-pill shadow-sm btn-sm" onclick="requestResetViaWhatsApp()">
-                        <i class="bi bi-whatsapp me-1"></i> Kirim Tautan Langsung ke WA Pribadi User
+                <div class="d-grid">
+                    <button class="btn btn-warning fw-bold rounded-pill shadow-sm text-dark btn-sm py-2" onclick="requestResetViaEmail()">
+                        <i class="bi bi-envelope-fill me-1"></i> Kirim Link Reset Password via Email
                     </button>
                 </div>
             </div>
@@ -1577,7 +1574,7 @@
         imagePreviewModal.show();
     }
 
-    // Fungsi Login Diperbarui (Mendukung Case-Insensitive Username)
+    // Fungsi Login
     async function handleLogin(e) {
         e.preventDefault();
         const userInput = document.getElementById('loginUser').value.trim();
@@ -2271,29 +2268,6 @@
             alert('Link reset password berhasil dikirim! Periksa Inbox atau Spam email Anda.');
             forgotModal.hide();
         } catch (error) { alert('Gagal mengirim email reset: ' + error.message); }
-    }
-
-    function requestResetViaWhatsApp() {
-        const contactInput = document.getElementById('forgotContactInput').value.trim();
-        if(!contactInput) { alert('Silakan masukkan Email, Username, atau Nomor WhatsApp!'); return; }
-
-        let targetUser = usersDb.find(x => 
-            (x.email && x.email.toLowerCase() === contactInput.toLowerCase()) || 
-            (x.username && x.username.toLowerCase() === contactInput.toLowerCase()) || 
-            x.wa === contactInput
-        );
-
-        if (!targetUser) { alert('Data akun tidak ditemukan!'); return; }
-        if (!targetUser.wa || targetUser.wa === '-') { alert('Nomor WhatsApp tidak terdaftar.'); return; }
-
-        let cleanWa = targetUser.wa.replace(/[^0-9]/g, '');
-        if (cleanWa.startsWith('0')) cleanWa = '62' + cleanWa.slice(1);
-
-        const tokenReset = 'OBR-RESET-' + Math.floor(100000 + Math.random() * 900000);
-        const pesan = encodeURIComponent(`Halo *${targetUser.nama}*, token reset password Anda: *${tokenReset}*\n\nSilakan masuk kembali ke aplikasi dan ubah password melalui menu Settings.`);
-        
-        window.open(`https://wa.me/${cleanWa}?text=${pesan}`, '_blank');
-        forgotModal.hide();
     }
 </script>
 </body>
