@@ -1577,10 +1577,11 @@
         imagePreviewModal.show();
     }
 
-    // Fungsi Login dengan Email / Username, Proteksi Blokir 5 Menit jika Salah Password 5x
+    // Fungsi Login Diperbarui (Mendukung Case-Insensitive Username)
     async function handleLogin(e) {
         e.preventDefault();
-        const userInput = document.getElementById('loginUser').value.trim().toLowerCase();
+        const userInput = document.getElementById('loginUser').value.trim();
+        const userInputLower = userInput.toLowerCase();
         const p = document.getElementById('loginPass').value.trim();
 
         let email = userInput;
@@ -1588,23 +1589,35 @@
         let userData = null;
 
         try {
-            let querySnapshot = await db.collection("users").where("email", "==", userInput).get();
-            if (querySnapshot.empty) {
-                querySnapshot = await db.collection("users").where("username", "==", userInput).get();
+            if (userInput.includes('@')) {
+                let querySnapshot = await db.collection("users").where("email", "==", userInputLower).get();
+                if (!querySnapshot.empty) {
+                    userDocRef = querySnapshot.docs[0].ref;
+                    userData = querySnapshot.docs[0].data();
+                    email = userData.email;
+                }
+            } else {
+                let allUsersSnapshot = await db.collection("users").get();
+                let matchedDoc = allUsersSnapshot.docs.find(doc => {
+                    let data = doc.data();
+                    return data.username && data.username.toLowerCase() === userInputLower;
+                });
+
+                if (matchedDoc) {
+                    userDocRef = matchedDoc.ref;
+                    userData = matchedDoc.data();
+                    email = userData.email;
+                }
             }
 
-            if (!querySnapshot.empty) {
-                userDocRef = querySnapshot.docs[0].ref;
-                userData = querySnapshot.docs[0].data();
-                email = userData.email;
-
+            if (userData) {
                 if (userData.lockoutUntil && userData.lockoutUntil > Date.now()) {
                     const remainingMinutes = Math.ceil((userData.lockoutUntil - Date.now()) / 60000);
                     alert(`⚠️ Akun Anda dikunci sementara karena salah password 5 kali. Coba lagi dalam ${remainingMinutes} menit.`);
                     return;
                 }
-            } else if (!userInput.includes('@')) {
-                alert('Username tidak terdaftar dalam sistem!');
+            } else {
+                alert('Username atau Email tidak terdaftar dalam sistem!');
                 return;
             }
         } catch (err) { console.error(err); }
@@ -1630,11 +1643,11 @@
                     return;
                 }
             }
-            alert('Email/Username atau Password salah!');
+            alert('Password salah!');
         }
     }
 
-    // Validasi Pendaftaran Akun (Poin 1.1)
+    // Validasi Pendaftaran Akun
     async function handleRegister(e) {
         e.preventDefault();
         const nama = document.getElementById('regNama').value.trim();
@@ -1714,7 +1727,7 @@
         settingsModal.show();
     }
 
-    // Ubah Profil Mandiri (Poin 1.2)
+    // Ubah Profil Mandiri
     async function handleUpdateProfile(e) {
         e.preventDefault();
         const newNama = document.getElementById('editProfileNama').value.trim();
@@ -1733,7 +1746,6 @@
             document.getElementById('userNameDisplay').innerText = newNama;
             document.getElementById('userDropdownName').innerText = newNama;
             
-            // Catat Log Aktivitas Admin/User
             await logAdminActivity(`User [${newNama}] memperbarui informasi profil mereka.`);
 
             alert('Profil berhasil diperbarui!');
@@ -1760,7 +1772,7 @@
         }
     }
 
-    // Log Aktivitas Admin/User (Poin 3.2)
+    // Log Aktivitas Admin/User
     async function logAdminActivity(activityText) {
         try {
             await db.collection("admin_logs").add({
@@ -1771,7 +1783,7 @@
         } catch (e) { console.error("Gagal mencatat log:", e); }
     }
 
-    // Ekspor ke Excel / CSV (Poin 3.1)
+    // Ekspor ke Excel / CSV
     function exportTableToExcel() {
         let tableId = (currentActiveView === 'ktaAktif') ? 'tableAnggotaExport' : 'tableProsesExport';
         let filename = (currentActiveView === 'ktaAktif') ? 'Data_Anggota_OBR.csv' : 'Data_Proses_KTA_OBR.csv';
@@ -1781,7 +1793,7 @@
         
         for (let i = 0; i < rows.length; i++) {
             let row = [], cols = rows[i].querySelectorAll("td, th");
-            for (let j = 0; j < cols.length - 1; j++) { // Abaikan kolom aksi terakhir
+            for (let j = 0; j < cols.length - 1; j++) {
                 let data = cols[j].innerText.replace(/(\r\n|\n|\r)/gm, "").replace(/(\s\s)/gm, " ");
                 row.push('"' + data + '"');
             }
@@ -1864,7 +1876,7 @@
         document.getElementById('cicilContainer').style.display = (val === 'CICIL') ? 'block' : 'none';
     }
 
-    // Cek Status Expired Masa Berlaku KTA (Poin 2.3)
+    // Cek Status Expired Masa Berlaku KTA
     function checkExpiryStatus(berlakuStr) {
         if (!berlakuStr || berlakuStr === '-') return { status: 'normal', label: '-' };
         
