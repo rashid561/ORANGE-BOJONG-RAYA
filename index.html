@@ -103,6 +103,21 @@
         .password-group:focus-within .btn-toggle-pass {
             border-color: #fd7e14;
         }
+
+        /* Indikator Kekuatan Password */
+        .strength-meter {
+            height: 5px;
+            border-radius: 3px;
+            background: #e9ecef;
+            margin-top: 5px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
         
         .main-card {
             border: none;
@@ -428,11 +443,11 @@
                         <input type="text" id="regNama" class="form-control rounded-3 p-2" required placeholder="Nama lengkap">
                     </div>
                     <div class="mb-2">
-                        <label class="form-label fw-semibold text-secondary small mb-1">Username</label>
-                        <input type="text" id="regUser" class="form-control rounded-3 p-2" required placeholder="Buat username">
+                        <label class="form-label fw-semibold text-secondary small mb-1">Username (Tanpa spasi)</label>
+                        <input type="text" id="regUser" class="form-control rounded-3 p-2" required placeholder="Buat username unik">
                     </div>
                     <div class="mb-2">
-                        <label class="form-label fw-semibold text-secondary small mb-1">Email</label>
+                        <label class="form-label fw-semibold text-secondary small mb-1">Email Aktif</label>
                         <input type="email" id="regEmail" class="form-control rounded-3 p-2" required placeholder="email@domain.com">
                     </div>
                     <div class="mb-2">
@@ -442,11 +457,13 @@
                     <div class="mb-3">
                         <label class="form-label fw-semibold text-secondary small mb-1">Password</label>
                         <div class="input-group password-group">
-                            <input type="password" id="regPass" class="form-control p-2" required placeholder="Minimal 6 karakter">
+                            <input type="password" id="regPass" class="form-control p-2" required placeholder="Minimal 6 karakter" onkeyup="checkPasswordStrength(this.value, 'regStrengthBar', 'regStrengthText')">
                             <button class="btn btn-toggle-pass" type="button" onclick="togglePasswordVisibility('regPass', 'eyeRegIcon')" title="Lihat/Sembunyikan Password">
                                 <i class="bi bi-eye-slash fs-6" id="eyeRegIcon"></i>
                             </button>
                         </div>
+                        <div class="strength-meter"><div id="regStrengthBar" class="strength-bar"></div></div>
+                        <small id="regStrengthText" class="text-muted" style="font-size: 0.7rem;"></small>
                     </div>
                     <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill shadow">DAFTAR AKUN</button>
                 </form>
@@ -490,7 +507,7 @@
                             <strong class="text-dark text-uppercase" id="userDropdownName">-</strong>
                             <br><span class="badge bg-warning text-dark font-monospace mt-1" id="userRoleBadge" style="font-size: 0.65rem;">-</span>
                         </li>
-                        <li><a class="dropdown-item rounded-2 py-1 fw-semibold text-dark" href="#" onclick="showSettingsModal()"><i class="bi bi-gear-fill me-2 text-warning"></i>Settings</a></li>
+                        <li><a class="dropdown-item rounded-2 py-1 fw-semibold text-dark" href="#" onclick="showSettingsModal()"><i class="bi bi-gear-fill me-2 text-warning"></i>Settings Profil</a></li>
                         <li><hr class="dropdown-divider my-1"></li>
                         <li><a class="dropdown-item rounded-2 py-1 fw-semibold text-danger" href="#" onclick="handleLogout('Anda telah berhasil keluar.')"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                     </ul>
@@ -498,6 +515,7 @@
 
                 <div class="d-flex gap-2 flex-wrap no-print">
                     <button id="btnTambahData" class="btn btn-light btn-action text-dark btn-sm shadow-sm fw-bold" onclick="showAddModalDynamic()" style="display: none;"><i class="bi bi-plus-circle-fill me-1 text-success"></i> Tambah Data</button>
+                    <button id="btnExportExcel" class="btn btn-success btn-action btn-sm shadow-sm" onclick="exportTableToExcel()" style="display: none;"><i class="bi bi-file-earmark-excel-fill me-1"></i> Ekspor Excel</button>
                     <button id="btnPrint" class="btn btn-dark btn-action text-warning btn-sm shadow-sm border border-warning" onclick="window.print()" style="display: none;"><i class="bi bi-printer-fill me-1"></i> Cetak / PDF</button>
                 </div>
             </div>
@@ -594,7 +612,7 @@
                 </div>
 
                 <div class="table-responsive shadow-sm bg-white border rounded-3">
-                    <table class="table table-hover table-striped align-middle mb-0">
+                    <table class="table table-hover table-striped align-middle mb-0" id="tableAnggotaExport">
                         <thead class="sticky-top">
                             <tr>
                                 <th class="text-center" style="width: 50px;">NO</th>
@@ -650,7 +668,7 @@
                 </div>
 
                 <div class="table-responsive shadow-sm bg-white border rounded-3">
-                    <table class="table table-hover table-striped align-middle mb-0">
+                    <table class="table table-hover table-striped align-middle mb-0" id="tableProsesExport">
                         <thead class="sticky-top">
                             <tr>
                                 <th class="text-center" style="width: 50px;">NO</th>
@@ -1014,34 +1032,47 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded-4">
             <div class="modal-header bg-dark text-white border-bottom border-warning py-3">
-                <h5 class="modal-title fw-bold fs-6"><i class="bi bi-gear-fill text-warning me-2"></i>Pengaturan Akun & Logo</h5>
+                <h5 class="modal-title fw-bold fs-6"><i class="bi bi-gear-fill text-warning me-2"></i>Pengaturan Akun & Profil</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-4 small">
-                <!-- Informasi Profil User & Password -->
+                <!-- Form Ubah Profil Mandiri -->
                 <div class="card bg-light border-0 p-3 rounded-3 mb-3">
-                    <h6 class="fw-bold text-dark mb-2"><i class="bi bi-person-badge me-1 text-warning"></i> Informasi Profil Akun</h6>
-                    <div class="mb-1"><b>Nama:</b> <span id="setProfileNama">-</span></div>
+                    <h6 class="fw-bold text-dark mb-2"><i class="bi bi-person-fill-gear me-1 text-warning"></i> Perbarui Profil Saya</h6>
+                    <form id="updateProfileForm" onsubmit="handleUpdateProfile(event)">
+                        <div class="mb-2">
+                            <label class="form-label text-secondary small mb-1">Nama Lengkap</label>
+                            <input type="text" id="editProfileNama" class="form-control form-control-sm" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label text-secondary small mb-1">Nomor WhatsApp</label>
+                            <input type="text" id="editProfileWa" class="form-control form-control-sm" required>
+                        </div>
+                        <button type="submit" class="btn btn-dark btn-sm w-100 fw-bold rounded-pill">Simpan Perubahan Profil</button>
+                    </form>
+                </div>
+
+                <!-- Informasi Akun & Ganti Password -->
+                <div class="card bg-light border-0 p-3 rounded-3 mb-3">
+                    <h6 class="fw-bold text-dark mb-2"><i class="bi bi-shield-lock-fill me-1 text-warning"></i> Keamanan & Password</h6>
                     <div class="mb-1"><b>Username:</b> <span id="setProfileUser">-</span></div>
-                    <div class="mb-1"><b>Email:</b> <span id="setProfileEmail">-</span></div>
-                    <div class="mb-1"><b>WhatsApp:</b> <span id="setProfileWa">-</span></div>
+                    <div class="mb-2"><b>Email:</b> <span id="setProfileEmail">-</span></div>
                     
-                    <hr class="my-2">
-                    <label class="form-label fw-semibold text-secondary small">Ganti / Reset Password Akun:</label>
+                    <label class="form-label fw-semibold text-secondary small">Ganti Password Baru:</label>
                     <div class="input-group input-group-sm mb-1 password-group">
-                        <input type="password" id="newAccountPass" class="form-control" placeholder="Password baru minimal 6 karakter">
+                        <input type="password" id="newAccountPass" class="form-control" placeholder="Minimal 6 karakter" onkeyup="checkPasswordStrength(this.value, 'setStrengthBar', 'setStrengthText')">
                         <button class="btn btn-toggle-pass px-3" type="button" onclick="togglePasswordVisibility('newAccountPass', 'eyeNewPassIcon')" title="Lihat/Sembunyikan Password">
                             <i class="bi bi-eye-slash" id="eyeNewPassIcon"></i>
                         </button>
-                        <button class="btn btn-warning fw-bold text-dark" type="button" onclick="updateUserPassword()">Simpan Password</button>
+                        <button class="btn btn-warning fw-bold text-dark" type="button" onclick="updateUserPassword()">Simpan</button>
                     </div>
+                    <div class="strength-meter"><div id="setStrengthBar" class="strength-bar"></div></div>
+                    <small id="setStrengthText" class="text-muted" style="font-size: 0.7rem;"></small>
                 </div>
 
-                <!-- Pengaturan Logo -->
-                <div class="card bg-light border-0 p-3 rounded-3" id="logoSettingsCard">
+                <!-- Pengaturan Logo (Khusus Admin) -->
+                <div class="card bg-light border-0 p-3 rounded-3" id="logoSettingsCard" style="display: none;">
                     <h6 class="fw-bold text-dark mb-2"><i class="bi bi-image-fill me-1 text-warning"></i> Pengaturan Pilihan Logo</h6>
-                    <p class="text-muted mb-3" style="font-size: 0.8rem;">Silakan pilih bagian logo perangkat atau browser yang ingin Anda ubah:</p>
-                    
                     <input type="file" id="uploadFaviconInput" accept="image/*" style="display: none;" onchange="handleFaviconUpload(event)">
                     <input type="file" id="uploadLogoLeftInput" accept="image/*" style="display: none;" onchange="handleLogoUpload(event, 'left')">
                     <input type="file" id="uploadLogoRightInput" accept="image/*" style="display: none;" onchange="handleLogoUpload(event, 'right')">
@@ -1051,10 +1082,10 @@
                             <i class="bi bi-browser-chrome me-2 text-warning"></i> Ganti Logo Browser (Favicon)
                         </button>
                         <button class="btn btn-outline-warning btn-sm rounded-pill text-start px-3 text-dark fw-semibold" onclick="document.getElementById('uploadLogoLeftInput').click()">
-                            <i class="bi bi-shield-fill-exclamation me-2"></i> Ganti Logo Kiri (Orange Bojong Raya)
+                            <i class="bi bi-shield-fill-exclamation me-2"></i> Ganti Logo Kiri (OBR)
                         </button>
                         <button class="btn btn-outline-dark btn-sm rounded-pill text-start px-3" onclick="document.getElementById('uploadLogoRightInput').click()">
-                            <i class="bi bi-shield-fill-check me-2 text-warning"></i> Ganti Logo Kanan (Jakmania Cengkareng)
+                            <i class="bi bi-shield-fill-check me-2 text-warning"></i> Ganti Logo Kanan (Cengkareng)
                         </button>
                     </div>
                 </div>
@@ -1151,7 +1182,7 @@
     </div>
 </div>
 
-<!-- Modal Form Tambah Banyak Anggota Sekaligus (Bulk Add - Seperti Excel) -->
+<!-- Modal Form Tambah Banyak Anggota Sekaligus (Bulk Add) -->
 <div class="modal fade" id="bulkMemberModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content border-0 shadow-lg rounded-4">
@@ -1160,9 +1191,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-3 small">
-                <p class="text-muted mb-2">💡 <b>Cara Penggunaan:</b> Anda bisa langsung menyalin data dari file Excel Anda, lalu <b>Paste (Tempel)</b> di dalam kotak teks besar di bawah. Pastikan urutan kolom sesuai dengan judul tabel di bawah ini:</p>
-                
-                <!-- Judul Kolom Ala Excel -->
+                <p class="text-muted mb-2">💡 <b>Cara Penggunaan:</b> Salin data dari Excel Anda, lalu <b>Paste (Tempel)</b> di bawah ini:</p>
                 <div class="bg-dark text-white p-2 rounded-top font-monospace fw-bold small row mx-0 text-center border-bottom border-warning">
                     <div class="col-3">NAMA ANGGOTA</div>
                     <div class="col-3">NOMOR ANGGOTA (KTA)</div>
@@ -1170,12 +1199,9 @@
                     <div class="col-2">KETERANGAN</div>
                     <div class="col-2">NO HP / WA</div>
                 </div>
-
                 <form id="bulkMemberForm">
                     <div class="mb-3">
-                        <textarea id="bulkInputText" class="form-control font-monospace rounded-bottom" rows="8" required placeholder="Contoh Paste dari Excel:
-RIKY RAMADHAN	JB.13.0112233.06.26	01 Juni 2027	SUB WILAYAH BOJONG	089612345678
-DEWI LESTARI	JB.13.0114455.06.26	-	SUB WILAYAH BOJONG	089587654321"></textarea>
+                        <textarea id="bulkInputText" class="form-control font-monospace rounded-bottom" rows="8" required placeholder="Contoh: RIKY RAMADHAN	JB.13.0112233.06.26	01 Juni 2027	SUB WILAYAH BOJONG	089612345678"></textarea>
                     </div>
                     <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill shadow">Simpan Semua Data Anggota</button>
                 </form>
@@ -1240,7 +1266,7 @@ DEWI LESTARI	JB.13.0114455.06.26	-	SUB WILAYAH BOJONG	089587654321"></textarea>
     </div>
 </div>
 
-<!-- Modal Form Tambah Banyak Pengajuan Proses KTA Sekaligus (Bulk Add - Seperti Excel) -->
+<!-- Modal Form Tambah Banyak Pengajuan Proses KTA Sekaligus (Bulk Add) -->
 <div class="modal fade" id="bulkProsesModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content border-0 shadow-lg rounded-4">
@@ -1249,22 +1275,17 @@ DEWI LESTARI	JB.13.0114455.06.26	-	SUB WILAYAH BOJONG	089587654321"></textarea>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-3 small">
-                <p class="text-muted mb-2">💡 <b>Cara Penggunaan:</b> Salin data dari file Excel Anda, lalu <b>Paste (Tempel)</b> di kotak teks di bawah. Pastikan urutan kolom sesuai dengan judul tabel:</p>
-                
-                <!-- Judul Kolom Ala Excel -->
+                <p class="text-muted mb-2">💡 <b>Cara Penggunaan:</b> Salin data dari Excel, lalu <b>Paste (Tempel)</b> di bawah ini:</p>
                 <div class="bg-dark text-white p-2 rounded-top font-monospace fw-bold small row mx-0 text-center border-bottom border-warning" style="font-size: 0.75rem !important;">
                     <div class="col-3">NAMA LENGKAP</div>
-                    <div class="col-2">STATUS KTA (PENDAFTARAN/PERPANJANGAN)</div>
-                    <div class="col-2">TIPE KTA (REGULER/PELAJAR)</div>
-                    <div class="col-2">STATUS PEMBAYARAN (LUNAS/BELUM/CICIL)</div>
+                    <div class="col-2">STATUS KTA</div>
+                    <div class="col-2">TIPE KTA</div>
+                    <div class="col-2">STATUS PEMBAYARAN</div>
                     <div class="col-3">NO WHATSAPP</div>
                 </div>
-
                 <form id="bulkProsesForm">
                     <div class="mb-3">
-                        <textarea id="bulkProsesInputText" class="form-control font-monospace rounded-bottom" rows="8" required placeholder="Contoh Paste dari Excel:
-AHMAD FAUZI	PENDAFTARAN	REGULER	SUDAH LUNAS	089612345678
-SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
+                        <textarea id="bulkProsesInputText" class="form-control font-monospace rounded-bottom" rows="8" required placeholder="Contoh: AHMAD FAUZI	PENDAFTARAN	REGULER	SUDAH LUNAS	089612345678"></textarea>
                     </div>
                     <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill shadow">Simpan Semua Pengajuan KTA</button>
                 </form>
@@ -1363,22 +1384,14 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
         loadUsersFromFirestore();
 
         const savedLogoLeft = localStorage.getItem('obr_custom_logo_left');
-        if(savedLogoLeft) {
-            document.getElementById('headerLogoLeft').src = savedLogoLeft;
-        }
-
+        if(savedLogoLeft) document.getElementById('headerLogoLeft').src = savedLogoLeft;
         const savedLogoRight = localStorage.getItem('obr_custom_logo_right');
-        if(savedLogoRight) {
-            document.getElementById('headerLogoRight').src = savedLogoRight;
-        }
-
+        if(savedLogoRight) document.getElementById('headerLogoRight').src = savedLogoRight;
         const savedFavicon = localStorage.getItem('obr_custom_favicon');
-        if(savedFavicon) {
-            document.getElementById('browserFavicon').href = savedFavicon;
-        }
+        if(savedFavicon) document.getElementById('browserFavicon').href = savedFavicon;
     });
 
-    // Toggle Lihat/Sembunyikan Password dengan transisi ikon
+    // Toggle Lihat/Sembunyikan Password
     function togglePasswordVisibility(inputId, iconId) {
         const input = document.getElementById(inputId);
         const icon = document.getElementById(iconId);
@@ -1393,6 +1406,41 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
         }
     }
 
+    // Indikator Kekuatan Password
+    function checkPasswordStrength(val, barId, textId) {
+        const bar = document.getElementById(barId);
+        const text = document.getElementById(textId);
+        if (!val) {
+            bar.style.width = '0%';
+            text.innerText = '';
+            return;
+        }
+
+        let score = 0;
+        if (val.length >= 6) score++;
+        if (val.length >= 10) score++;
+        if (/[A-Z]/.test(val)) score++;
+        if (/[0-9]/.test(val)) score++;
+        if (/[^A-Za-z0-9]/.test(val)) score++;
+
+        if (score <= 2) {
+            bar.style.width = '33%';
+            bar.style.backgroundColor = '#dc3545';
+            text.innerText = '⚠️ Lemah (Gunakan kombinasi huruf & angka)';
+            text.className = 'text-danger small';
+        } else if (score <= 4) {
+            bar.style.width = '66%';
+            bar.style.backgroundColor = '#ffc107';
+            text.innerText = '⚡ Sedang';
+            text.className = 'text-warning small';
+        } else {
+            bar.style.width = '100%';
+            bar.style.backgroundColor = '#198754';
+            text.innerText = '✅ Kuat & Aman';
+            text.className = 'text-success small';
+        }
+    }
+
     async function enforceSingleSession(uid) {
         let currentDeviceToken = localStorage.getItem('obr_device_token');
         if (!currentDeviceToken) {
@@ -1401,10 +1449,7 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
         }
 
         try {
-            await db.collection("users").doc(uid).update({
-                activeDeviceToken: currentDeviceToken
-            });
-
+            await db.collection("users").doc(uid).update({ activeDeviceToken: currentDeviceToken });
             if (sessionUnsubscribe) sessionUnsubscribe();
             sessionUnsubscribe = db.collection("users").doc(uid).onSnapshot((doc) => {
                 if (doc.exists) {
@@ -1419,19 +1464,13 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
                     }
                 }
             });
-        } catch (e) {
-            console.error("Gagal menyetel single session:", e);
-        }
+        } catch (e) { console.error(e); }
     }
 
     function initAfkTracker() {
         clearAfkTracker();
         resetAfkTimer();
-
-        const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
-        events.forEach(event => {
-            window.addEventListener(event, resetAfkTimer);
-        });
+        ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(ev => window.addEventListener(ev, resetAfkTimer));
     }
 
     function resetAfkTimer() {
@@ -1448,10 +1487,7 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
 
     function clearAfkTracker() {
         if (afkTimer) clearTimeout(afkTimer);
-        const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
-        events.forEach(event => {
-            window.removeEventListener(event, resetAfkTimer);
-        });
+        ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(ev => window.removeEventListener(ev, resetAfkTimer));
     }
 
     async function loadUsersFromFirestore() {
@@ -1459,26 +1495,20 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
             const snapshot = await db.collection("users").get();
             usersDb = [];
             snapshot.forEach(doc => usersDb.push({ id: doc.id, ...doc.data() }));
-        } catch (e) { 
-            console.error("Gagal memuat daftar user:", e); 
-        }
+        } catch (e) { console.error(e); }
     }
 
     function initRealtimeListeners() {
         db.collection("kta_aktif").onSnapshot((snapshot) => {
             members = [];
-            snapshot.forEach((doc) => {
-                members.push({ id: doc.id, ...doc.data() });
-            });
+            snapshot.forEach((doc) => members.push({ id: doc.id, ...doc.data() }));
             members.sort((a, b) => a.nama.localeCompare(b.nama));
             if(currentActiveView === 'ktaAktif') filterData();
         });
 
         db.collection("kta_proses").onSnapshot((snapshot) => {
             prosesKtaData = [];
-            snapshot.forEach((doc) => {
-                prosesKtaData.push({ id: doc.id, ...doc.data() });
-            });
+            snapshot.forEach((doc) => prosesKtaData.push({ id: doc.id, ...doc.data() }));
             prosesKtaData.sort((a, b) => a.nama.localeCompare(b.nama));
             if(currentActiveView === 'prosesKta') filterProsesData();
         });
@@ -1496,13 +1526,11 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
             document.getElementById('userDropdownName').innerText = currentUser.nama || currentUser.username;
             document.getElementById('userRoleBadge').innerText = currentUser.role.toUpperCase();
 
-            if (currentUser.role !== 'admin') {
-                document.getElementById('thAksi').style.display = 'none';
-                document.getElementById('thAksiProses').style.display = 'none';
-            } else {
-                document.getElementById('thAksi').style.display = 'table-cell';
-                document.getElementById('thAksiProses').style.display = 'table-cell';
-            }
+            const isAdmin = currentUser.role === 'admin';
+            document.getElementById('thAksi').style.display = isAdmin ? 'table-cell' : 'none';
+            document.getElementById('thAksiProses').style.display = isAdmin ? 'table-cell' : 'none';
+            document.getElementById('btnExportExcel').style.display = isAdmin ? 'inline-block' : 'none';
+
             switchView('dashboard');
         } else {
             authSec.style.setProperty('display', 'flex', 'important');
@@ -1520,13 +1548,18 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
         const isAdmin = currentUser && currentUser.role === 'admin';
         const btnTambah = document.getElementById('btnTambahData');
         const btnPrint = document.getElementById('btnPrint');
+        const btnExport = document.getElementById('btnExportExcel');
 
         if (viewName === 'dashboard' || viewName === 'panduanKta') {
             btnTambah.style.display = 'none';
             btnPrint.style.display = 'none';
+            if(btnExport) btnExport.style.display = 'none';
         } else {
             btnPrint.style.display = 'inline-block';
-            if (isAdmin) btnTambah.style.display = 'inline-block';
+            if (isAdmin) {
+                btnTambah.style.display = 'inline-block';
+                if(btnExport) btnExport.style.display = 'inline-block';
+            }
         }
 
         if (viewName === 'ktaAktif') filterData();
@@ -1565,7 +1598,6 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
                 userData = querySnapshot.docs[0].data();
                 email = userData.email;
 
-                // Cek Blokir 5 Menit (Lockout)
                 if (userData.lockoutUntil && userData.lockoutUntil > Date.now()) {
                     const remainingMinutes = Math.ceil((userData.lockoutUntil - Date.now()) / 60000);
                     alert(`⚠️ Akun Anda dikunci sementara karena salah password 5 kali. Coba lagi dalam ${remainingMinutes} menit.`);
@@ -1575,29 +1607,20 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
                 alert('Username tidak terdaftar dalam sistem!');
                 return;
             }
-        } catch (err) {
-            console.error("Gagal memeriksa data user:", err);
-        }
+        } catch (err) { console.error(err); }
 
         try {
             await auth.signInWithEmailAndPassword(email, p);
-            
-            // Jika sukses, reset percobaan gagal
             if (userDocRef) {
-                await userDocRef.update({
-                    failedLoginAttempts: 0,
-                    lockoutUntil: 0
-                });
+                await userDocRef.update({ failedLoginAttempts: 0, lockoutUntil: 0 });
             }
         } catch (error) {
-            console.error("Gagal login:", error);
-
             if (userDocRef) {
                 const currentAttempts = (userData.failedLoginAttempts || 0) + 1;
                 let updatePayload = { failedLoginAttempts: currentAttempts };
 
                 if (currentAttempts >= 5) {
-                    updatePayload.lockoutUntil = Date.now() + (5 * 60 * 1000); // Blokir 5 menit
+                    updatePayload.lockoutUntil = Date.now() + (5 * 60 * 1000);
                     await userDocRef.update(updatePayload);
                     alert('⚠️ Anda telah salah memasukkan password sebanyak 5 kali. Akses login diblokir selama 5 menit.');
                     return;
@@ -1607,11 +1630,11 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
                     return;
                 }
             }
-
             alert('Email/Username atau Password salah!');
         }
     }
 
+    // Validasi Pendaftaran Akun (Poin 1.1)
     async function handleRegister(e) {
         e.preventDefault();
         const nama = document.getElementById('regNama').value.trim();
@@ -1619,6 +1642,17 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
         const email = document.getElementById('regEmail').value.trim();
         const wa = document.getElementById('regWa').value.trim();
         const p = document.getElementById('regPass').value.trim();
+
+        if (/\s/.test(u)) {
+            alert('Username tidak boleh mengandung spasi!');
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert('Format email tidak valid!');
+            return;
+        }
 
         if (usersDb.some(x => x.username && x.username.toLowerCase() === u.toLowerCase())) {
             alert('Username sudah digunakan!');
@@ -1645,7 +1679,6 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
             document.getElementById('login-tab').click();
             loadUsersFromFirestore();
         } catch (error) {
-            console.error("Error Registrasi:", error);
             alert("Gagal daftar: " + error.message);
         }
     }
@@ -1658,49 +1691,56 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
             currentUser = null;
             checkAuthStatus();
             if (msg) alert(msg);
-        } catch (error) {
-            console.error("Gagal melakukan logout:", error);
-            alert("Gagal logout: " + error.message);
-        }
+        } catch (error) { alert("Gagal logout: " + error.message); }
     }
 
     async function showSettingsModal() {
         const user = auth.currentUser;
-        if (!user) {
-            alert("Anda belum login!");
-            return;
-        }
+        if (!user) { alert("Anda belum login!"); return; }
 
         try {
             const docRef = await db.collection("users").doc(user.uid).get();
             if (docRef.exists) {
-                const data = docRef.data();
-                document.getElementById('setProfileNama').innerText = data.nama || '-';
-                document.getElementById('setProfileUser').innerText = data.username || '-';
-                document.getElementById('setProfileEmail').innerText = data.email || '-';
-                document.getElementById('setProfileWa').innerText = data.wa || '-';
-                currentUser = data; 
-            } else {
-                document.getElementById('setProfileNama').innerText = user.email.split('@')[0];
-                document.getElementById('setProfileUser').innerText = user.email.split('@')[0];
-                document.getElementById('setProfileEmail').innerText = user.email;
-                document.getElementById('setProfileWa').innerText = '-';
+                currentUser = docRef.data();
             }
-        } catch (error) {
-            console.error("Gagal mengambil data profil terbaru:", error);
-            alert("Gagal memuat profil: " + error.message);
-        }
+            document.getElementById('editProfileNama').value = currentUser.nama || '';
+            document.getElementById('editProfileWa').value = currentUser.wa || '';
+            document.getElementById('setProfileUser').innerText = currentUser.username || '-';
+            document.getElementById('setProfileEmail').innerText = currentUser.email || '-';
+        } catch (error) { console.error(error); }
 
         document.getElementById('newAccountPass').value = '';
-
-        const logoCard = document.getElementById('logoSettingsCard');
-        if (currentUser && currentUser.role === 'admin') {
-            logoCard.style.display = 'block';
-        } else {
-            logoCard.style.display = 'none';
-        }
-
+        document.getElementById('logoSettingsCard').style.display = (currentUser && currentUser.role === 'admin') ? 'block' : 'none';
         settingsModal.show();
+    }
+
+    // Ubah Profil Mandiri (Poin 1.2)
+    async function handleUpdateProfile(e) {
+        e.preventDefault();
+        const newNama = document.getElementById('editProfileNama').value.trim();
+        const newWa = document.getElementById('editProfileWa').value.trim();
+        const user = auth.currentUser;
+
+        if (!user) return;
+
+        try {
+            await db.collection("users").doc(user.uid).update({
+                nama: newNama,
+                wa: newWa
+            });
+            currentUser.nama = newNama;
+            currentUser.wa = newWa;
+            document.getElementById('userNameDisplay').innerText = newNama;
+            document.getElementById('userDropdownName').innerText = newNama;
+            
+            // Catat Log Aktivitas Admin/User
+            await logAdminActivity(`User [${newNama}] memperbarui informasi profil mereka.`);
+
+            alert('Profil berhasil diperbarui!');
+            settingsModal.hide();
+        } catch (err) {
+            alert('Gagal memperbarui profil: ' + err.message);
+        }
     }
 
     async function updateUserPassword() {
@@ -1711,6 +1751,7 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
         if (user) {
             try {
                 await user.updatePassword(newPass);
+                await logAdminActivity(`User [${currentUser.nama}] mengubah sandi akun mereka.`);
                 settingsModal.hide();
                 handleLogout('Password berhasil diperbarui! Silakan masuk kembali menggunakan password baru Anda dengan Email atau Username.');
             } catch (error) {
@@ -1719,11 +1760,48 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
         }
     }
 
-    function handleLogoUpload(event, position) {
-        if (!currentUser || currentUser.role !== 'admin') {
-            alert('Akses Ditolak! Hanya Admin yang diperbolehkan mengubah logo.');
-            return;
+    // Log Aktivitas Admin/User (Poin 3.2)
+    async function logAdminActivity(activityText) {
+        try {
+            await db.collection("admin_logs").add({
+                activity: activityText,
+                user: currentUser ? currentUser.nama : 'System',
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+        } catch (e) { console.error("Gagal mencatat log:", e); }
+    }
+
+    // Ekspor ke Excel / CSV (Poin 3.1)
+    function exportTableToExcel() {
+        let tableId = (currentActiveView === 'ktaAktif') ? 'tableAnggotaExport' : 'tableProsesExport';
+        let filename = (currentActiveView === 'ktaAktif') ? 'Data_Anggota_OBR.csv' : 'Data_Proses_KTA_OBR.csv';
+        
+        let csv = [];
+        let rows = document.querySelectorAll(`#${tableId} tr`);
+        
+        for (let i = 0; i < rows.length; i++) {
+            let row = [], cols = rows[i].querySelectorAll("td, th");
+            for (let j = 0; j < cols.length - 1; j++) { // Abaikan kolom aksi terakhir
+                let data = cols[j].innerText.replace(/(\r\n|\n|\r)/gm, "").replace(/(\s\s)/gm, " ");
+                row.push('"' + data + '"');
+            }
+            csv.push(row.join(","));
         }
+
+        let csvFile = new Blob([csv.join("\n")], { type: "text/csv" });
+        let downloadLink = document.createElement("a");
+        downloadLink.download = filename;
+        downloadLink.href = window.URL.createObjectURL(csvFile);
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+
+        logAdminActivity(`Admin mengekspor data tabel [${currentActiveView}] ke Excel/CSV.`);
+    }
+
+    function handleLogoUpload(event, position) {
+        if (!currentUser || currentUser.role !== 'admin') return alert('Akses Ditolak!');
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
@@ -1732,12 +1810,12 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
                 if(position === 'left') {
                     document.getElementById('headerLogoLeft').src = base64Image;
                     localStorage.setItem('obr_custom_logo_left', base64Image);
-                    alert('Logo Kiri (Orange Bojong Raya) berhasil diperbarui!');
                 } else if(position === 'right') {
                     document.getElementById('headerLogoRight').src = base64Image;
                     localStorage.setItem('obr_custom_logo_right', base64Image);
-                    alert('Logo Kanan (Jakmania Cengkareng) berhasil diperbarui!');
                 }
+                logAdminActivity(`Admin mengubah logo [${position}].`);
+                alert('Logo berhasil diperbarui!');
             };
             reader.readAsDataURL(file);
         }
@@ -1751,7 +1829,7 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
                 const base64Image = e.target.result;
                 document.getElementById('browserFavicon').href = base64Image;
                 localStorage.setItem('obr_custom_favicon', base64Image);
-                alert('Logo browser (favicon) berhasil diperbarui!');
+                alert('Logo browser berhasil diperbarui!');
             };
             reader.readAsDataURL(file);
         }
@@ -1783,8 +1861,26 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
     }
 
     function toggleCicilField(val) {
-        const container = document.getElementById('cicilContainer');
-        container.style.display = (val === 'CICIL') ? 'block' : 'none';
+        document.getElementById('cicilContainer').style.display = (val === 'CICIL') ? 'block' : 'none';
+    }
+
+    // Cek Status Expired Masa Berlaku KTA (Poin 2.3)
+    function checkExpiryStatus(berlakuStr) {
+        if (!berlakuStr || berlakuStr === '-') return { status: 'normal', label: '-' };
+        
+        let targetDate = new Date(berlakuStr);
+        if (isNaN(targetDate)) return { status: 'normal', label: berlakuStr };
+
+        let today = new Date();
+        let diffTime = targetDate - today;
+        let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays < 0) {
+            return { status: 'expired', label: `${berlakuStr} <span class="badge bg-danger ms-1" style="font-size:0.65rem;">EXPIRED</span>` };
+        } else if (diffDays <= 30) {
+            return { status: 'warning', label: `${berlakuStr} <span class="badge bg-warning text-dark ms-1" style="font-size:0.65rem;">SEGERA HABIS (${diffDays} HARI)</span>` };
+        }
+        return { status: 'active', label: `${berlakuStr} <span class="badge bg-success ms-1" style="font-size:0.65rem;">AKTIF</span>` };
     }
 
     function renderTable(data = members) {
@@ -1811,6 +1907,8 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
                 `<a href="https://wa.me/62${waClean.replace(/^0/, '')}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-2 py-0" style="font-size: 0.75rem;"><i class="bi bi-whatsapp me-1"></i>${item.hp}</a>` 
                 : `<span class="${!isAdmin ? 'blur-data' : ''}">${displayHp}</span>`;
 
+            let expiryInfo = checkExpiryStatus(item.berlaku);
+
             let aksiCol = isAdmin ? `
                 <td class="text-center no-print">
                     <button class="btn btn-outline-warning btn-sm rounded-circle p-1 lh-1" onclick="editMember('${item.id}')"><i class="bi bi-pencil-fill small"></i></button>
@@ -1823,7 +1921,7 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
                     <td class="text-center font-monospace fw-bold text-secondary">${index + 1}</td>
                     <td class="fw-bold text-dark">${item.nama}</td>
                     <td class="font-monospace text-secondary"><span class="${!isAdmin ? 'blur-data' : ''}">${displayKta}</span></td>
-                    <td>${item.berlaku || '-'}</td>
+                    <td>${expiryInfo.label}</td>
                     <td>${ketBadge}</td>
                     <td>${hpFormatted}</td>
                     ${aksiCol}
@@ -1890,10 +1988,7 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
     }
 
     async function moveToAnggota(id) {
-        if (!currentUser || currentUser.role !== 'admin') {
-            alert('Akses Ditolak! Hanya Admin yang dapat memindahkan data.');
-            return;
-        }
+        if (!currentUser || currentUser.role !== 'admin') return;
 
         const item = prosesKtaData.find(x => x.id === id);
         if (!item) return;
@@ -1915,11 +2010,9 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
         try {
             await db.collection("kta_aktif").add(newMemberData);
             await db.collection("kta_proses").doc(id).delete();
-            alert(`Berhasil! Data [${item.nama}] telah dipindahkan ke Daftar Anggota.`);
-        } catch (error) {
-            console.error("Gagal memindahkan data:", error);
-            alert("Terjadi kesalahan: " + error.message);
-        }
+            logAdminActivity(`Admin memindahkan pengajuan [${item.nama}] ke Daftar Anggota Aktif.`);
+            alert(`Berhasil! Data [${item.nama}] telah dipindahkan.`);
+        } catch (error) { alert("Terjadi kesalahan: " + error.message); }
     }
 
     function filterData() {
@@ -1955,16 +2048,9 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
     }
 
     function showAddModalDynamic() {
-        if (!currentUser || currentUser.role !== 'admin') {
-            alert('Akses Ditolak! Hanya Admin yang dapat menambah data.');
-            return;
-        }
-
-        if (currentActiveView === 'ktaAktif') {
-            selectAddModeModal.show();
-        } else if (currentActiveView === 'prosesKta') {
-            selectAddProsesModeModal.show();
-        }
+        if (!currentUser || currentUser.role !== 'admin') return alert('Akses Ditolak!');
+        if (currentActiveView === 'ktaAktif') selectAddModeModal.show();
+        else if (currentActiveView === 'prosesKta') selectAddProsesModeModal.show();
     }
 
     function openSingleAddModal() {
@@ -2024,12 +2110,10 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
             });
 
             await Promise.all(batchPromises);
+            logAdminActivity(`Admin menambah ${count} data anggota secara massal.`);
             bulkMemberModal.hide();
             alert(`Berhasil menambahkan ${count} anggota baru sekaligus!`);
-        } catch (error) {
-            console.error("Gagal tambah massal:", error);
-            alert("Terjadi kesalahan saat menyimpan data massal: " + error.message);
-        }
+        } catch (error) { alert("Terjadi kesalahan: " + error.message); }
     });
 
     document.getElementById('bulkProsesForm').addEventListener('submit', async function(e) {
@@ -2060,12 +2144,10 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
             });
 
             await Promise.all(batchPromises);
+            logAdminActivity(`Admin menambah ${count} pengajuan KTA secara massal.`);
             bulkProsesModal.hide();
             alert(`Berhasil menambahkan ${count} pengajuan KTA baru sekaligus!`);
-        } catch (error) {
-            console.error("Gagal tambah massal proses KTA:", error);
-            alert("Terjadi kesalahan saat menyimpan data massal: " + error.message);
-        }
+        } catch (error) { alert("Terjadi kesalahan: " + error.message); }
     });
 
     function editMember(id) {
@@ -2110,9 +2192,15 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
         };
 
         if(docId === '') {
-            db.collection("kta_aktif").add(newData).then(() => modal.hide());
+            db.collection("kta_aktif").add(newData).then(() => {
+                logAdminActivity(`Admin menambah anggota [${newData.nama}].`);
+                modal.hide();
+            });
         } else {
-            db.collection("kta_aktif").doc(docId).update(newData).then(() => modal.hide());
+            db.collection("kta_aktif").doc(docId).update(newData).then(() => {
+                logAdminActivity(`Admin memperbarui data anggota [${newData.nama}].`);
+                modal.hide();
+            });
         }
     });
 
@@ -2133,21 +2221,27 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
         };
 
         if(docId === '') {
-            db.collection("kta_proses").add(newData).then(() => prosesModal.hide());
+            db.collection("kta_proses").add(newData).then(() => {
+                logAdminActivity(`Admin menambah pengajuan [${newData.nama}].`);
+                prosesModal.hide();
+            });
         } else {
-            db.collection("kta_proses").doc(docId).update(newData).then(() => prosesModal.hide());
+            db.collection("kta_proses").doc(docId).update(newData).then(() => {
+                logAdminActivity(`Admin memperbarui pengajuan [${newData.nama}].`);
+                prosesModal.hide();
+            });
         }
     });
 
     function deleteMember(id) {
         if(confirm("Hapus data anggota ini dari database?")) {
-            db.collection("kta_aktif").doc(id).delete();
+            db.collection("kta_aktif").doc(id).delete().then(() => logAdminActivity(`Admin menghapus data anggota ID: ${id}`));
         }
     }
 
     function deleteProsesKta(id) {
         if(confirm("Hapus pengajuan KTA ini dari database?")) {
-            db.collection("kta_proses").doc(id).delete();
+            db.collection("kta_proses").doc(id).delete().then(() => logAdminActivity(`Admin menghapus pengajuan KTA ID: ${id}`));
         }
     }
 
@@ -2158,27 +2252,18 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
 
     async function requestResetViaEmail() {
         const emailInput = document.getElementById('forgotContactInput').value.trim();
-        if (!emailInput) {
-            alert('Silakan masukkan email terdaftar Anda!');
-            return;
-        }
+        if (!emailInput) { alert('Silakan masukkan email terdaftar Anda!'); return; }
 
         try {
             await auth.sendPasswordResetEmail(emailInput);
             alert('Link reset password berhasil dikirim! Periksa Inbox atau Spam email Anda.');
             forgotModal.hide();
-        } catch (error) {
-            console.error("Error Reset Password:", error);
-            alert('Gagal mengirim email reset: ' + error.message);
-        }
+        } catch (error) { alert('Gagal mengirim email reset: ' + error.message); }
     }
 
     function requestResetViaWhatsApp() {
         const contactInput = document.getElementById('forgotContactInput').value.trim();
-        if(!contactInput) {
-            alert('Silakan masukkan Email, Username, atau Nomor WhatsApp Anda terlebih dahulu!');
-            return;
-        }
+        if(!contactInput) { alert('Silakan masukkan Email, Username, atau Nomor WhatsApp!'); return; }
 
         let targetUser = usersDb.find(x => 
             (x.email && x.email.toLowerCase() === contactInput.toLowerCase()) || 
@@ -2186,23 +2271,14 @@ SITI NURHALIZA	PERPANJANGAN	PELAJAR	CICIL	089587654321"></textarea>
             x.wa === contactInput
         );
 
-        if (!targetUser) {
-            alert('Data akun tidak ditemukan! Pastikan Anda memasukkan email/username/nomor WA yang terdaftar.');
-            return;
-        }
-
-        if (!targetUser.wa || targetUser.wa === '-') {
-            alert('Nomor WhatsApp tidak terdaftar pada akun tersebut.');
-            return;
-        }
+        if (!targetUser) { alert('Data akun tidak ditemukan!'); return; }
+        if (!targetUser.wa || targetUser.wa === '-') { alert('Nomor WhatsApp tidak terdaftar.'); return; }
 
         let cleanWa = targetUser.wa.replace(/[^0-9]/g, '');
-        if (cleanWa.startsWith('0')) {
-            cleanWa = '62' + cleanWa.slice(1);
-        }
+        if (cleanWa.startsWith('0')) cleanWa = '62' + cleanWa.slice(1);
 
         const tokenReset = 'OBR-RESET-' + Math.floor(100000 + Math.random() * 900000);
-        const pesan = encodeURIComponent(`Halo *${targetUser.nama}*, berikut adalah tautan pemulihan / token reset password akun KTA Orange Bojong Raya Anda:\n\n🔑 Token / Sandi Pemulihan: *${tokenReset}*\n\nSilakan masuk kembali ke aplikasi dan ubah password Anda melalui menu Settings setelah login.`);
+        const pesan = encodeURIComponent(`Halo *${targetUser.nama}*, token reset password Anda: *${tokenReset}*\n\nSilakan masuk kembali ke aplikasi dan ubah password melalui menu Settings.`);
         
         window.open(`https://wa.me/${cleanWa}?text=${pesan}`, '_blank');
         forgotModal.hide();
