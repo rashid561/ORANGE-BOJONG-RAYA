@@ -19,12 +19,29 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
     <style>
+        :root {
+            --bg-body: #111111;
+            --text-main: #333333;
+            --card-bg: #ffffff;
+            --header-bg: linear-gradient(135deg, #cc4400 0%, #ff6600 50%, #f39c12 100%);
+            --menu-bg: linear-gradient(135deg, #fff 0%, #fff7f0 100%);
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #0a0a0a;
+            --text-main: #f8f9fa;
+            --card-bg: #1a1a1a;
+            --header-bg: linear-gradient(135deg, #802b00 0%, #b34700 50%, #b36b00 100%);
+            --menu-bg: linear-gradient(135deg, #1f1f1f 100%, #2a1a08 0%);
+        }
+
         body { 
-            background: #111111; 
+            background: var(--bg-body); 
             font-family: 'Poppins', sans-serif; 
-            color: #333;
+            color: var(--text-main);
             min-height: 100vh;
             margin: 0;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
         #authSection {
@@ -76,7 +93,6 @@
             margin-top: 4px;
         }
 
-        /* UI/UX Khusus Input Password dengan Tombol Mata */
         .password-group .form-control {
             border-right: none;
             border-top-left-radius: 10px;
@@ -100,11 +116,7 @@
             color: #fd7e14;
             background-color: #fff8f3;
         }
-        .password-group:focus-within .btn-toggle-pass {
-            border-color: #fd7e14;
-        }
 
-        /* Indikator Kekuatan Password */
         .strength-meter {
             height: 5px;
             border-radius: 3px;
@@ -123,15 +135,17 @@
             border: none;
             border-radius: 16px;
             overflow: hidden;
-            background: #ffffff;
+            background: var(--card-bg);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5)!important;
+            transition: background 0.3s ease;
         }
 
         .card-header-persija { 
-            background: linear-gradient(135deg, #cc4400 0%, #ff6600 50%, #f39c12 100%); 
+            background: var(--header-bg); 
             color: white; 
             border-bottom: 5px solid #111;
             padding: 15px;
+            transition: background 0.3s ease;
         } 
 
         .header-brand-container {
@@ -200,6 +214,10 @@
             border-radius: 8px;
         }
 
+        .table {
+            color: var(--text-main) !important;
+        }
+
         .table th {
             background-color: #1a1a1a !important;
             color: #ffffff !important;
@@ -254,7 +272,7 @@
         .menu-card {
             border: 2px solid #fd7e14;
             border-radius: 16px;
-            background: linear-gradient(135deg, #fff 0%, #fff7f0 100%);
+            background: var(--menu-bg);
             transition: all 0.2s ease;
             cursor: pointer;
             height: 100%;
@@ -263,7 +281,7 @@
         .menu-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 10px 20px rgba(230, 92, 0, 0.2);
-            background: #fff8f3;
+            filter: brightness(1.05);
         }
 
         .menu-card-title {
@@ -271,7 +289,7 @@
             font-size: clamp(0.9rem, 1.8vw, 1.05rem);
             line-height: 1.3;
             letter-spacing: 0.5px;
-            color: #111111;
+            color: var(--text-main);
             text-transform: uppercase;
             margin-bottom: 6px;
         }
@@ -295,7 +313,7 @@
             border: 1px solid #ffd8be;
             border-left: 5px solid #e65c00;
             border-radius: 12px;
-            background: #ffffff;
+            background: var(--card-bg);
             transition: transform 0.2s;
         }
 
@@ -340,14 +358,14 @@
         }
 
         .bank-card {
-            background: #f8f9fa;
+            background: var(--card-bg);
             border: 2px dashed #0d6efd;
             border-radius: 14px;
             padding: 12px 15px;
         }
 
         .emoney-grid-item {
-            background: #fff;
+            background: var(--card-bg);
             border: 1px solid #dee2e6;
             border-radius: 12px;
             padding: 12px 8px;
@@ -360,7 +378,6 @@
         .emoney-grid-item:hover {
             border-color: #fd7e14;
             transform: translateY(-2px);
-            background: #fff8f3;
         }
 
         .contact-footer {
@@ -501,13 +518,15 @@
                         <i class="bi bi-person-circle fs-6"></i>
                         <span class="fw-bold" id="userNameDisplay">Profil</span>
                     </button>
-                    <ul class="dropdown-menu shadow border-0 rounded-3 mt-1 p-2" style="min-width: 200px; font-size: 0.85rem;">
+                    <ul class="dropdown-menu shadow border-0 rounded-3 mt-1 p-2" style="min-width: 220px; font-size: 0.85rem;">
                         <li class="px-2 py-1 border-bottom mb-2">
                             <span class="d-block text-muted" style="font-size: 0.7rem;">Masuk Sebagai:</span>
                             <strong class="text-dark text-uppercase" id="userDropdownName">-</strong>
                             <br><span class="badge bg-warning text-dark font-monospace mt-1" id="userRoleBadge" style="font-size: 0.65rem;">-</span>
                         </li>
-                        <li><a class="dropdown-item rounded-2 py-1 fw-semibold text-dark" href="#" onclick="showSettingsModal()"><i class="bi bi-gear-fill me-2 text-warning"></i>Settings Profil</a></li>
+                        <li><a class="dropdown-item rounded-2 py-1 fw-semibold" href="#" onclick="toggleDarkMode()"><i class="bi bi-circle-half me-2 text-warning"></i><span id="darkModeToggleText">Ganti Light/Dark Mode</span></a></li>
+                        <li><a class="dropdown-item rounded-2 py-1 fw-semibold" href="#" onclick="showSettingsModal()"><i class="bi bi-gear-fill me-2 text-warning"></i>Settings Profil</a></li>
+                        <li id="menuLogItem" style="display: none;"><a class="dropdown-item rounded-2 py-1 fw-semibold text-info" href="#" onclick="showActivityLogModal()"><i class="bi bi-journal-text me-2"></i>Log Aktivitas Admin</a></li>
                         <li><hr class="dropdown-divider my-1"></li>
                         <li><a class="dropdown-item rounded-2 py-1 fw-semibold text-danger" href="#" onclick="handleLogout('Anda telah berhasil keluar.')"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                     </ul>
@@ -521,13 +540,13 @@
             </div>
         </div>
         
-        <div class="card-body p-3 p-md-4 bg-light">
+        <div class="card-body p-3 p-md-4">
             
             <!-- MENU UTAMA / DASHBOARD -->
             <div id="viewMenuDashboard" class="py-2">
                 <div class="text-center mb-3">
-                    <h4 class="fw-bold text-dark text-uppercase">Pilih Menu Layanan</h4>
-                    <p class="text-muted small">Silakan pilih menu di bawah ini untuk melihat data, panduan pendaftaran, atau komunitas olahraga</p>
+                    <h4 class="fw-bold text-uppercase">Pilih Menu Layanan</h4>
+                    <p class="text-muted small">Silakan pilih menu di bawah ini untuk melihat data, panduan pendaftaran, galeri kegiatan, atau komunitas olahraga</p>
                 </div>
                 <div class="row justify-content-center g-3">
                     <!-- Menu 1: Daftar Anggota -->
@@ -566,7 +585,19 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Menu 4: OBR Sport -->
+                    <!-- Menu 4: Galeri Kegiatan -->
+                    <div class="col-md-3 col-sm-6">
+                        <div class="card menu-card p-3 text-center shadow-sm" onclick="switchView('galeriKegiatan')">
+                            <div class="card-body py-2">
+                                <i class="bi bi-images display-6 text-warning mb-2 d-block"></i>
+                                <h6 class="menu-card-title">
+                                    GALERI KEGIATAN<br>OBR & NOBAR
+                                </h6>
+                                <p class="text-muted small mb-0">Dokumentasi keseruan nonton bareng, futsal, dan kegiatan sosial OBR.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Menu 5: OBR Sport -->
                     <div class="col-md-3 col-sm-6">
                         <div class="card menu-card p-3 text-center shadow-sm" onclick="window.open('https://chat.whatsapp.com/FuwS4wYHMe7FbnduRr743e', '_blank')">
                             <div class="card-body py-2">
@@ -586,7 +617,7 @@
             <div id="viewKtaAktif" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                     <button class="btn btn-dark rounded-pill px-3 py-1 btn-sm fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-1"></i>Kembali ke Menu Utama</button>
-                    <h5 class="fw-bold text-uppercase text-dark mb-0">Daftar Anggota Orange Bojong Raya</h5>
+                    <h5 class="fw-bold text-uppercase mb-0">Daftar Anggota Orange Bojong Raya</h5>
                 </div>
 
                 <div class="row mb-3 align-items-center g-2">
@@ -604,14 +635,14 @@
                         </select>
                     </div>
                     <div class="col-md-3 text-md-end">
-                        <div class="d-inline-flex align-items-center bg-white px-3 py-1 rounded-pill shadow-sm border small">
+                        <div class="d-inline-flex align-items-center px-3 py-1 rounded-pill shadow-sm border small">
                             <i class="bi bi-people-fill text-warning me-2"></i>
-                            <span class="fw-bold text-dark" id="totalCount">Total: 0 Anggota</span>
+                            <span class="fw-bold" id="totalCount">Total: 0 Anggota</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="table-responsive shadow-sm bg-white border rounded-3">
+                <div class="table-responsive shadow-sm border rounded-3">
                     <table class="table table-hover table-striped align-middle mb-0" id="tableAnggotaExport">
                         <thead class="sticky-top">
                             <tr>
@@ -621,7 +652,7 @@
                                 <th>MASA BERLAKU</th>
                                 <th>KETERANGAN</th>
                                 <th>NO HP / WA</th>
-                                <th id="thAksi" class="text-center no-print" style="width: 100px;">AKSI</th>
+                                <th id="thAksi" class="text-center no-print" style="width: 140px;">AKSI</th>
                             </tr>
                         </thead>
                         <tbody id="tableBody"></tbody>
@@ -633,7 +664,7 @@
             <div id="viewProsesKta" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                     <button class="btn btn-dark rounded-pill px-3 py-1 btn-sm fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-1"></i>Kembali ke Menu Utama</button>
-                    <h5 class="fw-bold text-uppercase text-dark mb-0">Proses Pembuatan KTA The Jakmania OBR</h5>
+                    <h5 class="fw-bold text-uppercase mb-0">Proses Pembuatan KTA The Jakmania OBR</h5>
                 </div>
 
                 <div class="row mb-3 align-items-center g-2">
@@ -661,13 +692,13 @@
                 </div>
 
                 <div class="d-flex justify-content-end mb-2">
-                    <div class="d-inline-flex align-items-center bg-white px-3 py-1 rounded-pill shadow-sm border small">
+                    <div class="d-inline-flex align-items-center px-3 py-1 rounded-pill shadow-sm border small">
                         <i class="bi bi-clock-history text-warning me-2"></i>
-                        <span class="fw-bold text-dark" id="totalProsesCount">Total: 0 Pengajuan</span>
+                        <span class="fw-bold" id="totalProsesCount">Total: 0 Pengajuan</span>
                     </div>
                 </div>
 
-                <div class="table-responsive shadow-sm bg-white border rounded-3">
+                <div class="table-responsive shadow-sm border rounded-3">
                     <table class="table table-hover table-striped align-middle mb-0" id="tableProsesExport">
                         <thead class="sticky-top">
                             <tr>
@@ -687,11 +718,53 @@
                 </div>
             </div>
 
+            <!-- HALAMAN GALERI KEGIATAN OBR -->
+            <div id="viewGaleriKegiatan" style="display: none;">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <button class="btn btn-dark rounded-pill px-3 py-1 btn-sm fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-1"></i>Kembali ke Menu Utama</button>
+                    <h5 class="fw-bold text-uppercase mb-0">Galeri Kegiatan & Nobar Orange Bojong Raya</h5>
+                </div>
+                <p class="text-muted small mb-4">Kumpulan dokumentasi keseruan acara Nobar Persija, turnamen futsal internal, hingga kegiatan bakti sosial anggota.</p>
+                
+                <div class="row g-4">
+                    <div class="col-md-4 col-sm-6">
+                        <div class="shirt-preview-card shadow-sm text-center" onclick="openImageModal('BACKGROUND.png', 'Nobar Akbar The Jakmania OBR')">
+                            <img src="BACKGROUND.png" alt="Nobar Akbar" class="shirt-preview-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%23e65c00\'/><text x=\'50%\' y=\'50%\' fill=\'%23fff\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>NOBAR AKBAR OBR</text></svg>'">
+                            <div class="p-3">
+                                <span class="badge bg-warning text-dark font-monospace mb-1">NOBAR</span>
+                                <h6 class="fw-bold text-white m-0">NOBAR AKBAR PERSIJA JAKARTA</h6>
+                                <p class="text-white-50 small mb-0 mt-1">Keseruan anggota mendukung Macan Kemayoran <i class="bi bi-zoom-in ms-1 text-warning"></i></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="shirt-preview-card shadow-sm text-center" onclick="openImageModal('LOGO OBR.png', 'Turnamen Futsal OBR Sport')">
+                            <img src="LOGO OBR.png" alt="Futsal OBR" class="shirt-preview-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%23111\'/><text x=\'50%\' y=\'50%\' fill=\'%23ff9900\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>OBR SPORT</text></svg>'">
+                            <div class="p-3">
+                                <span class="badge bg-success font-monospace mb-1">OBR SPORT</span>
+                                <h6 class="fw-bold text-white m-0">TURNAMEN & SPARRING FUTSAL</h6>
+                                <p class="text-white-50 small mb-0 mt-1">Menjaga kebugaran dan kekompakan anggota <i class="bi bi-zoom-in ms-1 text-warning"></i></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="shirt-preview-card shadow-sm text-center" onclick="openImageModal('LOGO CKR.jpeg', 'Aksi Sosial & Peduli Sesama')">
+                            <img src="LOGO CKR.jpeg" alt="Aksi Sosial" class="shirt-preview-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%230d6efd\'/><text x=\'50%\' y=\'50%\' fill=\'%23fff\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>AKSI SOSIAL</text></svg>'">
+                            <div class="p-3">
+                                <span class="badge bg-primary font-monospace mb-1">SOSIAL</span>
+                                <h6 class="fw-bold text-white m-0">BAKTI SOSIAL & SANTUNAN</h6>
+                                <p class="text-white-50 small mb-0 mt-1">Wujud kepedulian sosial suporter bagi sesama <i class="bi bi-zoom-in ms-1 text-warning"></i></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- HALAMAN PANDUAN PENDAFTARAN & PERPANJANGAN KTA -->
             <div id="viewPanduanKta" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                     <button class="btn btn-dark rounded-pill px-3 py-1 btn-sm fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-1"></i>Kembali ke Menu Utama</button>
-                    <h5 class="fw-bold text-uppercase text-dark mb-0">Pendaftaran & Perpanjangan E-KTA The Jakmania OBR</h5>
+                    <h5 class="fw-bold text-uppercase mb-0">Pendaftaran & Perpanjangan E-KTA The Jakmania OBR</h5>
                 </div>
 
                 <!-- Hero Info / Banner Aplikasi Resmi -->
@@ -724,8 +797,8 @@
                 </div>
 
                 <!-- INFO REKENING PEMBAYARAN RESMI -->
-                <div class="card border-0 rounded-4 bg-white p-3 p-md-4 mb-4 shadow-sm border border-primary border-opacity-25">
-                    <h5 class="fw-bold text-dark text-uppercase mb-3"><i class="bi bi-bank text-primary me-2"></i>Rekening Pembayaran Resmi OBR</h5>
+                <div class="card border-0 rounded-4 p-3 p-md-4 mb-4 shadow-sm border border-primary border-opacity-25">
+                    <h5 class="fw-bold text-uppercase mb-3"><i class="bi bi-bank text-primary me-2"></i>Rekening Pembayaran Resmi OBR</h5>
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="bank-card shadow-sm">
@@ -733,7 +806,7 @@
                                     <span class="badge bg-primary text-white fw-bold">BANK BCA</span>
                                     <span class="badge bg-dark text-warning">KASUB</span>
                                 </div>
-                                <h5 class="font-monospace fw-bold text-dark my-1">4790479829</h5>
+                                <h5 class="font-monospace fw-bold my-1">4790479829</h5>
                                 <div class="small text-secondary">a/n <b>ANDRIYANTO</b></div>
                                 <button class="btn btn-sm btn-outline-primary rounded-pill mt-2 py-0 px-3" onclick="copyRek('4790479829')"><i class="bi bi-copy me-1"></i>Salin No Rekening</button>
                             </div>
@@ -744,7 +817,7 @@
                                     <span class="badge bg-primary text-white fw-bold">BANK BCA</span>
                                     <span class="badge bg-dark text-warning">SEKERTARIS</span>
                                 </div>
-                                <h5 class="font-monospace fw-bold text-dark my-1">4790457469</h5>
+                                <h5 class="font-monospace fw-bold my-1">4790457469</h5>
                                 <div class="small text-secondary">a/n <b>RASHID AL ARSHAD</b></div>
                                 <button class="btn btn-sm btn-outline-primary rounded-pill mt-2 py-0 px-3" onclick="copyRek('4790457469')"><i class="bi bi-copy me-1"></i>Salin No Rekening</button>
                             </div>
@@ -754,13 +827,13 @@
 
                 <!-- 8 Langkah Pendaftaran -->
                 <div class="mb-4">
-                    <h5 class="fw-bold text-dark text-uppercase mb-3"><i class="bi bi-list-ol text-warning me-2"></i>Langkah-Langkah Pendaftaran KTA</h5>
+                    <h5 class="fw-bold text-uppercase mb-3"><i class="bi bi-list-ol text-warning me-2"></i>Langkah-Langkah Pendaftaran KTA</h5>
                     <div class="row g-3">
                         <div class="col-md-6 col-lg-3">
                             <div class="p-3 step-card h-100 shadow-sm">
                                 <div class="d-flex align-items-center gap-2 mb-2">
                                     <div class="step-badge">01</div>
-                                    <h6 class="fw-bold m-0 text-dark">Unduh App</h6>
+                                    <h6 class="fw-bold m-0">Unduh App</h6>
                                 </div>
                                 <p class="text-secondary small mb-0">Unduh aplikasi resmi <b>The Jakmania</b> melalui Play Store (Android) atau App Store (iOS).</p>
                             </div>
@@ -769,7 +842,7 @@
                             <div class="p-3 step-card h-100 shadow-sm">
                                 <div class="d-flex align-items-center gap-2 mb-2">
                                     <div class="step-badge">02</div>
-                                    <h6 class="fw-bold m-0 text-dark">Isi Formulir</h6>
+                                    <h6 class="fw-bold m-0">Isi Formulir</h6>
                                 </div>
                                 <p class="text-secondary small mb-0">Buka aplikasi, isi data diri lengkap & benar (Nama, NIK KTP, serta alamat domisili).</p>
                             </div>
@@ -778,7 +851,7 @@
                             <div class="p-3 step-card h-100 shadow-sm">
                                 <div class="d-flex align-items-center gap-2 mb-2">
                                     <div class="step-badge">03</div>
-                                    <h6 class="fw-bold m-0 text-dark">Pilih Wilayah</h6>
+                                    <h6 class="fw-bold m-0">Pilih Wilayah</h6>
                                 </div>
                                 <p class="text-secondary small mb-0">Pilih wilayah / biro / sub-korwil: <b>Sub Korwil Cengkareng (Orange Bojong Raya)</b>.</p>
                             </div>
@@ -787,7 +860,7 @@
                             <div class="p-3 step-card h-100 shadow-sm">
                                 <div class="d-flex align-items-center gap-2 mb-2">
                                     <div class="step-badge">04</div>
-                                    <h6 class="fw-bold m-0 text-dark">Unggah Foto</h6>
+                                    <h6 class="fw-bold m-0">Unggah Foto</h6>
                                 </div>
                                 <p class="text-secondary small mb-0">Unggah foto diri (pasfoto rapi) dan foto identitas (KTP) sesuai ukuran.</p>
                             </div>
@@ -796,7 +869,7 @@
                             <div class="p-3 step-card h-100 shadow-sm">
                                 <div class="d-flex align-items-center gap-2 mb-2">
                                     <div class="step-badge">05</div>
-                                    <h6 class="fw-bold m-0 text-dark">Kode Bayar</h6>
+                                    <h6 class="fw-bold m-0">Kode Bayar</h6>
                                 </div>
                                 <p class="text-secondary small mb-0">Simpan data pendaftaran dan dapatkan daftar/kode transaksi pembayaran.</p>
                             </div>
@@ -805,7 +878,7 @@
                             <div class="p-3 step-card h-100 shadow-sm">
                                 <div class="d-flex align-items-center gap-2 mb-2">
                                     <div class="step-badge">06</div>
-                                    <h6 class="fw-bold m-0 text-dark">Pembayaran</h6>
+                                    <h6 class="fw-bold m-0">Pembayaran</h6>
                                 </div>
                                 <p class="text-secondary small mb-0">Transfer sebesar Rp150.000 ke rekening BCA Kasub / Sekertaris di atas.</p>
                             </div>
@@ -814,7 +887,7 @@
                             <div class="p-3 step-card h-100 shadow-sm">
                                 <div class="d-flex align-items-center gap-2 mb-2">
                                     <div class="step-badge">07</div>
-                                    <h6 class="fw-bold m-0 text-dark">Simpan Bukti</h6>
+                                    <h6 class="fw-bold m-0">Simpan Bukti</h6>
                                 </div>
                                 <p class="text-secondary small mb-0">Simpan screenshot bukti pendaftaran aplikasi dan bukti transfer pembayaran.</p>
                             </div>
@@ -823,7 +896,7 @@
                             <div class="p-3 step-card h-100 shadow-sm">
                                 <div class="d-flex align-items-center gap-2 mb-2">
                                     <div class="step-badge">08</div>
-                                    <h6 class="fw-bold m-0 text-dark">Verifikasi OBR</h6>
+                                    <h6 class="fw-bold m-0">Verifikasi OBR</h6>
                                 </div>
                                 <p class="text-secondary small mb-0">Kirimkan bukti tersebut kepada Pengurus Sub-Wilayah Bojong Raya untuk verifikasi.</p>
                             </div>
@@ -833,12 +906,12 @@
 
                 <!-- SECTION DESAIN BAJU KTA & SIZE CHART -->
                 <div class="mb-4">
-                    <h5 class="fw-bold text-dark text-uppercase mb-3"><i class="bi bi-tshirt text-warning me-2"></i>Desain Baju KTA & Size Chart T-Shirt</h5>
+                    <h5 class="fw-bold text-uppercase mb-3"><i class="bi bi-tshirt text-warning me-2"></i>Desain Baju KTA & Size Chart T-Shirt</h5>
                     <p class="text-muted small mb-2"><i class="bi bi-info-circle me-1"></i>Klik gambar baju di bawah untuk memperbesar tampilan desain secara penuh.</p>
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
                             <div class="shirt-preview-card shadow-sm text-center" onclick="openImageModal('BAJU KTA PENDAFTARAN BARU.jpeg', 'Baju KTA Pendaftaran Baru (Gue Anak Jakarta)')">
-                                <img src="BAJU KTA PENDAFTARAN BARU.jpeg" alt="Baju KTA Pendaftaran Baru" class="shirt-preview-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%23e65c00\'/><text x=\'50%\' y=\'50%\' fill=\'%23fff\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>BAJU PENDAFTARAN BARU</text></svg>'">
+                                <img src="BAJU KTA PENDAFTARAN BARU.jpeg" alt="Baju KTA Pendaftaran Baru" class="shirt-preview-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%23e65c00\'/><text x=\'50%\' y=\'50%\' fill=\'white\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>BAJU PENDAFTARAN BARU</text></svg>'">
                                 <div class="p-3">
                                     <span class="badge bg-warning text-dark font-monospace mb-1">REGULER & PELAJAR</span>
                                     <h6 class="fw-bold text-white m-0">BAJU KTA PENDAFTARAN BARU</h6>
@@ -859,9 +932,9 @@
                     </div>
 
                     <!-- TABEL SIZE CHART T-SHIRT -->
-                    <div class="card border-0 bg-white rounded-4 p-3 p-md-4 shadow-sm border mb-3">
+                    <div class="card border-0 rounded-4 p-3 p-md-4 shadow-sm border mb-3">
                         <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-                            <h6 class="fw-bold text-dark m-0"><i class="bi bi-ruler text-warning me-2"></i>SIZE CHART T-SHIRT KTA THE JAKMANIA (CM)</h6>
+                            <h6 class="fw-bold m-0"><i class="bi bi-ruler text-warning me-2"></i>SIZE CHART T-SHIRT KTA THE JAKMANIA (CM)</h6>
                             <span class="badge bg-dark text-warning font-monospace">STANDAR UKURAN</span>
                         </div>
                         <div class="table-responsive">
@@ -891,29 +964,29 @@
                 <!-- Program Khusus Pelajar (JakSchool) & Skema Cicilan -->
                 <div class="row g-3 mb-4">
                     <div class="col-md-6">
-                        <div class="card h-100 border-warning border-2 rounded-4 p-3 bg-white shadow-sm">
+                        <div class="card h-100 border-warning border-2 rounded-4 p-3 shadow-sm">
                             <div class="d-flex align-items-center gap-3 mb-2">
                                 <div class="icon-box-feature mb-0"><i class="bi bi-mortarboard-fill"></i></div>
                                 <div>
                                     <span class="badge bg-danger text-white mb-1">Diskon 15%</span>
-                                    <h6 class="fw-bold text-dark m-0">E-KTA Khusus Pelajar</h6>
+                                    <h6 class="fw-bold m-0">E-KTA Khusus Pelajar</h6>
                                 </div>
                             </div>
                             <p class="text-secondary small mb-2">
                                 Khusus untuk anggota yang masih berstatus pelajar/siswa, tersedia potongan harga diskon 15%.
                             </p>
-                            <div class="bg-light p-2 rounded-3 border mb-2 small">
+                            <div class="p-2 rounded-3 border mb-2 small bg-opacity-50">
                                 <b>Syarat & Ketentuan:</b> Wajib melampirkan foto Kartu Pelajar yang masih aktif saat pengajuan pendaftaran.
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="card h-100 border-success border-2 rounded-4 p-3 bg-white shadow-sm">
+                        <div class="card h-100 border-success border-2 rounded-4 p-3 shadow-sm">
                             <div class="d-flex align-items-center gap-3 mb-2">
                                 <div class="icon-box-feature mb-0 text-success border-success" style="background: #e8f5e9;"><i class="bi bi-cash-stack"></i></div>
                                 <div>
                                     <span class="badge bg-success text-white mb-1">Program JakSchool</span>
-                                    <h6 class="fw-bold text-dark m-0">Skema Cicilan KTA OBR</h6>
+                                    <h6 class="fw-bold m-0">Skema Cicilan KTA OBR</h6>
                                 </div>
                             </div>
                             <p class="text-secondary small mb-2">
@@ -929,8 +1002,8 @@
                 </div>
 
                 <!-- Fungsi e-Money -->
-                <div class="card border-0 bg-white rounded-4 p-3 p-md-4 shadow-sm border mb-4">
-                    <h6 class="fw-bold text-dark border-bottom pb-2 mb-3"><i class="bi bi-credit-card-2-front text-warning me-2"></i>Fungsi & Kegunaan E-KTA (e-Money Mandiri)</h6>
+                <div class="card border-0 rounded-4 p-3 p-md-4 shadow-sm border mb-4">
+                    <h6 class="fw-bold border-bottom pb-2 mb-3"><i class="bi bi-credit-card-2-front text-warning me-2"></i>Fungsi & Kegunaan E-KTA (e-Money Mandiri)</h6>
                     <p class="text-secondary small mb-3">
                         Selain sebagai bukti keanggotaan resmi, e-KTA berupa kartu fisik e-Money Mandiri dapat digunakan sebagai uang elektronik untuk berbagai transaksi harian:
                     </p>
@@ -975,8 +1048,8 @@
                 </div>
 
                 <!-- Tombol Konfirmasi WA Langsung -->
-                <div class="text-center p-3 bg-white border rounded-4 shadow-sm">
-                    <h6 class="fw-bold text-dark mb-2">Sudah Mendaftar di Aplikasi atau Ingin Bertanya?</h6>
+                <div class="text-center p-3 border rounded-4 shadow-sm">
+                    <h6 class="fw-bold mb-2">Sudah Mendaftar di Aplikasi atau Ingin Bertanya?</h6>
                     <p class="text-muted small mb-3">Hubungi tim pengurus Orange Bojong Raya untuk verifikasi & konfirmasi pembayaran:</p>
                     <div class="d-flex justify-content-center flex-wrap gap-2">
                         <a href="https://wa.me/6289625793431?text=Halo%20Andriyanto,%20saya%20ingin%20konfirmasi%20Pendaftaran/Perpanjangan%20KTA%20Orange%20Bojong%20Raya" target="_blank" class="btn btn-success rounded-pill fw-bold btn-sm px-3">
@@ -1012,16 +1085,45 @@
     </div>
 </div>
 
-<!-- MODAL PREVIEW GAMBAR / FOTO DESAIN BAJU -->
+<!-- MODAL PREVIEW GAMBAR / FOTO DESAIN BAJU / GALERI -->
 <div class="modal fade" id="imagePreviewModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 bg-dark text-white rounded-4 overflow-hidden shadow-lg">
             <div class="modal-header border-bottom border-warning py-2">
-                <h6 class="modal-title fw-bold text-warning m-0" id="previewModalTitle"><i class="bi bi-image me-1"></i>Pratinjau Desain Baju</h6>
+                <h6 class="modal-title fw-bold text-warning m-0" id="previewModalTitle"><i class="bi bi-image me-1"></i>Pratinjau Foto & Desain</h6>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body text-center p-2 p-md-3 bg-black">
-                <img id="modalPreviewImg" src="" alt="Desain Baju" class="img-fluid rounded shadow" style="max-height: 75vh; object-fit: contain;">
+                <img id="modalPreviewImg" src="" alt="Pratinjau" class="img-fluid rounded shadow" style="max-height: 75vh; object-fit: contain;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL LOG AKTIVITAS ADMIN -->
+<div class="modal fade" id="activityLogModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header bg-dark text-white border-bottom border-warning py-3">
+                <h5 class="modal-title fw-bold fs-6"><i class="bi bi-journal-text text-warning me-2"></i>Riwayat Log Aktivitas Admin</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-3 small">
+                <p class="text-muted mb-2">Berikut adalah catatan transparansi tindakan yang dilakukan oleh para admin di sistem:</p>
+                <div class="table-responsive" style="max-height: 400px;">
+                    <table class="table table-bordered table-striped align-middle mb-0 small">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>WAKTU</th>
+                                <th>ADMIN</th>
+                                <th>AKSI / AKTIVITAS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activityLogTableBody">
+                            <tr><td colspan="3" class="text-center text-muted">Memuat log aktivitas...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -1037,8 +1139,8 @@
             </div>
             <div class="modal-body p-4 small">
                 <!-- Form Ubah Profil Mandiri -->
-                <div class="card bg-light border-0 p-3 rounded-3 mb-3">
-                    <h6 class="fw-bold text-dark mb-2"><i class="bi bi-person-fill-gear me-1 text-warning"></i> Perbarui Profil Saya</h6>
+                <div class="card border-0 p-3 rounded-3 mb-3 shadow-sm">
+                    <h6 class="fw-bold mb-2"><i class="bi bi-person-fill-gear me-1 text-warning"></i> Perbarui Profil Saya</h6>
                     <form id="updateProfileForm" onsubmit="handleUpdateProfile(event)">
                         <div class="mb-2">
                             <label class="form-label text-secondary small mb-1">Nama Lengkap</label>
@@ -1046,15 +1148,15 @@
                         </div>
                         <div class="mb-2">
                             <label class="form-label text-secondary small mb-1">Nomor WhatsApp</label>
-                            <input type="text" id="editProfileWa" class="form-control form-control-sm" required>
+                            <input type="text" id="editProfileWa" class="form-control form-control-sm" required placeholder="08xxxxxxxxxx">
                         </div>
                         <button type="submit" class="btn btn-dark btn-sm w-100 fw-bold rounded-pill">Simpan Perubahan Profil</button>
                     </form>
                 </div>
 
                 <!-- Informasi Akun & Ganti Password -->
-                <div class="card bg-light border-0 p-3 rounded-3 mb-3">
-                    <h6 class="fw-bold text-dark mb-2"><i class="bi bi-shield-lock-fill me-1 text-warning"></i> Keamanan & Password</h6>
+                <div class="card border-0 p-3 rounded-3 mb-3 shadow-sm">
+                    <h6 class="fw-bold mb-2"><i class="bi bi-shield-lock-fill me-1 text-warning"></i> Keamanan & Password</h6>
                     <div class="mb-1"><b>Username:</b> <span id="setProfileUser">-</span></div>
                     <div class="mb-2"><b>Email:</b> <span id="setProfileEmail">-</span></div>
                     
@@ -1071,8 +1173,8 @@
                 </div>
 
                 <!-- Pengaturan Logo (Khusus Admin) -->
-                <div class="card bg-light border-0 p-3 rounded-3" id="logoSettingsCard" style="display: none;">
-                    <h6 class="fw-bold text-dark mb-2"><i class="bi bi-image-fill me-1 text-warning"></i> Pengaturan Pilihan Logo</h6>
+                <div class="card border-0 p-3 rounded-3 shadow-sm" id="logoSettingsCard" style="display: none;">
+                    <h6 class="fw-bold mb-2"><i class="bi bi-image-fill me-1 text-warning"></i> Pengaturan Pilihan Logo</h6>
                     <input type="file" id="uploadFaviconInput" accept="image/*" style="display: none;" onchange="handleFaviconUpload(event)">
                     <input type="file" id="uploadLogoLeftInput" accept="image/*" style="display: none;" onchange="handleLogoUpload(event, 'left')">
                     <input type="file" id="uploadLogoRightInput" accept="image/*" style="display: none;" onchange="handleLogoUpload(event, 'right')">
@@ -1081,7 +1183,7 @@
                         <button class="btn btn-outline-dark btn-sm rounded-pill text-start px-3" onclick="document.getElementById('uploadFaviconInput').click()">
                             <i class="bi bi-browser-chrome me-2 text-warning"></i> Ganti Logo Browser (Favicon)
                         </button>
-                        <button class="btn btn-outline-warning btn-sm rounded-pill text-start px-3 text-dark fw-semibold" onclick="document.getElementById('uploadLogoLeftInput').click()">
+                        <button class="btn btn-outline-warning btn-sm rounded-pill text-start px-3 fw-semibold" onclick="document.getElementById('uploadLogoLeftInput').click()">
                             <i class="bi bi-shield-fill-exclamation me-2"></i> Ganti Logo Kiri (OBR)
                         </button>
                         <button class="btn btn-outline-dark btn-sm rounded-pill text-start px-3" onclick="document.getElementById('uploadLogoRightInput').click()">
@@ -1351,8 +1453,14 @@
     const settingsModal = new bootstrap.Modal(document.getElementById('settingsModal'));
     const forgotModal = new bootstrap.Modal(document.getElementById('forgotModal'));
     const imagePreviewModal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
+    const activityLogModal = new bootstrap.Modal(document.getElementById('activityLogModal'));
 
     window.addEventListener('DOMContentLoaded', () => {
+        // Inisialisasi Tema Tersimpan
+        const savedTheme = localStorage.getItem('obr_theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeToggleText(savedTheme);
+
         auth.onAuthStateChanged(async (user) => {
             if (user) {
                 try {
@@ -1364,7 +1472,7 @@
                     }
                     
                     enforceSingleSession(user.uid);
-                    initAfkTracker(); // Pelacak AFK 10 Menit Aktif
+                    initAfkTracker();
 
                 } catch (error) {
                     console.error("Gagal memuat profil dari Firestore:", error);
@@ -1387,6 +1495,22 @@
         const savedFavicon = localStorage.getItem('obr_custom_favicon');
         if(savedFavicon) document.getElementById('browserFavicon').href = savedFavicon;
     });
+
+    // Fitur 5: Toggle Light/Dark Mode
+    function toggleDarkMode() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('obr_theme', newTheme);
+        updateThemeToggleText(newTheme);
+    }
+
+    function updateThemeToggleText(theme) {
+        const txt = document.getElementById('darkModeToggleText');
+        if(txt) {
+            txt.innerText = theme === 'dark' ? 'Mode Terang (Light Mode)' : 'Mode Gelap (Dark Mode)';
+        }
+    }
 
     // Toggle Lihat/Sembunyikan Password
     function togglePasswordVisibility(inputId, iconId) {
@@ -1464,7 +1588,6 @@
         } catch (e) { console.error(e); }
     }
 
-    // Fungsi Pelacak Aktivitas (AFK Tracker - 10 Menit)
     function initAfkTracker() {
         clearAfkTracker();
         resetAfkTimer();
@@ -1480,7 +1603,7 @@
                     location.reload();
                 });
             }
-        }, 10 * 60 * 1000); // 10 Menit
+        }, 10 * 60 * 1000);
     }
 
     function clearAfkTracker() {
@@ -1528,6 +1651,7 @@
             document.getElementById('thAksi').style.display = isAdmin ? 'table-cell' : 'none';
             document.getElementById('thAksiProses').style.display = isAdmin ? 'table-cell' : 'none';
             document.getElementById('btnExportExcel').style.display = isAdmin ? 'inline-block' : 'none';
+            document.getElementById('menuLogItem').style.display = isAdmin ? 'block' : 'none';
 
             switchView('dashboard');
         } else {
@@ -1542,13 +1666,14 @@
         document.getElementById('viewKtaAktif').style.display = (viewName === 'ktaAktif') ? 'block' : 'none';
         document.getElementById('viewProsesKta').style.display = (viewName === 'prosesKta') ? 'block' : 'none';
         document.getElementById('viewPanduanKta').style.display = (viewName === 'panduanKta') ? 'block' : 'none';
+        document.getElementById('viewGaleriKegiatan').style.display = (viewName === 'galeriKegiatan') ? 'block' : 'none';
 
         const isAdmin = currentUser && currentUser.role === 'admin';
         const btnTambah = document.getElementById('btnTambahData');
         const btnPrint = document.getElementById('btnPrint');
         const btnExport = document.getElementById('btnExportExcel');
 
-        if (viewName === 'dashboard' || viewName === 'panduanKta') {
+        if (viewName === 'dashboard' || viewName === 'panduanKta' || viewName === 'galeriKegiatan') {
             btnTambah.style.display = 'none';
             btnPrint.style.display = 'none';
             if(btnExport) btnExport.style.display = 'none';
@@ -1575,7 +1700,18 @@
         imagePreviewModal.show();
     }
 
-    // Fungsi Login (Mendukung Case-Insensitive Username & Email)
+    // Fitur 4: Pembersih Nomor WhatsApp Otomatis
+    function cleanWhatsAppNumber(inputNum) {
+        if (!inputNum) return "-";
+        let cleaned = inputNum.replace(/[^0-9]/g, '');
+        if (cleaned.startsWith('0')) {
+            cleaned = '62' + cleaned.substring(1);
+        } else if (!cleaned.startsWith('62') && cleaned.length > 5) {
+            cleaned = '62' + cleaned;
+        }
+        return cleaned;
+    }
+
     async function handleLogin(e) {
         e.preventDefault();
         const userInput = document.getElementById('loginUser').value.trim();
@@ -1645,13 +1781,13 @@
         }
     }
 
-    // Validasi Pendaftaran Akun
     async function handleRegister(e) {
         e.preventDefault();
         const nama = document.getElementById('regNama').value.trim();
         const u = document.getElementById('regUser').value.trim();
         const email = document.getElementById('regEmail').value.trim();
-        const wa = document.getElementById('regWa').value.trim();
+        const waRaw = document.getElementById('regWa').value.trim();
+        const wa = cleanWhatsAppNumber(waRaw);
         const p = document.getElementById('regPass').value.trim();
 
         if (/\s/.test(u)) {
@@ -1725,11 +1861,11 @@
         settingsModal.show();
     }
 
-    // Ubah Profil Mandiri
     async function handleUpdateProfile(e) {
         e.preventDefault();
         const newNama = document.getElementById('editProfileNama').value.trim();
-        const newWa = document.getElementById('editProfileWa').value.trim();
+        const newWaRaw = document.getElementById('editProfileWa').value.trim();
+        const newWa = cleanWhatsAppNumber(newWaRaw);
         const user = auth.currentUser;
 
         if (!user) return;
@@ -1770,7 +1906,7 @@
         }
     }
 
-    // Log Aktivitas Admin/User
+    // Fitur 2: Log Aktivitas Admin (Audit Trail)
     async function logAdminActivity(activityText) {
         try {
             await db.collection("admin_logs").add({
@@ -1781,7 +1917,41 @@
         } catch (e) { console.error("Gagal mencatat log:", e); }
     }
 
-    // Ekspor ke Excel / CSV
+    async function showActivityLogModal() {
+        if (!currentUser || currentUser.role !== 'admin') return alert('Akses Ditolak!');
+        activityLogModal.show();
+        
+        const tbody = document.getElementById('activityLogTableBody');
+        tbody.innerHTML = `<tr><td colspan="3" class="text-center text-muted">Memuat log aktivitas...</td></tr>`;
+
+        try {
+            const snapshot = await db.collection("admin_logs").orderBy("timestamp", "desc").limit(50).get();
+            if (snapshot.empty) {
+                tbody.innerHTML = `<tr><td colspan="3" class="text-center text-muted">Belum ada riwayat log aktivitas.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = '';
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                let timeStr = '-';
+                if (data.timestamp && data.timestamp.toDate) {
+                    timeStr = data.timestamp.toDate().toLocaleString('id-ID');
+                }
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="font-monospace small text-nowrap">${timeStr}</td>
+                        <td class="fw-bold">${data.user || 'System'}</td>
+                        <td>${data.activity}</td>
+                    </tr>
+                `;
+            });
+        } catch (err) {
+            console.error(err);
+            tbody.innerHTML = `<tr><td colspan="3" class="text-center text-danger">Gagal memuat log aktivitas. Pastikan aturan Firestore mengizinkan koleksi admin_logs.</td></tr>`;
+        }
+    }
+
     function exportTableToExcel() {
         let tableId = (currentActiveView === 'ktaAktif') ? 'tableAnggotaExport' : 'tableProsesExport';
         let filename = (currentActiveView === 'ktaAktif') ? 'Data_Anggota_OBR.csv' : 'Data_Proses_KTA_OBR.csv';
@@ -1874,7 +2044,6 @@
         document.getElementById('cicilContainer').style.display = (val === 'CICIL') ? 'block' : 'none';
     }
 
-    // Cek Status Expired Masa Berlaku KTA
     function checkExpiryStatus(berlakuStr) {
         if (!berlakuStr || berlakuStr === '-') return { status: 'normal', label: '-' };
         
@@ -1912,24 +2081,32 @@
                 displayHp = (item.hp && item.hp !== '-') ? "******" + item.hp.slice(-4) : "-";
             }
 
-            const waClean = item.hp ? item.hp.replace(/[^0-9]/g, '') : '';
+            const cleanWa = cleanWhatsAppNumber(item.hp);
             const hpFormatted = isAdmin && item.hp && item.hp !== '-' ? 
-                `<a href="https://wa.me/62${waClean.replace(/^0/, '')}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-2 py-0" style="font-size: 0.75rem;"><i class="bi bi-whatsapp me-1"></i>${item.hp}</a>` 
+                `<a href="https://wa.me/${cleanWa}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-2 py-0" style="font-size: 0.75rem;"><i class="bi bi-whatsapp me-1"></i>${item.hp}</a>` 
                 : `<span class="${!isAdmin ? 'blur-data' : ''}">${displayHp}</span>`;
 
             let expiryInfo = checkExpiryStatus(item.berlaku);
 
+            // Fitur 1: Tombol Cepat Pengingat WhatsApp jika Expired atau Segera Habis
+            let reminderBtn = '';
+            if (isAdmin && (expiryInfo.status === 'expired' || expiryInfo.status === 'warning') && item.hp && item.hp !== '-') {
+                let msg = encodeURIComponent(`Halo ${item.nama}, masa berlaku e-KTA The Jakmania Orange Bojong Raya Anda ${expiryInfo.status === 'expired' ? 'telah habis (expired)' : 'akan segera habis'}. Segera lakukan perpanjangan melalui pengurus ya. Salam Korwil!`);
+                reminderBtn = `<a href="https://wa.me/${cleanWa}?text=${msg}" target="_blank" class="btn btn-outline-info btn-sm rounded-circle p-1 lh-1 ms-1" title="Kirim Pengingat WhatsApp"><i class="bi bi-whatsapp small"></i></a>`;
+            }
+
             let aksiCol = isAdmin ? `
-                <td class="text-center no-print">
-                    <button class="btn btn-outline-warning btn-sm rounded-circle p-1 lh-1" onclick="editMember('${item.id}')"><i class="bi bi-pencil-fill small"></i></button>
-                    <button class="btn btn-outline-danger btn-sm rounded-circle p-1 lh-1" onclick="deleteMember('${item.id}')"><i class="bi bi-trash-fill small"></i></button>
+                <td class="text-center no-print text-nowrap">
+                    <button class="btn btn-outline-warning btn-sm rounded-circle p-1 lh-1" onclick="editMember('${item.id}')" title="Edit"><i class="bi bi-pencil-fill small"></i></button>
+                    <button class="btn btn-outline-danger btn-sm rounded-circle p-1 lh-1" onclick="deleteMember('${item.id}')" title="Hapus"><i class="bi bi-trash-fill small"></i></button>
+                    ${reminderBtn}
                 </td>
             ` : '';
 
             tbody.innerHTML += `
                 <tr>
                     <td class="text-center font-monospace fw-bold text-secondary">${index + 1}</td>
-                    <td class="fw-bold text-dark">${item.nama}</td>
+                    <td class="fw-bold">${item.nama}</td>
                     <td class="font-monospace text-secondary"><span class="${!isAdmin ? 'blur-data' : ''}">${displayKta}</span></td>
                     <td>${expiryInfo.label}</td>
                     <td>${ketBadge}</td>
@@ -1966,9 +2143,9 @@
                 displayWa = item.wa && item.wa.length >= 4 ? "******" + item.wa.slice(-4) : "******";
             }
 
-            const waClean = item.wa ? item.wa.replace(/[^0-9]/g, '') : '';
+            const cleanWa = cleanWhatsAppNumber(item.wa);
             const waFormatted = isAdmin && item.wa ? 
-                `<a href="https://wa.me/62${waClean.replace(/^0/, '')}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-2 py-0" style="font-size: 0.75rem;"><i class="bi bi-whatsapp me-1"></i>${item.wa}</a>` 
+                `<a href="https://wa.me/${cleanWa}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-2 py-0" style="font-size: 0.75rem;"><i class="bi bi-whatsapp me-1"></i>${item.wa}</a>` 
                 : `<span class="${!isAdmin ? 'blur-data' : ''}">${displayWa}</span>`;
 
             let aksiCol = isAdmin ? `
@@ -1982,9 +2159,9 @@
             tbody.innerHTML += `
                 <tr>
                     <td class="text-center font-monospace fw-bold text-secondary">${index + 1}</td>
-                    <td class="fw-bold text-dark">${item.nama}</td>
+                    <td class="fw-bold">${item.nama}</td>
                     <td>${statusKtaBadge}</td>
-                    <td><span class="badge bg-dark border text-warning px-2 py-1">${item.tipe}</span></td>
+                    <td><span class="badge border text-warning px-2 py-1">${item.tipe}</span></td>
                     <td>${formatTanggalIndo(item.tgl)}</td>
                     <td>${statusBadge}</td>
                     <td class="fw-bold text-success font-monospace">${formatRupiah(item.cicil)}</td>
@@ -2112,7 +2289,7 @@
                         kta: parts[1] || '-',
                         berlaku: parts[2] || '-',
                         ket: parts[3] || 'SUB WILAYAH BOJONG',
-                        hp: parts[4] || '-'
+                        hp: cleanWhatsAppNumber(parts[4]) || '-'
                     };
                     await db.collection("kta_aktif").add(memberData);
                     count++;
@@ -2146,7 +2323,7 @@
                         tgl: todayStr,
                         status: parts[3] ? parts[3].toUpperCase() : 'SUDAH LUNAS',
                         cicil: 0,
-                        wa: parts[4] || '-'
+                        wa: cleanWhatsAppNumber(parts[4]) || '-'
                     };
                     await db.collection("kta_proses").add(prosesData);
                     count++;
@@ -2198,7 +2375,7 @@
             kta: document.getElementById('inputNoKta').value,
             berlaku: document.getElementById('inputMasaBerlaku').value,
             ket: document.getElementById('inputKeterangan').value,
-            hp: document.getElementById('inputHp').value
+            hp: cleanWhatsAppNumber(document.getElementById('inputHp').value)
         };
 
         if(docId === '') {
@@ -2227,7 +2404,7 @@
             tgl: document.getElementById('inputProsesTanggal').value,
             status: statusVal,
             cicil: cicilVal,
-            wa: document.getElementById('inputProsesWa').value
+            wa: cleanWhatsAppNumber(document.getElementById('inputProsesWa').value)
         };
 
         if(docId === '') {
