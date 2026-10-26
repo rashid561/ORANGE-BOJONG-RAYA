@@ -257,6 +257,7 @@
             letter-spacing: 0.8px;
             padding: 14px 12px;
             border: none;
+            white-space: nowrap;
         }
 
         .table td {
@@ -310,6 +311,7 @@
             border-radius: 30px;
             font-size: 0.75rem;
             letter-spacing: 0.5px;
+            white-space: nowrap;
         }
         
         .badge-anggota { 
@@ -319,9 +321,18 @@
             border-radius: 30px;
             font-size: 0.75rem;
             letter-spacing: 0.5px;
+            white-space: nowrap;
         }
 
-        /* Badge Status Masa Berlaku Super Rapi & Presisi */
+        /* Perataan Masa Berlaku & Badge Status agar Sejajar & Rapi */
+        .masa-berlaku-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            white-space: nowrap;
+        }
+
         .badge-status-aktif {
             background-color: #198754;
             color: #ffffff;
@@ -334,6 +345,7 @@
             align-items: center;
             gap: 5px;
             box-shadow: 0 2px 6px rgba(25, 135, 84, 0.25);
+            white-space: nowrap;
         }
 
         .badge-status-expired {
@@ -348,6 +360,7 @@
             align-items: center;
             gap: 5px;
             box-shadow: 0 2px 6px rgba(220, 53, 69, 0.25);
+            white-space: nowrap;
         }
 
         .search-box {
@@ -2079,6 +2092,30 @@
         }
     }
 
+    // Format nomor telepon agar rapi berpola (misal: 0896-2579-3431)
+    function formatPhoneNumber(inputNum) {
+        if (!inputNum || inputNum === '-') return '-';
+        let cleaned = inputNum.replace(/[^0-9]/g, '');
+        if (cleaned.startsWith('62')) {
+            cleaned = '0' + cleaned.substring(2);
+        } else if (!cleaned.startsWith('0') && cleaned.length >= 8) {
+            cleaned = '0' + cleaned;
+        }
+
+        if (cleaned.length >= 10) {
+            if (cleaned.length === 10) {
+                return cleaned.replace(/(\d{4})(\d{3})(\d{3})/, '$1-$2-$3');
+            } else if (cleaned.length === 11) {
+                return cleaned.replace(/(\d{4})(\d{4})(\d{3})/, '$1-$2-$3');
+            } else if (cleaned.length === 12) {
+                return cleaned.replace(/(\d{4})(\d{4})(\d{4})/, '$1-$2-$3');
+            } else {
+                return cleaned.replace(/(\d{4})(\d{4})(\d{4})(\d*)/, '$1-$2-$3-$4');
+            }
+        }
+        return inputNum;
+    }
+
     function cleanWhatsAppNumber(inputNum) {
         if (!inputNum) return "-";
         let cleaned = inputNum.replace(/[^0-9]/g, '');
@@ -2370,7 +2407,6 @@
         document.getElementById('cicilContainer').style.display = (val === 'CICIL') ? 'block' : 'none';
     }
 
-    // Helper robust untuk parsing tanggal teks Indonesia (cth: "01 Januari 2029" atau "01 Oktober 2027")
     function parseIndonesianDate(dateStr) {
         if (!dateStr || dateStr === '-') return null;
         
@@ -2395,7 +2431,6 @@
         return null;
     }
 
-    // Fungsi otomatis mendeteksi status AKTIF / EXPIRED secara presisi dengan UI/UX badge yang konsisten
     function getRealtimeExpiryBadge(berlakuStr) {
         if (!berlakuStr || berlakuStr === '-') return `<span class="badge bg-secondary ms-1 font-monospace" style="font-size:0.7rem;">-</span>`;
         
@@ -2406,9 +2441,9 @@
         today.setHours(0, 0, 0, 0);
 
         if (targetDate < today) {
-            return `<span class="fw-medium">${berlakuStr}</span> <span class="badge-status-expired ms-2"><i class="bi bi-x-circle-fill"></i> EXPIRED</span>`;
+            return `<div class="masa-berlaku-wrapper"><span class="fw-medium">${berlakuStr}</span> <span class="badge-status-expired"><i class="bi bi-x-circle-fill"></i> EXPIRED</span></div>`;
         } else {
-            return `<span class="fw-medium">${berlakuStr}</span> <span class="badge-status-aktif ms-2"><i class="bi bi-check-circle-fill"></i> AKTIF</span>`;
+            return `<div class="masa-berlaku-wrapper"><span class="fw-medium">${berlakuStr}</span> <span class="badge-status-aktif"><i class="bi bi-check-circle-fill"></i> AKTIF</span></div>`;
         }
     }
 
@@ -2421,7 +2456,7 @@
             const isKetua = item.ket && item.ket.toUpperCase().includes('KETUA');
             const ketBadge = isKetua ? `<span class="badge badge-ketua shadow-sm">${item.ket}</span>` : `<span class="badge badge-anggota shadow-sm">${item.ket || 'SUB WILAYAH BOJONG'}</span>`;
             let displayKta = item.kta || '-';
-            let displayHp = item.hp || '-';
+            let displayHp = formatPhoneNumber(item.hp);
 
             if (!isAdmin) {
                 displayKta = item.kta && item.kta.length >= 6 ? item.kta.substring(0, item.kta.length - 6) + "******" : "******";
@@ -2430,7 +2465,7 @@
 
             const cleanWa = cleanWhatsAppNumber(item.hp);
             const hpFormatted = isAdmin && item.hp && item.hp !== '-' ? 
-                `<a href="https://wa.me/${cleanWa}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-2.5 py-1" style="font-size: 0.78rem;"><i class="bi bi-whatsapp me-1"></i>${item.hp}</a>` 
+                `<a href="https://wa.me/${cleanWa}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-2.5 py-1" style="font-size: 0.78rem;"><i class="bi bi-whatsapp me-1"></i>${displayHp}</a>` 
                 : `<span class="${!isAdmin ? 'blur-data' : ''}">${displayHp}</span>`;
 
             let masaBerlakuHtml = getRealtimeExpiryBadge(item.berlaku);
@@ -2463,23 +2498,23 @@
         const isAdmin = currentUser && currentUser.role === 'admin';
 
         data.forEach((item, index) => {
-            let statusKtaBadge = (item.statusKta === 'PERPANJANGAN') ? `<span class="badge bg-secondary shadow-sm">PERPANJANGAN</span>` : `<span class="badge bg-primary shadow-sm">PENDAFTARAN</span>`;
+            let statusKtaBadge = (item.statusKta === 'PERPANJANGAN') ? `<span class="badge bg-secondary shadow-sm px-3 py-1.5">PERPANJANGAN</span>` : `<span class="badge bg-primary shadow-sm px-3 py-1.5">PENDAFTARAN</span>`;
             let statusBadge = "";
-            if (item.status === 'SUDAH LUNAS') statusBadge = `<span class="badge bg-success shadow-sm">LUNAS</span>`;
-            else if (item.status === 'CICIL') statusBadge = `<span class="badge bg-warning text-dark shadow-sm">CICIL</span>`;
-            else statusBadge = `<span class="badge bg-danger shadow-sm">BELUM</span>`;
+            if (item.status === 'SUDAH LUNAS') statusBadge = `<span class="badge bg-success shadow-sm px-3 py-1.5">LUNAS</span>`;
+            else if (item.status === 'CICIL') statusBadge = `<span class="badge bg-warning text-dark shadow-sm px-3 py-1.5">CICIL</span>`;
+            else statusBadge = `<span class="badge bg-danger shadow-sm px-3 py-1.5">BELUM</span>`;
 
-            let displayWa = item.wa || '-';
+            let displayWa = formatPhoneNumber(item.wa);
             if (!isAdmin) displayWa = item.wa && item.wa.length >= 4 ? "******" + item.wa.slice(-4) : "******";
 
             const cleanWa = cleanWhatsAppNumber(item.wa);
             const waFormatted = isAdmin && item.wa ? 
-                `<a href="https://wa.me/${cleanWa}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-2.5 py-1" style="font-size: 0.78rem;"><i class="bi bi-whatsapp me-1"></i>${item.wa}</a>` 
+                `<a href="https://wa.me/${cleanWa}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-2.5 py-1" style="font-size: 0.78rem;"><i class="bi bi-whatsapp me-1"></i>${displayWa}</a>` 
                 : `<span class="${!isAdmin ? 'blur-data' : ''}">${displayWa}</span>`;
 
             let aksiCol = isAdmin ? `
                 <td class="text-center no-print">
-                    <button class="btn btn-outline-success btn-sm rounded-pill px-2.5 py-1 fw-semibold mb-1 shadow-sm" onclick="moveToAnggota('${item.id}')" title="Pindahkan ke Daftar Anggota Aktif" style="font-size: 0.72rem;"><i class="bi bi-box-arrow-right me-1"></i> Pindahkan</button><br>
+                    <button class="btn btn-outline-success btn-sm rounded-pill px-3 py-1.5 fw-semibold mb-1.5 shadow-sm" onclick="moveToAnggota('${item.id}')" title="Pindahkan ke Daftar Anggota Aktif" style="font-size: 0.75rem;"><i class="bi bi-box-arrow-right me-1"></i> Pindahkan</button><br>
                     <button class="btn btn-outline-warning btn-sm rounded-circle p-1.5 lh-1 me-1 shadow-sm" onclick="editProsesKta('${item.id}')"><i class="bi bi-pencil-fill small"></i></button>
                     <button class="btn btn-outline-danger btn-sm rounded-circle p-1.5 lh-1 shadow-sm" onclick="deleteProsesKta('${item.id}')"><i class="bi bi-trash-fill small"></i></button>
                 </td>
@@ -2490,8 +2525,8 @@
                     <td class="text-center font-monospace fw-bold text-secondary">${index + 1}</td>
                     <td class="fw-bold">${item.nama}</td>
                     <td>${statusKtaBadge}</td>
-                    <td><span class="badge border text-warning px-2.5 py-1">${item.tipe}</span></td>
-                    <td>${formatTanggalIndo(item.tgl)}</td>
+                    <td><span class="badge border text-warning px-3 py-1.5">${item.tipe}</span></td>
+                    <td class="text-nowrap">${formatTanggalIndo(item.tgl)}</td>
                     <td>${statusBadge}</td>
                     <td class="fw-bold text-success font-monospace">${formatRupiah(item.cicil)}</td>
                     <td>${waFormatted}</td>
