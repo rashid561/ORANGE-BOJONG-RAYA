@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DORANGE BOJONG RAYA</title>
+    <title>ORANGE BOJONG RAYA</title>
     <!-- Favicon dinamis -->
     <link id="browserFavicon" rel="icon" type="image/png" href="LOGO OBR.png">
     <!-- Bootstrap 5 CSS -->
@@ -34,6 +34,11 @@
             --bank-card-bg: #ffffff;
             --emoney-bg: #ffffff;
             --emoney-text: #111111;
+            --counter-badge-bg: #ffffff;
+            --counter-badge-text: #333333;
+            --counter-badge-border: #dee2e6;
+            --syarat-box-bg: #f8f9fa;
+            --syarat-box-text: #495057;
         }
 
         [data-theme="dark"] {
@@ -51,6 +56,11 @@
             --bank-card-bg: #1e1e1e;
             --emoney-bg: #1e1e1e;
             --emoney-text: #ffffff;
+            --counter-badge-bg: #222222;
+            --counter-badge-text: #ffb84d;
+            --counter-badge-border: #ff9900;
+            --syarat-box-bg: #2a2a2a;
+            --syarat-box-text: #f1f5f9;
         }
 
         body { 
@@ -258,9 +268,30 @@
             transition: color 0.3s ease;
         }
 
-        /* Penyesuaian agar teks kecil/muted jelas di mode gelap */
         [data-theme="dark"] .text-muted {
             color: #cbd5e1 !important;
+        }
+
+        /* Styling Badge Counter Total Anggota / Pengajuan agar terlihat jelas di dark mode */
+        .counter-badge-box {
+            background-color: var(--counter-badge-bg);
+            color: var(--counter-badge-text);
+            border: 1px solid var(--counter-badge-border);
+            padding: 6px 14px;
+            border-radius: 30px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* Kotak Syarat & Ketentuan Khusus Pelajar */
+        .syarat-ketentuan-box {
+            background-color: var(--syarat-box-bg);
+            color: var(--syarat-box-text);
+            border: 1px solid rgba(253, 126, 20, 0.3);
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
         }
 
         .badge-ketua { 
@@ -690,7 +721,7 @@
                         </select>
                     </div>
                     <div class="col-md-3 text-md-end">
-                        <div class="d-inline-flex align-items-center px-3 py-1 rounded-pill shadow-sm border small">
+                        <div class="counter-badge-box small">
                             <i class="bi bi-people-fill text-warning me-2"></i>
                             <span class="fw-bold" id="totalCount">Total: 0 Anggota</span>
                         </div>
@@ -747,7 +778,7 @@
                 </div>
 
                 <div class="d-flex justify-content-end mb-2">
-                    <div class="d-inline-flex align-items-center px-3 py-1 rounded-pill shadow-sm border small">
+                    <div class="counter-badge-box small">
                         <i class="bi bi-clock-history text-warning me-2"></i>
                         <span class="fw-bold" id="totalProsesCount">Total: 0 Pengajuan</span>
                     </div>
@@ -1030,7 +1061,7 @@
                             <p class="text-muted small mb-2">
                                 Khusus untuk anggota yang masih berstatus pelajar/siswa, tersedia potongan harga diskon 15%.
                             </p>
-                            <div class="p-2 rounded-3 border mb-2 small bg-opacity-50">
+                            <div class="syarat-ketentuan-box mb-2 small">
                                 <b>Syarat & Ketentuan:</b> Wajib melampirkan foto Kartu Pelajar yang masih aktif saat pengajuan pendaftaran.
                             </div>
                         </div>
@@ -2496,7 +2527,7 @@
         try {
             await auth.sendPasswordResetEmail(emailInput);
             alert('Link reset password berhasil dikirim! Periksa Inbox atau Spam email Anda.');
-            forgotModal.forgotModal.hide();
+            forgotModal.hide();
         } catch (error) { alert('Gagal mengirim email reset: ' + error.message); }
     }
 </script>
