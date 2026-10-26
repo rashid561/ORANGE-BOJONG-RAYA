@@ -2126,6 +2126,7 @@
     }
 
     // Format nomor telepon yang bersih tanpa kendala $4
+// Perbaikan fungsi format nomor telepon agar tidak berulang/aneh
     function formatPhoneNumber(inputNum) {
         if (!inputNum || inputNum === '-') return '-';
         let cleaned = inputNum.toString().replace(/[^0-9]/g, '');
@@ -2142,14 +2143,14 @@
             } else if (cleaned.length === 11) {
                 return cleaned.slice(0, 4) + '-' + cleaned.slice(4, 8) + '-' + cleaned.slice(8);
             } else if (cleaned.length === 12) {
-                return cleaned.slice(0, 4) + '-' + cleaned.slice(4, 8) + '-' + cleaned.slice(4, 12);
+                return cleaned.slice(0, 4) + '-' + cleaned.slice(4, 8) + '-' + cleaned.slice(8, 12);
             } else {
                 return cleaned.slice(0, 4) + '-' + cleaned.slice(4, 8) + '-' + cleaned.slice(8, 12) + '-' + cleaned.slice(12);
             }
         }
         return inputNum;
     }
-
+    
     function cleanWhatsAppNumber(inputNum) {
         if (!inputNum) return "-";
         let cleaned = inputNum.toString().replace(/[^0-9]/g, '');
