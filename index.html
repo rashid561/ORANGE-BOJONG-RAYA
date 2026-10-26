@@ -664,7 +664,7 @@
                         <div class="card menu-card p-3 text-center shadow-sm" onclick="switchView('galeriKegiatan')">
                             <div class="card-body py-2">
                                 <i class="bi bi-images display-6 text-warning mb-2 d-block"></i>
-                                <h6 class="menu-card-title">GALERI KEGIATAN<br>OBR & NOBAR</h6>
+                                <h6 class="menu-card-title">GALERI KEGIATAN<br>ORANGE BOJONG RAYA</h6>
                                 <p class="menu-card-desc mb-0">Dokumentasi keseruan nonton bareng, futsal, dan kegiatan sosial OBR.</p>
                             </div>
                         </div>
@@ -787,12 +787,12 @@
                 </div>
             </div>
 
-            <!-- HALAMAN GALERI KEGIATAN OBR (DINAMIS & BISA DI-DOWNLOAD) -->
+            <!-- HALAMAN GALERI KEGIATAN ORANGE BOJONG RAYA -->
             <div id="viewGaleriKegiatan" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                     <button class="btn btn-dark rounded-pill px-3 py-1 btn-sm fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-1"></i>Kembali ke Menu Utama</button>
                     <div class="d-flex align-items-center gap-2">
-                        <h5 class="fw-bold text-uppercase mb-0">Galeri Kegiatan & Nobar Orange Bojong Raya</h5>
+                        <h5 class="fw-bold text-uppercase mb-0">Galeri Kegiatan Orange Bojong Raya</h5>
                         <button id="btnTambahGaleri" class="btn btn-warning btn-sm rounded-pill fw-bold px-3 shadow-sm text-dark" onclick="openGaleriModal()" style="display: none;"><i class="bi bi-plus-circle-fill me-1"></i> Tambah Foto Galeri</button>
                     </div>
                 </div>
@@ -1089,7 +1089,7 @@
     </div>
 </div>
 
-<!-- MODAL TAMBAH / EDIT GALERI (KHUSUS ADMIN) -->
+<!-- MODAL TAMBAH / EDIT GALERI (BISA MULTI-UPLOAD & PILIH SAMPUL) -->
 <div class="modal fade" id="galeriModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded-4">
@@ -1112,10 +1112,16 @@
                         <label class="form-label fw-semibold text-secondary mb-1">Deskripsi Singkat <span class="text-danger">*</span></label>
                         <input type="text" id="inputGaleriDesc" class="form-control form-control-sm rounded-3" required placeholder="Keterangan singkat kegiatan...">
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold text-secondary mb-1">Pilih File Foto <span class="text-danger">*</span></label>
-                        <input type="file" id="inputGaleriFile" class="form-control form-control-sm rounded-3" accept="image/*">
-                        <small class="text-muted" style="font-size: 0.7rem;">Foto akan disimpan secara aman di Firebase Storage.</small>
+                    <div class="mb-2">
+                        <label class="form-label fw-semibold text-secondary mb-1">Pilih File Foto (Bisa Banyak Sekaligus) <span class="text-danger">*</span></label>
+                        <input type="file" id="inputGaleriFiles" class="form-control form-control-sm rounded-3" accept="image/*" multiple onchange="previewSelectedGalleryFiles(this)">
+                        <small class="text-muted" style="font-size: 0.7rem;">Anda dapat memilih lebih dari 1 foto sekaligus dari perangkat Anda.</small>
+                    </div>
+                    <div class="mb-3" id="thumbnailSelectionContainer" style="display: none;">
+                        <label class="form-label fw-semibold text-secondary mb-1">Pilih Foto Sampul Depan (Thumbnail Utama di Website):</label>
+                        <div id="thumbnailRadioGroup" class="d-flex flex-wrap gap-2 p-2 border rounded bg-light">
+                            <!-- Radio pilihan sampul akan muncul otomatis di sini -->
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill shadow" id="btnSimpanGaleri">Simpan Foto Galeri</button>
                 </form>
@@ -1450,6 +1456,7 @@
     let currentActiveView = 'dashboard';
     let sessionUnsubscribe = null;
     let afkTimer = null;
+    let selectedFilesTemp = [];
 
     const selectAddModeModal = new bootstrap.Modal(document.getElementById('selectAddModeModal'));
     const selectAddProsesModeModal = new bootstrap.Modal(document.getElementById('selectAddProsesModeModal'));
@@ -1713,7 +1720,7 @@
         imagePreviewModal.show();
     }
 
-    // Fungsi Render Galeri Dinamis dengan Tombol Download & Aksi Admin
+    // Fungsi Render Galeri Dinamis dengan Sampul Latar Depan & Tombol Download
     function renderGaleri() {
         const container = document.getElementById('galeriContainer');
         container.innerHTML = '';
@@ -1728,7 +1735,7 @@
             let adminActions = isAdmin ? `
                 <div class="mt-2 d-flex justify-content-center gap-2">
                     <button class="btn btn-outline-warning btn-sm rounded-pill px-3 py-1 fw-semibold" onclick="editGaleri('${item.id}')"><i class="bi bi-pencil-fill me-1"></i> Edit</button>
-                    <button class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1 fw-semibold" onclick="deleteGaleri('${item.id}', '${item.imagePath || ''}')"><i class="bi bi-trash-fill me-1"></i> Hapus</button>
+                    <button class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1 fw-semibold" onclick="deleteGaleri('${item.id}')"><i class="bi bi-trash-fill me-1"></i> Hapus</button>
                 </div>
             ` : '';
 
@@ -1755,8 +1762,38 @@
         document.getElementById('editGaleriId').value = '';
         document.getElementById('galeriModalTitle').innerHTML = '<i class="bi bi-images me-1"></i>Tambah Foto Galeri Kegiatan';
         document.getElementById('galeriForm').reset();
-        document.getElementById('inputGaleriFile').required = true;
+        document.getElementById('inputGaleriFiles').required = true;
+        document.getElementById('thumbnailSelectionContainer').style.display = 'none';
+        selectedFilesTemp = [];
         galeriModal.show();
+    }
+
+    function previewSelectedGalleryFiles(input) {
+        selectedFilesTemp = Array.from(input.files);
+        const container = document.getElementById('thumbnailSelectionContainer');
+        const radioGroup = document.getElementById('thumbnailRadioGroup');
+        radioGroup.innerHTML = '';
+
+        if (selectedFilesTemp.length > 1) {
+            container.style.display = 'block';
+            selectedFilesTemp.forEach((file, idx) => {
+                let reader = new FileReader();
+                reader.onload = function(e) {
+                    radioGroup.innerHTML += `
+                        <div class="form-check form-check-inline text-center p-1 border rounded bg-white">
+                            <input class="form-check-input" type="radio" name="thumbnailRadio" id="thumb_${idx}" value="${idx}" ${idx === 0 ? 'checked' : ''}>
+                            <label class="form-check-label d-block text-dark small" for="thumb_${idx}">
+                                <img src="${e.target.result}" style="width: 50px; height: 50px; object-fit: cover;" class="rounded d-block mb-1 mx-auto">
+                                Foto ${idx + 1}
+                            </label>
+                        </div>
+                    `;
+                }
+                reader.readAsDataURL(file);
+            });
+        } else {
+            container.style.display = 'none';
+        }
     }
 
     function editGaleri(id) {
@@ -1767,7 +1804,8 @@
         document.getElementById('inputGaleriJudul').value = item.judul;
         document.getElementById('inputGaleriKategori').value = item.kategori;
         document.getElementById('inputGaleriDesc').value = item.deskripsi;
-        document.getElementById('inputGaleriFile').required = false;
+        document.getElementById('inputGaleriFiles').required = false;
+        document.getElementById('thumbnailSelectionContainer').style.display = 'none';
         galeriModal.show();
     }
 
@@ -1777,40 +1815,61 @@
         const judul = document.getElementById('inputGaleriJudul').value.toUpperCase();
         const kategori = document.getElementById('inputGaleriKategori').value.toUpperCase();
         const deskripsi = document.getElementById('inputGaleriDesc').value;
-        const fileInput = document.getElementById('inputGaleriFile');
+        const fileInput = document.getElementById('inputGaleriFiles');
         const btn = document.getElementById('btnSimpanGaleri');
 
         btn.disabled = true;
-        btn.innerText = 'Menyimpan...';
+        btn.innerText = 'Mengunggah & Menyimpan...';
 
         try {
-            let imageUrl = '';
-            let imagePath = '';
-
             if (docId) {
-                const existing = galeriData.find(x => x.id === docId);
-                imageUrl = existing.imageUrl;
-                imagePath = existing.imagePath || '';
-            }
+                // Mode Edit 1 Foto
+                let imageUrl = galeriData.find(x => x.id === docId).imageUrl;
+                let imagePath = galeriData.find(x => x.id === docId).imagePath || '';
 
-            if (fileInput.files && fileInput.files[0]) {
-                const file = fileInput.files[0];
-                imagePath = 'galeri/' + Date.now() + '_' + file.name;
-                const storageRef = storage.ref().child(imagePath);
-                const snapshot = await storageRef.put(file);
-                imageUrl = await snapshot.ref.getDownloadURL();
-            }
+                if (fileInput.files && fileInput.files[0]) {
+                    const file = fileInput.files[0];
+                    imagePath = 'galeri/' + Date.now() + '_' + file.name;
+                    const snapshot = await storage.ref().child(imagePath).put(file);
+                    imageUrl = await snapshot.ref.getDownloadURL();
+                }
 
-            const dataPayload = { judul, kategori, deskripsi, imageUrl, imagePath };
-
-            if (!docId) {
-                await db.collection("galeri_kegiatan").add(dataPayload);
-                logAdminActivity(`Admin menambahkan foto galeri [${judul}].`);
-                alert('Foto galeri berhasil ditambahkan!');
-            } else {
-                await db.collection("galeri_kegiatan").doc(docId).update(dataPayload);
+                await db.collection("galeri_kegiatan").doc(docId).update({ judul, kategori, deskripsi, imageUrl, imagePath });
                 logAdminActivity(`Admin memperbarui foto galeri [${judul}].`);
                 alert('Foto galeri berhasil diperbarui!');
+            } else {
+                // Mode Tambah (Bisa Banyak Foto Sekaligus)
+                if (!fileInput.files || fileInput.files.length === 0) {
+                    alert('Pilih minimal 1 file foto!');
+                    btn.disabled = false;
+                    btn.innerText = 'Simpan Foto Galeri';
+                    return;
+                }
+
+                let files = Array.from(fileInput.files);
+                let primaryIndex = 0;
+                if (files.length > 1) {
+                    let checkedRadio = document.querySelector('input[name="thumbnailRadio"]:checked');
+                    if (checkedRadio) primaryIndex = parseInt(checkedRadio.value);
+                }
+
+                // Urutkan agar foto sampul utama diproses di urutan pertama atau ditandai
+                let uploadPromises = files.map(async (file, idx) => {
+                    let imagePath = 'galeri/' + Date.now() + '_' + idx + '_' + file.name;
+                    let snapshot = await storage.ref().child(imagePath).put(file);
+                    let imageUrl = await snapshot.ref.getDownloadURL();
+                    return { judul, kategori, deskripsi, imageUrl, imagePath, isFeatured: (idx === primaryIndex) };
+                });
+
+                let uploadedItems = await Promise.all(uploadPromises);
+
+                // Simpan ke Firestore
+                for (let item of uploadedItems) {
+                    await db.collection("galeri_kegiatan").add(item);
+                }
+
+                logAdminActivity(`Admin mengunggah ${files.length} foto galeri baru.`);
+                alert(`Berhasil mengunggah ${files.length} foto ke galeri kegiatan!`);
             }
 
             galeriModal.hide();
@@ -1822,12 +1881,13 @@
         }
     }
 
-    async function deleteGaleri(id, imagePath) {
+    async function deleteGaleri(id) {
         if (confirm("Hapus foto galeri ini?")) {
             try {
+                const item = galeriData.find(x => x.id === id);
                 await db.collection("galeri_kegiatan").doc(id).delete();
-                if (imagePath) {
-                    await storage.ref().child(imagePath).delete().catch(() => {});
+                if (item && item.imagePath) {
+                    await storage.ref().child(item.imagePath).delete().catch(() => {});
                 }
                 logAdminActivity(`Admin menghapus foto galeri ID: ${id}`);
                 alert('Foto berhasil dihapus!');
