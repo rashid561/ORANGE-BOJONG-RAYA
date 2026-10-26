@@ -257,7 +257,7 @@
         }
 
         .table td {
-            padding: 10px 12px;
+            padding: 12px;
             vertical-align: middle;
             font-size: 0.9rem;
         }
@@ -294,7 +294,7 @@
         .badge-ketua { 
             background-color: #dc3545; 
             font-weight: 600;
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 30px;
             font-size: 0.75rem;
         }
@@ -302,9 +302,38 @@
         .badge-anggota { 
             background-color: #198754; 
             font-weight: 600;
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 30px;
             font-size: 0.75rem;
+        }
+
+        /* Perbaikan UI Badge Status Masa Berlaku */
+        .badge-status-aktif {
+            background-color: #198754;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            letter-spacing: 0.3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 2px 4px rgba(25, 135, 84, 0.2);
+        }
+
+        .badge-status-expired {
+            background-color: #dc3545;
+            color: #ffffff;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            letter-spacing: 0.3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2);
         }
 
         .search-box {
@@ -1073,7 +1102,7 @@
     </div>
 </div>
 
-<!-- MODAL PREVIEW SLIDER GAMBAR (BAGIAN MERAH DI ATAS SUDAH DIHILANGKAN) -->
+<!-- MODAL PREVIEW SLIDER GAMBAR -->
 <div class="modal fade" id="imagePreviewModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 bg-dark text-white rounded-4 overflow-hidden shadow-lg">
@@ -1083,9 +1112,7 @@
             </div>
             <div class="modal-body text-center p-2 p-md-3 bg-black position-relative">
                 <div id="modalCarouselContainer" class="carousel slide" data-bs-interval="false">
-                    <div class="carousel-inner" id="modalCarouselInner">
-                        <!-- Slide foto modal dimuat dinamis -->
-                    </div>
+                    <div class="carousel-inner" id="modalCarouselInner"></div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#modalCarouselContainer" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
@@ -2316,19 +2343,46 @@
         document.getElementById('cicilContainer').style.display = (val === 'CICIL') ? 'block' : 'none';
     }
 
-    // Fungsi otomatis menentukan badge AKTIF / EXPIRED berdasarkan tanggal real-life tanpa bolong-bolong
+    // Helper robust untuk parsing tanggal teks Indonesia (cth: "01 Januari 2029" atau "01 Oktober 2027")
+    function parseIndonesianDate(dateStr) {
+        if (!dateStr || dateStr === '-') return null;
+        
+        // Jika format sudah standar YYYY-MM-DD
+        let directDate = new Date(dateStr);
+        if (!isNaN(directDate)) return directDate;
+
+        const months = {
+            'januari': 0, 'februari': 1, 'maret': 2, 'april': 3, 'mei': 4, 'juni': 5,
+            'juli': 6, 'agustus': 7, 'september': 8, 'oktober': 9, 'november': 10, 'desember': 11
+        };
+
+        let parts = dateStr.trim().toLowerCase().split(/\s+/);
+        if (parts.length >= 3) {
+            let day = parseInt(parts[0], 10);
+            let monthName = parts[1].replace(/[^a-z]/g, '');
+            let year = parseInt(parts[2], 10);
+
+            if (!isNaN(day) && months[monthName] !== undefined && !isNaN(year)) {
+                return new Date(year, months[monthName], day);
+            }
+        }
+        return null;
+    }
+
+    // Fungsi otomatis mendeteksi status AKTIF / EXPIRED secara presisi dengan UI/UX badge yang konsisten
     function getRealtimeExpiryBadge(berlakuStr) {
-        if (!berlakuStr || berlakuStr === '-') return `<span class="badge bg-secondary ms-1" style="font-size:0.65rem;">-</span>`;
+        if (!berlakuStr || berlakuStr === '-') return `<span class="badge bg-secondary ms-1 font-monospace" style="font-size:0.7rem;">-</span>`;
         
-        let targetDate = new Date(berlakuStr);
-        if (isNaN(targetDate)) return `<span class="badge bg-secondary ms-1" style="font-size:0.65rem;">${berlakuStr}</span>`;
+        let targetDate = parseIndonesianDate(berlakuStr);
+        if (!targetDate) return `<span class="badge bg-secondary ms-1 font-monospace" style="font-size:0.7rem;">${berlakuStr}</span>`;
         
-        let today = new Date(); // Tanggal real-life saat ini
-        
+        let today = new Date();
+        today.setHours(0, 0, 0, 0); // Reset jam agar perbandingan hari akurat
+
         if (targetDate < today) {
-            return `${berlakuStr} <span class="badge bg-danger ms-1" style="font-size:0.65rem;">EXPIRED</span>`;
+            return `<span class="fw-medium">${berlakuStr}</span> <span class="badge-status-expired ms-2"><i class="bi bi-x-circle-fill"></i> EXPIRED</span>`;
         } else {
-            return `${berlakuStr} <span class="badge bg-success ms-1" style="font-size:0.65rem;">AKTIF</span>`;
+            return `<span class="fw-medium">${berlakuStr}</span> <span class="badge-status-aktif ms-2"><i class="bi bi-check-circle-fill"></i> AKTIF</span>`;
         }
     }
 
@@ -2353,7 +2407,6 @@
                 `<a href="https://wa.me/${cleanWa}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-2 py-0" style="font-size: 0.75rem;"><i class="bi bi-whatsapp me-1"></i>${item.hp}</a>` 
                 : `<span class="${!isAdmin ? 'blur-data' : ''}">${displayHp}</span>`;
 
-            // Menerapkan badge AKTIF / EXPIRED secara otomatis ke seluruh data tanpa bolong-bolong
             let masaBerlakuHtml = getRealtimeExpiryBadge(item.berlaku);
 
             let aksiCol = isAdmin ? `
@@ -2453,12 +2506,13 @@
         const query = document.getElementById('searchInput').value.toLowerCase();
         const statusFilter = document.getElementById('statusFilter').value;
         const today = new Date();
+        today.setHours(0, 0, 0, 0);
 
         const filtered = members.filter(m => {
             const matchQuery = (m.nama && m.nama.toLowerCase().includes(query)) || (m.kta && m.kta.toLowerCase().includes(query)) || (m.ket && m.ket.toLowerCase().includes(query)) || (m.hp && m.hp.toLowerCase().includes(query));
             
-            let targetDate = new Date(m.berlaku);
-            let isExpired = !isNaN(targetDate) && targetDate < today;
+            let targetDate = parseIndonesianDate(m.berlaku);
+            let isExpired = targetDate ? (targetDate < today) : false;
 
             if (statusFilter === 'active') return matchQuery && !isExpired && m.berlaku && m.berlaku !== '-';
             if (statusFilter === 'expired') return matchQuery && isExpired;
