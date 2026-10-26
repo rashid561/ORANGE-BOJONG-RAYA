@@ -21,13 +21,13 @@
     <style>
         :root {
             --bg-body: #f4f6f9;
-            --text-main: #333333;
+            --text-main: #2c3e50;
             --card-bg: #ffffff;
             --header-bg: linear-gradient(135deg, #cc4400 0%, #ff6600 50%, #f39c12 100%);
             --menu-bg: linear-gradient(135deg, #ffffff 0%, #fff7f0 100%);
-            --menu-text: #111111;
+            --menu-text: #1a1a1a;
             --menu-desc: #6c757d;
-            --section-title: #222222;
+            --section-title: #1a1a1a;
             --step-card-bg: #ffffff;
             --step-card-border: #ffd8be;
             --step-text: #333333;
@@ -39,6 +39,7 @@
             --counter-badge-border: #dee2e6;
             --syarat-box-bg: #f8f9fa;
             --syarat-box-text: #495057;
+            --table-hover: #fff3eb;
         }
 
         [data-theme="dark"] {
@@ -48,7 +49,7 @@
             --header-bg: linear-gradient(135deg, #802b00 0%, #b34700 50%, #b36b00 100%);
             --menu-bg: linear-gradient(135deg, #222222 0%, #2d1e12 100%);
             --menu-text: #ffffff;
-            --menu-desc: #f1f5f9;
+            --menu-desc: #cbd5e1;
             --section-title: #ffffff;
             --step-card-bg: #1e1e1e;
             --step-card-border: #ff8533;
@@ -61,6 +62,7 @@
             --counter-badge-border: #ff9900;
             --syarat-box-bg: #2a2a2a;
             --syarat-box-text: #f1f5f9;
+            --table-hover: #262626;
         }
 
         body { 
@@ -86,45 +88,44 @@
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
             border: 3px solid #e65c00;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(230, 92, 0, 0.3);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(230, 92, 0, 0.35);
             width: 100%;
             max-width: 450px;
         }
 
         .portal-logo {
-            width: 85px;
-            height: 85px;
+            width: 90px;
+            height: 90px;
             object-fit: cover;
             border-radius: 50%;
             border: 3px solid #e65c00;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
             margin-bottom: 12px;
         }
 
         .portal-title {
             font-family: 'Teko', 'Bebas Neue', sans-serif;
-            font-size: clamp(1.6rem, 5vw, 2.2rem);
+            font-size: clamp(1.8rem, 5vw, 2.4rem);
             letter-spacing: 1px;
             line-height: 1.05;
             color: #111;
             text-transform: uppercase;
             font-weight: 700;
-            word-break: break-word;
         }
 
         .portal-subtitle {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.15rem;
-            letter-spacing: 1px;
+            font-size: 1.25rem;
+            letter-spacing: 1.5px;
             color: #e65c00;
-            margin-top: 4px;
+            margin-top: 2px;
         }
 
         .password-group .form-control {
             border-right: none;
-            border-top-left-radius: 10px;
-            border-bottom-left-radius: 10px;
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
         }
         .password-group .form-control:focus {
             border-color: #fd7e14;
@@ -134,11 +135,11 @@
             background-color: #ffffff;
             border: 1px solid #dee2e6;
             border-left: none;
-            border-top-right-radius: 10px;
-            border-bottom-right-radius: 10px;
+            border-top-right-radius: 12px;
+            border-bottom-right-radius: 12px;
             color: #6c757d;
             transition: all 0.2s ease;
-            padding: 0 15px;
+            padding: 0 16px;
         }
         .password-group .btn-toggle-pass:hover {
             color: #fd7e14;
@@ -146,10 +147,10 @@
         }
 
         .strength-meter {
-            height: 5px;
-            border-radius: 3px;
+            height: 6px;
+            border-radius: 4px;
             background: #e9ecef;
-            margin-top: 5px;
+            margin-top: 6px;
             overflow: hidden;
             transition: all 0.3s ease;
         }
@@ -161,18 +162,18 @@
         
         .main-card {
             border: none;
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
             background: var(--card-bg);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15)!important;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12)!important;
             transition: background 0.3s ease;
         }
 
         .card-header-persija { 
             background: var(--header-bg); 
             color: white; 
-            border-bottom: 5px solid #111;
-            padding: 15px;
+            border-bottom: 6px solid #111;
+            padding: 20px;
             transition: background 0.3s ease;
         } 
 
@@ -180,7 +181,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
+            gap: 12px;
             width: 100%;
         }
 
@@ -195,55 +196,56 @@
 
         .brand-title {
             font-family: 'Teko', 'Bebas Neue', sans-serif;
-            font-size: clamp(1.8rem, 5.5vw, 3.6rem);
+            font-size: clamp(2rem, 6vw, 3.8rem);
             line-height: 0.95;
-            letter-spacing: 1px;
+            letter-spacing: 1.2px;
             font-weight: 700;
             color: #ffffff;
             margin: 0;
-            text-shadow: 2px 2px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000, 0px 3px 8px rgba(0,0,0,0.7);
+            text-shadow: 2px 2px 0px #000, -1px -1px 0px #000, 1px -1px 0px #000, -1px 1px 0px #000, 0px 4px 10px rgba(0,0,0,0.6);
         }
 
         .brand-subtext {
             font-family: 'Bebas Neue', sans-serif;
-            font-size: clamp(0.85rem, 2.5vw, 1.4rem);
-            letter-spacing: 1.5px;
+            font-size: clamp(0.9rem, 2.5vw, 1.45rem);
+            letter-spacing: 2px;
             background: #111111;
             color: #ff9900;
             border: 2px solid #ff9900;
-            padding: 3px 12px;
+            padding: 4px 16px;
             border-radius: 30px;
             display: inline-block;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
             text-transform: uppercase;
-            margin-top: 4px;
+            margin-top: 6px;
             white-space: nowrap;
         }
 
         .app-logo {
-            width: clamp(65px, 14vw, 95px);
-            height: clamp(65px, 14vw, 95px);
+            width: clamp(70px, 14vw, 100px);
+            height: clamp(70px, 14vw, 100px);
             object-fit: cover;
             border-radius: 50%;
             border: 3px solid #ffffff;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
             background-color: #000;
             flex-shrink: 0;
-            transition: transform 0.2s ease;
+            transition: transform 0.25s ease;
         }
 
         .app-logo:hover {
-            transform: scale(1.05);
+            transform: scale(1.06);
         }
 
         .table-responsive { 
             max-height: 600px; 
             overflow-y: auto; 
-            border-radius: 8px;
+            border-radius: 12px;
         }
 
         .table {
             color: var(--text-main) !important;
+            margin-bottom: 0;
         }
 
         .table th {
@@ -252,14 +254,24 @@
             font-weight: 600;
             text-transform: uppercase;
             font-size: 0.85rem;
-            letter-spacing: 0.5px;
-            padding: 12px;
+            letter-spacing: 0.8px;
+            padding: 14px 12px;
+            border: none;
         }
 
         .table td {
-            padding: 12px;
+            padding: 14px 12px;
             vertical-align: middle;
             font-size: 0.9rem;
+            border-color: rgba(0,0,0,0.06);
+        }
+
+        [data-theme="dark"] .table td {
+            border-color: rgba(255,255,255,0.06);
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: var(--table-hover) !important;
         }
 
         h4, h5, h6 {
@@ -275,9 +287,9 @@
             background-color: var(--counter-badge-bg);
             color: var(--counter-badge-text);
             border: 1px solid var(--counter-badge-border);
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 30px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.04);
             display: inline-flex;
             align-items: center;
         }
@@ -286,132 +298,139 @@
             background-color: var(--syarat-box-bg);
             color: var(--syarat-box-text);
             border: 1px solid rgba(253, 126, 20, 0.3);
-            padding: 10px 12px;
-            border-radius: 8px;
-            font-size: 0.85rem;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.88rem;
         }
 
         .badge-ketua { 
             background-color: #dc3545; 
             font-weight: 600;
-            padding: 6px 12px;
+            padding: 6px 14px;
             border-radius: 30px;
             font-size: 0.75rem;
+            letter-spacing: 0.5px;
         }
         
         .badge-anggota { 
             background-color: #198754; 
             font-weight: 600;
-            padding: 6px 12px;
+            padding: 6px 14px;
             border-radius: 30px;
             font-size: 0.75rem;
+            letter-spacing: 0.5px;
         }
 
-        /* Perbaikan UI Badge Status Masa Berlaku */
+        /* Badge Status Masa Berlaku Super Rapi & Presisi */
         .badge-status-aktif {
             background-color: #198754;
             color: #ffffff;
             font-weight: 600;
-            padding: 5px 10px;
+            padding: 5px 12px;
             border-radius: 30px;
-            font-size: 0.7rem;
-            letter-spacing: 0.3px;
+            font-size: 0.72rem;
+            letter-spacing: 0.5px;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            box-shadow: 0 2px 4px rgba(25, 135, 84, 0.2);
+            gap: 5px;
+            box-shadow: 0 2px 6px rgba(25, 135, 84, 0.25);
         }
 
         .badge-status-expired {
             background-color: #dc3545;
             color: #ffffff;
             font-weight: 600;
-            padding: 5px 10px;
+            padding: 5px 12px;
             border-radius: 30px;
-            font-size: 0.7rem;
-            letter-spacing: 0.3px;
+            font-size: 0.72rem;
+            letter-spacing: 0.5px;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            box-shadow: 0 2px 4px rgba(220, 53, 69, 0.2);
+            gap: 5px;
+            box-shadow: 0 2px 6px rgba(220, 53, 69, 0.25);
         }
 
         .search-box {
             border-radius: 30px;
             padding-left: 20px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.04);
+            border-color: #ced4da;
         }
 
         .btn-action {
             border-radius: 30px;
             font-weight: 600;
-            padding: 6px 14px;
-            font-size: 0.85rem;
+            padding: 8px 18px;
+            font-size: 0.88rem;
             transition: all 0.2s ease;
         }
 
         .btn-action:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
         }
 
         .menu-card {
             border: 2px solid #fd7e14;
-            border-radius: 16px;
+            border-radius: 20px;
             background: var(--menu-bg);
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
             cursor: pointer;
             height: 100%;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.04);
         }
 
         .menu-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(230, 92, 0, 0.3);
-            filter: brightness(1.05);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 25px rgba(230, 92, 0, 0.3);
+            filter: brightness(1.04);
         }
 
         .menu-card-title {
             font-weight: 800;
-            font-size: clamp(0.9rem, 1.8vw, 1.05rem);
-            line-height: 1.3;
+            font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+            line-height: 1.35;
             letter-spacing: 0.5px;
             color: var(--menu-text);
             text-transform: uppercase;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .menu-card-desc {
             color: var(--menu-desc);
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             margin-bottom: 0;
+            line-height: 1.4;
         }
 
         .step-badge {
-            width: 38px;
-            height: 38px;
+            width: 42px;
+            height: 42px;
             background: #111;
             color: #ff9900;
             font-weight: 800;
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             border: 2px solid #ff9900;
             flex-shrink: 0;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
         }
 
         .step-card {
             border: 1px solid var(--step-card-border);
-            border-left: 5px solid #e65c00;
-            border-radius: 12px;
+            border-left: 6px solid #e65c00;
+            border-radius: 14px;
             background: var(--step-card-bg);
             color: var(--step-text);
             transition: transform 0.2s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
         }
 
         .step-card:hover {
-            transform: translateX(4px);
+            transform: translateX(6px);
         }
         
         .step-card p, .step-card h6 {
@@ -419,17 +438,18 @@
         }
 
         .icon-box-feature {
-            width: 55px;
-            height: 55px;
+            width: 60px;
+            height: 60px;
             background: #fff3eb;
             border: 2px solid #fd7e14;
-            border-radius: 14px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #e65c00;
-            font-size: 1.6rem;
-            margin-bottom: 10px;
+            font-size: 1.7rem;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 10px rgba(253, 126, 20, 0.15);
         }
 
         [data-theme="dark"] .icon-box-feature {
@@ -439,32 +459,39 @@
 
         .shirt-preview-card {
             border: 2px solid #e65c00;
-            border-radius: 16px;
+            border-radius: 18px;
             overflow: hidden;
             background: #111;
             color: white;
-            transition: transform 0.2s ease;
+            transition: transform 0.25s ease;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
         }
 
         .shirt-preview-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(230, 92, 0, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(230, 92, 0, 0.35);
         }
 
         .shirt-preview-img {
             width: 100%;
-            height: 220px;
+            height: 230px;
             object-fit: cover;
             border-bottom: 2px solid #e65c00;
             cursor: pointer;
+            transition: filter 0.2s ease;
+        }
+
+        .shirt-preview-img:hover {
+            filter: brightness(1.08);
         }
 
         .bank-card {
             background: var(--bank-card-bg);
             color: var(--text-main);
             border: 2px dashed #0d6efd;
-            border-radius: 14px;
-            padding: 12px 15px;
+            border-radius: 16px;
+            padding: 16px 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
         }
 
         [data-theme="dark"] .bank-card .text-secondary {
@@ -475,11 +502,11 @@
             background: var(--emoney-bg);
             color: var(--emoney-text);
             border: 1px solid #dee2e6;
-            border-radius: 12px;
-            padding: 12px 8px;
+            border-radius: 14px;
+            padding: 14px 10px;
             text-align: center;
             transition: all 0.2s ease;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.03);
             height: 100%;
         }
 
@@ -489,26 +516,28 @@
 
         .emoney-grid-item:hover {
             border-color: #fd7e14;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(253, 126, 20, 0.15);
         }
 
         .contact-footer {
             background: #1a1a1a;
             color: #fff;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 20px;
-            border-left: 4px solid #fd7e14;
-            font-size: 0.85rem;
+            border-radius: 14px;
+            padding: 18px;
+            margin-top: 25px;
+            border-left: 6px solid #fd7e14;
+            font-size: 0.88rem;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
         }
 
         .blur-data {
-            filter: blur(4px);
+            filter: blur(5px);
             user-select: none;
             color: #888;
             background-color: #eee;
-            padding: 2px 6px;
-            border-radius: 4px;
+            padding: 2px 8px;
+            border-radius: 6px;
         }
 
         @media print {
@@ -547,12 +576,12 @@
                 <form id="loginForm" onsubmit="handleLogin(event)">
                     <div class="mb-3">
                         <label class="form-label fw-semibold text-secondary small">Email atau Username</label>
-                        <input type="text" id="loginUser" class="form-control rounded-3 p-2" required placeholder="Masukkan email / username">
+                        <input type="text" id="loginUser" class="form-control rounded-3 p-2.5" required placeholder="Masukkan email / username">
                     </div>
                     <div class="mb-2">
                         <label class="form-label fw-semibold text-secondary small">Password</label>
                         <div class="input-group password-group">
-                            <input type="password" id="loginPass" class="form-control p-2" required placeholder="Masukkan password">
+                            <input type="password" id="loginPass" class="form-control p-2.5" required placeholder="Masukkan password">
                             <button class="btn btn-toggle-pass" type="button" onclick="togglePasswordVisibility('loginPass', 'eyeLoginIcon')" title="Lihat/Sembunyikan Password">
                                 <i class="bi bi-eye-slash fs-6" id="eyeLoginIcon"></i>
                             </button>
@@ -561,7 +590,7 @@
                     <div class="text-end mb-3">
                         <a href="#" class="text-warning fw-semibold small text-decoration-none" onclick="showForgotPasswordModal()"><i class="bi bi-key-fill me-1"></i>Lupa Password?</a>
                     </div>
-                    <button type="submit" class="btn btn-warning w-100 fw-bold py-2 rounded-pill shadow text-dark">MASUK APLIKASI</button>
+                    <button type="submit" class="btn btn-warning w-100 fw-bold py-2.5 rounded-pill shadow text-dark">MASUK APLIKASI</button>
                 </form>
             </div>
 
@@ -594,7 +623,7 @@
                         <div class="strength-meter"><div id="regStrengthBar" class="strength-bar"></div></div>
                         <small id="regStrengthText" class="text-muted" style="font-size: 0.7rem;"></small>
                     </div>
-                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill shadow">DAFTAR AKUN</button>
+                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2.5 rounded-pill shadow">DAFTAR AKUN</button>
                 </form>
             </div>
         </div>
@@ -626,21 +655,21 @@
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 pt-2 border-top border-white border-opacity-25 mt-3">
                 
                 <div class="dropdown no-print">
-                    <button class="btn btn-dark dropdown-toggle text-warning border-warning d-flex align-items-center gap-2 px-3 py-1 rounded-pill shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.8rem;">
+                    <button class="btn btn-dark dropdown-toggle text-warning border-warning d-flex align-items-center gap-2 px-3 py-1.5 rounded-pill shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.82rem;">
                         <i class="bi bi-person-circle fs-6"></i>
                         <span class="fw-bold" id="userNameDisplay">Profil</span>
                     </button>
                     <ul class="dropdown-menu shadow border-0 rounded-3 mt-1 p-2" style="min-width: 220px; font-size: 0.85rem;">
-                        <li class="px-2 py-1 border-bottom mb-2">
+                        <li class="px-2 py-1.5 border-bottom mb-2">
                             <span class="d-block text-muted" style="font-size: 0.7rem;">Masuk Sebagai:</span>
                             <strong class="text-dark text-uppercase" id="userDropdownName">-</strong>
                             <br><span class="badge bg-warning text-dark font-monospace mt-1" id="userRoleBadge" style="font-size: 0.65rem;">-</span>
                         </li>
-                        <li><a class="dropdown-item rounded-2 py-1 fw-semibold" href="#" onclick="toggleDarkMode()"><i class="bi bi-circle-half me-2 text-warning"></i><span id="darkModeToggleText">Ganti Light/Dark Mode</span></a></li>
-                        <li><a class="dropdown-item rounded-2 py-1 fw-semibold" href="#" onclick="showSettingsModal()"><i class="bi bi-gear-fill me-2 text-warning"></i>Settings Profil</a></li>
-                        <li id="menuLogItem" style="display: none;"><a class="dropdown-item rounded-2 py-1 fw-semibold text-info" href="#" onclick="showActivityLogModal()"><i class="bi bi-journal-text me-2"></i>Log Aktivitas Admin</a></li>
+                        <li><a class="dropdown-item rounded-2 py-1.5 fw-semibold" href="#" onclick="toggleDarkMode()"><i class="bi bi-circle-half me-2 text-warning"></i><span id="darkModeToggleText">Ganti Light/Dark Mode</span></a></li>
+                        <li><a class="dropdown-item rounded-2 py-1.5 fw-semibold" href="#" onclick="showSettingsModal()"><i class="bi bi-gear-fill me-2 text-warning"></i>Settings Profil</a></li>
+                        <li id="menuLogItem" style="display: none;"><a class="dropdown-item rounded-2 py-1.5 fw-semibold text-info" href="#" onclick="showActivityLogModal()"><i class="bi bi-journal-text me-2"></i>Log Aktivitas Admin</a></li>
                         <li><hr class="dropdown-divider my-1"></li>
-                        <li><a class="dropdown-item rounded-2 py-1 fw-semibold text-danger" href="#" onclick="handleLogout('Anda telah berhasil keluar.')"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                        <li><a class="dropdown-item rounded-2 py-1.5 fw-semibold text-danger" href="#" onclick="handleLogout('Anda telah berhasil keluar.')"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                     </ul>
                 </div>
 
@@ -656,7 +685,7 @@
             
             <!-- MENU UTAMA / DASHBOARD -->
             <div id="viewMenuDashboard" class="py-2">
-                <div class="text-center mb-3">
+                <div class="text-center mb-4">
                     <h4 class="fw-bold text-uppercase">Pilih Menu Layanan</h4>
                     <p class="text-muted small">Silakan pilih menu di bawah ini untuk melihat data, panduan pendaftaran, galeri kegiatan, atau komunitas olahraga</p>
                 </div>
@@ -703,7 +732,7 @@
                                 <i class="bi bi-whatsapp display-6 text-success mb-2 d-block"></i>
                                 <h6 class="menu-card-title">OBR SPORT<br>&nbsp;</h6>
                                 <p class="menu-card-desc mb-2">Gabung grup WhatsApp khusus anggota yang hobi dan aktif berolahraga bersama.</p>
-                                <span class="badge bg-success px-2 py-1 rounded-pill fw-semibold"><i class="bi bi-box-arrow-up-right me-1"></i> Gabung Grup</span>
+                                <span class="badge bg-success px-3 py-1.5 rounded-pill fw-semibold"><i class="bi bi-box-arrow-up-right me-1"></i> Gabung Grup</span>
                             </div>
                         </div>
                     </div>
@@ -713,7 +742,7 @@
             <!-- TABEL ANGGOTA ORANGE BOJONG RAYA -->
             <div id="viewKtaAktif" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-                    <button class="btn btn-dark rounded-pill px-3 py-1 btn-sm fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-1"></i>Kembali ke Menu Utama</button>
+                    <button class="btn btn-dark rounded-pill px-3 py-1.5 btn-sm fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-1"></i>Kembali ke Menu Utama</button>
                     <h5 class="fw-bold text-uppercase mb-0">Daftar Anggota Orange Bojong Raya</h5>
                 </div>
 
@@ -721,11 +750,11 @@
                     <div class="col-md-5">
                         <div class="input-group shadow-sm">
                             <span class="input-group-text bg-white border-end-0 text-secondary search-box"><i class="bi bi-search"></i></span>
-                            <input type="text" id="searchInput" class="form-control border-start-0 search-box form-control-sm" placeholder="Cari Nama, No KTA, Keterangan, HP..." onkeyup="filterData()">
+                            <input type="text" id="searchInput" class="form-control border-start-0 search-box form-control-sm py-2" placeholder="Cari Nama, No KTA, Keterangan, HP..." onkeyup="filterData()">
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <select id="statusFilter" class="form-select form-select-sm shadow-sm rounded-pill px-3" onchange="filterData()">
+                        <select id="statusFilter" class="form-select form-select-sm shadow-sm rounded-pill px-3 py-2" onchange="filterData()">
                             <option value="all">🔍 Semua Status KTA</option>
                             <option value="active">🟢 Masa Berlaku Aktif</option>
                             <option value="expired">🔴 Masa Berlaku Expired</option>
@@ -760,7 +789,7 @@
             <!-- TABEL PROSES KTA -->
             <div id="viewProsesKta" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-                    <button class="btn btn-dark rounded-pill px-3 py-1 btn-sm fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-1"></i>Kembali ke Menu Utama</button>
+                    <button class="btn btn-dark rounded-pill px-3 py-1.5 btn-sm fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-1"></i>Kembali ke Menu Utama</button>
                     <h5 class="fw-bold text-uppercase mb-0">Proses Pembuatan KTA The Jakmania OBR</h5>
                 </div>
 
@@ -768,18 +797,18 @@
                     <div class="col-md-4">
                         <div class="input-group shadow-sm">
                             <span class="input-group-text bg-white border-end-0 text-secondary search-box"><i class="bi bi-search"></i></span>
-                            <input type="text" id="searchProsesInput" class="form-control border-start-0 search-box form-control-sm" placeholder="Cari Nama, WA..." onkeyup="filterProsesData()">
+                            <input type="text" id="searchProsesInput" class="form-control border-start-0 search-box form-control-sm py-2" placeholder="Cari Nama, WA..." onkeyup="filterProsesData()">
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <select id="statusKtaFilter" class="form-select form-select-sm shadow-sm rounded-pill px-3" onchange="filterProsesData()">
+                        <select id="statusKtaFilter" class="form-select form-select-sm shadow-sm rounded-pill px-3 py-2" onchange="filterProsesData()">
                             <option value="all">🔍 Semua Status (Pendaftaran/Perpanjangan)</option>
                             <option value="PENDAFTARAN">📁 Pendaftaran</option>
                             <option value="PERPANJANGAN">🔄 Perpanjangan</option>
                         </select>
                     </div>
                     <div class="col-md-4">
-                        <select id="statusBayarFilter" class="form-select form-select-sm shadow-sm rounded-pill px-3" onchange="filterProsesData()">
+                        <select id="statusBayarFilter" class="form-select form-select-sm shadow-sm rounded-pill px-3 py-2" onchange="filterProsesData()">
                             <option value="all">🔍 Semua Pembayaran</option>
                             <option value="SUDAH LUNAS">🟢 Sudah Lunas</option>
                             <option value="BELUM LUNAS">🔴 Belum Lunas</option>
@@ -818,23 +847,21 @@
             <!-- HALAMAN GALERI KEGIATAN ORANGE BOJONG RAYA -->
             <div id="viewGaleriKegiatan" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-                    <button class="btn btn-dark rounded-pill px-3 py-1 btn-sm fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-1"></i>Kembali ke Menu Utama</button>
+                    <button class="btn btn-dark rounded-pill px-3 py-1.5 btn-sm fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-1"></i>Kembali ke Menu Utama</button>
                     <div class="d-flex align-items-center gap-2">
                         <h5 class="fw-bold text-uppercase mb-0">Galeri Kegiatan Orange Bojong Raya</h5>
-                        <button id="btnTambahGaleri" class="btn btn-warning btn-sm rounded-pill fw-bold px-3 shadow-sm text-dark" onclick="openGaleriModal()" style="display: none;"><i class="bi bi-plus-circle-fill me-1"></i> Tambah Foto Galeri</button>
+                        <button id="btnTambahGaleri" class="btn btn-warning btn-sm rounded-pill fw-bold px-3 py-1.5 shadow-sm text-dark" onclick="openGaleriModal()" style="display: none;"><i class="bi bi-plus-circle-fill me-1"></i> Tambah Foto Galeri</button>
                     </div>
                 </div>
                 <p class="text-muted small mb-4">Kumpulan dokumentasi keseruan acara Nobar Persija, turnamen futsal internal, hingga kegiatan bakti sosial anggota. Anda dapat melihat pratinjau atau mengunduh fotonya.</p>
                 
-                <div class="row g-4" id="galeriContainer">
-                    <!-- Data galeri akan dimuat secara dinamis dari Firebase -->
-                </div>
+                <div class="row g-4" id="galeriContainer"></div>
             </div>
 
             <!-- HALAMAN PANDUAN PENDAFTARAN & PERPANJANGAN KTA -->
             <div id="viewPanduanKta" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-                    <button class="btn btn-dark rounded-pill px-3 py-1 btn-sm fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-1"></i>Kembali ke Menu Utama</button>
+                    <button class="btn btn-dark rounded-pill px-3 py-1.5 btn-sm fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-1"></i>Kembali ke Menu Utama</button>
                     <h5 class="fw-bold text-uppercase mb-0">Pendaftaran & Perpanjangan E-KTA The Jakmania OBR</h5>
                 </div>
 
@@ -843,20 +870,20 @@
                         <div class="col-md-8">
                             <span class="badge bg-warning text-dark fw-bold text-uppercase px-3 py-1 rounded-pill mb-2"><i class="bi bi-phone me-1"></i> Aplikasi Resmi</span>
                             <h3 class="fw-bold text-warning mb-2">Pendaftaran via Aplikasi The Jakmania</h3>
-                            <p class="text-light mb-3" style="font-size: 0.9rem;">
+                            <p class="text-light mb-3" style="font-size: 0.92rem;">
                                 Saat ini pendaftaran dan perpanjangan e-KTA The Jakmania Orange Bojong Raya Sub Korwil Cengkareng dilakukan langsung melalui Aplikasi Smartphone Resmi The Jakmania.
                             </p>
                             <div class="d-flex flex-wrap gap-2">
-                                <a href="https://play.google.com/store/apps/details?id=com.moflip.supporter.jakmania" target="_blank" class="btn btn-outline-light btn-sm rounded-pill fw-semibold px-3">
+                                <a href="https://play.google.com/store/apps/details?id=com.moflip.supporter.jakmania" target="_blank" class="btn btn-outline-light btn-sm rounded-pill fw-semibold px-3 py-2">
                                     <i class="bi bi-google-play text-warning me-1"></i> Android Play Store
                                 </a>
-                                <a href="https://apps.apple.com/id/app/the-jakmania/id6451290983?l=id" target="_blank" class="btn btn-outline-light btn-sm rounded-pill fw-semibold px-3">
+                                <a href="https://apps.apple.com/id/app/the-jakmania/id6451290983?l=id" target="_blank" class="btn btn-outline-light btn-sm rounded-pill fw-semibold px-3 py-2">
                                     <i class="bi bi-apple me-1"></i> Apple App Store
                                 </a>
                             </div>
                         </div>
                         <div class="col-md-4 text-center mt-3 mt-md-0">
-                            <div class="p-3 bg-white bg-opacity-10 rounded-3 border border-warning border-opacity-25">
+                            <div class="p-3.5 bg-white bg-opacity-10 rounded-3 border border-warning border-opacity-25 shadow-sm">
                                 <i class="bi bi-card-checklist text-warning display-4 mb-2 d-block"></i>
                                 <span class="fw-bold text-white d-block">Biaya Pendaftaran</span>
                                 <span class="fs-4 fw-extrabold text-warning">Rp 150.000</span>
@@ -877,7 +904,7 @@
                                 </div>
                                 <h5 class="font-monospace fw-bold my-1">4790479829</h5>
                                 <div class="small text-secondary">a/n <b>ANDRIYANTO</b></div>
-                                <button class="btn btn-sm btn-outline-primary rounded-pill mt-2 py-0 px-3" onclick="copyRek('4790479829')"><i class="bi bi-copy me-1"></i>Salin No Rekening</button>
+                                <button class="btn btn-sm btn-outline-primary rounded-pill mt-2 py-1 px-3" onclick="copyRek('4790479829')"><i class="bi bi-copy me-1"></i>Salin No Rekening</button>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -888,7 +915,7 @@
                                 </div>
                                 <h5 class="font-monospace fw-bold my-1">4790457469</h5>
                                 <div class="small text-secondary">a/n <b>RASHID AL ARSHAD</b></div>
-                                <button class="btn btn-sm btn-outline-primary rounded-pill mt-2 py-0 px-3" onclick="copyRek('4790457469')"><i class="bi bi-copy me-1"></i>Salin No Rekening</button>
+                                <button class="btn btn-sm btn-outline-primary rounded-pill mt-2 py-1 px-3" onclick="copyRek('4790457469')"><i class="bi bi-copy me-1"></i>Salin No Rekening</button>
                             </div>
                         </div>
                     </div>
@@ -898,7 +925,7 @@
                     <h5 class="fw-bold text-uppercase mb-3"><i class="bi bi-list-ol text-warning me-2"></i>Langkah-Langkah Pendaftaran KTA</h5>
                     <div class="row g-3">
                         <div class="col-md-6 col-lg-3">
-                            <div class="p-3 step-card h-100 shadow-sm">
+                            <div class="p-3.5 step-card h-100 shadow-sm">
                                 <div class="d-flex align-items-center gap-2 mb-2">
                                     <div class="step-badge">01</div>
                                     <h6 class="fw-bold m-0">Unduh App</h6>
@@ -907,7 +934,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
-                            <div class="p-3 step-card h-100 shadow-sm">
+                            <div class="p-3.5 step-card h-100 shadow-sm">
                                 <div class="d-flex align-items-center gap-2 mb-2">
                                     <div class="step-badge">02</div>
                                     <h6 class="fw-bold m-0">Isi Formulir</h6>
@@ -916,7 +943,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
-                            <div class="p-3 step-card h-100 shadow-sm">
+                            <div class="p-3.5 step-card h-100 shadow-sm">
                                 <div class="d-flex align-items-center gap-2 mb-2">
                                     <div class="step-badge">03</div>
                                     <h6 class="fw-bold m-0">Pilih Wilayah</h6>
@@ -925,7 +952,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
-                            <div class="p-3 step-card h-100 shadow-sm">
+                            <div class="p-3.5 step-card h-100 shadow-sm">
                                 <div class="d-flex align-items-center gap-2 mb-2">
                                     <div class="step-badge">04</div>
                                     <h6 class="fw-bold m-0">Unggah Foto</h6>
@@ -934,7 +961,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
-                            <div class="p-3 step-card h-100 shadow-sm">
+                            <div class="p-3.5 step-card h-100 shadow-sm">
                                 <div class="d-flex align-items-center gap-2 mb-2">
                                     <div class="step-badge">05</div>
                                     <h6 class="fw-bold m-0">Kode Bayar</h6>
@@ -943,7 +970,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
-                            <div class="p-3 step-card h-100 shadow-sm">
+                            <div class="p-3.5 step-card h-100 shadow-sm">
                                 <div class="d-flex align-items-center gap-2 mb-2">
                                     <div class="step-badge">06</div>
                                     <h6 class="fw-bold m-0">Pembayaran</h6>
@@ -952,7 +979,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
-                            <div class="p-3 step-card h-100 shadow-sm">
+                            <div class="p-3.5 step-card h-100 shadow-sm">
                                 <div class="d-flex align-items-center gap-2 mb-2">
                                     <div class="step-badge">07</div>
                                     <h6 class="fw-bold m-0">Simpan Bukti</h6>
@@ -961,7 +988,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
-                            <div class="p-3 step-card h-100 shadow-sm">
+                            <div class="p-3.5 step-card h-100 shadow-sm">
                                 <div class="d-flex align-items-center gap-2 mb-2">
                                     <div class="step-badge">08</div>
                                     <h6 class="fw-bold m-0">Verifikasi OBR</h6>
@@ -998,7 +1025,7 @@
                         </div>
                     </div>
 
-                    <div class="card border-0 rounded-4 p-3 p-md-4 shadow-sm border mb-3" style="background: var(--card-bg);">
+                    <div class="card border-0 rounded-4 p-3.5 p-md-4 shadow-sm border mb-3" style="background: var(--card-bg);">
                         <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
                             <h6 class="fw-bold m-0"><i class="bi bi-ruler text-warning me-2"></i>SIZE CHART T-SHIRT KTA THE JAKMANIA (CM)</h6>
                             <span class="badge bg-dark text-warning font-monospace">STANDAR UKURAN</span>
@@ -1029,7 +1056,7 @@
 
                 <div class="row g-3 mb-4">
                     <div class="col-md-6">
-                        <div class="card h-100 border-warning border-2 rounded-4 p-3 shadow-sm" style="background: var(--card-bg);">
+                        <div class="card h-100 border-warning border-2 rounded-4 p-3.5 shadow-sm" style="background: var(--card-bg);">
                             <div class="d-flex align-items-center gap-3 mb-2">
                                 <div class="icon-box-feature mb-0"><i class="bi bi-mortarboard-fill"></i></div>
                                 <div>
@@ -1044,7 +1071,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="card h-100 border-success border-2 rounded-4 p-3 shadow-sm" style="background: var(--card-bg);">
+                        <div class="card h-100 border-success border-2 rounded-4 p-3.5 shadow-sm" style="background: var(--card-bg);">
                             <div class="d-flex align-items-center gap-3 mb-2">
                                 <div class="icon-box-feature mb-0 text-success border-success" style="background: #e8f5e9;"><i class="bi bi-cash-stack"></i></div>
                                 <div>
@@ -1062,7 +1089,7 @@
                     </div>
                 </div>
 
-                <div class="card border-0 rounded-4 p-3 p-md-4 shadow-sm border mb-4" style="background: var(--card-bg);">
+                <div class="card border-0 rounded-4 p-3.5 p-md-4 shadow-sm border mb-4" style="background: var(--card-bg);">
                     <h6 class="fw-bold border-bottom pb-2 mb-3"><i class="bi bi-credit-card-2-front text-warning me-2"></i>Fungsi & Kegunaan E-KTA (e-Money Mandiri)</h6>
                     <p class="text-muted small mb-3">Selain sebagai bukti keanggotaan resmi, e-KTA berupa kartu fisik e-Money Mandiri dapat digunakan sebagai uang elektronik untuk berbagai transaksi harian:</p>
                     <div class="row g-2 text-center small fw-bold">
@@ -1075,12 +1102,12 @@
                     </div>
                 </div>
 
-                <div class="text-center p-3 border rounded-4 shadow-sm" style="background: var(--card-bg);">
+                <div class="text-center p-3.5 border rounded-4 shadow-sm" style="background: var(--card-bg);">
                     <h6 class="fw-bold mb-2">Sudah Mendaftar di Aplikasi atau Ingin Bertanya?</h6>
                     <p class="text-muted small mb-3">Hubungi tim pengurus Orange Bojong Raya untuk verifikasi & konfirmasi pembayaran:</p>
                     <div class="d-flex justify-content-center flex-wrap gap-2">
-                        <a href="https://wa.me/6289625793431?text=Halo%20Andriyanto,%20saya%20ingin%20konfirmasi%20Pendaftaran/Perpanjangan%20KTA%20Orange%20Bojong%20Raya" target="_blank" class="btn btn-success rounded-pill fw-bold btn-sm px-3"><i class="bi bi-whatsapp me-1"></i> WhatsApp Andriyanto (0896-2579-3431)</a>
-                        <a href="https://wa.me/6289513766307?text=Halo%20Rashid,%20saya%20ingin%20konfirmasi%20Pendaftaran/Perpanjangan%20KTA%20Orange%20Bojong%20Raya" target="_blank" class="btn btn-success rounded-pill fw-bold btn-sm px-3"><i class="bi bi-whatsapp me-1"></i> WhatsApp Rashid (0895-1376-6307)</a>
+                        <a href="https://wa.me/6289625793431?text=Halo%20Andriyanto,%20saya%20ingin%20konfirmasi%20Pendaftaran/Perpanjangan%20KTA%20Orange%20Bojong%20Raya" target="_blank" class="btn btn-success rounded-pill fw-bold btn-sm px-3 py-2"><i class="bi bi-whatsapp me-1"></i> WhatsApp Andriyanto (0896-2579-3431)</a>
+                        <a href="https://wa.me/6289513766307?text=Halo%20Rashid,%20saya%20ingin%20konfirmasi%20Pendaftaran/Perpanjangan%20KTA%20Orange%20Bojong%20Raya" target="_blank" class="btn btn-success rounded-pill fw-bold btn-sm px-3 py-2"><i class="bi bi-whatsapp me-1"></i> WhatsApp Rashid (0895-1376-6307)</a>
                     </div>
                 </div>
             </div>
@@ -1092,9 +1119,9 @@
                         <h6 class="fw-bold text-warning mb-1 small"><i class="bi bi-info-circle-fill me-1"></i>BUTUH INFORMASI / PERTANYAAN? SILAKAN HUBUNGI KAMI:</h6>
                     </div>
                     <div class="col-md-12 d-flex flex-wrap justify-content-center justify-content-md-start gap-2">
-                        <a href="https://wa.me/6289625793431" target="_blank" class="btn btn-success btn-sm rounded-pill px-2 py-1 fw-semibold" style="font-size: 0.75rem;"><i class="bi bi-whatsapp me-1"></i> Andriyanto: 0896-2579-3431</a>
-                        <a href="https://wa.me/6289513766307" target="_blank" class="btn btn-success btn-sm rounded-pill px-2 py-1 fw-semibold" style="font-size: 0.75rem;"><i class="bi bi-whatsapp me-1"></i> Rashid Al Arshad: 0895-1376-6307</a>
-                        <a href="https://www.instagram.com/jak_bojongraya?vrfl=MjhyYnpwaDFqZG5k" target="_blank" class="btn btn-danger btn-sm rounded-pill px-2 py-1 fw-semibold" style="font-size: 0.75rem;"><i class="bi bi-instagram me-1"></i> Instagram: @jak_bojongraya</a>
+                        <a href="https://wa.me/6289625793431" target="_blank" class="btn btn-success btn-sm rounded-pill px-3 py-1.5 fw-semibold" style="font-size: 0.78rem;"><i class="bi bi-whatsapp me-1"></i> Andriyanto: 0896-2579-3431</a>
+                        <a href="https://wa.me/6289513766307" target="_blank" class="btn btn-success btn-sm rounded-pill px-3 py-1.5 fw-semibold" style="font-size: 0.78rem;"><i class="bi bi-whatsapp me-1"></i> Rashid Al Arshad: 0895-1376-6307</a>
+                        <a href="https://www.instagram.com/jak_bojongraya?vrfl=MjhyYnpwaDFqZG5k" target="_blank" class="btn btn-danger btn-sm rounded-pill px-3 py-1.5 fw-semibold" style="font-size: 0.78rem;"><i class="bi bi-instagram me-1"></i> Instagram: @jak_bojongraya</a>
                     </div>
                 </div>
             </div>
@@ -1106,7 +1133,7 @@
 <div class="modal fade" id="imagePreviewModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 bg-dark text-white rounded-4 overflow-hidden shadow-lg">
-            <div class="modal-header border-bottom border-warning py-2 justify-content-between align-items-center">
+            <div class="modal-header border-bottom border-warning py-2.5 justify-content-between align-items-center">
                 <h6 class="modal-title fw-bold text-warning m-0" id="previewModalTitle"><i class="bi bi-image me-1"></i>Pratinjau Foto & Desain</h6>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
@@ -1131,42 +1158,42 @@
 <div class="modal fade" id="galeriModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 shadow-lg rounded-4">
-            <div class="modal-header bg-warning text-dark fw-bold py-2">
+            <div class="modal-header bg-warning text-dark fw-bold py-2.5">
                 <h6 class="modal-title m-0" id="galeriModalTitle"><i class="bi bi-images me-1"></i>Tambah Foto Galeri Kegiatan</h6>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body p-3 small">
+            <div class="modal-body p-3.5 small">
                 <form id="galeriForm" onsubmit="handleSaveGaleri(event)">
                     <input type="hidden" id="editGaleriId">
-                    <div class="mb-2">
+                    <div class="mb-2.5">
                         <label class="form-label fw-semibold text-secondary mb-1">Judul Kegiatan <span class="text-danger">*</span></label>
-                        <input type="text" id="inputGaleriJudul" class="form-control form-control-sm rounded-3" required placeholder="Contoh: NOBAR AKBAR PERSIJA">
+                        <input type="text" id="inputGaleriJudul" class="form-control form-control-sm rounded-3 py-2" required placeholder="Contoh: NOBAR AKBAR PERSIJA">
                     </div>
-                    <div class="mb-2">
+                    <div class="mb-2.5">
                         <label class="form-label fw-semibold text-secondary mb-1">Kategori Badge <span class="text-danger">*</span></label>
-                        <input type="text" id="inputGaleriKategori" class="form-control form-control-sm rounded-3" required placeholder="Contoh: NOBAR / OBR SPORT / SOSIAL">
+                        <input type="text" id="inputGaleriKategori" class="form-control form-control-sm rounded-3 py-2" required placeholder="Contoh: NOBAR / OBR SPORT / SOSIAL">
                     </div>
-                    <div class="mb-2">
+                    <div class="mb-2.5">
                         <label class="form-label fw-semibold text-secondary mb-1">Deskripsi Singkat <span class="text-danger">*</span></label>
-                        <input type="text" id="inputGaleriDesc" class="form-control form-control-sm rounded-3" required placeholder="Keterangan singkat kegiatan...">
+                        <input type="text" id="inputGaleriDesc" class="form-control form-control-sm rounded-3 py-2" required placeholder="Keterangan singkat kegiatan...">
                     </div>
 
                     <div class="mb-3" id="editExistingPhotosContainer" style="display: none;">
                         <label class="form-label fw-semibold text-secondary mb-1">Foto Yang Sudah Ada (Klik tombol X untuk menghapus foto):</label>
-                        <div id="existingPhotosList" class="d-flex flex-wrap gap-2 p-2 border rounded bg-light"></div>
+                        <div id="existingPhotosList" class="d-flex flex-wrap gap-2 p-2.5 border rounded bg-light"></div>
                     </div>
 
-                    <div class="mb-2">
+                    <div class="mb-2.5">
                         <label class="form-label fw-semibold text-secondary mb-1" id="labelFileFotoInput">Pilih File Foto (Bisa Banyak Sekaligus) <span class="text-danger">*</span></label>
-                        <input type="file" id="inputGaleriFiles" class="form-control form-control-sm rounded-3" accept="image/*" multiple onchange="previewSelectedGalleryFiles(this)">
-                        <small class="text-muted" style="font-size: 0.7rem;">Anda dapat memilih lebih dari 1 foto sekaligus dari perangkat Anda.</small>
+                        <input type="file" id="inputGaleriFiles" class="form-control form-control-sm rounded-3 py-2" accept="image/*" multiple onchange="previewSelectedGalleryFiles(this)">
+                        <small class="text-muted" style="font-size: 0.72rem;">Anda dapat memilih lebih dari 1 foto sekaligus dari perangkat Anda.</small>
                     </div>
 
                     <div class="mb-3" id="thumbnailSelectionContainer" style="display: none;">
                         <label class="form-label fw-semibold text-secondary mb-1">Pilih Foto Sampul Depan (Thumbnail Utama di Website):</label>
-                        <div id="thumbnailRadioGroup" class="d-flex flex-wrap gap-2 p-2 border rounded bg-light"></div>
+                        <div id="thumbnailRadioGroup" class="d-flex flex-wrap gap-2 p-2.5 border rounded bg-light"></div>
                     </div>
-                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill shadow" id="btnSimpanGaleri">Simpan Foto Galeri</button>
+                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2.5 rounded-pill shadow" id="btnSimpanGaleri">Simpan Foto Galeri</button>
                 </form>
             </div>
         </div>
@@ -1181,7 +1208,7 @@
                 <h5 class="modal-title fw-bold fs-6"><i class="bi bi-journal-text text-warning me-2"></i>Riwayat Log Aktivitas Admin</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body p-3 small">
+            <div class="modal-body p-3.5 small">
                 <p class="text-muted mb-2">Berikut adalah catatan transparansi tindakan yang dilakukan oleh para admin di sistem:</p>
                 <div class="table-responsive" style="max-height: 400px;">
                     <table class="table table-bordered table-striped align-middle mb-0 small">
@@ -1211,48 +1238,48 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-4 small">
-                <div class="card border-0 p-3 rounded-3 mb-3 shadow-sm">
+                <div class="card border-0 p-3.5 rounded-3 mb-3 shadow-sm">
                     <h6 class="fw-bold mb-2"><i class="bi bi-person-fill-gear me-1 text-warning"></i> Perbarui Profil Saya</h6>
                     <form id="updateProfileForm" onsubmit="handleUpdateProfile(event)">
                         <div class="mb-2">
                             <label class="form-label text-secondary small mb-1">Nama Lengkap</label>
-                            <input type="text" id="editProfileNama" class="form-control form-control-sm" required>
+                            <input type="text" id="editProfileNama" class="form-control form-control-sm py-2" required>
                         </div>
-                        <div class="mb-2">
+                        <div class="mb-2.5">
                             <label class="form-label text-secondary small mb-1">Nomor WhatsApp</label>
-                            <input type="text" id="editProfileWa" class="form-control form-control-sm" required placeholder="08xxxxxxxxxx">
+                            <input type="text" id="editProfileWa" class="form-control form-control-sm py-2" required placeholder="08xxxxxxxxxx">
                         </div>
-                        <button type="submit" class="btn btn-dark btn-sm w-100 fw-bold rounded-pill">Simpan Perubahan Profil</button>
+                        <button type="submit" class="btn btn-dark btn-sm w-100 fw-bold py-2 rounded-pill">Simpan Perubahan Profil</button>
                     </form>
                 </div>
 
-                <div class="card border-0 p-3 rounded-3 mb-3 shadow-sm">
+                <div class="card border-0 p-3.5 rounded-3 mb-3 shadow-sm">
                     <h6 class="fw-bold mb-2"><i class="bi bi-shield-lock-fill me-1 text-warning"></i> Keamanan & Password</h6>
                     <div class="mb-1"><b>Username:</b> <span id="setProfileUser">-</span></div>
-                    <div class="mb-2"><b>Email:</b> <span id="setProfileEmail">-</span></div>
+                    <div class="mb-2.5"><b>Email:</b> <span id="setProfileEmail">-</span></div>
                     
                     <label class="form-label fw-semibold text-secondary small">Ganti Password Baru:</label>
                     <div class="input-group input-group-sm mb-1 password-group">
-                        <input type="password" id="newAccountPass" class="form-control" placeholder="Minimal 6 karakter" onkeyup="checkPasswordStrength(this.value, 'setStrengthBar', 'setStrengthText')">
+                        <input type="password" id="newAccountPass" class="form-control py-2" placeholder="Minimal 6 karakter" onkeyup="checkPasswordStrength(this.value, 'setStrengthBar', 'setStrengthText')">
                         <button class="btn btn-toggle-pass px-3" type="button" onclick="togglePasswordVisibility('newAccountPass', 'eyeNewPassIcon')" title="Lihat/Sembunyikan Password">
                             <i class="bi bi-eye-slash" id="eyeNewPassIcon"></i>
                         </button>
-                        <button class="btn btn-warning fw-bold text-dark" type="button" onclick="updateUserPassword()">Simpan</button>
+                        <button class="btn btn-warning fw-bold text-dark px-3" type="button" onclick="updateUserPassword()">Simpan</button>
                     </div>
                     <div class="strength-meter"><div id="setStrengthBar" class="strength-bar"></div></div>
-                    <small id="setStrengthText" class="text-muted" style="font-size: 0.7rem;"></small>
+                    <small id="setStrengthText" class="text-muted" style="font-size: 0.72rem;"></small>
                 </div>
 
-                <div class="card border-0 p-3 rounded-3 shadow-sm" id="logoSettingsCard" style="display: none;">
+                <div class="card border-0 p-3.5 rounded-3 shadow-sm" id="logoSettingsCard" style="display: none;">
                     <h6 class="fw-bold mb-2"><i class="bi bi-image-fill me-1 text-warning"></i> Pengaturan Pilihan Logo</h6>
                     <input type="file" id="uploadFaviconInput" accept="image/*" style="display: none;" onchange="handleFaviconUpload(event)">
                     <input type="file" id="uploadLogoLeftInput" accept="image/*" style="display: none;" onchange="handleLogoUpload(event, 'left')">
                     <input type="file" id="uploadLogoRightInput" accept="image/*" style="display: none;" onchange="handleLogoUpload(event, 'right')">
 
                     <div class="d-flex flex-column gap-2">
-                        <button class="btn btn-outline-dark btn-sm rounded-pill text-start px-3" onclick="document.getElementById('uploadFaviconInput').click()"><i class="bi bi-browser-chrome me-2 text-warning"></i> Ganti Logo Browser (Favicon)</button>
-                        <button class="btn btn-outline-warning btn-sm rounded-pill text-start px-3 fw-semibold" onclick="document.getElementById('uploadLogoLeftInput').click()"><i class="bi bi-shield-fill-exclamation me-2"></i> Ganti Logo Kiri (OBR)</button>
-                        <button class="btn btn-outline-dark btn-sm rounded-pill text-start px-3" onclick="document.getElementById('uploadLogoRightInput').click()"><i class="bi bi-shield-fill-check me-2 text-warning"></i> Ganti Logo Kanan (Cengkareng)</button>
+                        <button class="btn btn-outline-dark btn-sm rounded-pill text-start px-3 py-2" onclick="document.getElementById('uploadFaviconInput').click()"><i class="bi bi-browser-chrome me-2 text-warning"></i> Ganti Logo Browser (Favicon)</button>
+                        <button class="btn btn-outline-warning btn-sm rounded-pill text-start px-3 py-2 fw-semibold" onclick="document.getElementById('uploadLogoLeftInput').click()"><i class="bi bi-shield-fill-exclamation me-2"></i> Ganti Logo Kiri (OBR)</button>
+                        <button class="btn btn-outline-dark btn-sm rounded-pill text-start px-3 py-2" onclick="document.getElementById('uploadLogoRightInput').click()"><i class="bi bi-shield-fill-check me-2 text-warning"></i> Ganti Logo Kanan (Cengkareng)</button>
                     </div>
                 </div>
             </div>
@@ -1302,38 +1329,38 @@
 <div class="modal fade" id="memberModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded-4">
-            <div class="modal-header bg-warning text-dark fw-bold py-2">
+            <div class="modal-header bg-warning text-dark fw-bold py-2.5">
                 <h6 class="modal-title m-0" id="modalTitle"><i class="bi bi-person-badge me-1"></i>Tambah Anggota</h6>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body p-3 small">
+            <div class="modal-body p-3.5 small">
                 <form id="memberForm">
                     <input type="hidden" id="editDocId">
-                    <div class="mb-2">
+                    <div class="mb-2.5">
                         <label class="form-label fw-semibold text-secondary mb-1">Nama Anggota <span class="text-danger">*</span></label>
-                        <input type="text" id="inputNama" class="form-control form-control-sm rounded-3" required placeholder="Nama lengkap anggota">
+                        <input type="text" id="inputNama" class="form-control form-control-sm rounded-3 py-2" required placeholder="Nama lengkap anggota">
                     </div>
-                    <div class="mb-2">
+                    <div class="mb-2.5">
                         <label class="form-label fw-semibold text-secondary mb-1">Nomor Anggota (KTA) <span class="text-danger">*</span></label>
-                        <input type="text" id="inputNoKta" class="form-control form-control-sm rounded-3" required placeholder="JB.13.0113769.06.24">
+                        <input type="text" id="inputNoKta" class="form-control form-control-sm rounded-3 py-2" required placeholder="JB.13.0113769.06.24">
                     </div>
-                    <div class="mb-2">
+                    <div class="mb-2.5">
                         <label class="form-label fw-semibold text-secondary mb-1">Masa Berlaku <span class="text-danger">*</span></label>
                         <div class="input-group input-group-sm mb-1">
-                            <input type="date" id="inputMasaBerlakuDate" class="form-control" onchange="syncMasaBerlakuFromPicker(this.value)">
-                            <button class="btn btn-outline-secondary" type="button" onclick="setMasaBerlakuDash()">Strip (-)</button>
+                            <input type="date" id="inputMasaBerlakuDate" class="form-control py-2" onchange="syncMasaBerlakuFromPicker(this.value)">
+                            <button class="btn btn-outline-secondary px-3" type="button" onclick="setMasaBerlakuDash()">Strip (-)</button>
                         </div>
-                        <input type="text" id="inputMasaBerlaku" class="form-control form-control-sm rounded-3" required placeholder="01 Juni 2027 atau -">
+                        <input type="text" id="inputMasaBerlaku" class="form-control form-control-sm rounded-3 py-2" required placeholder="01 Juni 2027 atau -">
                     </div>
-                    <div class="mb-2">
+                    <div class="mb-2.5">
                         <label class="form-label fw-semibold text-secondary mb-1">Keterangan <span class="text-danger">*</span></label>
-                        <input type="text" id="inputKeterangan" class="form-control form-control-sm rounded-3" required value="SUB WILAYAH BOJONG">
+                        <input type="text" id="inputKeterangan" class="form-control form-control-sm rounded-3 py-2" required value="SUB WILAYAH BOJONG">
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3.5">
                         <label class="form-label fw-semibold text-secondary mb-1">No HP / WA <span class="text-danger">*</span></label>
-                        <input type="text" id="inputHp" class="form-control form-control-sm rounded-3" required placeholder="089625793431">
+                        <input type="text" id="inputHp" class="form-control form-control-sm rounded-3 py-2" required placeholder="089625793431">
                     </div>
-                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill shadow">Simpan Data</button>
+                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2.5 rounded-pill shadow">Simpan Data</button>
                 </form>
             </div>
         </div>
@@ -1344,13 +1371,13 @@
 <div class="modal fade" id="bulkMemberModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content border-0 shadow-lg rounded-4">
-            <div class="modal-header bg-warning text-dark fw-bold py-2">
+            <div class="modal-header bg-warning text-dark fw-bold py-2.5">
                 <h6 class="modal-title m-0"><i class="bi bi-file-earmark-spreadsheet-fill me-1"></i>Tambah Banyak Anggota Sekaligus (Format Excel)</h6>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body p-3 small">
-                <p class="text-muted mb-2">💡 <b>Cara Penggunaan:</b> Salin data dari Excel Anda, lalu <b>Paste (Tempel)</b> di bawah ini:</p>
-                <div class="bg-dark text-white p-2 rounded-top font-monospace fw-bold small row mx-0 text-center border-bottom border-warning">
+            <div class="modal-body p-3.5 small">
+                <p class="text-muted mb-2.5">💡 <b>Cara Penggunaan:</b> Salin data dari Excel Anda, lalu <b>Paste (Tempel)</b> di bawah ini:</p>
+                <div class="bg-dark text-white p-2.5 rounded-top font-monospace fw-bold small row mx-0 text-center border-bottom border-warning">
                     <div class="col-3">NAMA ANGGOTA</div>
                     <div class="col-3">NOMOR ANGGOTA (KTA)</div>
                     <div class="col-2">MASA BERLAKU</div>
@@ -1358,10 +1385,10 @@
                     <div class="col-2">NO HP / WA</div>
                 </div>
                 <form id="bulkMemberForm">
-                    <div class="mb-3">
-                        <textarea id="bulkInputText" class="form-control font-monospace rounded-bottom" rows="8" required placeholder="Contoh: RIKY RAMADHAN	JB.13.0112233.06.26	01 Juni 2027	SUB WILAYAH BOJONG	089612345678"></textarea>
+                    <div class="mb-3.5">
+                        <textarea id="bulkInputText" class="form-control font-monospace rounded-bottom p-3" rows="8" required placeholder="Contoh: RIKY RAMADHAN	JB.13.0112233.06.26	01 Juni 2027	SUB WILAYAH BOJONG	089612345678"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill shadow">Simpan Semua Data Anggota</button>
+                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2.5 rounded-pill shadow">Simpan Semua Data Anggota</button>
                 </form>
             </div>
         </div>
@@ -1372,52 +1399,52 @@
 <div class="modal fade" id="prosesModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded-4">
-            <div class="modal-header bg-warning text-dark fw-bold py-2">
+            <div class="modal-header bg-warning text-dark fw-bold py-2.5">
                 <h6 class="modal-title m-0" id="prosesModalTitle"><i class="bi bi-clock-history me-1"></i>Tambah Pengajuan Proses KTA</h6>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body p-3 small">
+            <div class="modal-body p-3.5 small">
                 <form id="prosesForm">
                     <input type="hidden" id="editProsesDocId">
-                    <div class="mb-2">
+                    <div class="mb-2.5">
                         <label class="form-label fw-semibold text-secondary mb-1">Nama Lengkap <span class="text-danger">*</span></label>
-                        <input type="text" id="inputProsesNama" class="form-control form-control-sm rounded-3" required placeholder="Nama lengkap">
+                        <input type="text" id="inputProsesNama" class="form-control form-control-sm rounded-3 py-2" required placeholder="Nama lengkap">
                     </div>
-                    <div class="mb-2">
+                    <div class="mb-2.5">
                         <label class="form-label fw-semibold text-secondary mb-1">Status KTA <span class="text-danger">*</span></label>
-                        <select id="inputProsesStatusKta" class="form-select form-select-sm rounded-3" required>
+                        <select id="inputProsesStatusKta" class="form-select form-select-sm rounded-3 py-2" required>
                             <option value="PENDAFTARAN">PENDAFTARAN</option>
                             <option value="PERPANJANGAN">PERPANJANGAN</option>
                         </select>
                     </div>
-                    <div class="mb-2">
+                    <div class="mb-2.5">
                         <label class="form-label fw-semibold text-secondary mb-1">Tipe KTA <span class="text-danger">*</span></label>
-                        <select id="inputProsesTipe" class="form-select form-select-sm rounded-3" required>
+                        <select id="inputProsesTipe" class="form-select form-select-sm rounded-3 py-2" required>
                             <option value="REGULER">REGULER</option>
                             <option value="PELAJAR">PELAJAR</option>
                         </select>
                     </div>
-                    <div class="mb-2">
+                    <div class="mb-2.5">
                         <label class="form-label fw-semibold text-secondary mb-1">Tanggal Daftar <span class="text-danger">*</span></label>
-                        <input type="date" id="inputProsesTanggal" class="form-control form-control-sm rounded-3" required>
+                        <input type="date" id="inputProsesTanggal" class="form-control form-control-sm rounded-3 py-2" required>
                     </div>
-                    <div class="mb-2">
+                    <div class="mb-2.5">
                         <label class="form-label fw-semibold text-secondary mb-1">Status Pembayaran <span class="text-danger">*</span></label>
-                        <select id="inputProsesStatus" class="form-select form-select-sm rounded-3" required onchange="toggleCicilField(this.value)">
+                        <select id="inputProsesStatus" class="form-select form-select-sm rounded-3 py-2" required onchange="toggleCicilField(this.value)">
                             <option value="SUDAH LUNAS">SUDAH LUNAS</option>
                             <option value="BELUM LUNAS">BELUM LUNAS</option>
                             <option value="CICIL">CICIL</option>
                         </select>
                     </div>
-                    <div class="mb-2" id="cicilContainer" style="display: none;">
+                    <div class="mb-2.5" id="cicilContainer" style="display: none;">
                         <label class="form-label fw-semibold text-secondary mb-1">Nominal Cicil (Rp)</label>
-                        <input type="number" id="inputProsesCicil" class="form-control form-control-sm rounded-3" placeholder="50000">
+                        <input type="number" id="inputProsesCicil" class="form-control form-control-sm rounded-3 py-2" placeholder="50000">
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3.5">
                         <label class="form-label fw-semibold text-secondary mb-1">No WhatsApp <span class="text-danger">*</span></label>
-                        <input type="text" id="inputProsesWa" class="form-control form-control-sm rounded-3" required placeholder="089625793431">
+                        <input type="text" id="inputProsesWa" class="form-control form-control-sm rounded-3 py-2" required placeholder="089625793431">
                     </div>
-                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill shadow">Simpan Pengajuan</button>
+                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2.5 rounded-pill shadow">Simpan Pengajuan</button>
                 </form>
             </div>
         </div>
@@ -1428,13 +1455,13 @@
 <div class="modal fade" id="bulkProsesModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content border-0 shadow-lg rounded-4">
-            <div class="modal-header bg-warning text-dark fw-bold py-2">
+            <div class="modal-header bg-warning text-dark fw-bold py-2.5">
                 <h6 class="modal-title m-0"><i class="bi bi-file-earmark-spreadsheet-fill me-1"></i>Tambah Banyak Pengajuan KTA Sekaligus (Format Excel)</h6>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body p-3 small">
-                <p class="text-muted mb-2">💡 <b>Cara Penggunaan:</b> Salin data dari Excel, lalu <b>Paste (Tempel)</b> di bawah ini:</p>
-                <div class="bg-dark text-white p-2 rounded-top font-monospace fw-bold small row mx-0 text-center border-bottom border-warning" style="font-size: 0.75rem !important;">
+            <div class="modal-body p-3.5 small">
+                <p class="text-muted mb-2.5">💡 <b>Cara Penggunaan:</b> Salin data dari Excel, lalu <b>Paste (Tempel)</b> di bawah ini:</p>
+                <div class="bg-dark text-white p-2.5 rounded-top font-monospace fw-bold small row mx-0 text-center border-bottom border-warning" style="font-size: 0.75rem !important;">
                     <div class="col-3">NAMA LENGKAP</div>
                     <div class="col-2">STATUS KTA</div>
                     <div class="col-2">TIPE KTA</div>
@@ -1442,10 +1469,10 @@
                     <div class="col-3">NO WHATSAPP</div>
                 </div>
                 <form id="bulkProsesForm">
-                    <div class="mb-3">
-                        <textarea id="bulkProsesInputText" class="form-control font-monospace rounded-bottom" rows="8" required placeholder="Contoh: AHMAD FAUZI	PENDAFTARAN	REGULER	SUDAH LUNAS	089612345678"></textarea>
+                    <div class="mb-3.5">
+                        <textarea id="bulkProsesInputText" class="form-control font-monospace rounded-bottom p-3" rows="8" required placeholder="Contoh: AHMAD FAUZI	PENDAFTARAN	REGULER	SUDAH LUNAS	089612345678"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill shadow">Simpan Semua Pengajuan KTA</button>
+                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2.5 rounded-pill shadow">Simpan Semua Pengajuan KTA</button>
                 </form>
             </div>
         </div>
@@ -1456,7 +1483,7 @@
 <div class="modal fade" id="forgotModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow-lg rounded-4">
-            <div class="modal-header bg-dark text-white border-bottom border-warning py-2">
+            <div class="modal-header bg-dark text-white border-bottom border-warning py-2.5">
                 <h6 class="modal-title fw-bold m-0"><i class="bi bi-shield-lock-fill text-warning me-1"></i>Reset Password</h6>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
@@ -1464,10 +1491,10 @@
                 <p class="text-muted mb-3">Masukkan email terdaftar Anda untuk menerima tautan pemulihan sandi:</p>
                 <div class="mb-3">
                     <label class="form-label fw-semibold text-secondary small">Email Terdaftar</label>
-                    <input type="email" id="forgotContactInput" class="form-control rounded-3 mb-2" placeholder="email@domain.com">
+                    <input type="email" id="forgotContactInput" class="form-control rounded-3 py-2.5 mb-2" placeholder="email@domain.com">
                 </div>
                 <div class="d-grid">
-                    <button class="btn btn-warning fw-bold rounded-pill shadow-sm text-dark btn-sm py-2" onclick="requestResetViaEmail()"><i class="bi bi-envelope-fill me-1"></i> Kirim Link Reset Password via Email</button>
+                    <button class="btn btn-warning fw-bold rounded-pill shadow-sm text-dark btn-sm py-2.5" onclick="requestResetViaEmail()"><i class="bi bi-envelope-fill me-1"></i> Kirim Link Reset Password via Email</button>
                 </div>
             </div>
         </div>
@@ -1805,11 +1832,11 @@
             let thumbImg = imageUrls[0];
 
             let downloadItems = imageUrls.map((url, idx) => `
-                <li><a class="dropdown-item py-1 fw-semibold text-dark" href="${url}" download="${item.judul}_Foto_${idx+1}.jpg" target="_blank"><i class="bi bi-download me-2 text-success"></i>Unduh Foto ${idx + 1}</a></li>
+                <li><a class="dropdown-item py-1.5 fw-semibold text-dark" href="${url}" download="${item.judul}_Foto_${idx+1}.jpg" target="_blank"><i class="bi bi-download me-2 text-success"></i>Unduh Foto ${idx + 1}</a></li>
             `).join('');
 
             let adminActions = isAdmin ? `
-                <div class="mt-2 d-flex justify-content-center gap-2">
+                <div class="mt-2.5 d-flex justify-content-center gap-2">
                     <button class="btn btn-outline-warning btn-sm rounded-pill px-3 py-1 fw-semibold" onclick="editGaleri('${item.id}')"><i class="bi bi-pencil-fill me-1"></i> Edit</button>
                     <button class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1 fw-semibold" onclick="deleteGaleri('${item.id}')"><i class="bi bi-trash-fill me-1"></i> Hapus</button>
                 </div>
@@ -1817,18 +1844,18 @@
 
             container.innerHTML += `
                 <div class="col-md-4 col-sm-6">
-                    <div class="shirt-preview-card shadow-sm text-center p-2">
+                    <div class="shirt-preview-card shadow-sm text-center p-2.5">
                         <img src="${thumbImg}" alt="${item.judul}" class="shirt-preview-img rounded mb-2" onclick="openImageModal('${item.id}', 0)" title="Klik untuk pratinjau semua foto">
                         <div class="p-2">
                             <span class="badge bg-warning text-dark font-monospace mb-1">${item.kategori}</span>
                             <h6 class="fw-bold text-white m-0">${item.judul}</h6>
-                            <p class="text-white-50 small mb-2 mt-1">${item.deskripsi}</p>
+                            <p class="text-white-50 small mb-2.5 mt-1">${item.deskripsi}</p>
                             
                             <div class="dropdown mb-1">
-                                <button class="btn btn-success btn-sm rounded-pill px-3 py-1 fw-semibold dropdown-toggle shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.75rem;">
+                                <button class="btn btn-success btn-sm rounded-pill px-3 py-1.5 fw-semibold dropdown-toggle shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.78rem;">
                                     <i class="bi bi-download me-1"></i> Unduh Foto (${imageUrls.length} File)
                                 </button>
-                                <ul class="dropdown-menu shadow border-0 rounded-3 p-1" style="font-size: 0.8rem;">
+                                <ul class="dropdown-menu shadow border-0 rounded-3 p-1" style="font-size: 0.82rem;">
                                     ${downloadItems}
                                 </ul>
                             </div>
@@ -1866,10 +1893,10 @@
             totalImagesForThumb.forEach((fileOrUrl, idx) => {
                 if (typeof fileOrUrl === 'string') {
                     radioGroup.innerHTML += `
-                        <div class="form-check form-check-inline text-center p-1 border rounded bg-white">
+                        <div class="form-check form-check-inline text-center p-1.5 border rounded bg-white">
                             <input class="form-check-input" type="radio" name="thumbnailRadio" id="thumb_${idx}" value="${idx}" ${idx === 0 ? 'checked' : ''}>
                             <label class="form-check-label d-block text-dark small" for="thumb_${idx}">
-                                <img src="${fileOrUrl}" style="width: 45px; height: 45px; object-fit: cover;" class="rounded d-block mb-1 mx-auto">
+                                <img src="${fileOrUrl}" style="width: 50px; height: 50px; object-fit: cover;" class="rounded d-block mb-1 mx-auto">
                                 Foto ${idx + 1}
                             </label>
                         </div>
@@ -1878,10 +1905,10 @@
                     let reader = new FileReader();
                     reader.onload = function(e) {
                         radioGroup.innerHTML += `
-                            <div class="form-check form-check-inline text-center p-1 border rounded bg-white">
+                            <div class="form-check form-check-inline text-center p-1.5 border rounded bg-white">
                                 <input class="form-check-input" type="radio" name="thumbnailRadio" id="thumb_${idx}" value="${idx}" ${idx === 0 ? 'checked' : ''}>
                                 <label class="form-check-label d-block text-dark small" for="thumb_${idx}">
-                                    <img src="${e.target.result}" style="width: 45px; height: 45px; object-fit: cover;" class="rounded d-block mb-1 mx-auto">
+                                    <img src="${e.target.result}" style="width: 50px; height: 50px; object-fit: cover;" class="rounded d-block mb-1 mx-auto">
                                     Foto ${idx + 1}
                                 </label>
                             </div>
@@ -1923,10 +1950,10 @@
             container.style.display = 'block';
             currentEditImages.forEach((url, idx) => {
                 listDiv.innerHTML += `
-                    <div class="position-relative d-inline-block p-1 border rounded bg-white text-center">
-                        <img src="${url}" style="width: 55px; height: 55px; object-fit: cover;" class="rounded d-block mb-1">
+                    <div class="position-relative d-inline-block p-1.5 border rounded bg-white text-center">
+                        <img src="${url}" style="width: 60px; height: 60px; object-fit: cover;" class="rounded d-block mb-1">
                         <span class="small text-muted font-monospace">#${idx+1}</span>
-                        ${currentEditImages.length > 1 ? `<button type="button" class="btn btn-danger btn-sm rounded-circle position-absolute top-0 end-0 p-0 d-flex align-items-center justify-content-center" style="width: 20px; height: 20px; font-size: 10px;" onclick="removeExistingPhoto(${idx})" title="Hapus foto ini"><i class="bi bi-x"></i></button>` : ''}
+                        ${currentEditImages.length > 1 ? `<button type="button" class="btn btn-danger btn-sm rounded-circle position-absolute top-0 end-0 p-0 d-flex align-items-center justify-content-center" style="width: 22px; height: 22px; font-size: 11px;" onclick="removeExistingPhoto(${idx})" title="Hapus foto ini"><i class="bi bi-x"></i></button>` : ''}
                     </div>
                 `;
             });
@@ -2347,7 +2374,6 @@
     function parseIndonesianDate(dateStr) {
         if (!dateStr || dateStr === '-') return null;
         
-        // Jika format sudah standar YYYY-MM-DD
         let directDate = new Date(dateStr);
         if (!isNaN(directDate)) return directDate;
 
@@ -2377,7 +2403,7 @@
         if (!targetDate) return `<span class="badge bg-secondary ms-1 font-monospace" style="font-size:0.7rem;">${berlakuStr}</span>`;
         
         let today = new Date();
-        today.setHours(0, 0, 0, 0); // Reset jam agar perbandingan hari akurat
+        today.setHours(0, 0, 0, 0);
 
         if (targetDate < today) {
             return `<span class="fw-medium">${berlakuStr}</span> <span class="badge-status-expired ms-2"><i class="bi bi-x-circle-fill"></i> EXPIRED</span>`;
@@ -2404,15 +2430,15 @@
 
             const cleanWa = cleanWhatsAppNumber(item.hp);
             const hpFormatted = isAdmin && item.hp && item.hp !== '-' ? 
-                `<a href="https://wa.me/${cleanWa}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-2 py-0" style="font-size: 0.75rem;"><i class="bi bi-whatsapp me-1"></i>${item.hp}</a>` 
+                `<a href="https://wa.me/${cleanWa}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-2.5 py-1" style="font-size: 0.78rem;"><i class="bi bi-whatsapp me-1"></i>${item.hp}</a>` 
                 : `<span class="${!isAdmin ? 'blur-data' : ''}">${displayHp}</span>`;
 
             let masaBerlakuHtml = getRealtimeExpiryBadge(item.berlaku);
 
             let aksiCol = isAdmin ? `
                 <td class="text-center no-print text-nowrap">
-                    <button class="btn btn-outline-warning btn-sm rounded-circle p-1 lh-1" onclick="editMember('${item.id}')" title="Edit"><i class="bi bi-pencil-fill small"></i></button>
-                    <button class="btn btn-outline-danger btn-sm rounded-circle p-1 lh-1" onclick="deleteMember('${item.id}')" title="Hapus"><i class="bi bi-trash-fill small"></i></button>
+                    <button class="btn btn-outline-warning btn-sm rounded-circle p-1.5 lh-1 me-1 shadow-sm" onclick="editMember('${item.id}')" title="Edit"><i class="bi bi-pencil-fill small"></i></button>
+                    <button class="btn btn-outline-danger btn-sm rounded-circle p-1.5 lh-1 shadow-sm" onclick="deleteMember('${item.id}')" title="Hapus"><i class="bi bi-trash-fill small"></i></button>
                 </td>
             ` : '';
 
@@ -2448,14 +2474,14 @@
 
             const cleanWa = cleanWhatsAppNumber(item.wa);
             const waFormatted = isAdmin && item.wa ? 
-                `<a href="https://wa.me/${cleanWa}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-2 py-0" style="font-size: 0.75rem;"><i class="bi bi-whatsapp me-1"></i>${item.wa}</a>` 
+                `<a href="https://wa.me/${cleanWa}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-2.5 py-1" style="font-size: 0.78rem;"><i class="bi bi-whatsapp me-1"></i>${item.wa}</a>` 
                 : `<span class="${!isAdmin ? 'blur-data' : ''}">${displayWa}</span>`;
 
             let aksiCol = isAdmin ? `
                 <td class="text-center no-print">
-                    <button class="btn btn-outline-success btn-sm rounded-pill px-2 py-1 fw-semibold mb-1" onclick="moveToAnggota('${item.id}')" title="Pindahkan ke Daftar Anggota Aktif" style="font-size: 0.7rem;"><i class="bi bi-box-arrow-right me-1"></i> Pindahkan</button><br>
-                    <button class="btn btn-outline-warning btn-sm rounded-circle p-1 lh-1" onclick="editProsesKta('${item.id}')"><i class="bi bi-pencil-fill small"></i></button>
-                    <button class="btn btn-outline-danger btn-sm rounded-circle p-1 lh-1" onclick="deleteProsesKta('${item.id}')"><i class="bi bi-trash-fill small"></i></button>
+                    <button class="btn btn-outline-success btn-sm rounded-pill px-2.5 py-1 fw-semibold mb-1 shadow-sm" onclick="moveToAnggota('${item.id}')" title="Pindahkan ke Daftar Anggota Aktif" style="font-size: 0.72rem;"><i class="bi bi-box-arrow-right me-1"></i> Pindahkan</button><br>
+                    <button class="btn btn-outline-warning btn-sm rounded-circle p-1.5 lh-1 me-1 shadow-sm" onclick="editProsesKta('${item.id}')"><i class="bi bi-pencil-fill small"></i></button>
+                    <button class="btn btn-outline-danger btn-sm rounded-circle p-1.5 lh-1 shadow-sm" onclick="deleteProsesKta('${item.id}')"><i class="bi bi-trash-fill small"></i></button>
                 </td>
             ` : '';
 
@@ -2464,7 +2490,7 @@
                     <td class="text-center font-monospace fw-bold text-secondary">${index + 1}</td>
                     <td class="fw-bold">${item.nama}</td>
                     <td>${statusKtaBadge}</td>
-                    <td><span class="badge border text-warning px-2 py-1">${item.tipe}</span></td>
+                    <td><span class="badge border text-warning px-2.5 py-1">${item.tipe}</span></td>
                     <td>${formatTanggalIndo(item.tgl)}</td>
                     <td>${statusBadge}</td>
                     <td class="fw-bold text-success font-monospace">${formatRupiah(item.cicil)}</td>
