@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ORANGE BOJONG RAYA</title>
+    <title>DORANGE BOJONG RAYA</title>
     <!-- Favicon dinamis -->
     <link id="browserFavicon" rel="icon" type="image/png" href="LOGO OBR.png">
     <!-- Bootstrap 5 CSS -->
@@ -27,16 +27,30 @@
             --menu-bg: linear-gradient(135deg, #ffffff 0%, #fff7f0 100%);
             --menu-text: #111111;
             --menu-desc: #6c757d;
+            --section-title: #222222;
+            --step-card-bg: #ffffff;
+            --step-card-border: #ffd8be;
+            --step-text: #333333;
+            --bank-card-bg: #ffffff;
+            --emoney-bg: #ffffff;
+            --emoney-text: #111111;
         }
 
         [data-theme="dark"] {
             --bg-body: #121212;
             --text-main: #f8f9fa;
-            --card-bg: #1e1e1e;
+            --card-bg: #1a1a1a;
             --header-bg: linear-gradient(135deg, #802b00 0%, #b34700 50%, #b36b00 100%);
-            --menu-bg: linear-gradient(135deg, #242424 0%, #2d1e12 100%);
+            --menu-bg: linear-gradient(135deg, #222222 0%, #2d1e12 100%);
             --menu-text: #ffffff;
-            --menu-desc: #d1d5db;
+            --menu-desc: #f1f5f9;
+            --section-title: #ffffff;
+            --step-card-bg: #1e1e1e;
+            --step-card-border: #ff8533;
+            --step-text: #e2e8f0;
+            --bank-card-bg: #1e1e1e;
+            --emoney-bg: #1e1e1e;
+            --emoney-text: #ffffff;
         }
 
         body { 
@@ -238,6 +252,17 @@
             font-size: 0.9rem;
         }
 
+        /* Warna Teks Judul Bagian Universal */
+        h4, h5, h6 {
+            color: var(--section-title);
+            transition: color 0.3s ease;
+        }
+
+        /* Penyesuaian agar teks kecil/muted jelas di mode gelap */
+        [data-theme="dark"] .text-muted {
+            color: #cbd5e1 !important;
+        }
+
         .badge-ketua { 
             background-color: #dc3545; 
             font-weight: 600;
@@ -320,15 +345,20 @@
         }
 
         .step-card {
-            border: 1px solid #ffd8be;
+            border: 1px solid var(--step-card-border);
             border-left: 5px solid #e65c00;
             border-radius: 12px;
-            background: var(--card-bg);
+            background: var(--step-card-bg);
+            color: var(--step-text);
             transition: transform 0.2s;
         }
 
         .step-card:hover {
             transform: translateX(4px);
+        }
+        
+        .step-card p, .step-card h6 {
+            color: var(--step-text) !important;
         }
 
         .icon-box-feature {
@@ -343,6 +373,11 @@
             color: #e65c00;
             font-size: 1.6rem;
             margin-bottom: 10px;
+        }
+
+        [data-theme="dark"] .icon-box-feature {
+            background: #2d1a08;
+            color: #ff9900;
         }
 
         .shirt-preview-card {
@@ -368,14 +403,20 @@
         }
 
         .bank-card {
-            background: var(--card-bg);
+            background: var(--bank-card-bg);
+            color: var(--text-main);
             border: 2px dashed #0d6efd;
             border-radius: 14px;
             padding: 12px 15px;
         }
 
+        [data-theme="dark"] .bank-card .text-secondary {
+            color: #94a3b8 !important;
+        }
+
         .emoney-grid-item {
-            background: var(--card-bg);
+            background: var(--emoney-bg);
+            color: var(--emoney-text);
             border: 1px solid #dee2e6;
             border-radius: 12px;
             padding: 12px 8px;
@@ -383,6 +424,10 @@
             transition: all 0.2s ease;
             box-shadow: 0 2px 6px rgba(0,0,0,0.03);
             height: 100%;
+        }
+
+        [data-theme="dark"] .emoney-grid-item {
+            border-color: #333333;
         }
 
         .emoney-grid-item:hover {
@@ -807,7 +852,7 @@
                 </div>
 
                 <!-- INFO REKENING PEMBAYARAN RESMI -->
-                <div class="card border-0 rounded-4 p-3 p-md-4 mb-4 shadow-sm border border-primary border-opacity-25">
+                <div class="card border-0 rounded-4 p-3 p-md-4 mb-4 shadow-sm border border-primary border-opacity-25" style="background: var(--card-bg);">
                     <h5 class="fw-bold text-uppercase mb-3"><i class="bi bi-bank text-primary me-2"></i>Rekening Pembayaran Resmi OBR</h5>
                     <div class="row g-3">
                         <div class="col-md-6">
@@ -845,7 +890,7 @@
                                     <div class="step-badge">01</div>
                                     <h6 class="fw-bold m-0">Unduh App</h6>
                                 </div>
-                                <p class="text-secondary small mb-0">Unduh aplikasi resmi <b>The Jakmania</b> melalui Play Store (Android) atau App Store (iOS).</p>
+                                <p class="small mb-0">Unduh aplikasi resmi <b>The Jakmania</b> melalui Play Store (Android) atau App Store (iOS).</p>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
@@ -854,7 +899,7 @@
                                     <div class="step-badge">02</div>
                                     <h6 class="fw-bold m-0">Isi Formulir</h6>
                                 </div>
-                                <p class="text-secondary small mb-0">Buka aplikasi, isi data diri lengkap & benar (Nama, NIK KTP, serta alamat domisili).</p>
+                                <p class="small mb-0">Buka aplikasi, isi data diri lengkap & benar (Nama, NIK KTP, serta alamat domisili).</p>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
@@ -863,7 +908,7 @@
                                     <div class="step-badge">03</div>
                                     <h6 class="fw-bold m-0">Pilih Wilayah</h6>
                                 </div>
-                                <p class="text-secondary small mb-0">Pilih wilayah / biro / sub-korwil: <b>Sub Korwil Cengkareng (Orange Bojong Raya)</b>.</p>
+                                <p class="small mb-0">Pilih wilayah / biro / sub-korwil: <b>Sub Korwil Cengkareng (Orange Bojong Raya)</b>.</p>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
@@ -872,7 +917,7 @@
                                     <div class="step-badge">04</div>
                                     <h6 class="fw-bold m-0">Unggah Foto</h6>
                                 </div>
-                                <p class="text-secondary small mb-0">Unggah foto diri (pasfoto rapi) dan foto identitas (KTP) sesuai ukuran.</p>
+                                <p class="small mb-0">Unggah foto diri (pasfoto rapi) dan foto identitas (KTP) sesuai ukuran.</p>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
@@ -881,7 +926,7 @@
                                     <div class="step-badge">05</div>
                                     <h6 class="fw-bold m-0">Kode Bayar</h6>
                                 </div>
-                                <p class="text-secondary small mb-0">Simpan data pendaftaran dan dapatkan daftar/kode transaksi pembayaran.</p>
+                                <p class="small mb-0">Simpan data pendaftaran dan dapatkan daftar/kode transaksi pembayaran.</p>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
@@ -890,7 +935,7 @@
                                     <div class="step-badge">06</div>
                                     <h6 class="fw-bold m-0">Pembayaran</h6>
                                 </div>
-                                <p class="text-secondary small mb-0">Transfer sebesar Rp150.000 ke rekening BCA Kasub / Sekertaris di atas.</p>
+                                <p class="small mb-0">Transfer sebesar Rp150.000 ke rekening BCA Kasub / Sekertaris di atas.</p>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
@@ -899,7 +944,7 @@
                                     <div class="step-badge">07</div>
                                     <h6 class="fw-bold m-0">Simpan Bukti</h6>
                                 </div>
-                                <p class="text-secondary small mb-0">Simpan screenshot bukti pendaftaran aplikasi dan bukti transfer pembayaran.</p>
+                                <p class="small mb-0">Simpan screenshot bukti pendaftaran aplikasi dan bukti transfer pembayaran.</p>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-3">
@@ -908,7 +953,7 @@
                                     <div class="step-badge">08</div>
                                     <h6 class="fw-bold m-0">Verifikasi OBR</h6>
                                 </div>
-                                <p class="text-secondary small mb-0">Kirimkan bukti tersebut kepada Pengurus Sub-Wilayah Bojong Raya untuk verifikasi.</p>
+                                <p class="small mb-0">Kirimkan bukti tersebut kepada Pengurus Sub-Wilayah Bojong Raya untuk verifikasi.</p>
                             </div>
                         </div>
                     </div>
@@ -942,7 +987,7 @@
                     </div>
 
                     <!-- TABEL SIZE CHART T-SHIRT -->
-                    <div class="card border-0 rounded-4 p-3 p-md-4 shadow-sm border mb-3">
+                    <div class="card border-0 rounded-4 p-3 p-md-4 shadow-sm border mb-3" style="background: var(--card-bg);">
                         <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
                             <h6 class="fw-bold m-0"><i class="bi bi-ruler text-warning me-2"></i>SIZE CHART T-SHIRT KTA THE JAKMANIA (CM)</h6>
                             <span class="badge bg-dark text-warning font-monospace">STANDAR UKURAN</span>
@@ -974,7 +1019,7 @@
                 <!-- Program Khusus Pelajar (JakSchool) & Skema Cicilan -->
                 <div class="row g-3 mb-4">
                     <div class="col-md-6">
-                        <div class="card h-100 border-warning border-2 rounded-4 p-3 shadow-sm">
+                        <div class="card h-100 border-warning border-2 rounded-4 p-3 shadow-sm" style="background: var(--card-bg);">
                             <div class="d-flex align-items-center gap-3 mb-2">
                                 <div class="icon-box-feature mb-0"><i class="bi bi-mortarboard-fill"></i></div>
                                 <div>
@@ -982,7 +1027,7 @@
                                     <h6 class="fw-bold m-0">E-KTA Khusus Pelajar</h6>
                                 </div>
                             </div>
-                            <p class="text-secondary small mb-2">
+                            <p class="text-muted small mb-2">
                                 Khusus untuk anggota yang masih berstatus pelajar/siswa, tersedia potongan harga diskon 15%.
                             </p>
                             <div class="p-2 rounded-3 border mb-2 small bg-opacity-50">
@@ -991,7 +1036,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="card h-100 border-success border-2 rounded-4 p-3 shadow-sm">
+                        <div class="card h-100 border-success border-2 rounded-4 p-3 shadow-sm" style="background: var(--card-bg);">
                             <div class="d-flex align-items-center gap-3 mb-2">
                                 <div class="icon-box-feature mb-0 text-success border-success" style="background: #e8f5e9;"><i class="bi bi-cash-stack"></i></div>
                                 <div>
@@ -999,10 +1044,10 @@
                                     <h6 class="fw-bold m-0">Skema Cicilan KTA OBR</h6>
                                 </div>
                             </div>
-                            <p class="text-secondary small mb-2">
+                            <p class="text-muted small mb-2">
                                 OBR membuka kemudahan pendaftaran & perpanjangan e-KTA JakSchool dengan cara dicicil.
                             </p>
-                            <ol class="ps-3 mb-0 text-secondary small">
+                            <ol class="ps-3 mb-0 text-muted small">
                                 <li>Kirim detail Nama, Alamat, dan Asal Sekolah ke Admin OBR.</li>
                                 <li>Kirim bukti pendaftaran aplikasi & transfer cicilan dengan berita transfer: <b>"CICIL KTA OBR (NAMA)"</b>.</li>
                                 <li>Pengurus akan memasukkan Anda ke grup khusus pemantauan cicilan.</li>
@@ -1012,9 +1057,9 @@
                 </div>
 
                 <!-- Fungsi e-Money -->
-                <div class="card border-0 rounded-4 p-3 p-md-4 shadow-sm border mb-4">
+                <div class="card border-0 rounded-4 p-3 p-md-4 shadow-sm border mb-4" style="background: var(--card-bg);">
                     <h6 class="fw-bold border-bottom pb-2 mb-3"><i class="bi bi-credit-card-2-front text-warning me-2"></i>Fungsi & Kegunaan E-KTA (e-Money Mandiri)</h6>
-                    <p class="text-secondary small mb-3">
+                    <p class="text-muted small mb-3">
                         Selain sebagai bukti keanggotaan resmi, e-KTA berupa kartu fisik e-Money Mandiri dapat digunakan sebagai uang elektronik untuk berbagai transaksi harian:
                     </p>
                     <div class="row g-2 text-center small fw-bold">
@@ -1058,7 +1103,7 @@
                 </div>
 
                 <!-- Tombol Konfirmasi WA Langsung -->
-                <div class="text-center p-3 border rounded-4 shadow-sm">
+                <div class="text-center p-3 border rounded-4 shadow-sm" style="background: var(--card-bg);">
                     <h6 class="fw-bold mb-2">Sudah Mendaftar di Aplikasi atau Ingin Bertanya?</h6>
                     <p class="text-muted small mb-3">Hubungi tim pengurus Orange Bojong Raya untuk verifikasi & konfirmasi pembayaran:</p>
                     <div class="d-flex justify-content-center flex-wrap gap-2">
@@ -1466,7 +1511,7 @@
     const activityLogModal = new bootstrap.Modal(document.getElementById('activityLogModal'));
 
     window.addEventListener('DOMContentLoaded', () => {
-        // Inisialisasi Tema Tersimpan (Default: light jika belum pernah dipilih)
+        // Inisialisasi Tema Tersimpan (Default: light)
         const savedTheme = localStorage.getItem('obr_theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
         updateThemeToggleText(savedTheme);
@@ -2451,7 +2496,7 @@
         try {
             await auth.sendPasswordResetEmail(emailInput);
             alert('Link reset password berhasil dikirim! Periksa Inbox atau Spam email Anda.');
-            forgotModal.hide();
+            forgotModal.forgotModal.hide();
         } catch (error) { alert('Gagal mengirim email reset: ' + error.message); }
     }
 </script>
