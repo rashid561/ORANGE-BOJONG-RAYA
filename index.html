@@ -1224,40 +1224,63 @@
                     </div>
                 </div>
 
-                <div class="row g-3 mb-4">
-                    <div class="col-md-6">
-                        <div class="card h-100 border-warning border-2 rounded-4 p-3.5 shadow-sm" style="background: var(--card-bg);">
-                            <div class="d-flex align-items-center gap-3 mb-2">
-                                <div class="icon-box-feature mb-0"><i class="bi bi-mortarboard-fill"></i></div>
-                                <div>
-                                    <span class="badge bg-danger text-white mb-1">Diskon 15%</span>
-                                    <h6 class="fw-bold m-0">E-KTA Khusus Pelajar</h6>
-                                </div>
-                            </div>
-                            <p class="text-muted small mb-2">Khusus untuk anggota yang masih berstatus pelajar/siswa, tersedia potongan harga diskon 15%.</p>
-                            <div class="syarat-ketentuan-box mb-2 small">
-                                <b>Syarat & Ketentuan:</b> Wajib melampirkan foto Kartu Pelajar yang masih aktif saat pengajuan pendaftaran.
-                            </div>
-                        </div>
+               <div class="row g-3 mb-4">
+    <!-- Kartu E-KTA Khusus Pelajar -->
+    <div class="col-md-6">
+        <div class="card h-100 promo-card promo-card-pelajar shadow-sm">
+            <div>
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="icon-box-pelajar">
+                        <i class="bi bi-mortarboard-fill"></i>
                     </div>
-                    <div class="col-md-6">
-                        <div class="card h-100 border-success border-2 rounded-4 p-3.5 shadow-sm" style="background: var(--card-bg);">
-                            <div class="d-flex align-items-center gap-3 mb-2">
-                                <div class="icon-box-feature mb-0 text-success border-success" style="background: #e8f5e9;"><i class="bi bi-cash-stack"></i></div>
-                                <div>
-                                    <span class="badge bg-success text-white mb-1">Program JakSchool</span>
-                                    <h6 class="fw-bold m-0">Skema Cicilan KTA OBR</h6>
-                                </div>
-                            </div>
-                            <p class="text-muted small mb-2">OBR membuka kemudahan pendaftaran & perpanjangan e-KTA JakSchool dengan cara dicicil.</p>
-                            <ol class="ps-3 mb-0 text-muted small">
-                                <li>Kirim detail Nama, Alamat, dan Asal Sekolah ke Admin OBR.</li>
-                                <li>Kirim bukti pendaftaran aplikasi & transfer cicilan dengan berita transfer: <b>"CICIL KTA OBR (NAMA)"</b>.</li>
-                                <li>Pengurus akan memasukkan Anda ke grup khusus pemantauan cicilan.</li>
-                            </ol>
-                        </div>
+                    <div>
+                        <span class="badge bg-danger text-white mb-1 px-2.5 py-1">Diskon 15%</span>
+                        <h6 class="fw-bold m-0 fs-5">E-KTA Khusus Pelajar</h6>
                     </div>
                 </div>
+                <p class="small mb-3 text-secondary">
+                    Khusus untuk anggota yang masih berstatus pelajar/siswa, tersedia potongan harga diskon 15%.
+                </p>
+            </div>
+            <div class="promo-info-box small">
+                <span class="fw-bold text-warning d-block mb-1">
+                    <i class="bi bi-exclamation-circle-fill me-1"></i>Syarat & Ketentuan:
+                </span>
+                <span>Wajib melampirkan foto Kartu Pelajar yang masih aktif saat pengajuan pendaftaran.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kartu Skema Cicilan KTA -->
+    <div class="col-md-6">
+        <div class="card h-100 promo-card promo-card-cicil shadow-sm">
+            <div>
+                <div class="d-flex align-items-center gap-3 mb-3">
+                    <div class="icon-box-cicil">
+                        <i class="bi bi-cash-stack"></i>
+                    </div>
+                    <div>
+                        <span class="badge bg-success text-white mb-1 px-2.5 py-1">Program JakSchool</span>
+                        <h6 class="fw-bold m-0 fs-5">Skema Cicilan KTA OBR</h6>
+                    </div>
+                </div>
+                <p class="small mb-3 text-secondary">
+                    OBR membuka kemudahan pendaftaran & perpanjangan e-KTA JakSchool dengan cara dicicil.
+                </p>
+            </div>
+            <div class="promo-info-box small">
+                <span class="fw-bold text-success d-block mb-1">
+                    <i class="bi bi-list-check me-1"></i>Langkah Pembayaran Cicilan:
+                </span>
+                <ol class="ps-3 mb-0">
+                    <li class="mb-1">Kirim detail Nama, Alamat, dan Asal Sekolah ke Admin OBR.</li>
+                    <li class="mb-1">Kirim bukti pendaftaran aplikasi & transfer cicilan dengan berita transfer: <b class="text-warning">"CICIL KTA OBR (NAMA)"</b>.</li>
+                    <li>Pengurus akan memasukkan Anda ke grup khusus pemantauan cicilan.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
 
                 <div class="card border-0 rounded-4 p-3.5 p-md-4 shadow-sm border mb-4" style="background: var(--card-bg);">
                     <h6 class="fw-bold border-bottom pb-2 mb-3"><i class="bi bi-credit-card-2-front text-warning me-2"></i>Fungsi & Kegunaan E-KTA (e-Money Mandiri)</h6>
