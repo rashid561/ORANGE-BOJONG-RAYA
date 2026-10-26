@@ -699,7 +699,7 @@
                         <select id="statusFilter" class="form-select form-select-sm shadow-sm rounded-pill px-3" onchange="filterData()">
                             <option value="all">🔍 Semua Status KTA</option>
                             <option value="active">🟢 Masa Berlaku Aktif</option>
-                            <option value="expired">🔴 Masa Berlaku Habis (Expired)</option>
+                            <option value="expired">🔴 Masa Berlaku Expired</option>
                         </select>
                     </div>
                     <div class="col-md-3 text-md-end">
@@ -1073,13 +1073,12 @@
     </div>
 </div>
 
-<!-- MODAL PREVIEW SLIDER GAMBAR DENGAN KETERANGAN FOTO -->
+<!-- MODAL PREVIEW SLIDER GAMBAR (BAGIAN MERAH DI ATAS SUDAH DIHILANGKAN) -->
 <div class="modal fade" id="imagePreviewModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 bg-dark text-white rounded-4 overflow-hidden shadow-lg">
             <div class="modal-header border-bottom border-warning py-2 justify-content-between align-items-center">
                 <h6 class="modal-title fw-bold text-warning m-0" id="previewModalTitle"><i class="bi bi-image me-1"></i>Pratinjau Foto & Desain</h6>
-                <span id="previewModalCounter" class="badge bg-warning text-dark font-monospace px-2 py-1" style="font-size: 0.75rem;">Foto 1 dari 1</span>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body text-center p-2 p-md-3 bg-black position-relative">
@@ -1101,7 +1100,7 @@
     </div>
 </div>
 
-<!-- MODAL TAMBAH / EDIT GALERI (BISA TAMBAH FOTO BARU & HAPUS FOTO LAMA) -->
+<!-- MODAL TAMBAH / EDIT GALERI -->
 <div class="modal fade" id="galeriModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 shadow-lg rounded-4">
@@ -1125,12 +1124,9 @@
                         <input type="text" id="inputGaleriDesc" class="form-control form-control-sm rounded-3" required placeholder="Keterangan singkat kegiatan...">
                     </div>
 
-                    <!-- Container khusus edit foto yang sudah ada -->
                     <div class="mb-3" id="editExistingPhotosContainer" style="display: none;">
                         <label class="form-label fw-semibold text-secondary mb-1">Foto Yang Sudah Ada (Klik tombol X untuk menghapus foto):</label>
-                        <div id="existingPhotosList" class="d-flex flex-wrap gap-2 p-2 border rounded bg-light">
-                            <!-- Foto lama muncul di sini -->
-                        </div>
+                        <div id="existingPhotosList" class="d-flex flex-wrap gap-2 p-2 border rounded bg-light"></div>
                     </div>
 
                     <div class="mb-2">
@@ -1141,9 +1137,7 @@
 
                     <div class="mb-3" id="thumbnailSelectionContainer" style="display: none;">
                         <label class="form-label fw-semibold text-secondary mb-1">Pilih Foto Sampul Depan (Thumbnail Utama di Website):</label>
-                        <div id="thumbnailRadioGroup" class="d-flex flex-wrap gap-2 p-2 border rounded bg-light">
-                            <!-- Radio pilihan sampul -->
-                        </div>
+                        <div id="thumbnailRadioGroup" class="d-flex flex-wrap gap-2 p-2 border rounded bg-light"></div>
                     </div>
                     <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill shadow" id="btnSimpanGaleri">Simpan Foto Galeri</button>
                 </form>
@@ -1478,7 +1472,7 @@
     let sessionUnsubscribe = null;
     let afkTimer = null;
     let selectedFilesTemp = [];
-    let currentEditImages = []; // Array foto sementara saat mode edit galeri
+    let currentEditImages = [];
 
     const selectAddModeModal = new bootstrap.Modal(document.getElementById('selectAddModeModal'));
     const selectAddProsesModeModal = new bootstrap.Modal(document.getElementById('selectAddProsesModeModal'));
@@ -1736,7 +1730,6 @@
         alert('Nomor Rekening BCA (' + noRek + ') berhasil disalin!');
     }
 
-    // Modal Preview Gambar dengan Slider & Keterangan Foto 1 dari X
     function openImageModal(galleryId, activeIndex = 0) {
         const item = galeriData.find(x => x.id === galleryId);
         if (!item) return;
@@ -1756,20 +1749,11 @@
             `;
         });
 
-        document.getElementById('previewModalCounter').innerText = `Foto ${activeIndex + 1} dari ${imageUrls.length}`;
-
-        // Event listener saat slider digeser di modal
-        const myCarousel = document.getElementById('modalCarouselContainer');
-        myCarousel.addEventListener('slide.bs.carousel', function (e) {
-            document.getElementById('previewModalCounter').innerText = `Foto ${e.to + 1} dari ${imageUrls.length}`;
-        }, { once: true });
-
         imagePreviewModal.show();
     }
 
     function openSingleImageModal(imgSrc, title) {
         document.getElementById('previewModalTitle').innerHTML = `<i class="bi bi-image me-1"></i> ${title}`;
-        document.getElementById('previewModalCounter').innerText = `Foto 1 dari 1`;
         document.getElementById('modalCarouselInner').innerHTML = `
             <div class="carousel-item active">
                 <img src="${imgSrc}" class="d-block mx-auto rounded shadow" style="max-height: 75vh; object-fit: contain; width: 100%;">
@@ -1779,7 +1763,6 @@
         imagePreviewModal.show();
     }
 
-    // Render Galeri dengan Tombol Dropdown Unduh Ringkas (1 Tombol Saja)
     function renderGaleri() {
         const container = document.getElementById('galeriContainer');
         container.innerHTML = '';
@@ -1794,7 +1777,6 @@
             let imageUrls = item.imageUrls || [item.imageUrl];
             let thumbImg = imageUrls[0];
 
-            // Dropdown pilihan unduh foto ke berapa
             let downloadItems = imageUrls.map((url, idx) => `
                 <li><a class="dropdown-item py-1 fw-semibold text-dark" href="${url}" download="${item.judul}_Foto_${idx+1}.jpg" target="_blank"><i class="bi bi-download me-2 text-success"></i>Unduh Foto ${idx + 1}</a></li>
             `).join('');
@@ -1815,7 +1797,6 @@
                             <h6 class="fw-bold text-white m-0">${item.judul}</h6>
                             <p class="text-white-50 small mb-2 mt-1">${item.deskripsi}</p>
                             
-                            <!-- 1 Tombol Unduh Utama dengan Dropdown Pilihan Foto -->
                             <div class="dropdown mb-1">
                                 <button class="btn btn-success btn-sm rounded-pill px-3 py-1 fw-semibold dropdown-toggle shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.75rem;">
                                     <i class="bi bi-download me-1"></i> Unduh Foto (${imageUrls.length} File)
@@ -1960,7 +1941,6 @@
 
         try {
             if (docId) {
-                // Mode Edit
                 let finalImageUrls = [...currentEditImages];
 
                 if (fileInput.files && fileInput.files.length > 0) {
@@ -1977,7 +1957,6 @@
                     return;
                 }
 
-                // Cek apakah ada pilihan thumbnail utama yang diubah
                 let checkedRadio = document.querySelector('input[name="thumbnailRadio"]:checked');
                 if (checkedRadio && (fileInput.files.length > 0 || currentEditImages.length > 1)) {
                     let selectedIdx = parseInt(checkedRadio.value);
@@ -1989,7 +1968,6 @@
                 logAdminActivity(`Admin memperbarui galeri kegiatan [${judul}].`);
                 alert('Galeri kegiatan berhasil diperbarui!');
             } else {
-                // Mode Tambah Baru
                 if (!fileInput.files || fileInput.files.length === 0) {
                     alert('Pilih minimal 1 file foto!');
                     btn.disabled = false;
@@ -2338,20 +2316,20 @@
         document.getElementById('cicilContainer').style.display = (val === 'CICIL') ? 'block' : 'none';
     }
 
-    function checkExpiryStatus(berlakuStr) {
-        if (!berlakuStr || berlakuStr === '-') return { status: 'normal', label: '-' };
+    // Fungsi otomatis menentukan badge AKTIF / EXPIRED berdasarkan tanggal real-life tanpa bolong-bolong
+    function getRealtimeExpiryBadge(berlakuStr) {
+        if (!berlakuStr || berlakuStr === '-') return `<span class="badge bg-secondary ms-1" style="font-size:0.65rem;">-</span>`;
+        
         let targetDate = new Date(berlakuStr);
-        if (isNaN(targetDate)) return { status: 'normal', label: berlakuStr };
-        let today = new Date();
-        let diffTime = targetDate - today;
-        let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
-        if (diffDays < 0) {
-            return { status: 'expired', label: `${berlakuStr} <span class="badge bg-danger ms-1" style="font-size:0.65rem;">EXPIRED</span>` };
-        } else if (diffDays <= 30) {
-            return { status: 'warning', label: `${berlakuStr} <span class="badge bg-warning text-dark ms-1" style="font-size:0.65rem;">SEGERA HABIS (${diffDays} HARI)</span>` };
+        if (isNaN(targetDate)) return `<span class="badge bg-secondary ms-1" style="font-size:0.65rem;">${berlakuStr}</span>`;
+        
+        let today = new Date(); // Tanggal real-life saat ini
+        
+        if (targetDate < today) {
+            return `${berlakuStr} <span class="badge bg-danger ms-1" style="font-size:0.65rem;">EXPIRED</span>`;
+        } else {
+            return `${berlakuStr} <span class="badge bg-success ms-1" style="font-size:0.65rem;">AKTIF</span>`;
         }
-        return { status: 'active', label: `${berlakuStr} <span class="badge bg-success ms-1" style="font-size:0.65rem;">AKTIF</span>` };
     }
 
     function renderTable(data = members) {
@@ -2375,18 +2353,13 @@
                 `<a href="https://wa.me/${cleanWa}" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-2 py-0" style="font-size: 0.75rem;"><i class="bi bi-whatsapp me-1"></i>${item.hp}</a>` 
                 : `<span class="${!isAdmin ? 'blur-data' : ''}">${displayHp}</span>`;
 
-            let expiryInfo = checkExpiryStatus(item.berlaku);
-            let reminderBtn = '';
-            if (isAdmin && (expiryInfo.status === 'expired' || expiryInfo.status === 'warning') && item.hp && item.hp !== '-') {
-                let msg = encodeURIComponent(`Halo ${item.nama}, masa berlaku e-KTA The Jakmania Orange Bojong Raya Anda ${expiryInfo.status === 'expired' ? 'telah habis (expired)' : 'akan segera habis'}. Segera lakukan perpanjangan melalui pengurus ya. Salam Korwil!`);
-                reminderBtn = `<a href="https://wa.me/${cleanWa}?text=${msg}" target="_blank" class="btn btn-outline-info btn-sm rounded-circle p-1 lh-1 ms-1" title="Kirim Pengingat WhatsApp"><i class="bi bi-whatsapp small"></i></a>`;
-            }
+            // Menerapkan badge AKTIF / EXPIRED secara otomatis ke seluruh data tanpa bolong-bolong
+            let masaBerlakuHtml = getRealtimeExpiryBadge(item.berlaku);
 
             let aksiCol = isAdmin ? `
                 <td class="text-center no-print text-nowrap">
                     <button class="btn btn-outline-warning btn-sm rounded-circle p-1 lh-1" onclick="editMember('${item.id}')" title="Edit"><i class="bi bi-pencil-fill small"></i></button>
                     <button class="btn btn-outline-danger btn-sm rounded-circle p-1 lh-1" onclick="deleteMember('${item.id}')" title="Hapus"><i class="bi bi-trash-fill small"></i></button>
-                    ${reminderBtn}
                 </td>
             ` : '';
 
@@ -2395,7 +2368,7 @@
                     <td class="text-center font-monospace fw-bold text-secondary">${index + 1}</td>
                     <td class="fw-bold">${item.nama}</td>
                     <td class="font-monospace text-secondary"><span class="${!isAdmin ? 'blur-data' : ''}">${displayKta}</span></td>
-                    <td>${expiryInfo.label}</td>
+                    <td>${masaBerlakuHtml}</td>
                     <td>${ketBadge}</td>
                     <td>${hpFormatted}</td>
                     ${aksiCol}
@@ -2479,10 +2452,16 @@
     function filterData() {
         const query = document.getElementById('searchInput').value.toLowerCase();
         const statusFilter = document.getElementById('statusFilter').value;
+        const today = new Date();
+
         const filtered = members.filter(m => {
             const matchQuery = (m.nama && m.nama.toLowerCase().includes(query)) || (m.kta && m.kta.toLowerCase().includes(query)) || (m.ket && m.ket.toLowerCase().includes(query)) || (m.hp && m.hp.toLowerCase().includes(query));
-            if (statusFilter === 'active') return matchQuery && m.berlaku && m.berlaku !== '-';
-            if (statusFilter === 'expired') return matchQuery && (!m.berlaku || m.berlaku === '-');
+            
+            let targetDate = new Date(m.berlaku);
+            let isExpired = !isNaN(targetDate) && targetDate < today;
+
+            if (statusFilter === 'active') return matchQuery && !isExpired && m.berlaku && m.berlaku !== '-';
+            if (statusFilter === 'expired') return matchQuery && isExpired;
             return matchQuery;
         });
         filtered.sort((a, b) => a.nama.localeCompare(b.nama));
