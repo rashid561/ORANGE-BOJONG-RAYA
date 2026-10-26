@@ -424,7 +424,7 @@
 
         .shirt-preview-img {
             width: 100%;
-            max-height: 220px;
+            height: 220px;
             object-fit: cover;
             border-bottom: 2px solid #e65c00;
             cursor: pointer;
@@ -1718,18 +1718,52 @@
         imagePreviewModal.show();
     }
 
-    // Fungsi Render Galeri Dinamis dengan Sampul Latar Depan & Tombol Download
+    // Fungsi Render Galeri (1 Artikel, Banyak Foto dalam Slider Carousel)
     function renderGaleri() {
         const container = document.getElementById('galeriContainer');
         container.innerHTML = '';
         const isAdmin = currentUser && currentUser.role === 'admin';
 
         if (galeriData.length === 0) {
-            container.innerHTML = `<div class="col-12 text-center text-muted py-4">Belum ada foto galeri kegiatan yang diunggah.</div>`;
+            container.innerHTML = `<div class="col-12 text-center text-muted py-4">Belum ada galeri kegiatan yang diunggah.</div>`;
             return;
         }
 
-        galeriData.forEach((item) => {
+        galeriData.forEach((item, index) => {
+            let imageUrls = item.imageUrls || [item.imageUrl]; // Kompatibilitas data lama
+            let carouselId = `carouselGaleri_${index}`;
+
+            let mediaHtml = '';
+            if (imageUrls.length > 1) {
+                let indicators = '';
+                let slides = '';
+                imageUrls.forEach((imgUrl, imgIdx) => {
+                    indicators += `<button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${imgIdx}" ${imgIdx === 0 ? 'class="active" aria-current="true"' : ''}></button>`;
+                    slides += `
+                        <div class="carousel-item ${imgIdx === 0 ? 'active' : ''}">
+                            <img src="${imgUrl}" class="d-block w-100 shirt-preview-img rounded" alt="Foto ${imgIdx+1}" onclick="openImageModal('${imgUrl}', '${item.judul}')">
+                        </div>
+                    `;
+                });
+
+                mediaHtml = `
+                    <div id="${carouselId}" class="carousel slide mb-2" data-bs-ride="carousel">
+                        <div class="carousel-indicators">${indicators}</div>
+                        <div class="carousel-inner">${slides}</div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                `;
+            } else {
+                mediaHtml = `<img src="${imageUrls[0]}" alt="${item.judul}" class="shirt-preview-img rounded mb-2" onclick="openImageModal('${imageUrls[0]}', '${item.judul}')">`;
+            }
+
             let adminActions = isAdmin ? `
                 <div class="mt-2 d-flex justify-content-center gap-2">
                     <button class="btn btn-outline-warning btn-sm rounded-pill px-3 py-1 fw-semibold" onclick="editGaleri('${item.id}')"><i class="bi bi-pencil-fill me-1"></i> Edit</button>
@@ -1737,16 +1771,20 @@
                 </div>
             ` : '';
 
+            let downloadButtons = imageUrls.map((url, idx) => `
+                <a href="${url}" download="Galeri_OBR_${index+1}_${idx+1}.jpg" target="_blank" class="btn btn-success btn-sm rounded-pill px-2 py-1 fw-semibold" style="font-size: 0.7rem;"><i class="bi bi-download"></i> Foto ${idx+1}</a>
+            `).join(' ');
+
             container.innerHTML += `
                 <div class="col-md-4 col-sm-6">
                     <div class="shirt-preview-card shadow-sm text-center p-2">
-                        <img src="${item.imageUrl}" alt="${item.judul}" class="shirt-preview-img rounded" onclick="openImageModal('${item.imageUrl}', '${item.judul}')">
+                        ${mediaHtml}
                         <div class="p-2">
                             <span class="badge bg-warning text-dark font-monospace mb-1">${item.kategori}</span>
                             <h6 class="fw-bold text-white m-0">${item.judul}</h6>
                             <p class="text-white-50 small mb-2 mt-1">${item.deskripsi}</p>
-                            <div class="d-flex justify-content-center gap-2">
-                                <a href="${item.imageUrl}" download="Galeri_OBR.jpg" target="_blank" class="btn btn-success btn-sm rounded-pill px-3 py-1 fw-semibold" style="font-size: 0.75rem;"><i class="bi bi-download me-1"></i> Download Foto</a>
+                            <div class="d-flex justify-content-center flex-wrap gap-1 mb-1">
+                                ${downloadButtons}
                             </div>
                             ${adminActions}
                         </div>
@@ -1807,7 +1845,6 @@
         galeriModal.show();
     }
 
-    // Fungsi konversi file ke Base64 (Menghindari Firebase Storage & Error CORS)
     function readFileAsDataURL(file) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -1831,16 +1868,21 @@
 
         try {
             if (docId) {
-                // Mode Edit 1 Foto
-                let imageUrl = galeriData.find(x => x.id === docId).imageUrl;
-                if (fileInput.files && fileInput.files[0]) {
-                    imageUrl = await readFileAsDataURL(fileInput.files[0]);
+                let itemData = galeriData.find(x => x.id === docId);
+                let imageUrls = itemData.imageUrls || [itemData.imageUrl];
+                
+                if (fileInput.files && fileInput.files.length > 0) {
+                    imageUrls = [];
+                    for (let i = 0; i < fileInput.files.length; i++) {
+                        let base64Img = await readFileAsDataURL(fileInput.files[i]);
+                        imageUrls.push(base64Img);
+                    }
                 }
-                await db.collection("galeri_kegiatan").doc(docId).update({ judul, kategori, deskripsi, imageUrl });
-                logAdminActivity(`Admin memperbarui foto galeri [${judul}].`);
-                alert('Foto galeri berhasil diperbarui!');
+                
+                await db.collection("galeri_kegiatan").doc(docId).update({ judul, kategori, deskripsi, imageUrls });
+                logAdminActivity(`Admin memperbarui galeri kegiatan [${judul}].`);
+                alert('Galeri kegiatan berhasil diperbarui!');
             } else {
-                // Mode Tambah (Bisa Banyak Foto Sekaligus)
                 if (!fileInput.files || fileInput.files.length === 0) {
                     alert('Pilih minimal 1 file foto!');
                     btn.disabled = false;
@@ -1855,24 +1897,31 @@
                     if (checkedRadio) primaryIndex = parseInt(checkedRadio.value);
                 }
 
+                let imageUrls = [];
                 for (let i = 0; i < files.length; i++) {
                     let base64Image = await readFileAsDataURL(files[i]);
-                    await db.collection("galeri_kegiatan").add({
-                        judul,
-                        kategori,
-                        deskripsi,
-                        imageUrl: base64Image,
-                        isFeatured: (i === primaryIndex)
-                    });
+                    imageUrls.push(base64Image);
                 }
 
-                logAdminActivity(`Admin mengunggah ${files.length} foto galeri baru.`);
-                alert(`Berhasil menyimpan ${files.length} foto ke galeri kegiatan!`);
+                if (primaryIndex > 0) {
+                    let chosenThumb = imageUrls.splice(primaryIndex, 1)[0];
+                    imageUrls.unshift(chosenThumb);
+                }
+
+                await db.collection("galeri_kegiatan").add({
+                    judul,
+                    kategori,
+                    deskripsi,
+                    imageUrls: imageUrls
+                });
+
+                logAdminActivity(`Admin menambah artikel galeri baru [${judul}] dengan ${imageUrls.length} foto.`);
+                alert(`Berhasil menyimpan artikel galeri dengan ${imageUrls.length} foto di dalamnya!`);
             }
 
             galeriModal.hide();
         } catch (err) {
-            alert('Gagal menyimpan foto: ' + err.message);
+            alert('Gagal menyimpan: ' + err.message);
         } finally {
             btn.disabled = false;
             btn.innerText = 'Simpan Foto Galeri';
@@ -1880,11 +1929,11 @@
     }
 
     async function deleteGaleri(id) {
-        if (confirm("Hapus foto galeri ini?")) {
+        if (confirm("Hapus galeri kegiatan ini?")) {
             try {
                 await db.collection("galeri_kegiatan").doc(id).delete();
-                logAdminActivity(`Admin menghapus foto galeri ID: ${id}`);
-                alert('Foto berhasil dihapus!');
+                logAdminActivity(`Admin menghapus galeri ID: ${id}`);
+                alert('Galeri berhasil dihapus!');
             } catch (err) {
                 alert('Gagal menghapus: ' + err.message);
             }
