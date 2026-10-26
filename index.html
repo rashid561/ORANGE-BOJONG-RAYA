@@ -949,7 +949,7 @@
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
                             <div class="shirt-preview-card shadow-sm text-center">
-                                <img src="BAJU KTA PENDAFTARAN BARU.jpeg" alt="Baju KTA Pendaftaran Baru" class="shirt-preview-img" onclick="openImageModal('BAJU KTA PENDAFTARAN BARU.jpeg', 'Baju KTA Pendaftaran Baru (Gue Anak Jakarta)')" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%23e65c00\'/><text x=\'50%\' y=\'50%\' fill=\'white\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>BAJU PENDAFTARAN BARU</text></svg>'">
+                                <img src="BAJU KTA PENDAFTARAN BARU.jpeg" alt="Baju KTA Pendaftaran Baru" class="shirt-preview-img" onclick="openSingleImageModal('BAJU KTA PENDAFTARAN BARU.jpeg', 'Baju KTA Pendaftaran Baru (Gue Anak Jakarta)')" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%23e65c00\'/><text x=\'50%\' y=\'50%\' fill=\'white\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>BAJU PENDAFTARAN BARU</text></svg>'">
                                 <div class="p-3">
                                     <span class="badge bg-warning text-dark font-monospace mb-1">REGULER & PELAJAR</span>
                                     <h6 class="fw-bold text-white m-0">BAJU KTA PENDAFTARAN BARU</h6>
@@ -959,7 +959,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="shirt-preview-card shadow-sm text-center">
-                                <img src="BAJU KTA PERPANJANGAN.jpeg" alt="Baju KTA Perpanjangan" class="shirt-preview-img" onclick="openImageModal('BAJU KTA PERPANJANGAN.jpeg', 'Baju KTA Perpanjangan (Satu Jakarta Satu)')" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%23111\'/><text x=\'50%\' y=\'50%\' fill=\'%23ff9900\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>BAJU PERPANJANGAN</text></svg>'">
+                                <img src="BAJU KTA PERPANJANGAN.jpeg" alt="Baju KTA Perpanjangan" class="shirt-preview-img" onclick="openSingleImageModal('BAJU KTA PERPANJANGAN.jpeg', 'Baju KTA Perpanjangan (Satu Jakarta Satu)')" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%23111\'/><text x=\'50%\' y=\'50%\' fill=\'%23ff9900\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>BAJU PERPANJANGAN</text></svg>'">
                                 <div class="p-3">
                                     <span class="badge bg-secondary font-monospace mb-1">RENEWAL</span>
                                     <h6 class="fw-bold text-white m-0">BAJU KTA PERPANJANGAN</h6>
@@ -1073,24 +1073,37 @@
     </div>
 </div>
 
-<!-- MODAL PREVIEW GAMBAR -->
+<!-- MODAL PREVIEW SLIDER GAMBAR DENGAN KETERANGAN FOTO -->
 <div class="modal fade" id="imagePreviewModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 bg-dark text-white rounded-4 overflow-hidden shadow-lg">
-            <div class="modal-header border-bottom border-warning py-2">
+            <div class="modal-header border-bottom border-warning py-2 justify-content-between align-items-center">
                 <h6 class="modal-title fw-bold text-warning m-0" id="previewModalTitle"><i class="bi bi-image me-1"></i>Pratinjau Foto & Desain</h6>
+                <span id="previewModalCounter" class="badge bg-warning text-dark font-monospace px-2 py-1" style="font-size: 0.75rem;">Foto 1 dari 1</span>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
-            <div class="modal-body text-center p-2 p-md-3 bg-black">
-                <img id="modalPreviewImg" src="" alt="Pratinjau" class="img-fluid rounded shadow" style="max-height: 75vh; object-fit: contain;">
+            <div class="modal-body text-center p-2 p-md-3 bg-black position-relative">
+                <div id="modalCarouselContainer" class="carousel slide" data-bs-interval="false">
+                    <div class="carousel-inner" id="modalCarouselInner">
+                        <!-- Slide foto modal dimuat dinamis -->
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#modalCarouselContainer" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#modalCarouselContainer" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- MODAL TAMBAH / EDIT GALERI (BISA MULTI-UPLOAD & PILIH SAMPUL) -->
+<!-- MODAL TAMBAH / EDIT GALERI (BISA TAMBAH FOTO BARU & HAPUS FOTO LAMA) -->
 <div class="modal fade" id="galeriModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 shadow-lg rounded-4">
             <div class="modal-header bg-warning text-dark fw-bold py-2">
                 <h6 class="modal-title m-0" id="galeriModalTitle"><i class="bi bi-images me-1"></i>Tambah Foto Galeri Kegiatan</h6>
@@ -1111,15 +1124,25 @@
                         <label class="form-label fw-semibold text-secondary mb-1">Deskripsi Singkat <span class="text-danger">*</span></label>
                         <input type="text" id="inputGaleriDesc" class="form-control form-control-sm rounded-3" required placeholder="Keterangan singkat kegiatan...">
                     </div>
+
+                    <!-- Container khusus edit foto yang sudah ada -->
+                    <div class="mb-3" id="editExistingPhotosContainer" style="display: none;">
+                        <label class="form-label fw-semibold text-secondary mb-1">Foto Yang Sudah Ada (Klik tombol X untuk menghapus foto):</label>
+                        <div id="existingPhotosList" class="d-flex flex-wrap gap-2 p-2 border rounded bg-light">
+                            <!-- Foto lama muncul di sini -->
+                        </div>
+                    </div>
+
                     <div class="mb-2">
-                        <label class="form-label fw-semibold text-secondary mb-1">Pilih File Foto (Bisa Banyak Sekaligus) <span class="text-danger">*</span></label>
+                        <label class="form-label fw-semibold text-secondary mb-1" id="labelFileFotoInput">Pilih File Foto (Bisa Banyak Sekaligus) <span class="text-danger">*</span></label>
                         <input type="file" id="inputGaleriFiles" class="form-control form-control-sm rounded-3" accept="image/*" multiple onchange="previewSelectedGalleryFiles(this)">
                         <small class="text-muted" style="font-size: 0.7rem;">Anda dapat memilih lebih dari 1 foto sekaligus dari perangkat Anda.</small>
                     </div>
+
                     <div class="mb-3" id="thumbnailSelectionContainer" style="display: none;">
                         <label class="form-label fw-semibold text-secondary mb-1">Pilih Foto Sampul Depan (Thumbnail Utama di Website):</label>
                         <div id="thumbnailRadioGroup" class="d-flex flex-wrap gap-2 p-2 border rounded bg-light">
-                            <!-- Radio pilihan sampul akan muncul otomatis di sini -->
+                            <!-- Radio pilihan sampul -->
                         </div>
                     </div>
                     <button type="submit" class="btn btn-dark w-100 fw-bold py-2 rounded-pill shadow" id="btnSimpanGaleri">Simpan Foto Galeri</button>
@@ -1455,6 +1478,7 @@
     let sessionUnsubscribe = null;
     let afkTimer = null;
     let selectedFilesTemp = [];
+    let currentEditImages = []; // Array foto sementara saat mode edit galeri
 
     const selectAddModeModal = new bootstrap.Modal(document.getElementById('selectAddModeModal'));
     const selectAddProsesModeModal = new bootstrap.Modal(document.getElementById('selectAddProsesModeModal'));
@@ -1712,13 +1736,50 @@
         alert('Nomor Rekening BCA (' + noRek + ') berhasil disalin!');
     }
 
-    function openImageModal(imgSrc, title) {
-        document.getElementById('modalPreviewImg').src = imgSrc;
-        document.getElementById('previewModalTitle').innerHTML = '<i class="bi bi-image me-1"></i> ' + title;
+    // Modal Preview Gambar dengan Slider & Keterangan Foto 1 dari X
+    function openImageModal(galleryId, activeIndex = 0) {
+        const item = galeriData.find(x => x.id === galleryId);
+        if (!item) return;
+        const imageUrls = item.imageUrls || [item.imageUrl];
+
+        document.getElementById('previewModalTitle').innerHTML = `<i class="bi bi-image me-1"></i> ${item.judul}`;
+        
+        const innerContainer = document.getElementById('modalCarouselInner');
+        innerContainer.innerHTML = '';
+
+        imageUrls.forEach((url, idx) => {
+            innerContainer.innerHTML += `
+                <div class="carousel-item ${idx === activeIndex ? 'active' : ''}" data-index="${idx}">
+                    <img src="${url}" class="d-block mx-auto rounded shadow" alt="Foto ${idx+1}" style="max-height: 75vh; object-fit: contain; width: 100%;">
+                    <div class="mt-2 text-warning fw-bold font-monospace" style="font-size: 0.9rem;">Foto ${idx + 1} dari ${imageUrls.length}</div>
+                </div>
+            `;
+        });
+
+        document.getElementById('previewModalCounter').innerText = `Foto ${activeIndex + 1} dari ${imageUrls.length}`;
+
+        // Event listener saat slider digeser di modal
+        const myCarousel = document.getElementById('modalCarouselContainer');
+        myCarousel.addEventListener('slide.bs.carousel', function (e) {
+            document.getElementById('previewModalCounter').innerText = `Foto ${e.to + 1} dari ${imageUrls.length}`;
+        }, { once: true });
+
         imagePreviewModal.show();
     }
 
-    // Fungsi Render Galeri (1 Artikel, Banyak Foto dalam Slider Carousel)
+    function openSingleImageModal(imgSrc, title) {
+        document.getElementById('previewModalTitle').innerHTML = `<i class="bi bi-image me-1"></i> ${title}`;
+        document.getElementById('previewModalCounter').innerText = `Foto 1 dari 1`;
+        document.getElementById('modalCarouselInner').innerHTML = `
+            <div class="carousel-item active">
+                <img src="${imgSrc}" class="d-block mx-auto rounded shadow" style="max-height: 75vh; object-fit: contain; width: 100%;">
+                <div class="mt-2 text-warning fw-bold font-monospace" style="font-size: 0.9rem;">Foto 1 dari 1</div>
+            </div>
+        `;
+        imagePreviewModal.show();
+    }
+
+    // Render Galeri dengan Tombol Dropdown Unduh Ringkas (1 Tombol Saja)
     function renderGaleri() {
         const container = document.getElementById('galeriContainer');
         container.innerHTML = '';
@@ -1730,39 +1791,13 @@
         }
 
         galeriData.forEach((item, index) => {
-            let imageUrls = item.imageUrls || [item.imageUrl]; // Kompatibilitas data lama
-            let carouselId = `carouselGaleri_${index}`;
+            let imageUrls = item.imageUrls || [item.imageUrl];
+            let thumbImg = imageUrls[0];
 
-            let mediaHtml = '';
-            if (imageUrls.length > 1) {
-                let indicators = '';
-                let slides = '';
-                imageUrls.forEach((imgUrl, imgIdx) => {
-                    indicators += `<button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${imgIdx}" ${imgIdx === 0 ? 'class="active" aria-current="true"' : ''}></button>`;
-                    slides += `
-                        <div class="carousel-item ${imgIdx === 0 ? 'active' : ''}">
-                            <img src="${imgUrl}" class="d-block w-100 shirt-preview-img rounded" alt="Foto ${imgIdx+1}" onclick="openImageModal('${imgUrl}', '${item.judul}')">
-                        </div>
-                    `;
-                });
-
-                mediaHtml = `
-                    <div id="${carouselId}" class="carousel slide mb-2" data-bs-ride="carousel">
-                        <div class="carousel-indicators">${indicators}</div>
-                        <div class="carousel-inner">${slides}</div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                `;
-            } else {
-                mediaHtml = `<img src="${imageUrls[0]}" alt="${item.judul}" class="shirt-preview-img rounded mb-2" onclick="openImageModal('${imageUrls[0]}', '${item.judul}')">`;
-            }
+            // Dropdown pilihan unduh foto ke berapa
+            let downloadItems = imageUrls.map((url, idx) => `
+                <li><a class="dropdown-item py-1 fw-semibold text-dark" href="${url}" download="${item.judul}_Foto_${idx+1}.jpg" target="_blank"><i class="bi bi-download me-2 text-success"></i>Unduh Foto ${idx + 1}</a></li>
+            `).join('');
 
             let adminActions = isAdmin ? `
                 <div class="mt-2 d-flex justify-content-center gap-2">
@@ -1771,21 +1806,25 @@
                 </div>
             ` : '';
 
-            let downloadButtons = imageUrls.map((url, idx) => `
-                <a href="${url}" download="Galeri_OBR_${index+1}_${idx+1}.jpg" target="_blank" class="btn btn-success btn-sm rounded-pill px-2 py-1 fw-semibold" style="font-size: 0.7rem;"><i class="bi bi-download"></i> Foto ${idx+1}</a>
-            `).join(' ');
-
             container.innerHTML += `
                 <div class="col-md-4 col-sm-6">
                     <div class="shirt-preview-card shadow-sm text-center p-2">
-                        ${mediaHtml}
+                        <img src="${thumbImg}" alt="${item.judul}" class="shirt-preview-img rounded mb-2" onclick="openImageModal('${item.id}', 0)" title="Klik untuk pratinjau semua foto">
                         <div class="p-2">
                             <span class="badge bg-warning text-dark font-monospace mb-1">${item.kategori}</span>
                             <h6 class="fw-bold text-white m-0">${item.judul}</h6>
                             <p class="text-white-50 small mb-2 mt-1">${item.deskripsi}</p>
-                            <div class="d-flex justify-content-center flex-wrap gap-1 mb-1">
-                                ${downloadButtons}
+                            
+                            <!-- 1 Tombol Unduh Utama dengan Dropdown Pilihan Foto -->
+                            <div class="dropdown mb-1">
+                                <button class="btn btn-success btn-sm rounded-pill px-3 py-1 fw-semibold dropdown-toggle shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.75rem;">
+                                    <i class="bi bi-download me-1"></i> Unduh Foto (${imageUrls.length} File)
+                                </button>
+                                <ul class="dropdown-menu shadow border-0 rounded-3 p-1" style="font-size: 0.8rem;">
+                                    ${downloadItems}
+                                </ul>
                             </div>
+
                             ${adminActions}
                         </div>
                     </div>
@@ -1800,7 +1839,10 @@
         document.getElementById('galeriForm').reset();
         document.getElementById('inputGaleriFiles').required = true;
         document.getElementById('thumbnailSelectionContainer').style.display = 'none';
+        document.getElementById('editExistingPhotosContainer').style.display = 'none';
+        document.getElementById('labelFileFotoInput').innerHTML = 'Pilih File Foto (Bisa Banyak Sekaligus) <span class="text-danger">*</span>';
         selectedFilesTemp = [];
+        currentEditImages = [];
         galeriModal.show();
     }
 
@@ -1810,22 +1852,35 @@
         const radioGroup = document.getElementById('thumbnailRadioGroup');
         radioGroup.innerHTML = '';
 
-        if (selectedFilesTemp.length > 1) {
+        if (selectedFilesTemp.length > 1 || (currentEditImages.length > 0 && selectedFilesTemp.length > 0)) {
             container.style.display = 'block';
-            selectedFilesTemp.forEach((file, idx) => {
-                let reader = new FileReader();
-                reader.onload = function(e) {
+            let totalImagesForThumb = [...currentEditImages, ...selectedFilesTemp];
+            totalImagesForThumb.forEach((fileOrUrl, idx) => {
+                if (typeof fileOrUrl === 'string') {
                     radioGroup.innerHTML += `
                         <div class="form-check form-check-inline text-center p-1 border rounded bg-white">
                             <input class="form-check-input" type="radio" name="thumbnailRadio" id="thumb_${idx}" value="${idx}" ${idx === 0 ? 'checked' : ''}>
                             <label class="form-check-label d-block text-dark small" for="thumb_${idx}">
-                                <img src="${e.target.result}" style="width: 50px; height: 50px; object-fit: cover;" class="rounded d-block mb-1 mx-auto">
+                                <img src="${fileOrUrl}" style="width: 45px; height: 45px; object-fit: cover;" class="rounded d-block mb-1 mx-auto">
                                 Foto ${idx + 1}
                             </label>
                         </div>
                     `;
+                } else {
+                    let reader = new FileReader();
+                    reader.onload = function(e) {
+                        radioGroup.innerHTML += `
+                            <div class="form-check form-check-inline text-center p-1 border rounded bg-white">
+                                <input class="form-check-input" type="radio" name="thumbnailRadio" id="thumb_${idx}" value="${idx}" ${idx === 0 ? 'checked' : ''}>
+                                <label class="form-check-label d-block text-dark small" for="thumb_${idx}">
+                                    <img src="${e.target.result}" style="width: 45px; height: 45px; object-fit: cover;" class="rounded d-block mb-1 mx-auto">
+                                    Foto ${idx + 1}
+                                </label>
+                            </div>
+                        `;
+                    }
+                    reader.readAsDataURL(fileOrUrl);
                 }
-                reader.readAsDataURL(file);
             });
         } else {
             container.style.display = 'none';
@@ -1841,8 +1896,45 @@
         document.getElementById('inputGaleriKategori').value = item.kategori;
         document.getElementById('inputGaleriDesc').value = item.deskripsi;
         document.getElementById('inputGaleriFiles').required = false;
+        document.getElementById('labelFileFotoInput').innerHTML = 'Tambah Foto Baru (Opsional):';
+        
+        currentEditImages = item.imageUrls || [item.imageUrl];
+        renderExistingPhotosInEditModal();
+        
+        selectedFilesTemp = [];
         document.getElementById('thumbnailSelectionContainer').style.display = 'none';
         galeriModal.show();
+    }
+
+    function renderExistingPhotosInEditModal() {
+        const container = document.getElementById('editExistingPhotosContainer');
+        const listDiv = document.getElementById('existingPhotosList');
+        listDiv.innerHTML = '';
+
+        if (currentEditImages.length > 0) {
+            container.style.display = 'block';
+            currentEditImages.forEach((url, idx) => {
+                listDiv.innerHTML += `
+                    <div class="position-relative d-inline-block p-1 border rounded bg-white text-center">
+                        <img src="${url}" style="width: 55px; height: 55px; object-fit: cover;" class="rounded d-block mb-1">
+                        <span class="small text-muted font-monospace">#${idx+1}</span>
+                        ${currentEditImages.length > 1 ? `<button type="button" class="btn btn-danger btn-sm rounded-circle position-absolute top-0 end-0 p-0 d-flex align-items-center justify-content-center" style="width: 20px; height: 20px; font-size: 10px;" onclick="removeExistingPhoto(${idx})" title="Hapus foto ini"><i class="bi bi-x"></i></button>` : ''}
+                    </div>
+                `;
+            });
+        } else {
+            container.style.display = 'none';
+        }
+    }
+
+    function removeExistingPhoto(index) {
+        if (currentEditImages.length <= 1) {
+            alert('Artikel galeri harus memiliki minimal 1 foto!');
+            return;
+        }
+        currentEditImages.splice(index, 1);
+        renderExistingPhotosInEditModal();
+        previewSelectedGalleryFiles(document.getElementById('inputGaleriFiles'));
     }
 
     function readFileAsDataURL(file) {
@@ -1868,21 +1960,36 @@
 
         try {
             if (docId) {
-                let itemData = galeriData.find(x => x.id === docId);
-                let imageUrls = itemData.imageUrls || [itemData.imageUrl];
-                
+                // Mode Edit
+                let finalImageUrls = [...currentEditImages];
+
                 if (fileInput.files && fileInput.files.length > 0) {
-                    imageUrls = [];
                     for (let i = 0; i < fileInput.files.length; i++) {
                         let base64Img = await readFileAsDataURL(fileInput.files[i]);
-                        imageUrls.push(base64Img);
+                        finalImageUrls.push(base64Img);
                     }
                 }
-                
-                await db.collection("galeri_kegiatan").doc(docId).update({ judul, kategori, deskripsi, imageUrls });
+
+                if (finalImageUrls.length === 0) {
+                    alert('Galeri harus memiliki minimal 1 foto!');
+                    btn.disabled = false;
+                    btn.innerText = 'Simpan Foto Galeri';
+                    return;
+                }
+
+                // Cek apakah ada pilihan thumbnail utama yang diubah
+                let checkedRadio = document.querySelector('input[name="thumbnailRadio"]:checked');
+                if (checkedRadio && (fileInput.files.length > 0 || currentEditImages.length > 1)) {
+                    let selectedIdx = parseInt(checkedRadio.value);
+                    let chosenThumb = finalImageUrls.splice(selectedIdx, 1)[0];
+                    finalImageUrls.unshift(chosenThumb);
+                }
+
+                await db.collection("galeri_kegiatan").doc(docId).update({ judul, kategori, deskripsi, imageUrls: finalImageUrls });
                 logAdminActivity(`Admin memperbarui galeri kegiatan [${judul}].`);
                 alert('Galeri kegiatan berhasil diperbarui!');
             } else {
+                // Mode Tambah Baru
                 if (!fileInput.files || fileInput.files.length === 0) {
                     alert('Pilih minimal 1 file foto!');
                     btn.disabled = false;
