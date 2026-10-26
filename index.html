@@ -17,7 +17,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
 
     <style>
         :root {
@@ -1446,7 +1445,6 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const auth = firebase.auth();
-    const storage = firebase.storage();
 
     let members = [];
     let prosesKtaData = [];
@@ -1809,6 +1807,16 @@
         galeriModal.show();
     }
 
+    // Fungsi konversi file ke Base64 (Menghindari Firebase Storage & Error CORS)
+    function readFileAsDataURL(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+            reader.readAsDataURL(file);
+        });
+    }
+
     async function handleSaveGaleri(e) {
         e.preventDefault();
         const docId = document.getElementById('editGaleriId').value;
@@ -1819,22 +1827,16 @@
         const btn = document.getElementById('btnSimpanGaleri');
 
         btn.disabled = true;
-        btn.innerText = 'Mengunggah & Menyimpan...';
+        btn.innerText = 'Memproses & Menyimpan...';
 
         try {
             if (docId) {
                 // Mode Edit 1 Foto
                 let imageUrl = galeriData.find(x => x.id === docId).imageUrl;
-                let imagePath = galeriData.find(x => x.id === docId).imagePath || '';
-
                 if (fileInput.files && fileInput.files[0]) {
-                    const file = fileInput.files[0];
-                    imagePath = 'galeri/' + Date.now() + '_' + file.name;
-                    const snapshot = await storage.ref().child(imagePath).put(file);
-                    imageUrl = await snapshot.ref.getDownloadURL();
+                    imageUrl = await readFileAsDataURL(fileInput.files[0]);
                 }
-
-                await db.collection("galeri_kegiatan").doc(docId).update({ judul, kategori, deskripsi, imageUrl, imagePath });
+                await db.collection("galeri_kegiatan").doc(docId).update({ judul, kategori, deskripsi, imageUrl });
                 logAdminActivity(`Admin memperbarui foto galeri [${judul}].`);
                 alert('Foto galeri berhasil diperbarui!');
             } else {
@@ -1853,23 +1855,19 @@
                     if (checkedRadio) primaryIndex = parseInt(checkedRadio.value);
                 }
 
-                // Urutkan agar foto sampul utama diproses di urutan pertama atau ditandai
-                let uploadPromises = files.map(async (file, idx) => {
-                    let imagePath = 'galeri/' + Date.now() + '_' + idx + '_' + file.name;
-                    let snapshot = await storage.ref().child(imagePath).put(file);
-                    let imageUrl = await snapshot.ref.getDownloadURL();
-                    return { judul, kategori, deskripsi, imageUrl, imagePath, isFeatured: (idx === primaryIndex) };
-                });
-
-                let uploadedItems = await Promise.all(uploadPromises);
-
-                // Simpan ke Firestore
-                for (let item of uploadedItems) {
-                    await db.collection("galeri_kegiatan").add(item);
+                for (let i = 0; i < files.length; i++) {
+                    let base64Image = await readFileAsDataURL(files[i]);
+                    await db.collection("galeri_kegiatan").add({
+                        judul,
+                        kategori,
+                        deskripsi,
+                        imageUrl: base64Image,
+                        isFeatured: (i === primaryIndex)
+                    });
                 }
 
                 logAdminActivity(`Admin mengunggah ${files.length} foto galeri baru.`);
-                alert(`Berhasil mengunggah ${files.length} foto ke galeri kegiatan!`);
+                alert(`Berhasil menyimpan ${files.length} foto ke galeri kegiatan!`);
             }
 
             galeriModal.hide();
@@ -1884,11 +1882,7 @@
     async function deleteGaleri(id) {
         if (confirm("Hapus foto galeri ini?")) {
             try {
-                const item = galeriData.find(x => x.id === id);
                 await db.collection("galeri_kegiatan").doc(id).delete();
-                if (item && item.imagePath) {
-                    await storage.ref().child(item.imagePath).delete().catch(() => {});
-                }
                 logAdminActivity(`Admin menghapus foto galeri ID: ${id}`);
                 alert('Foto berhasil dihapus!');
             } catch (err) {
