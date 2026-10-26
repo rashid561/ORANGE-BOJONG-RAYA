@@ -2125,10 +2125,11 @@
         }
     }
 
-    // Format nomor telepon agar rapi berpola (misal: 0896-2579-3431)
+    // Format nomor telepon konsisten (mendukung input 08, 62, atau +62) tanpa karakter $
     function formatPhoneNumber(inputNum) {
         if (!inputNum || inputNum === '-') return '-';
-        let cleaned = inputNum.replace(/[^0-9]/g, '');
+        let cleaned = inputNum.toString().replace(/[^0-9]/g, '');
+        
         if (cleaned.startsWith('62')) {
             cleaned = '0' + cleaned.substring(2);
         } else if (!cleaned.startsWith('0') && cleaned.length >= 8) {
@@ -2137,13 +2138,13 @@
 
         if (cleaned.length >= 10) {
             if (cleaned.length === 10) {
-                return cleaned.replace(/(\d{4})(\d{3})(\d{3})/, '$1-$2-$3');
+                return cleaned.replace(/^(\d{4})(\d{3})(\d{3})$/, '$1-$2-$3');
             } else if (cleaned.length === 11) {
-                return cleaned.replace(/(\d{4})(\d{4})(\d{3})/, '$1-$2-$3');
+                return cleaned.replace(/^(\d{4})(\d{4})(\d{3})$/, '$1-$2-$3');
             } else if (cleaned.length === 12) {
-                return cleaned.replace(/(\d{4})(\d{4})(\d{4})/, '$1-$2-$3-$4');
+                return cleaned.replace(/^(\d{4})(\d{4})(\d{4})$/, '$1-$2-$3-$4');
             } else {
-                return cleaned.replace(/(\d{4})(\d{4})(\d{4})(\d*)/, '$1-$2-$3-$4');
+                return cleaned.replace(/^(\d{4})(\d{4})(\d{4})(\d*)$/, '$1-$2-$3-$4');
             }
         }
         return inputNum;
@@ -2151,7 +2152,7 @@
 
     function cleanWhatsAppNumber(inputNum) {
         if (!inputNum) return "-";
-        let cleaned = inputNum.replace(/[^0-9]/g, '');
+        let cleaned = inputNum.toString().replace(/[^0-9]/g, '');
         if (cleaned.startsWith('0')) {
             cleaned = '62' + cleaned.substring(1);
         } else if (!cleaned.startsWith('62') && cleaned.length > 5) {
