@@ -14,9 +14,180 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800;900&family=Teko:wght@600;700&display=swap" rel="stylesheet">
     
     <!-- Firebase SDK v9 -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js">
+    function togglePasswordVisibility(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        if (!input || !icon) return;
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        }
+    }
+
+    function checkPasswordStrength(password, barId, textId) {
+        const bar = document.getElementById(barId);
+        const text = document.getElementById(textId);
+        if (!bar || !text) return;
+
+        let strength = 0;
+        if (password.length >= 6) strength += 25;
+        if (password.length >= 10) strength += 25;
+        if (/[A-Z]/.test(password)) strength += 25;
+        if (/[0-9!@#$%^&*]/.test(password)) strength += 25;
+
+        bar.style.width = strength + '%';
+        if (strength === 0) {
+            bar.style.backgroundColor = 'transparent';
+            text.innerText = '';
+        } else if (strength <= 25) {
+            bar.style.backgroundColor = '#dc3545';
+            text.innerText = 'Kekuatan: Sangat Lemah';
+            text.className = 'text-danger fw-semibold';
+        } else if (strength <= 50) {
+            bar.style.backgroundColor = '#fd7e14';
+            text.innerText = 'Kekuatan: Sedang';
+            text.className = 'text-warning fw-semibold';
+        } else if (strength <= 75) {
+            bar.style.backgroundColor = '#ffc107';
+            text.innerText = 'Kekuatan: Baik';
+            text.className = 'text-warning fw-semibold';
+        } else {
+            bar.style.backgroundColor = '#198754';
+            text.innerText = 'Kekuatan: Sangat Kuat';
+            text.className = 'text-success fw-semibold';
+        }
+    }
+
+    function openSingleImagePreview(imgUrl, title) {
+        document.getElementById('previewModalTitle').innerHTML = `<i class="bi bi-image me-1"></i> ${title}`;
+        const innerContainer = document.getElementById('modalCarouselInner');
+        innerContainer.innerHTML = `<div class="carousel-item active"><img src="${imgUrl}" class="d-block mx-auto rounded shadow" style="max-height: 75vh; object-fit: contain; width: 100%;"></div>`;
+        imagePreviewModal.show();
+    }
+
+</script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js">
+    function togglePasswordVisibility(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        if (!input || !icon) return;
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        }
+    }
+
+    function checkPasswordStrength(password, barId, textId) {
+        const bar = document.getElementById(barId);
+        const text = document.getElementById(textId);
+        if (!bar || !text) return;
+
+        let strength = 0;
+        if (password.length >= 6) strength += 25;
+        if (password.length >= 10) strength += 25;
+        if (/[A-Z]/.test(password)) strength += 25;
+        if (/[0-9!@#$%^&*]/.test(password)) strength += 25;
+
+        bar.style.width = strength + '%';
+        if (strength === 0) {
+            bar.style.backgroundColor = 'transparent';
+            text.innerText = '';
+        } else if (strength <= 25) {
+            bar.style.backgroundColor = '#dc3545';
+            text.innerText = 'Kekuatan: Sangat Lemah';
+            text.className = 'text-danger fw-semibold';
+        } else if (strength <= 50) {
+            bar.style.backgroundColor = '#fd7e14';
+            text.innerText = 'Kekuatan: Sedang';
+            text.className = 'text-warning fw-semibold';
+        } else if (strength <= 75) {
+            bar.style.backgroundColor = '#ffc107';
+            text.innerText = 'Kekuatan: Baik';
+            text.className = 'text-warning fw-semibold';
+        } else {
+            bar.style.backgroundColor = '#198754';
+            text.innerText = 'Kekuatan: Sangat Kuat';
+            text.className = 'text-success fw-semibold';
+        }
+    }
+
+    function openSingleImagePreview(imgUrl, title) {
+        document.getElementById('previewModalTitle').innerHTML = `<i class="bi bi-image me-1"></i> ${title}`;
+        const innerContainer = document.getElementById('modalCarouselInner');
+        innerContainer.innerHTML = `<div class="carousel-item active"><img src="${imgUrl}" class="d-block mx-auto rounded shadow" style="max-height: 75vh; object-fit: contain; width: 100%;"></div>`;
+        imagePreviewModal.show();
+    }
+
+</script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js">
+    function togglePasswordVisibility(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        if (!input || !icon) return;
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        }
+    }
+
+    function checkPasswordStrength(password, barId, textId) {
+        const bar = document.getElementById(barId);
+        const text = document.getElementById(textId);
+        if (!bar || !text) return;
+
+        let strength = 0;
+        if (password.length >= 6) strength += 25;
+        if (password.length >= 10) strength += 25;
+        if (/[A-Z]/.test(password)) strength += 25;
+        if (/[0-9!@#$%^&*]/.test(password)) strength += 25;
+
+        bar.style.width = strength + '%';
+        if (strength === 0) {
+            bar.style.backgroundColor = 'transparent';
+            text.innerText = '';
+        } else if (strength <= 25) {
+            bar.style.backgroundColor = '#dc3545';
+            text.innerText = 'Kekuatan: Sangat Lemah';
+            text.className = 'text-danger fw-semibold';
+        } else if (strength <= 50) {
+            bar.style.backgroundColor = '#fd7e14';
+            text.innerText = 'Kekuatan: Sedang';
+            text.className = 'text-warning fw-semibold';
+        } else if (strength <= 75) {
+            bar.style.backgroundColor = '#ffc107';
+            text.innerText = 'Kekuatan: Baik';
+            text.className = 'text-warning fw-semibold';
+        } else {
+            bar.style.backgroundColor = '#198754';
+            text.innerText = 'Kekuatan: Sangat Kuat';
+            text.className = 'text-success fw-semibold';
+        }
+    }
+
+    function openSingleImagePreview(imgUrl, title) {
+        document.getElementById('previewModalTitle').innerHTML = `<i class="bi bi-image me-1"></i> ${title}`;
+        const innerContainer = document.getElementById('modalCarouselInner');
+        innerContainer.innerHTML = `<div class="carousel-item active"><img src="${imgUrl}" class="d-block mx-auto rounded shadow" style="max-height: 75vh; object-fit: contain; width: 100%;"></div>`;
+        imagePreviewModal.show();
+    }
+
+</script>
 
     <style>
         :root {
@@ -1097,7 +1268,7 @@
                     <div class="col-12 col-md-4">
                         <div class="input-group shadow-sm">
                             <span class="input-group-text bg-white border-end-0 text-secondary search-box"><i class="bi bi-search"></i></span>
-                            <input type="text" id="searchInput" class="form-control border-start-0 search-box form-control-sm py-2" placeholder="Cari Nama, No KTA, Jabatan/Keterangan, HP..." onkeyup="filterData()">
+                            <input type="text" id="searchInput" class="form-control border-start-0 search-box form-control-sm py-2" placeholder="Cari Nama, No KTA, HP..." onkeyup="filterData()">
                         </div>
                     </div>
                     <div class="col-12 col-md-3">
@@ -2111,108 +2282,6 @@
     const pengurusModal = new bootstrap.Modal(document.getElementById('pengurusModal'));
     const detailPengurusModal = new bootstrap.Modal(document.getElementById('detailPengurusModal'));
     const myProfileModal = new bootstrap.Modal(document.getElementById('myProfileModal'));
-    const afkWarningModal = new bootstrap.Modal(document.getElementById('afkWarningModal'));
-
-    // ==========================================
-    // KEAMANAN BRUTE-FORCE LOGIN (5x SALAH -> 5 MENIT BLOKIR)
-    // ==========================================
-    function checkLockoutStatus() {
-        const lockoutUntil = parseInt(localStorage.getItem('obr_lockout_until') || '0', 10);
-        const now = Date.now();
-        if (lockoutUntil > now) {
-            const remainingSec = Math.ceil((lockoutUntil - now) / 1000);
-            const mins = Math.floor(remainingSec / 60);
-            const secs = remainingSec % 60;
-            const timeStr = mins > 0 ? `${mins} menit ${secs} detik` : `${secs} detik`;
-            return { isLocked: true, timeStr: timeStr };
-        }
-        return { isLocked: false, timeStr: '' };
-    }
-
-    function recordFailedLogin() {
-        let attempts = parseInt(localStorage.getItem('obr_failed_attempts') || '0', 10) + 1;
-        localStorage.setItem('obr_failed_attempts', attempts.toString());
-        
-        if (attempts >= 5) {
-            const lockoutTime = Date.now() + 5 * 60 * 1000; // 5 menit lockout
-            localStorage.setItem('obr_lockout_until', lockoutTime.toString());
-            alert("KEAMANAN: Percobaan login gagal 5 kali! Akses login dikunci selama 5 menit demi keamanan akun.");
-        } else {
-            alert(`Login Gagal: Username/Email atau Password salah! (Percobaan ${attempts}/5)`);
-        }
-    }
-
-    function resetFailedLogin() {
-        localStorage.setItem('obr_failed_attempts', '0');
-        localStorage.setItem('obr_lockout_until', '0');
-    }
-
-    // ==========================================
-    // KEAMANAN AUTO LOGOUT AFK (10 MENIT INACTIVITY)
-    // ==========================================
-    let afkWarningModal = null;
-    let afkWarningTimeout = null;
-    let afkLogoutTimeout = null;
-    let afkCountdownInterval = null;
-    let afkSecondsRemaining = 60;
-    const AFK_WARNING_TIME = 9 * 60 * 1000; // Menit ke-9 muncul peringatan
-
-    function startAFKTimer() {
-        clearAFKTimers();
-        if (!currentUser) return;
-        afkWarningTimeout = setTimeout(() => {
-            showAFKWarningModal();
-        }, AFK_WARNING_TIME);
-    }
-
-    function clearAFKTimers() {
-        if (afkWarningTimeout) clearTimeout(afkWarningTimeout);
-        if (afkLogoutTimeout) clearTimeout(afkLogoutTimeout);
-        if (afkCountdownInterval) clearInterval(afkCountdownInterval);
-        afkSecondsRemaining = 60;
-    }
-
-    function showAFKWarningModal() {
-        if (!currentUser) return;
-        afkSecondsRemaining = 60;
-        const countEl = document.getElementById('afkCountdownText');
-        if (countEl) countEl.innerText = afkSecondsRemaining + 's';
-        
-        if (afkWarningModal) {
-            afkWarningModal.show();
-        }
-
-        afkCountdownInterval = setInterval(() => {
-            afkSecondsRemaining--;
-            const el = document.getElementById('afkCountdownText');
-            if (el) el.innerText = afkSecondsRemaining + 's';
-
-            if (afkSecondsRemaining <= 0) {
-                clearInterval(afkCountdownInterval);
-                if (afkWarningModal) afkWarningModal.hide();
-                handleLogout('Logout Otomatis: Sesi Anda diakhiri karena tidak ada aktivitas selama 10 menit (AFK).');
-            }
-        }, 1000);
-    }
-
-    function resetAFKTimerFromModal() {
-        clearAFKTimers();
-        if (afkWarningModal) afkWarningModal.hide();
-        startAFKTimer();
-    }
-
-    function setupAFKListeners() {
-        const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
-        events.forEach(ev => {
-            document.addEventListener(ev, () => {
-                const afkModalEl = document.getElementById('afkWarningModal');
-                if (currentUser && (!afkModalEl || !afkModalEl.classList.contains('show'))) {
-                    startAFKTimer();
-                }
-            });
-        });
-    }
-
 
     window.addEventListener('DOMContentLoaded', () => {
         const savedTheme = localStorage.getItem('obr_theme') || 'dark';
@@ -2236,7 +2305,6 @@
         });
 
         initRealtimeListeners();
-        setupAFKListeners();
     });
 
     async function enforceSingleSession(uid) {
@@ -2312,7 +2380,6 @@
         if (currentUser) {
             authSec.style.setProperty('display', 'none', 'important');
             appSec.style.display = 'block';
-            startAFKTimer();
             document.getElementById('userNameDisplay').innerText = currentUser.nama || currentUser.username;
             document.getElementById('userDropdownName').innerText = currentUser.nama || currentUser.username;
             document.getElementById('userRoleBadge').innerText = currentUser.role.toUpperCase();
@@ -2711,7 +2778,7 @@
         const today = new Date(); today.setHours(0, 0, 0, 0);
 
         const filtered = members.filter(m => {
-            const matchQuery = (m.nama && m.nama.toLowerCase().includes(query)) || (m.kta && m.kta.toLowerCase().includes(query)) || (m.hp && m.hp.toLowerCase().includes(query)) || (m.ket && m.ket.toLowerCase().includes(query));
+            const matchQuery = (m.nama && m.nama.toLowerCase().includes(query)) || (m.kta && m.kta.toLowerCase().includes(query)) || (m.hp && m.hp.toLowerCase().includes(query));
             let targetDate = parseIndonesianDate(m.berlaku);
             let isExpired = targetDate ? (targetDate < today) : false;
             if (statusFilter === 'active') return matchQuery && !isExpired && m.berlaku && m.berlaku !== '-';
@@ -2887,12 +2954,6 @@
 
     async function handleLogin(e) {
         e.preventDefault();
-        const lockoutCheck = checkLockoutStatus();
-        if (lockoutCheck.isLocked) {
-            alert(`AKUN DIKUNCI: Terlalu banyak percobaan login gagal. Silakan tunggu ${lockoutCheck.timeStr} lagi.`);
-            return;
-        }
-
         const userInput = document.getElementById('loginUser').value.trim();
         const passInput = document.getElementById('loginPass').value.trim();
 
@@ -2927,9 +2988,16 @@
 
         try {
             await auth.signInWithEmailAndPassword(emailToAuth, passInput);
-            resetFailedLogin();
         } catch (error) {
-            recordFailedLogin();
+            if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+                alert("Email / Username atau Password yang Anda masukkan salah.");
+            } else if (error.code === 'auth/wrong-password') {
+                alert("Password yang Anda masukkan salah.");
+            } else if (error.code === 'auth/invalid-email') {
+                alert("Format email atau username tidak valid.");
+            } else {
+                alert("Login gagal: " + error.message);
+            }
         }
     }
 
@@ -2943,7 +3011,7 @@
         } catch (error) { alert("Gagal daftar: " + error.message); }
     }
 
-    async function handleLogout(msg = '') { clearAFKTimers(); if (afkWarningModal) afkWarningModal.hide(); await auth.signOut(); currentUser = null; checkAuthStatus(); if (msg) alert(msg); }
+    async function handleLogout(msg = '') { await auth.signOut(); currentUser = null; checkAuthStatus(); if (msg) alert(msg); }
     function showForgotPasswordModal() { document.getElementById('forgotContactInput').value = ''; forgotModal.show(); }
     async function requestResetViaEmail() {
         const email = document.getElementById('forgotContactInput').value.trim();
@@ -3067,23 +3135,5 @@
     }
 
 </script>
-
-<!-- MODAL PERINGATAN AFK (10 MENIT AUTO-LOGOUT) -->
-<div class="modal fade" id="afkWarningModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-        <div class="modal-content border-0 bg-dark text-white rounded-4 overflow-hidden shadow-lg border border-warning text-center p-3">
-            <div class="mb-2">
-                <i class="bi bi-exclamation-triangle-fill display-4 text-warning"></i>
-            </div>
-            <h6 class="fw-bold text-warning mb-2">PERINGATAN SESI AFK</h6>
-            <p class="small text-white-50 mb-2" style="font-size: 0.8rem;">Anda tidak aktif selama 9 menit. Sesi login akan otomatis berakhir dalam:</p>
-            <div class="fs-2 fw-extrabold text-warning font-monospace mb-3" id="afkCountdownText">60s</div>
-            <button type="button" class="btn btn-warning btn-sm rounded-pill fw-bold text-dark w-100 py-2" onclick="resetAFKTimerFromModal()">
-                <i class="bi bi-person-check-fill me-1"></i> Saya Masih Di Sini
-            </button>
-        </div>
-    </div>
-</div>
-
 </body>
 </html>
