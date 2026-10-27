@@ -334,6 +334,31 @@
             box-shadow: 0 20px 40px rgba(230, 92, 0, 0.35);
             width: 100%;
             max-width: 450px;
+            color: #2c3e50 !important;
+        }
+
+        .auth-card .portal-title {
+            font-family: 'Teko', 'Bebas Neue', sans-serif;
+            font-size: clamp(1.8rem, 5vw, 2.4rem);
+            letter-spacing: 1px;
+            line-height: 1.05;
+            color: #111111 !important;
+            text-transform: uppercase;
+            font-weight: 700;
+            text-shadow: none !important;
+        }
+
+        .auth-card .portal-subtitle {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.25rem;
+            letter-spacing: 1.5px;
+            color: #e65c00 !important;
+            margin-top: 2px;
+        }
+
+        .auth-card label, .auth-card h1, .auth-card h2, .auth-card h3, .auth-card h4, .auth-card h5, .auth-card h6 {
+            color: #2c3e50 !important;
+            text-shadow: none !important;
         }
 
         .portal-logo {
@@ -504,9 +529,11 @@
             justify-content: center;
         }
 
+        
+        /* PERBAIKAN LOGO NAVBAR */
         .nav-logo-brand {
-            height: 36px;
-            width: 36px;
+            height: 52px !important;
+            width: 52px !important;
             object-fit: cover;
             border-radius: 50%;
             border: 2px solid #ff9900;
@@ -514,6 +541,23 @@
             transition: transform 0.2s ease;
             flex-shrink: 0;
         }
+
+        .text-dark-override {
+            color: #111111 !important;
+        }
+
+        [data-theme="dark"] .modal-content {
+            background-color: #1e1e1e !important;
+            color: #ffffff !important;
+            border: 1px solid #3d3d3d !important;
+        }
+        [data-theme="dark"] .modal-body {
+            color: #ffffff !important;
+        }
+        [data-theme="dark"] .modal-header {
+            border-bottom-color: #ff9900 !important;
+        }
+
 
         .nav-logo-brand:hover {
             transform: scale(1.1);
@@ -1023,7 +1067,7 @@
                     <div class="text-end mb-3">
                         <a href="#" class="text-warning fw-semibold small text-decoration-none" onclick="showForgotPasswordModal()"><i class="bi bi-key-fill me-1"></i>Lupa Password?</a>
                     </div>
-                    <button type="submit" class="btn btn-warning w-100 fw-bold py-2.5 rounded-pill shadow text-dark">MASUK APLIKASI</button>
+                    <button type="submit" class="btn btn-warning w-100 fw-bold py-2.5 rounded-pill shadow text-dark-override">MASUK</button>
                 </form>
             </div>
 
@@ -1102,7 +1146,7 @@
                 </div>
 
                 <div class="d-flex gap-2 flex-wrap">
-                    <button id="btnTambahData" class="btn btn-light btn-action text-dark btn-sm shadow-sm fw-bold" onclick="showAddModalDynamic()" style="display: none;"><i class="bi bi-plus-circle-fill me-1 text-success"></i> Tambah Data</button>
+                    <button id="btnTambahData" class="btn btn-warning btn-action text-dark-override btn-sm shadow-sm fw-bold" onclick="showAddModalDynamic()" style="display: none;"><i class="bi bi-plus-circle-fill me-1 text-dark-override"></i> Tambah Data</button>
                     <button id="btnExportExcel" class="btn btn-success btn-action btn-sm shadow-sm" onclick="exportTableToExcel()" style="display: none;"><i class="bi bi-file-earmark-excel-fill me-1"></i> Ekspor Excel</button>
                     <button id="btnPrint" class="btn btn-dark btn-action text-warning btn-sm shadow-sm border border-warning" onclick="window.print()" style="display: none;"><i class="bi bi-printer-fill me-1"></i> Cetak / PDF</button>
                 </div>
@@ -1115,7 +1159,7 @@
             <img src="LOGO OBR.png" alt="Logo OBR Home" class="nav-logo-brand" onclick="switchView('dashboard')" title="Kembali ke HOME Orange Bojong Raya">
             
             <span class="persija-nav-link active" id="navDash" onclick="switchView('dashboard')"><i class="bi bi-house-door-fill"></i> HOME</span>
-            <span class="persija-nav-link" id="navKta" onclick="switchView('ktaAktif')"><i class="bi bi-card-heading"></i> ANGGOTA KTA</span>
+            <span class="persija-nav-link" id="navKta" onclick="switchView('ktaAktif')"><i class="bi bi-card-heading"></i> ANGGOTA OBR</span>
             <span class="persija-nav-link" id="navProses" onclick="switchView('prosesKta')"><i class="bi bi-clock-history"></i> PROSES KTA</span>
             <span class="persija-nav-link" id="navStruktur" onclick="switchView('strukturOrganisasi')"><i class="bi bi-diagram-3-fill"></i> STRUKTUR PENGURUS</span>
             <span class="persija-nav-link" id="navPanduan" onclick="switchView('panduanKta')"><i class="bi bi-file-earmark-plus"></i> PANDUAN KTA</span>
@@ -1781,20 +1825,14 @@
             <div class="modal-body p-3.5 small">
                 <form id="pengurusForm" onsubmit="handleSavePengurus(event)">
                     <input type="hidden" id="editPengurusId">
-                    <div class="row g-2 mb-2.5">
-                        <div class="col-6">
-                            <label class="form-label fw-semibold text-secondary mb-1">No KTA / Nomor <span class="text-danger">*</span></label>
-                            <input type="text" id="inputPengurusNo" class="form-control form-control-sm rounded-3 py-2" required placeholder="JB.13.0113769.06.24">
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label fw-semibold text-secondary mb-1">Divisi Kategori <span class="text-danger">*</span></label>
-                            <select id="inputPengurusKategori" class="form-select form-select-sm rounded-3 py-2" required>
-                                <option value="harian">PENGURUS HARIAN</option>
-                                <option value="humas">HUMAS & MEDIA</option>
-                                <option value="korlap">KORLAP & KEAMANAN</option>
-                                <option value="sport">OBR SPORT</option>
-                            </select>
-                        </div>
+                    <div class="mb-2.5">
+                        <label class="form-label fw-semibold text-secondary mb-1">Divisi Kategori <span class="text-danger">*</span></label>
+                        <select id="inputPengurusKategori" class="form-select form-select-sm rounded-3 py-2" required>
+                            <option value="harian">PENGURUS HARIAN</option>
+                            <option value="humas">HUMAS & MEDIA</option>
+                            <option value="korlap">KORLAP & KEAMANAN</option>
+                            <option value="sport">OBR SPORT</option>
+                        </select>
                     </div>
                     <div class="mb-2.5">
                         <label class="form-label fw-semibold text-secondary mb-1">Badge Jabatan <span class="text-danger">*</span></label>
@@ -2003,8 +2041,8 @@
             </div>
             <div class="modal-body p-4 text-center">
                 <div class="d-grid gap-3">
-                    <button class="btn btn-outline-warning text-dark fw-bold py-3 rounded-pill border-2" onclick="openSingleAddModal()"><i class="bi bi-person-fill-add fs-4 d-block mb-1"></i> Tambah 1 Orang Saja</button>
-                    <button class="btn btn-warning text-dark fw-bold py-3 rounded-pill shadow-sm" onclick="openBulkAddModal()"><i class="bi bi-people-fill fs-4 d-block mb-1"></i> Tambah Lebih dari 1 Orang Sekaligus (Massal)</button>
+                    <button class="btn btn-outline-warning fw-bold py-3 rounded-pill border-2 shadow-sm" onclick="openSingleAddModal()"><i class="bi bi-person-fill-add fs-4 d-block mb-1"></i> Tambah 1 Orang Saja</button>
+                    <button class="btn btn-warning text-dark-override fw-bold py-3 rounded-pill shadow-sm" onclick="openBulkAddModal()"><i class="bi bi-people-fill fs-4 d-block mb-1"></i> Tambah Lebih dari 1 Orang Sekaligus (Massal)</button>
                 </div>
             </div>
         </div>
@@ -2020,8 +2058,8 @@
             </div>
             <div class="modal-body p-4 text-center">
                 <div class="d-grid gap-3">
-                    <button class="btn btn-outline-warning text-dark fw-bold py-3 rounded-pill border-2" onclick="openSingleProsesAddModal()"><i class="bi bi-person-fill-add fs-4 d-block mb-1"></i> Tambah 1 Pengajuan Saja</button>
-                    <button class="btn btn-warning text-dark fw-bold py-3 rounded-pill shadow-sm" onclick="openBulkProsesAddModal()"><i class="bi bi-people-fill fs-4 d-block mb-1"></i> Tambah Lebih dari 1 Pengajuan Sekaligus (Massal)</button>
+                    <button class="btn btn-outline-warning fw-bold py-3 rounded-pill border-2 shadow-sm" onclick="openSingleProsesAddModal()"><i class="bi bi-person-fill-add fs-4 d-block mb-1"></i> Tambah 1 Pengajuan Saja</button>
+                    <button class="btn btn-warning text-dark-override fw-bold py-3 rounded-pill shadow-sm" onclick="openBulkProsesAddModal()"><i class="bi bi-people-fill fs-4 d-block mb-1"></i> Tambah Lebih dari 1 Pengajuan Sekaligus (Massal)</button>
                 </div>
             </div>
         </div>
@@ -2469,7 +2507,6 @@
                             <img src="${imgPath}" alt="${item.nameLarge}" class="squad-img" onerror="this.src='LOGO OBR.png'">
                         </div>
                         <div class="squad-info d-flex align-items-center">
-                            <div class="squad-number">${item.no || '00'}</div>
                             <div>
                                 <span class="squad-role-badge">${item.role}</span>
                                 <div class="squad-name-small">${item.nameSmall}</div>
@@ -2501,7 +2538,7 @@
         document.getElementById('detailPengurusImg').src = item.imageUrl || 'LOGO OBR.png';
         document.getElementById('detailPengurusRoleBadge').innerText = item.role || 'PENGURUS';
         document.getElementById('detailPengurusName').innerText = `${item.nameSmall} ${item.nameLarge}`;
-        document.getElementById('detailPengurusKta').innerText = item.no || '-';
+        document.getElementById('detailPengurusKta').style.display = 'none';
         document.getElementById('detailPengurusJabatan').innerText = item.role || '-';
         document.getElementById('detailPengurusDivisi').innerText = item.kategori || '-';
 
@@ -2524,7 +2561,6 @@
         if(!item) return;
         document.getElementById('editPengurusId').value = item.id.startsWith('def') ? '' : item.id;
         document.getElementById('pengurusModalTitle').innerHTML = '<i class="bi bi-pencil-square me-1"></i>Edit Data Pengurus';
-        document.getElementById('inputPengurusNo').value = item.no || '';
         document.getElementById('inputPengurusKategori').value = item.kategori || 'harian';
         document.getElementById('inputPengurusRole').value = item.role || '';
         document.getElementById('inputPengurusNameSmall').value = item.nameSmall || '';
@@ -2536,7 +2572,6 @@
     async function handleSavePengurus(e) {
         e.preventDefault();
         const docId = document.getElementById('editPengurusId').value;
-        const no = document.getElementById('inputPengurusNo').value.trim();
         const kategori = document.getElementById('inputPengurusKategori').value;
         const role = document.getElementById('inputPengurusRole').value.toUpperCase();
         const nameSmall = document.getElementById('inputPengurusNameSmall').value.toUpperCase();
@@ -2547,7 +2582,7 @@
         let imageUrl = 'LOGO OBR.png';
         if (fileInput.files && fileInput.files[0]) imageUrl = await compressAndReadFile(fileInput.files[0], 800, 1000, 0.7);
 
-        const payload = { no, kategori, role, nameSmall, nameLarge, wa, imageUrl };
+        const payload = { kategori, role, nameSmall, nameLarge, wa, imageUrl };
         if(docId) await db.collection("struktur_pengurus").doc(docId).update(payload);
         else await db.collection("struktur_pengurus").add(payload);
         
@@ -2826,8 +2861,51 @@
 
     async function handleLogin(e) {
         e.preventDefault();
-        try { await auth.signInWithEmailAndPassword(document.getElementById('loginUser').value.trim(), document.getElementById('loginPass').value.trim()); }
-        catch (error) { alert("Login gagal: " + error.message); }
+        const userInput = document.getElementById('loginUser').value.trim();
+        const passInput = document.getElementById('loginPass').value.trim();
+
+        if (!userInput || !passInput) {
+            alert("Silakan masukkan Username / Email dan Password.");
+            return;
+        }
+
+        let emailToAuth = userInput;
+
+        // Jika input bukan format email (tidak ada '@'), cari email berdasarkan username di Firestore
+        if (!userInput.includes('@')) {
+            try {
+                const userSnap = await db.collection("users").where("username", "==", userInput).get();
+                if (!userSnap.empty) {
+                    emailToAuth = userSnap.docs[0].data().email;
+                } else {
+                    const userSnapLower = await db.collection("users").where("username", "==", userInput.toLowerCase()).get();
+                    if (!userSnapLower.empty) {
+                        emailToAuth = userSnapLower.docs[0].data().email;
+                    } else {
+                        alert("Username tidak ditemukan. Silakan periksa kembali username atau gunakan email terdaftar.");
+                        return;
+                    }
+                }
+            } catch (err) {
+                console.error("Error kueri username:", err);
+                alert("Gagal memverifikasi username: " + err.message);
+                return;
+            }
+        }
+
+        try {
+            await auth.signInWithEmailAndPassword(emailToAuth, passInput);
+        } catch (error) {
+            if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
+                alert("Email / Username atau Password yang Anda masukkan salah.");
+            } else if (error.code === 'auth/wrong-password') {
+                alert("Password yang Anda masukkan salah.");
+            } else if (error.code === 'auth/invalid-email') {
+                alert("Format email atau username tidak valid.");
+            } else {
+                alert("Login gagal: " + error.message);
+            }
+        }
     }
 
     async function handleRegister(e) {
