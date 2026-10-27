@@ -49,6 +49,8 @@
             --table-border: #e9ecef;
             --table-text: #2c3e50;
             --table-muted: #6c757d;
+            --squad-info-bg: #ffffff;
+            --squad-info-text: #111111;
         }
 
         [data-theme="dark"] {
@@ -81,6 +83,8 @@
             --table-border: #333333;
             --table-text: #f8fafc;
             --table-muted: #94a3b8;
+            --squad-info-bg: #181818;
+            --squad-info-text: #ffffff;
         }
 
         body { 
@@ -325,15 +329,6 @@
             background-color: var(--table-hover) !important;
         }
 
-        .table-muted-text {
-            color: var(--table-muted) !important;
-        }
-
-        h4, h5, h6 {
-            color: var(--section-title);
-            transition: color 0.3s ease;
-        }
-
         .counter-badge-box {
             background-color: var(--counter-badge-bg);
             color: var(--counter-badge-text);
@@ -355,13 +350,8 @@
             transition: all 0.3s ease;
         }
 
-        .promo-card-pelajar {
-            border: 2px solid #ff9900 !important;
-        }
-
-        .promo-card-cicil {
-            border: 2px solid #198754 !important;
-        }
+        .promo-card-pelajar { border: 2px solid #ff9900 !important; }
+        .promo-card-cicil { border: 2px solid #198754 !important; }
 
         .icon-box-pelajar {
             width: 50px;
@@ -513,6 +503,112 @@
             line-height: 1.4;
         }
 
+        /* STYLING KARTU STRUKTUR PENGURUS ALA PERSIJA */
+        .squad-filter-btn {
+            background-color: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid #ff9900;
+            border-radius: 30px;
+            padding: 6px 18px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.25s ease;
+        }
+
+        .squad-filter-btn:hover, .squad-filter-btn.active {
+            background-color: #ff9900 !important;
+            color: #111111 !important;
+            border-color: #ff9900 !important;
+            box-shadow: 0 4px 12px rgba(255, 153, 0, 0.4);
+        }
+
+        .squad-card {
+            background: #0d0d0d;
+            border-radius: 18px;
+            overflow: hidden;
+            border: 2px solid #ff9900;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .squad-card:hover {
+            transform: translateY(-6px);
+            border-color: #ff9900;
+            box-shadow: 0 12px 25px rgba(255, 153, 0, 0.4);
+        }
+
+        .squad-img-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3/4;
+            background: radial-gradient(circle at center, #2a2a2a 0%, #050505 100%);
+            overflow: hidden;
+        }
+
+        .squad-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            transition: transform 0.4s ease;
+        }
+
+        .squad-card:hover .squad-img { transform: scale(1.05); }
+
+        .squad-info {
+            background: var(--squad-info-bg);
+            padding: 14px 16px;
+            border-top: 3px solid #ff9900;
+            color: var(--squad-info-text);
+        }
+
+        .squad-number {
+            font-family: 'Teko', 'Bebas Neue', sans-serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            line-height: 0.8;
+            color: #ff9900;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .squad-role-badge {
+            background-color: #e65c00;
+            color: #ffffff;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 20px;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 2px;
+        }
+
+        .squad-name-small {
+            font-size: 0.75rem;
+            color: #888;
+            text-transform: uppercase;
+            font-weight: 600;
+            line-height: 1;
+        }
+
+        .squad-name-large {
+            font-family: 'Teko', 'Bebas Neue', sans-serif;
+            font-size: 1.65rem;
+            font-weight: 700;
+            line-height: 0.95;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+
         .step-badge {
             width: 42px;
             height: 42px;
@@ -539,13 +635,8 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.03);
         }
 
-        .step-card:hover {
-            transform: translateX(4px);
-        }
-        
-        .step-card p, .step-card h6 {
-            color: var(--step-text) !important;
-        }
+        .step-card:hover { transform: translateX(4px); }
+        .step-card p, .step-card h6 { color: var(--step-text) !important; }
 
         .shirt-preview-card {
             border: 2px solid #e65c00;
@@ -574,9 +665,7 @@
             display: block;
         }
 
-        .shirt-preview-img:hover {
-            filter: brightness(1.08);
-        }
+        .shirt-preview-img:hover { filter: brightness(1.08); }
 
         .bank-card {
             background: var(--bank-card-bg);
@@ -626,124 +715,13 @@
             border-radius: 6px;
         }
 
-        @media (min-width: 576px) and (max-width: 991px) {
-            .app-logo {
-                width: 65px;
-                height: 65px;
-            }
-            .brand-title {
-                font-size: 2.5rem;
-            }
-            .brand-subtext {
-                font-size: 1rem;
-                padding: 3px 14px;
-            }
-            .card-header-persija {
-                padding: 16px;
-            }
-        }
-
         @media (max-width: 575.98px) {
-            body {
-                font-size: 0.86rem;
-            }
-            .main-card {
-                border-radius: 16px;
-            }
-            .card-header-persija {
-                padding: 14px 12px;
-            }
-            .card-header-persija::after {
-                font-size: 2.8rem;
-                bottom: -10px;
-                right: -5px;
-                opacity: 0.04;
-            }
-            .header-brand-container {
-                gap: 6px;
-            }
-            .app-logo {
-                width: 48px;
-                height: 48px;
-                border-width: 2px;
-            }
-            .brand-title {
-                font-size: 1.65rem;
-                letter-spacing: 0.8px;
-            }
-            .brand-subtext {
-                font-size: 0.72rem;
-                padding: 2px 10px;
-                letter-spacing: 1px;
-                margin-top: 3px;
-            }
-            .header-toolbar-mobile {
-                flex-direction: column;
-                align-items: stretch !important;
-                gap: 8px !important;
-            }
-            .header-toolbar-mobile .dropdown,
-            .header-toolbar-mobile .dropdown button {
-                width: 100%;
-                justify-content: center;
-            }
-            .header-toolbar-mobile .d-flex.gap-2 {
-                width: 100%;
-                justify-content: center;
-            }
-            .header-toolbar-mobile .btn-action {
-                flex: 1;
-                font-size: 0.78rem;
-                padding: 6px 10px;
-                text-align: center;
-                justify-content: center;
-            }
-            .menu-card {
-                border-radius: 14px;
-            }
-            .menu-card .card-body {
-                padding: 12px 8px !important;
-            }
-            .menu-card-title {
-                font-size: 0.88rem;
-                margin-bottom: 4px;
-            }
-            .menu-card-desc {
-                font-size: 0.76rem;
-            }
-            .step-card {
-                padding: 12px !important;
-                border-radius: 12px;
-            }
-            .step-badge {
-                width: 34px;
-                height: 34px;
-                font-size: 0.95rem;
-            }
-            .table th, .table td {
-                padding: 10px 8px;
-                font-size: 0.8rem;
-            }
-            .search-box {
-                font-size: 0.82rem;
-            }
-            .emoney-grid-item {
-                padding: 10px 6px;
-            }
-            .emoney-grid-item i {
-                font-size: 1.4rem !important;
-            }
-            .emoney-grid-item span {
-                font-size: 0.72rem;
-            }
-        }
-
-        @media print {
-            .no-print { display: none !important; }
-            body { background: white !important; }
-            .main-card { box-shadow: none !important; border: 1px solid #ddd !important; }
-            .card-header-persija { background: #e65c00 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-            .contact-footer { background: #f8f9fa !important; color: #000 !important; border: 1px solid #ddd !important; }
+            body { font-size: 0.86rem; }
+            .main-card { border-radius: 16px; }
+            .card-header-persija { padding: 14px 12px; }
+            .brand-title { font-size: 1.65rem; }
+            .brand-subtext { font-size: 0.72rem; }
+            .header-toolbar-mobile { flex-direction: column; align-items: stretch !important; gap: 8px !important; }
         }
     </style>
 </head>
@@ -754,9 +732,7 @@
     <div class="card auth-card p-4">
         <div class="text-center mb-3">
             <img src="LOGO OBR.png" alt="Logo OBR" class="portal-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23111\'/><text x=\'50%\' y=\'55%\' fill=\'%23fd7e14\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>OBR</text></svg>'">
-            <h3 class="portal-title mb-0">
-                THE JAKMANIA<br>ORANGE BOJONG RAYA
-            </h3>
+            <h3 class="portal-title mb-0">THE JAKMANIA<br>ORANGE BOJONG RAYA</h3>
             <p class="portal-subtitle mb-0">Sub Korwil Cengkareng</p>
         </div>
 
@@ -834,20 +810,12 @@
         <div class="card-header-persija">
             
             <div class="header-brand-container">
-                <img id="headerLogoLeft" src="LOGO OBR.png" alt="Logo Orange Bojong Raya" class="app-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23111\'/><text x=\'50%\' y=\'55%\' fill=\'%23fd7e14\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>OBR</text></svg>'">
-                
+                <img id="headerLogoLeft" src="LOGO OBR.png" alt="Logo Orange Bojong Raya" class="app-logo">
                 <div class="header-brand-center px-1">
-                    <h1 class="brand-title">
-                        ORANGE BOJONG RAYA
-                    </h1>
-                    <div>
-                        <span class="brand-subtext">
-                            Sub Korwil Cengkareng
-                        </span>
-                    </div>
+                    <h1 class="brand-title">ORANGE BOJONG RAYA</h1>
+                    <div><span class="brand-subtext">Sub Korwil Cengkareng</span></div>
                 </div>
-                
-                <img id="headerLogoRight" src="LOGO CKR.jpeg" alt="Logo Jakmania Cengkareng" class="app-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><circle cx=\'50\' cy=\'50\' r=\'50\' fill=\'%23111\'/><text x=\'50%\' y=\'55%\' fill=\'%23fff\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>CKR</text></svg>'">
+                <img id="headerLogoRight" src="LOGO CKR.jpeg" alt="Logo Jakmania Cengkareng" class="app-logo">
             </div>
 
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 pt-2 border-top border-white border-opacity-25 mt-3 header-toolbar-mobile">
@@ -884,7 +852,7 @@
             <div id="viewMenuDashboard" class="py-2">
                 <div class="text-center mb-4">
                     <h4 class="fw-bold text-uppercase">Pilih Menu Layanan</h4>
-                    <p class="text-secondary small">Silakan pilih menu di bawah ini untuk melihat data, panduan pendaftaran, galeri kegiatan, atau komunitas olahraga</p>
+                    <p class="text-secondary small">Silakan pilih menu di bawah ini untuk melihat data, struktur pengurus, panduan pendaftaran, atau galeri kegiatan</p>
                 </div>
                 <div class="row justify-content-center g-3">
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
@@ -902,6 +870,15 @@
                                 <i class="bi bi-clock-history display-6 text-warning mb-2 d-block"></i>
                                 <h6 class="menu-card-title">PROSES PEMBUATAN KTA<br>THE JAKMANIA OBR</h6>
                                 <p class="menu-card-desc mb-0">Pantau status pengajuan pendaftaran & perpanjangan, tipe KTA, serta status pembayaran.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="card menu-card p-3 text-center shadow-sm" onclick="switchView('strukturOrganisasi')">
+                            <div class="card-body py-2">
+                                <i class="bi bi-diagram-3-fill display-6 text-warning mb-2 d-block"></i>
+                                <h6 class="menu-card-title">STRUKTUR PENGURUS<br>ORANGE BOJONG RAYA</h6>
+                                <p class="menu-card-desc mb-0">Jajaran struktur kepengurusan resmi Sub Wilayah Bojong Raya.</p>
                             </div>
                         </div>
                     </div>
@@ -1041,6 +1018,29 @@
                 </div>
             </div>
 
+            <!-- HALAMAN STRUKTUR PENGURUS DINAMIS ALA PERSIJA -->
+            <div id="viewStrukturOrganisasi" style="display: none;">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <button class="btn btn-dark rounded-pill px-3 py-1.5 btn-sm fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-1"></i>Kembali ke Menu Utama</button>
+                    <div class="d-flex align-items-center gap-2">
+                        <h5 class="fw-bold text-uppercase mb-0">Struktur Pengurus Orange Bojong Raya</h5>
+                        <button id="btnTambahPengurus" class="btn btn-warning btn-sm rounded-pill fw-bold px-3 py-1.5 shadow-sm text-dark" onclick="openPengurusModal()" style="display: none;"><i class="bi bi-plus-circle-fill me-1"></i> Tambah Pengurus</button>
+                    </div>
+                </div>
+
+                <!-- Filter Tab Bar Kategori Divisi -->
+                <div class="d-flex gap-2 flex-wrap mb-4 pb-2 border-bottom">
+                    <button class="btn squad-filter-btn active" onclick="filterPengurus('all', this)">SEMUA PENGURUS</button>
+                    <button class="btn squad-filter-btn" onclick="filterPengurus('harian', this)">PENGURUS HARIAN</button>
+                    <button class="btn squad-filter-btn" onclick="filterPengurus('humas', this)">HUMAS & MEDIA</button>
+                    <button class="btn squad-filter-btn" onclick="filterPengurus('korlap', this)">KORLAP & KEAMANAN</button>
+                    <button class="btn squad-filter-btn" onclick="filterPengurus('sport', this)">OBR SPORT</button>
+                </div>
+
+                <!-- Grid Kartu Pengurus Dinamis -->
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="pengurusContainer"></div>
+            </div>
+
             <!-- HALAMAN GALERI KEGIATAN ORANGE BOJONG RAYA -->
             <div id="viewGaleriKegiatan" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
@@ -1118,164 +1118,21 @@
                     </div>
                 </div>
 
-                <!-- LANGKAH-LANGKAH PENDAFTARAN KTA -->
-                <div class="mb-4">
-                    <h5 class="fw-bold text-uppercase mb-3"><i class="bi bi-list-ol text-warning me-2"></i>Langkah-Langkah Pendaftaran KTA</h5>
-                    <div class="row g-3">
-                        <div class="col-12 col-sm-6 col-lg-3">
-                            <div class="p-3 step-card h-100 shadow-sm">
-                                <div class="d-flex align-items-center gap-2 mb-2">
-                                    <div class="step-badge">01</div>
-                                    <h6 class="fw-bold m-0">Unduh App</h6>
-                                </div>
-                                <p class="small mb-0">Unduh aplikasi resmi <b>The Jakmania</b> melalui Play Store (Android) atau App Store (iOS).</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
-                            <div class="p-3 step-card h-100 shadow-sm">
-                                <div class="d-flex align-items-center gap-2 mb-2">
-                                    <div class="step-badge">02</div>
-                                    <h6 class="fw-bold m-0">Isi Formulir</h6>
-                                </div>
-                                <p class="small mb-0">Buka aplikasi, isi data diri lengkap & benar (Nama, NIK KTP, serta alamat domisili).</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
-                            <div class="p-3 step-card h-100 shadow-sm">
-                                <div class="d-flex align-items-center gap-2 mb-2">
-                                    <div class="step-badge">03</div>
-                                    <h6 class="fw-bold m-0">Pilih Wilayah</h6>
-                                </div>
-                                <p class="small mb-0">Pilih wilayah / biro / sub-korwil: <b>Sub Korwil Cengkareng (Orange Bojong Raya)</b>.</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
-                            <div class="p-3 step-card h-100 shadow-sm">
-                                <div class="d-flex align-items-center gap-2 mb-2">
-                                    <div class="step-badge">04</div>
-                                    <h6 class="fw-bold m-0">Unggah Foto</h6>
-                                </div>
-                                <p class="small mb-0">Unggah foto diri (pasfoto rapi) dan foto identitas (KTP) sesuai ukuran.</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
-                            <div class="p-3 step-card h-100 shadow-sm">
-                                <div class="d-flex align-items-center gap-2 mb-2">
-                                    <div class="step-badge">05</div>
-                                    <h6 class="fw-bold m-0">Kode Bayar</h6>
-                                </div>
-                                <p class="small mb-0">Simpan data pendaftaran dan dapatkan daftar/kode transaksi pembayaran.</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
-                            <div class="p-3 step-card h-100 shadow-sm">
-                                <div class="d-flex align-items-center gap-2 mb-2">
-                                    <div class="step-badge">06</div>
-                                    <h6 class="fw-bold m-0">Pembayaran</h6>
-                                </div>
-                                <p class="small mb-0">Transfer sebesar Rp150.000 ke rekening BCA Kasub / Sekertaris di atas.</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
-                            <div class="p-3 step-card h-100 shadow-sm">
-                                <div class="d-flex align-items-center gap-2 mb-2">
-                                    <div class="step-badge">07</div>
-                                    <h6 class="fw-bold m-0">Simpan Bukti</h6>
-                                </div>
-                                <p class="small mb-0">Simpan screenshot bukti pendaftaran aplikasi dan bukti transfer pembayaran.</p>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-6 col-lg-3">
-                            <div class="p-3 step-card h-100 shadow-sm">
-                                <div class="d-flex align-items-center gap-2 mb-2">
-                                    <div class="step-badge">08</div>
-                                    <h6 class="fw-bold m-0">Verifikasi OBR</h6>
-                                </div>
-                                <p class="small mb-0">Kirimkan bukti tersebut kepada Pengurus Sub-Wilayah Bojong Raya untuk verifikasi.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="mb-4">
-                    <h5 class="fw-bold text-uppercase mb-3"><i class="bi bi-tshirt text-warning me-2"></i>Desain Baju KTA & Size Chart T-Shirt</h5>
-                    <p class="text-secondary small mb-2"><i class="bi bi-info-circle me-1"></i>Klik gambar baju di bawah untuk memperbesar tampilan desain secara penuh.</p>
-                    <div class="row g-3 mb-3">
-                        <div class="col-md-6">
-                            <div class="shirt-preview-card shadow-sm text-center">
-                                <img src="BAJU KTA PENDAFTARAN BARU.jpeg" alt="Baju KTA Pendaftaran Baru" class="shirt-preview-img" onclick="openSingleImageModal('BAJU KTA PENDAFTARAN BARU.jpeg', 'Baju KTA Pendaftaran Baru (Gue Anak Jakarta)')" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%23e65c00\'/><text x=\'50%\' y=\'50%\' fill=\'white\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>BAJU PENDAFTARAN BARU</text></svg>'">
-                                <div class="p-3">
-                                    <span class="badge bg-warning text-dark font-monospace mb-1">REGULER & PELAJAR</span>
-                                    <h6 class="fw-bold text-white m-0">BAJU KTA PENDAFTARAN BARU</h6>
-                                    <p class="text-white-50 small mb-0 mt-1">Sablon Depan: <b>"GUE ANAK JAKARTA"</b></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="shirt-preview-card shadow-sm text-center">
-                                <img src="BAJU KTA PERPANJANGAN.jpeg" alt="Baju KTA Perpanjangan" class="shirt-preview-img" onclick="openSingleImageModal('BAJU KTA PERPANJANGAN.jpeg', 'Baju KTA Perpanjangan (Satu Jakarta Satu)')" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'400\' height=\'250\'><rect width=\'100%\' height=\'100%\' fill=\'%23111\'/><text x=\'50%\' y=\'50%\' fill=\'%23ff9900\' font-size=\'18\' font-weight=\'bold\' text-anchor=\'middle\'>BAJU PERPANJANGAN</text></svg>'">
-                                <div class="p-3">
-                                    <span class="badge bg-secondary font-monospace mb-1">RENEWAL</span>
-                                    <h6 class="fw-bold text-white m-0">BAJU KTA PERPANJANGAN</h6>
-                                    <p class="text-white-50 small mb-0 mt-1">Sablon Belakang: <b>"SATU JAKARTA SATU"</b></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card border-0 rounded-4 p-3.5 p-md-4 shadow-sm border mb-3" style="background: var(--card-bg);">
-                        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-                            <h6 class="fw-bold m-0"><i class="bi bi-ruler text-warning me-2"></i>SIZE CHART T-SHIRT KTA THE JAKMANIA (CM)</h6>
-                            <span class="badge bg-dark text-warning font-monospace">STANDAR UKURAN</span>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table table-striped text-center align-middle mb-0 small">
-                                <thead>
-                                    <tr>
-                                        <th>SIZE</th>
-                                        <th>WIDTH (LEBAR DADA)</th>
-                                        <th>LENGTH (PANJANG)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr><td class="fw-bold text-warning">XS</td><td>44 cm</td><td>57 cm</td></tr>
-                                    <tr><td class="fw-bold text-warning">S</td><td>46 cm</td><td>65 cm</td></tr>
-                                    <tr><td class="fw-bold text-warning">M</td><td>49 cm</td><td>68 cm</td></tr>
-                                    <tr><td class="fw-bold text-warning">L</td><td>52 cm</td><td>71 cm</td></tr>
-                                    <tr><td class="fw-bold text-warning">XL</td><td>55 cm</td><td>74 cm</td></tr>
-                                    <tr><td class="fw-bold text-warning">XXL</td><td>58 cm</td><td>77 cm</td></tr>
-                                    <tr><td class="fw-bold text-warning">3XL</td><td>61 cm</td><td>80 cm</td></tr>
-                                    <tr><td class="fw-bold text-warning">4XL</td><td>64 cm</td><td>83 cm</td></tr>
-                                    <tr><td class="fw-bold text-warning">5XL</td><td>67 cm</td><td>86 cm</td></tr>
-                                    <tr><td class="fw-bold text-warning">6XL</td><td>70 cm</td><td>89 cm</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- KARTU PROMO PELAJAR & CICILAN -->
                 <div class="row g-3 mb-4">
                     <div class="col-md-6">
                         <div class="card h-100 promo-card promo-card-pelajar shadow-sm">
                             <div>
                                 <div class="d-flex align-items-center gap-3 mb-3">
-                                    <div class="icon-box-pelajar">
-                                        <i class="bi bi-mortarboard-fill"></i>
-                                    </div>
+                                    <div class="icon-box-pelajar"><i class="bi bi-mortarboard-fill"></i></div>
                                     <div>
                                         <span class="badge bg-danger text-white mb-1 px-2.5 py-1">Diskon 15%</span>
                                         <h6 class="fw-bold m-0 fs-5">E-KTA Khusus Pelajar</h6>
                                     </div>
                                 </div>
-                                <p class="small mb-3 text-secondary">
-                                    Khusus untuk anggota yang masih berstatus pelajar/siswa, tersedia potongan harga diskon 15%.
-                                </p>
+                                <p class="small mb-3 text-secondary">Khusus untuk anggota yang masih berstatus pelajar/siswa, tersedia potongan harga diskon 15%.</p>
                             </div>
                             <div class="promo-info-box small">
-                                <span class="fw-bold text-warning d-block mb-1">
-                                    <i class="bi bi-exclamation-circle-fill me-1"></i>Syarat & Ketentuan:
-                                </span>
+                                <span class="fw-bold text-warning d-block mb-1"><i class="bi bi-exclamation-circle-fill me-1"></i>Syarat & Ketentuan:</span>
                                 <span>Wajib melampirkan foto Kartu Pelajar yang masih aktif saat pengajuan pendaftaran.</span>
                             </div>
                         </div>
@@ -1285,22 +1142,16 @@
                         <div class="card h-100 promo-card promo-card-cicil shadow-sm">
                             <div>
                                 <div class="d-flex align-items-center gap-3 mb-3">
-                                    <div class="icon-box-cicil">
-                                        <i class="bi bi-cash-stack"></i>
-                                    </div>
+                                    <div class="icon-box-cicil"><i class="bi bi-cash-stack"></i></div>
                                     <div>
                                         <span class="badge bg-success text-white mb-1 px-2.5 py-1">Program JakSchool</span>
                                         <h6 class="fw-bold m-0 fs-5">Skema Cicilan KTA OBR</h6>
                                     </div>
                                 </div>
-                                <p class="small mb-3 text-secondary">
-                                    OBR membuka kemudahan pendaftaran & perpanjangan e-KTA JakSchool dengan cara dicicil.
-                                </p>
+                                <p class="small mb-3 text-secondary">OBR membuka kemudahan pendaftaran & perpanjangan e-KTA JakSchool dengan cara dicicil.</p>
                             </div>
                             <div class="promo-info-box small">
-                                <span class="fw-bold text-success d-block mb-1">
-                                    <i class="bi bi-list-check me-1"></i>Langkah Pembayaran Cicilan:
-                                </span>
+                                <span class="fw-bold text-success d-block mb-1"><i class="bi bi-list-check me-1"></i>Langkah Pembayaran Cicilan:</span>
                                 <ol class="ps-3 mb-0">
                                     <li class="mb-1">Kirim detail Nama, Alamat, dan Asal Sekolah ke Admin OBR.</li>
                                     <li class="mb-1">Kirim bukti pendaftaran aplikasi & transfer cicilan dengan berita transfer: <b class="text-warning">"CICIL KTA OBR (NAMA)"</b>.</li>
@@ -1308,28 +1159,6 @@
                                 </ol>
                             </div>
                         </div>
-                    </div>
-                </div>
-
-                <div class="card border-0 rounded-4 p-3.5 p-md-4 shadow-sm border mb-4" style="background: var(--card-bg);">
-                    <h6 class="fw-bold border-bottom pb-2 mb-3"><i class="bi bi-credit-card-2-front text-warning me-2"></i>Fungsi & Kegunaan E-KTA (e-Money Mandiri)</h6>
-                    <p class="text-secondary small mb-3">Selain sebagai bukti keanggotaan resmi, e-KTA berupa kartu fisik e-Money Mandiri dapat digunakan sebagai uang elektronik untuk berbagai transaksi harian:</p>
-                    <div class="row g-2 text-center small fw-bold">
-                        <div class="col-4 col-sm-4 col-md-2"><div class="emoney-grid-item"><i class="bi bi-car-front text-warning d-block fs-3 mb-1"></i><span>TOL</span></div></div>
-                        <div class="col-4 col-sm-4 col-md-2"><div class="emoney-grid-item"><i class="bi bi-p-circle text-warning d-block fs-3 mb-1"></i><span>PARKIR</span></div></div>
-                        <div class="col-4 col-sm-4 col-md-2"><div class="emoney-grid-item"><i class="bi bi-train-front text-warning d-block fs-3 mb-1"></i><span>KRL/MRT/LRT</span></div></div>
-                        <div class="col-4 col-sm-4 col-md-2"><div class="emoney-grid-item"><i class="bi bi-bus-front text-warning d-block fs-3 mb-1"></i><span>BUSWAY</span></div></div>
-                        <div class="col-4 col-sm-4 col-md-2"><div class="emoney-grid-item"><i class="bi bi-shop text-warning d-block fs-3 mb-1"></i><span>MINIMARKET</span></div></div>
-                        <div class="col-4 col-sm-4 col-md-2"><div class="emoney-grid-item"><i class="bi bi-tree text-warning d-block fs-3 mb-1"></i><span>WISATA</span></div></div>
-                    </div>
-                </div>
-
-                <div class="text-center p-3.5 border rounded-4 shadow-sm" style="background: var(--card-bg);">
-                    <h6 class="fw-bold mb-2">Sudah Mendaftar di Aplikasi atau Ingin Bertanya?</h6>
-                    <p class="text-secondary small mb-3">Hubungi tim pengurus Orange Bojong Raya untuk verifikasi & konfirmasi pembayaran:</p>
-                    <div class="d-flex justify-content-center flex-wrap gap-2">
-                        <a href="https://wa.me/6289625793431?text=Halo%20Kasub,%20saya%20ingin%20konfirmasi%20Pendaftaran/Perpanjangan%20KTA%20Orange%20Bojong%20Raya" target="_blank" class="btn btn-success rounded-pill fw-bold btn-sm px-3 py-2"><i class="bi bi-whatsapp me-1"></i> KASUB</a>
-                        <a href="https://wa.me/6289513766307?text=Halo%20Sekretaris,%20saya%20ingin%20konfirmasi%20Pendaftaran/Perpanjangan%20KTA%20Orange%20Bojong%20Raya" target="_blank" class="btn btn-success rounded-pill fw-bold btn-sm px-3 py-2"><i class="bi bi-whatsapp me-1"></i> SEKERTARIS</a>
                     </div>
                 </div>
             </div>
@@ -1343,8 +1172,8 @@
                     <div class="col-md-12 d-flex flex-wrap justify-content-center justify-content-md-start gap-2 align-items-center">
                         <a href="https://wa.me/6289625793431" target="_blank" class="btn btn-success btn-sm rounded-pill px-3 py-1.5 fw-semibold" style="font-size: 0.78rem;"><i class="bi bi-whatsapp me-1"></i> KASUB</a>
                         <a href="https://wa.me/6289513766307" target="_blank" class="btn btn-success btn-sm rounded-pill px-3 py-1.5 fw-semibold" style="font-size: 0.78rem;"><i class="bi bi-whatsapp me-1"></i> SEKERTARIS</a>
-                        <a href="https://www.instagram.com/jak_bojongraya?vrfl=MjhyYnpwaDFqZG5k" target="_blank" class="btn btn-danger btn-sm rounded-pill px-3 py-1.5 fw-semibold" style="font-size: 0.78rem;" title="Instagram @jak_bojongraya"><i class="bi bi-instagram"></i></a>
-                        <a href="https://www.tiktok.com/@orenbojongraya?_r=1&_t=ZS-9As7EzhiVzZ" target="_blank" class="btn btn-dark btn-sm rounded-pill px-3 py-1.5 fw-semibold border border-secondary" style="font-size: 0.78rem;" title="TikTok @orenbojongraya"><i class="bi bi-tiktok"></i></a>
+                        <a href="https://www.instagram.com/jak_bojongraya" target="_blank" class="btn btn-danger btn-sm rounded-pill px-3 py-1.5 fw-semibold" style="font-size: 0.78rem;"><i class="bi bi-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@orenbojongraya" target="_blank" class="btn btn-dark btn-sm rounded-pill px-3 py-1.5 fw-semibold border border-secondary" style="font-size: 0.78rem;"><i class="bi bi-tiktok"></i></a>
                     </div>
                 </div>
             </div>
@@ -1353,7 +1182,7 @@
 </div>
 
 <!-- MODAL PREVIEW SLIDER GAMBAR -->
-<div class="modal fade" id="imagePreviewModal" tabindex="1">
+<div class="modal fade" id="imagePreviewModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content border-0 bg-dark text-white rounded-4 overflow-hidden shadow-lg">
             <div class="modal-header border-bottom border-warning py-2.5 justify-content-between align-items-center">
@@ -1365,13 +1194,96 @@
                     <div class="carousel-inner" id="modalCarouselInner"></div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#modalCarouselContainer" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#modalCarouselContainer" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DETAIL PROFIL & HUBUNGI WHATSAPP PENGURUS -->
+<div class="modal fade" id="detailPengurusModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 bg-dark text-white rounded-4 overflow-hidden shadow-lg border border-warning">
+            <div class="modal-header border-bottom border-warning py-2.5">
+                <h6 class="modal-title fw-bold text-warning m-0"><i class="bi bi-person-lines-fill me-1"></i>Profil Pengurus Sub Wilayah</h6>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center p-4">
+                <img id="detailPengurusImg" src="" class="rounded-circle border border-warning border-3 mb-3 shadow" style="width: 120px; height: 120px; object-fit: cover;">
+                <span class="badge bg-warning text-dark fw-bold font-monospace d-block mx-auto mb-2" id="detailPengurusRoleBadge" style="width: max-content;">-</span>
+                <h4 class="fw-bold text-uppercase text-white mb-0" id="detailPengurusName">-</h4>
+                <p class="font-monospace text-warning small mb-3" id="detailPengurusKta">-</p>
+                <div class="p-3 bg-black rounded-3 mb-3 border border-secondary text-start small">
+                    <div class="d-flex justify-content-between border-bottom border-secondary pb-1 mb-1">
+                        <span class="text-secondary">Jabatan Resmi:</span>
+                        <strong class="text-light" id="detailPengurusJabatan">-</strong>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="text-secondary">Kategori Divisi:</span>
+                        <strong class="text-light text-uppercase" id="detailPengurusDivisi">-</strong>
+                    </div>
+                </div>
+                <a id="detailPengurusWaBtn" href="#" target="_blank" class="btn btn-success w-100 rounded-pill fw-bold py-2 shadow-sm"><i class="bi bi-whatsapp me-1"></i> Hubungi Pengurus via WhatsApp</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL TAMBAH / EDIT PENGURUS (ADMIN MODE) -->
+<div class="modal fade" id="pengurusModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header bg-warning text-dark fw-bold py-2.5">
+                <h6 class="modal-title m-0" id="pengurusModalTitle"><i class="bi bi-person-badge-fill me-1"></i>Tambah Data Pengurus</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-3.5 small">
+                <form id="pengurusForm" onsubmit="handleSavePengurus(event)">
+                    <input type="hidden" id="editPengurusId">
+                    <div class="row g-2 mb-2.5">
+                        <div class="col-6">
+                            <label class="form-label fw-semibold text-secondary mb-1">No KTA / Nomor <span class="text-danger">*</span></label>
+                            <input type="text" id="inputPengurusNo" class="form-control form-control-sm rounded-3 py-2" required placeholder="JB.13.0113769.06.24">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label fw-semibold text-secondary mb-1">Divisi Kategori <span class="text-danger">*</span></label>
+                            <select id="inputPengurusKategori" class="form-select form-select-sm rounded-3 py-2" required>
+                                <option value="harian">PENGURUS HARIAN</option>
+                                <option value="humas">HUMAS & MEDIA</option>
+                                <option value="korlap">KORLAP & KEAMANAN</option>
+                                <option value="sport">OBR SPORT</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-2.5">
+                        <label class="form-label fw-semibold text-secondary mb-1">Badge Jabatan <span class="text-danger">*</span></label>
+                        <input type="text" id="inputPengurusRole" class="form-control form-control-sm rounded-3 py-2" required placeholder="Contoh: KETUA SUB KORWIL / SEKRETARIS">
+                    </div>
+                    <div class="row g-2 mb-2.5">
+                        <div class="col-6">
+                            <label class="form-label fw-semibold text-secondary mb-1">Nama Depan (Kecil) <span class="text-danger">*</span></label>
+                            <input type="text" id="inputPengurusNameSmall" class="form-control form-control-sm rounded-3 py-2" required placeholder="ANDRIYANTO">
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label fw-semibold text-secondary mb-1">Nama Belakang (Besar) <span class="text-danger">*</span></label>
+                            <input type="text" id="inputPengurusNameLarge" class="form-control form-control-sm rounded-3 py-2" required placeholder="KASUB">
+                        </div>
+                    </div>
+                    <div class="mb-2.5">
+                        <label class="form-label fw-semibold text-secondary mb-1">No WhatsApp <span class="text-danger">*</span></label>
+                        <input type="text" id="inputPengurusWa" class="form-control form-control-sm rounded-3 py-2" required placeholder="089625793431">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold text-secondary mb-1">Foto Portrait (Opsional):</label>
+                        <input type="file" id="inputPengurusFile" class="form-control form-control-sm rounded-3 py-2" accept="image/*">
+                        <small class="text-muted" style="font-size: 0.72rem;">Disarankan foto rasio 3:4 berlatar gelap atau Jersey OBR. Dikompresi otomatis.</small>
+                    </div>
+                    <button type="submit" class="btn btn-dark w-100 fw-bold py-2.5 rounded-pill shadow" id="btnSimpanPengurus">Simpan Data Pengurus</button>
+                </form>
             </div>
         </div>
     </div>
@@ -1402,18 +1314,17 @@
                     </div>
 
                     <div class="mb-3" id="editExistingPhotosContainer" style="display: none;">
-                        <label class="form-label fw-semibold text-secondary mb-1">Foto Yang Sudah Ada (Klik tombol X untuk menghapus foto):</label>
+                        <label class="form-label fw-semibold text-secondary mb-1">Foto Yang Sudah Ada:</label>
                         <div id="existingPhotosList" class="d-flex flex-wrap gap-2 p-2.5 border rounded bg-light"></div>
                     </div>
 
                     <div class="mb-2.5">
                         <label class="form-label fw-semibold text-secondary mb-1" id="labelFileFotoInput">Pilih File Foto (Bisa Banyak Sekaligus) <span class="text-danger">*</span></label>
                         <input type="file" id="inputGaleriFiles" class="form-control form-control-sm rounded-3 py-2" accept="image/*" multiple onchange="previewSelectedGalleryFiles(this)">
-                        <small class="text-muted" style="font-size: 0.72rem;">Anda dapat memilih lebih dari 1 foto sekaligus dari perangkat Anda.</small>
                     </div>
 
                     <div class="mb-3" id="thumbnailSelectionContainer" style="display: none;">
-                        <label class="form-label fw-semibold text-secondary mb-1">Pilih Foto Sampul Depan (Thumbnail Utama di Website):</label>
+                        <label class="form-label fw-semibold text-secondary mb-1">Pilih Foto Sampul Depan:</label>
                         <div id="thumbnailRadioGroup" class="d-flex flex-wrap gap-2 p-2.5 border rounded bg-light"></div>
                     </div>
                     <button type="submit" class="btn btn-dark w-100 fw-bold py-2.5 rounded-pill shadow" id="btnSimpanGaleri">Simpan Foto Galeri</button>
@@ -1432,7 +1343,6 @@
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body p-3.5 small">
-                <p class="text-muted mb-2">Berikut adalah catatan transparansi tindakan yang dilakukan oleh para admin di sistem:</p>
                 <div class="table-responsive" style="max-height: 400px;">
                     <table class="table table-striped align-middle mb-0 small">
                         <thead>
@@ -1484,26 +1394,11 @@
                     <label class="form-label fw-semibold text-secondary small">Ganti Password Baru:</label>
                     <div class="input-group input-group-sm mb-1 password-group">
                         <input type="password" id="newAccountPass" class="form-control py-2" placeholder="Minimal 6 karakter" onkeyup="checkPasswordStrength(this.value, 'setStrengthBar', 'setStrengthText')">
-                        <button class="btn btn-toggle-pass px-3" type="button" onclick="togglePasswordVisibility('newAccountPass', 'eyeNewPassIcon')" title="Lihat/Sembunyikan Password">
-                            <i class="bi bi-eye-slash" id="eyeNewPassIcon"></i>
-                        </button>
+                        <button class="btn btn-toggle-pass px-3" type="button" onclick="togglePasswordVisibility('newAccountPass', 'eyeNewPassIcon')"><i class="bi bi-eye-slash" id="eyeNewPassIcon"></i></button>
                         <button class="btn btn-warning fw-bold text-dark px-3" type="button" onclick="updateUserPassword()">Simpan</button>
                     </div>
                     <div class="strength-meter"><div id="setStrengthBar" class="strength-bar"></div></div>
                     <small id="setStrengthText" class="text-muted" style="font-size: 0.72rem;"></small>
-                </div>
-
-                <div class="card border-0 p-3.5 rounded-3 shadow-sm" id="logoSettingsCard" style="display: none; background: var(--card-bg);">
-                    <h6 class="fw-bold mb-2"><i class="bi bi-image-fill me-1 text-warning"></i> Pengaturan Pilihan Logo</h6>
-                    <input type="file" id="uploadFaviconInput" accept="image/*" style="display: none;" onchange="handleFaviconUpload(event)">
-                    <input type="file" id="uploadLogoLeftInput" accept="image/*" style="display: none;" onchange="handleLogoUpload(event, 'left')">
-                    <input type="file" id="uploadLogoRightInput" accept="image/*" style="display: none;" onchange="handleLogoUpload(event, 'right')">
-
-                    <div class="d-flex flex-column gap-2">
-                        <button class="btn btn-outline-dark btn-sm rounded-pill text-start px-3 py-2" onclick="document.getElementById('uploadFaviconInput').click()"><i class="bi bi-browser-chrome me-2 text-warning"></i> Ganti Logo Browser (Favicon)</button>
-                        <button class="btn btn-outline-warning btn-sm rounded-pill text-start px-3 py-2 fw-semibold" onclick="document.getElementById('uploadLogoLeftInput').click()"><i class="bi bi-shield-fill-exclamation me-2"></i> Ganti Logo Kiri (OBR)</button>
-                        <button class="btn btn-outline-dark btn-sm rounded-pill text-start px-3 py-2" onclick="document.getElementById('uploadLogoRightInput').click()"><i class="bi bi-shield-fill-check me-2 text-warning"></i> Ganti Logo Kanan (Cengkareng)</button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1600,13 +1495,6 @@
             </div>
             <div class="modal-body p-3.5 small">
                 <p class="text-muted mb-2.5">💡 <b>Cara Penggunaan:</b> Salin data dari Excel Anda, lalu <b>Paste (Tempel)</b> di bawah ini:</p>
-                <div class="bg-dark text-white p-2.5 rounded-top font-monospace fw-bold small row mx-0 text-center border-bottom border-warning">
-                    <div class="col-3">NAMA ANGGOTA</div>
-                    <div class="col-3">NOMOR ANGGOTA (KTA)</div>
-                    <div class="col-2">MASA BERLAKU</div>
-                    <div class="col-2">KETERANGAN</div>
-                    <div class="col-2">NO HP / WA</div>
-                </div>
                 <form id="bulkMemberForm">
                     <div class="mb-3.5">
                         <textarea id="bulkInputText" class="form-control font-monospace rounded-bottom p-3" rows="8" required placeholder="Contoh: RIKY RAMADHAN	JB.13.0112233.06.26	01 Juni 2027	SUB WILAYAH BOJONG	089612345678"></textarea>
@@ -1684,13 +1572,6 @@
             </div>
             <div class="modal-body p-3.5 small">
                 <p class="text-muted mb-2.5">💡 <b>Cara Penggunaan:</b> Salin data dari Excel, lalu <b>Paste (Tempel)</b> di bawah ini:</p>
-                <div class="bg-dark text-white p-2.5 rounded-top font-monospace fw-bold small row mx-0 text-center border-bottom border-warning" style="font-size: 0.75rem !important;">
-                    <div class="col-3">NAMA LENGKAP</div>
-                    <div class="col-2">STATUS KTA</div>
-                    <div class="col-2">TIPE KTA</div>
-                    <div class="col-2">STATUS PEMBAYARAN</div>
-                    <div class="col-3">NO WHATSAPP</div>
-                </div>
                 <form id="bulkProsesForm">
                     <div class="mb-3.5">
                         <textarea id="bulkProsesInputText" class="form-control font-monospace rounded-bottom p-3" rows="8" required placeholder="Contoh: AHMAD FAUZI	PENDAFTARAN	REGULER	SUDAH LUNAS	089612345678"></textarea>
@@ -1743,6 +1624,7 @@
     let members = [];
     let prosesKtaData = [];
     let galeriData = [];
+    let pengurusData = [];
     let usersDb = [];
     let currentUser = null;
     let currentActiveView = 'dashboard';
@@ -1750,6 +1632,7 @@
     let afkTimer = null;
     let selectedFilesTemp = [];
     let currentEditImages = [];
+    let currentEditPengurusImg = "";
 
     const selectAddModeModal = new bootstrap.Modal(document.getElementById('selectAddModeModal'));
     const selectAddProsesModeModal = new bootstrap.Modal(document.getElementById('selectAddProsesModeModal'));
@@ -1762,6 +1645,8 @@
     const imagePreviewModal = new bootstrap.Modal(document.getElementById('imagePreviewModal'));
     const activityLogModal = new bootstrap.Modal(document.getElementById('activityLogModal'));
     const galeriModal = new bootstrap.Modal(document.getElementById('galeriModal'));
+    const pengurusModal = new bootstrap.Modal(document.getElementById('pengurusModal'));
+    const detailPengurusModal = new bootstrap.Modal(document.getElementById('detailPengurusModal'));
 
     window.addEventListener('DOMContentLoaded', () => {
         const savedTheme = localStorage.getItem('obr_theme') || 'light';
@@ -1779,9 +1664,7 @@
                     }
                     enforceSingleSession(user.uid);
                     initAfkTracker();
-                } catch (error) {
-                    console.error("Gagal memuat profil dari Firestore:", error);
-                }
+                } catch (error) { console.error(error); }
             } else {
                 currentUser = null;
                 if (sessionUnsubscribe) sessionUnsubscribe();
@@ -1792,82 +1675,12 @@
 
         initRealtimeListeners();
         loadUsersFromFirestore();
-
-        const savedLogoLeft = localStorage.getItem('obr_custom_logo_left');
-        if(savedLogoLeft) document.getElementById('headerLogoLeft').src = savedLogoLeft;
-        const savedLogoRight = localStorage.getItem('obr_custom_logo_right');
-        if(savedLogoRight) document.getElementById('headerLogoRight').src = savedLogoRight;
-        const savedFavicon = localStorage.getItem('obr_custom_favicon');
-        if(savedFavicon) document.getElementById('browserFavicon').href = savedFavicon;
     });
-
-    function toggleDarkMode() {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('obr_theme', newTheme);
-        updateThemeToggleText(newTheme);
-    }
-
-    function updateThemeToggleText(theme) {
-        const txt = document.getElementById('darkModeToggleText');
-        if(txt) {
-            txt.innerText = theme === 'dark' ? 'Mode Terang (Light Mode)' : 'Mode Gelap (Dark Mode)';
-        }
-    }
-
-    function togglePasswordVisibility(inputId, iconId) {
-        const input = document.getElementById(inputId);
-        const icon = document.getElementById(iconId);
-        if (input.type === 'password') {
-            input.type = 'text';
-            icon.classList.remove('bi-eye-slash');
-            icon.classList.add('bi-eye');
-        } else {
-            input.type = 'password';
-            icon.classList.remove('bi-eye');
-            icon.classList.add('bi-eye-slash');
-        }
-    }
-
-    function checkPasswordStrength(val, barId, textId) {
-        const bar = document.getElementById(barId);
-        const text = document.getElementById(textId);
-        if (!val) {
-            bar.style.width = '0%';
-            text.innerText = '';
-            return;
-        }
-
-        let score = 0;
-        if (val.length >= 6) score++;
-        if (val.length >= 10) score++;
-        if (/[A-Z]/.test(val)) score++;
-        if (/[0-9]/.test(val)) score++;
-        if (/[^A-Za-z0-9]/.test(val)) score++;
-
-        if (score <= 2) {
-            bar.style.width = '33%';
-            bar.style.backgroundColor = '#dc3545';
-            text.innerText = '⚠️ Lemah (Gunakan kombinasi huruf & angka)';
-            text.className = 'text-danger small';
-        } else if (score <= 4) {
-            bar.style.width = '66%';
-            bar.style.backgroundColor = '#ffc107';
-            text.innerText = '⚡ Sedang';
-            text.className = 'text-warning small';
-        } else {
-            bar.style.width = '100%';
-            bar.style.backgroundColor = '#198754';
-            text.innerText = '✅ Kuat & Aman';
-            text.className = 'text-success small';
-        }
-    }
 
     async function enforceSingleSession(uid) {
         let currentDeviceToken = localStorage.getItem('obr_device_token');
         if (!currentDeviceToken) {
-            currentDeviceToken = 'TOKEN-' + Math.random().toString(36.2) + Date.now();
+            currentDeviceToken = 'TOKEN-' + Math.random().toString(36).substring(2) + Date.now();
             localStorage.setItem('obr_device_token', currentDeviceToken);
         }
 
@@ -1890,6 +1703,56 @@
         } catch (e) { console.error(e); }
     }
 
+    function toggleDarkMode() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('obr_theme', newTheme);
+        updateThemeToggleText(newTheme);
+    }
+
+    function updateThemeToggleText(theme) {
+        const txt = document.getElementById('darkModeToggleText');
+        if(txt) txt.innerText = theme === 'dark' ? 'Mode Terang (Light Mode)' : 'Mode Gelap (Dark Mode)';
+    }
+
+    function togglePasswordVisibility(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        }
+    }
+
+    function checkPasswordStrength(val, barId, textId) {
+        const bar = document.getElementById(barId);
+        const text = document.getElementById(textId);
+        if (!val) { bar.style.width = '0%'; text.innerText = ''; return; }
+        let score = 0;
+        if (val.length >= 6) score++;
+        if (val.length >= 10) score++;
+        if (/[A-Z]/.test(val)) score++;
+        if (/[0-9]/.test(val)) score++;
+        if (/[^A-Za-z0-9]/.test(val)) score++;
+
+        if (score <= 2) {
+            bar.style.width = '33%'; bar.style.backgroundColor = '#dc3545';
+            text.innerText = '⚠️ Lemah'; text.className = 'text-danger small';
+        } else if (score <= 4) {
+            bar.style.width = '66%'; bar.style.backgroundColor = '#ffc107';
+            text.innerText = '⚡ Sedang'; text.className = 'text-warning small';
+        } else {
+            bar.style.width = '100%'; bar.style.backgroundColor = '#198754';
+            text.innerText = '✅ Kuat & Aman'; text.className = 'text-success small';
+        }
+    }
+
     function initAfkTracker() {
         clearAfkTracker();
         resetAfkTimer();
@@ -1901,7 +1764,7 @@
         afkTimer = setTimeout(() => {
             if (auth.currentUser) {
                 auth.signOut().then(() => {
-                    alert("⏰ Anda otomatis keluar karena tidak ada aktivitas (AFK) selama 10 menit.");
+                    alert("⏰ Anda otomatis keluar karena AFK 10 menit.");
                     location.reload();
                 });
             }
@@ -1941,6 +1804,12 @@
             snapshot.forEach((doc) => galeriData.push({ id: doc.id, ...doc.data() }));
             if(currentActiveView === 'galeriKegiatan') renderGaleri();
         });
+
+        db.collection("struktur_pengurus").onSnapshot((snapshot) => {
+            pengurusData = [];
+            snapshot.forEach((doc) => pengurusData.push({ id: doc.id, ...doc.data() }));
+            if(currentActiveView === 'strukturOrganisasi') renderPengurus();
+        });
     }
 
     function checkAuthStatus() {
@@ -1961,6 +1830,7 @@
             document.getElementById('btnExportExcel').style.display = isAdmin ? 'inline-block' : 'none';
             document.getElementById('menuLogItem').style.display = isAdmin ? 'block' : 'none';
             document.getElementById('btnTambahGaleri').style.display = isAdmin ? 'inline-block' : 'none';
+            document.getElementById('btnTambahPengurus').style.display = isAdmin ? 'inline-block' : 'none';
 
             switchView('dashboard');
         } else {
@@ -1976,19 +1846,24 @@
         document.getElementById('viewProsesKta').style.display = (viewName === 'prosesKta') ? 'block' : 'none';
         document.getElementById('viewPanduanKta').style.display = (viewName === 'panduanKta') ? 'block' : 'none';
         document.getElementById('viewGaleriKegiatan').style.display = (viewName === 'galeriKegiatan') ? 'block' : 'none';
+        document.getElementById('viewStrukturOrganisasi').style.display = (viewName === 'strukturOrganisasi') ? 'block' : 'none';
 
         const isAdmin = currentUser && currentUser.role === 'admin';
         const btnTambah = document.getElementById('btnTambahData');
         const btnPrint = document.getElementById('btnPrint');
         const btnExport = document.getElementById('btnExportExcel');
 
-        if (viewName === 'dashboard' || viewName === 'panduanKta' || viewName === 'galeriKegiatan') {
+        if (viewName === 'dashboard' || viewName === 'panduanKta' || viewName === 'galeriKegiatan' || viewName === 'strukturOrganisasi') {
             btnTambah.style.display = 'none';
             btnPrint.style.display = 'none';
             if(btnExport) btnExport.style.display = 'none';
             if(viewName === 'galeriKegiatan') {
                 renderGaleri();
                 if(isAdmin) document.getElementById('btnTambahGaleri').style.display = 'inline-block';
+            }
+            if(viewName === 'strukturOrganisasi') {
+                renderPengurus();
+                if(isAdmin) document.getElementById('btnTambahPengurus').style.display = 'inline-block';
             }
         } else {
             btnPrint.style.display = 'inline-block';
@@ -2000,6 +1875,157 @@
 
         if (viewName === 'ktaAktif') filterData();
         if (viewName === 'prosesKta') filterProsesData();
+    }
+
+    /* LOGIK STRUKTUR PENGURUS DINAMIS ALA PERSIJA */
+    function renderPengurus() {
+        const container = document.getElementById('pengurusContainer');
+        container.innerHTML = '';
+        const isAdmin = currentUser && currentUser.role === 'admin';
+
+        if (pengurusData.length === 0) {
+            container.innerHTML = `<div class="col-12 text-center text-muted py-5">Belum ada data pengurus yang diunggah.</div>`;
+            return;
+        }
+
+        pengurusData.forEach((item) => {
+            const imgPath = item.imageUrl || 'LOGO OBR.png';
+            const adminActions = isAdmin ? `
+                <div class="p-2 border-top bg-dark d-flex justify-content-center gap-2" onclick="event.stopPropagation();">
+                    <button class="btn btn-outline-warning btn-sm rounded-pill px-3 py-1 fw-semibold" onclick="editPengurus('${item.id}')"><i class="bi bi-pencil-fill me-1"></i> Edit</button>
+                    <button class="btn btn-outline-danger btn-sm rounded-pill px-3 py-1 fw-semibold" onclick="deletePengurus('${item.id}')"><i class="bi bi-trash-fill me-1"></i> Hapus</button>
+                </div>
+            ` : '';
+
+            container.innerHTML += `
+                <div class="col pengurus-item" data-category="${item.kategori || 'harian'}">
+                    <div class="squad-card shadow-sm" onclick="showDetailPengurus('${item.id}')">
+                        <div class="squad-img-wrapper">
+                            <img src="${imgPath}" alt="${item.nameLarge}" class="squad-img" onerror="this.src='LOGO OBR.png'">
+                        </div>
+                        <div class="squad-info d-flex align-items-center">
+                            <div class="squad-number">${item.no || '00'}</div>
+                            <div>
+                                <span class="squad-role-badge">${item.role}</span>
+                                <div class="squad-name-small">${item.nameSmall}</div>
+                                <div class="squad-name-large">${item.nameLarge}</div>
+                            </div>
+                        </div>
+                        ${adminActions}
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    function filterPengurus(category, btn) {
+        document.querySelectorAll('.squad-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const items = document.querySelectorAll('.pengurus-item');
+        items.forEach(item => {
+            if (category === 'all' || item.getAttribute('data-category') === category) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+
+    function showDetailPengurus(id) {
+        const item = pengurusData.find(x => x.id === id);
+        if(!item) return;
+
+        document.getElementById('detailPengurusImg').src = item.imageUrl || 'LOGO OBR.png';
+        document.getElementById('detailPengurusRoleBadge').innerText = item.role || 'PENGURUS';
+        document.getElementById('detailPengurusName').innerText = `${item.nameSmall} ${item.nameLarge}`;
+        document.getElementById('detailPengurusKta').innerText = item.no || '-';
+        document.getElementById('detailPengurusJabatan').innerText = item.role || '-';
+        document.getElementById('detailPengurusDivisi').innerText = item.kategori || '-';
+
+        let cleanWa = item.wa ? item.wa.replace(/[^0-9]/g, '') : '';
+        if (cleanWa.startsWith('0')) cleanWa = '62' + cleanWa.substring(1);
+
+        const waLink = cleanWa ? `https://wa.me/${cleanWa}?text=Halo%20${encodeURIComponent(item.nameSmall)},%20saya%20anggota%20Orange%20Bojong%20Raya` : '#';
+        document.getElementById('detailPengurusWaBtn').href = waLink;
+
+        detailPengurusModal.show();
+    }
+
+    function openPengurusModal() {
+        document.getElementById('editPengurusId').value = '';
+        document.getElementById('pengurusModalTitle').innerHTML = '<i class="bi bi-person-plus-fill me-1"></i>Tambah Data Pengurus';
+        document.getElementById('pengurusForm').reset();
+        currentEditPengurusImg = "";
+        pengurusModal.show();
+    }
+
+    function editPengurus(id) {
+        const item = pengurusData.find(x => x.id === id);
+        if(!item) return;
+        document.getElementById('editPengurusId').value = id;
+        document.getElementById('pengurusModalTitle').innerHTML = '<i class="bi bi-pencil-square me-1"></i>Edit Data Pengurus';
+        document.getElementById('inputPengurusNo').value = item.no || '';
+        document.getElementById('inputPengurusKategori').value = item.kategori || 'harian';
+        document.getElementById('inputPengurusRole').value = item.role || '';
+        document.getElementById('inputPengurusNameSmall').value = item.nameSmall || '';
+        document.getElementById('inputPengurusNameLarge').value = item.nameLarge || '';
+        document.getElementById('inputPengurusWa').value = item.wa || '';
+        currentEditPengurusImg = item.imageUrl || '';
+        pengurusModal.show();
+    }
+
+    async function handleSavePengurus(e) {
+        e.preventDefault();
+        const docId = document.getElementById('editPengurusId').value;
+        const no = document.getElementById('inputPengurusNo').value.trim();
+        const kategori = document.getElementById('inputPengurusKategori').value;
+        const role = document.getElementById('inputPengurusRole').value.toUpperCase();
+        const nameSmall = document.getElementById('inputPengurusNameSmall').value.toUpperCase();
+        const nameLarge = document.getElementById('inputPengurusNameLarge').value.toUpperCase();
+        const wa = document.getElementById('inputPengurusWa').value.trim();
+        const fileInput = document.getElementById('inputPengurusFile');
+        const btn = document.getElementById('btnSimpanPengurus');
+
+        btn.disabled = true;
+        btn.innerText = 'Mengompresi Gambar & Menyimpan...';
+
+        try {
+            let imageUrl = currentEditPengurusImg || 'LOGO OBR.png';
+            if (fileInput.files && fileInput.files[0]) {
+                imageUrl = await compressAndReadFile(fileInput.files[0], 800, 1000, 0.7);
+            }
+
+            const payload = { no, kategori, role, nameSmall, nameLarge, wa, imageUrl };
+
+            if(docId) {
+                await db.collection("struktur_pengurus").doc(docId).update(payload);
+                logAdminActivity(`Admin memperbarui data pengurus [${nameSmall} ${nameLarge}].`);
+                alert('Data pengurus berhasil diperbarui!');
+            } else {
+                await db.collection("struktur_pengurus").add(payload);
+                logAdminActivity(`Admin menambah pengurus baru [${nameSmall} ${nameLarge}].`);
+                alert('Data pengurus berhasil ditambahkan!');
+            }
+            pengurusModal.hide();
+        } catch(err) {
+            alert('Gagal menyimpan: ' + err.message);
+        } finally {
+            btn.disabled = false;
+            btn.innerText = 'Simpan Data Pengurus';
+        }
+    }
+
+    async function deletePengurus(id) {
+        if(confirm("Hapus pengurus ini dari struktur organisasi?")) {
+            try {
+                await db.collection("struktur_pengurus").doc(id).delete();
+                logAdminActivity(`Admin menghapus pengurus ID: ${id}`);
+                alert('Pengurus berhasil dihapus!');
+            } catch(err) {
+                alert('Gagal menghapus: ' + err.message);
+            }
+        }
     }
 
     function copyRek(noRek) {
@@ -2019,13 +2045,12 @@
 
         imageUrls.forEach((url, idx) => {
             innerContainer.innerHTML += `
-                <div class="carousel-item ${idx === activeIndex ? 'active' : ''}" data-index="${idx}">
-                    <img src="${url}" class="d-block mx-auto rounded shadow" alt="Foto ${idx+1}" style="max-height: 75vh; object-fit: contain; width: 100%;">
+                <div class="carousel-item ${idx === activeIndex ? 'active' : ''}">
+                    <img src="${url}" class="d-block mx-auto rounded shadow" style="max-height: 75vh; object-fit: contain; width: 100%;">
                     <div class="mt-2 text-warning fw-bold font-monospace" style="font-size: 0.9rem;">Foto ${idx + 1} dari ${imageUrls.length}</div>
                 </div>
             `;
         });
-
         imagePreviewModal.show();
     }
 
@@ -2034,7 +2059,6 @@
         document.getElementById('modalCarouselInner').innerHTML = `
             <div class="carousel-item active">
                 <img src="${imgSrc}" class="d-block mx-auto rounded shadow" style="max-height: 75vh; object-fit: contain; width: 100%;">
-                <div class="mt-2 text-warning fw-bold font-monospace" style="font-size: 0.9rem;">Foto 1 dari 1</div>
             </div>
         `;
         imagePreviewModal.show();
@@ -2050,7 +2074,7 @@
             return;
         }
 
-        galeriData.forEach((item, index) => {
+        galeriData.forEach((item) => {
             let imageUrls = item.imageUrls || [item.imageUrl];
             let thumbImg = imageUrls[0];
 
@@ -2068,21 +2092,20 @@
             container.innerHTML += `
                 <div class="col-md-4 col-sm-6">
                     <div class="shirt-preview-card shadow-sm text-center p-2.5">
-                        <img src="${thumbImg}" alt="${item.judul}" class="shirt-preview-img rounded mb-2" onclick="openImageModal('${item.id}', 0)" title="Klik untuk pratinjau semua foto">
+                        <img src="${thumbImg}" alt="${item.judul}" class="shirt-preview-img rounded mb-2" onclick="openImageModal('${item.id}', 0)">
                         <div class="p-2">
                             <span class="badge bg-warning text-dark font-monospace mb-1">${item.kategori}</span>
                             <h6 class="fw-bold text-white m-0">${item.judul}</h6>
                             <p class="text-white-50 small mb-2.5 mt-1">${item.deskripsi}</p>
                             
                             <div class="dropdown mb-1">
-                                <button class="btn btn-success btn-sm rounded-pill px-3 py-1.5 fw-semibold dropdown-toggle shadow-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 0.78rem;">
+                                <button class="btn btn-success btn-sm rounded-pill px-3 py-1.5 fw-semibold dropdown-toggle shadow-sm" type="button" data-bs-toggle="dropdown" style="font-size: 0.78rem;">
                                     <i class="bi bi-download me-1"></i> Unduh Foto (${imageUrls.length} File)
                                 </button>
                                 <ul class="dropdown-menu shadow border-0 rounded-3 p-1" style="font-size: 0.82rem;">
                                     ${downloadItems}
                                 </ul>
                             </div>
-
                             ${adminActions}
                         </div>
                     </div>
@@ -2098,7 +2121,6 @@
         document.getElementById('inputGaleriFiles').required = true;
         document.getElementById('thumbnailSelectionContainer').style.display = 'none';
         document.getElementById('editExistingPhotosContainer').style.display = 'none';
-        document.getElementById('labelFileFotoInput').innerHTML = 'Pilih File Foto (Bisa Banyak Sekaligus) <span class="text-danger">*</span>';
         selectedFilesTemp = [];
         currentEditImages = [];
         galeriModal.show();
@@ -2154,13 +2176,9 @@
         document.getElementById('inputGaleriKategori').value = item.kategori;
         document.getElementById('inputGaleriDesc').value = item.deskripsi;
         document.getElementById('inputGaleriFiles').required = false;
-        document.getElementById('labelFileFotoInput').innerHTML = 'Tambah Foto Baru (Opsional):';
-        
         currentEditImages = item.imageUrls || [item.imageUrl];
         renderExistingPhotosInEditModal();
-        
         selectedFilesTemp = [];
-        document.getElementById('thumbnailSelectionContainer').style.display = 'none';
         galeriModal.show();
     }
 
@@ -2175,8 +2193,7 @@
                 listDiv.innerHTML += `
                     <div class="position-relative d-inline-block p-1.5 border rounded bg-white text-center">
                         <img src="${url}" style="width: 60px; height: 60px; object-fit: cover;" class="rounded d-block mb-1">
-                        <span class="small text-muted font-monospace">#${idx+1}</span>
-                        ${currentEditImages.length > 1 ? `<button type="button" class="btn btn-danger btn-sm rounded-circle position-absolute top-0 end-0 p-0 d-flex align-items-center justify-content-center" style="width: 22px; height: 22px; font-size: 11px;" onclick="removeExistingPhoto(${idx})" title="Hapus foto ini"><i class="bi bi-x"></i></button>` : ''}
+                        ${currentEditImages.length > 1 ? `<button type="button" class="btn btn-danger btn-sm rounded-circle position-absolute top-0 end-0 p-0" style="width: 22px; height: 22px; font-size: 11px;" onclick="removeExistingPhoto(${idx})"><i class="bi bi-x"></i></button>` : ''}
                     </div>
                 `;
             });
@@ -2192,10 +2209,9 @@
         }
         currentEditImages.splice(index, 1);
         renderExistingPhotosInEditModal();
-        previewSelectedGalleryFiles(document.getElementById('inputGaleriFiles'));
     }
 
-    // FUNGSI KOMPRESI GAMBAR OTOMATIS (Mencegah Firestore Exceed Limit Error)
+    // KOMPRESI GAMBAR OTOMATIS
     function compressAndReadFile(file, maxWidth = 1000, maxHeight = 1000, quality = 0.65) {
         return new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -2206,7 +2222,6 @@
                 img.onload = () => {
                     let width = img.width;
                     let height = img.height;
-
                     if (width > height) {
                         if (width > maxWidth) {
                             height = Math.round((height * maxWidth) / width);
@@ -2218,15 +2233,12 @@
                             height = maxHeight;
                         }
                     }
-
                     const canvas = document.createElement('canvas');
                     canvas.width = width;
                     canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-
-                    const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
-                    resolve(compressedDataUrl);
+                    resolve(canvas.toDataURL('image/jpeg', quality));
                 };
                 img.onerror = (err) => reject(err);
             };
@@ -2257,60 +2269,21 @@
                     }
                 }
 
-                if (finalImageUrls.length === 0) {
-                    alert('Galeri harus memiliki minimal 1 foto!');
-                    btn.disabled = false;
-                    btn.innerText = 'Simpan Foto Galeri';
-                    return;
-                }
-
-                let checkedRadio = document.querySelector('input[name="thumbnailRadio"]:checked');
-                if (checkedRadio && (fileInput.files.length > 0 || currentEditImages.length > 1)) {
-                    let selectedIdx = parseInt(checkedRadio.value);
-                    let chosenThumb = finalImageUrls.splice(selectedIdx, 1)[0];
-                    finalImageUrls.unshift(chosenThumb);
-                }
-
                 await db.collection("galeri_kegiatan").doc(docId).update({ judul, kategori, deskripsi, imageUrls: finalImageUrls });
                 logAdminActivity(`Admin memperbarui galeri kegiatan [${judul}].`);
                 alert('Galeri kegiatan berhasil diperbarui!');
             } else {
-                if (!fileInput.files || fileInput.files.length === 0) {
-                    alert('Pilih minimal 1 file foto!');
-                    btn.disabled = false;
-                    btn.innerText = 'Simpan Foto Galeri';
-                    return;
-                }
-
                 let files = Array.from(fileInput.files);
-                let primaryIndex = 0;
-                if (files.length > 1) {
-                    let checkedRadio = document.querySelector('input[name="thumbnailRadio"]:checked');
-                    if (checkedRadio) primaryIndex = parseInt(checkedRadio.value);
-                }
-
                 let imageUrls = [];
                 for (let i = 0; i < files.length; i++) {
                     let base64Image = await compressAndReadFile(files[i]);
                     imageUrls.push(base64Image);
                 }
 
-                if (primaryIndex > 0) {
-                    let chosenThumb = imageUrls.splice(primaryIndex, 1)[0];
-                    imageUrls.unshift(chosenThumb);
-                }
-
-                await db.collection("galeri_kegiatan").add({
-                    judul,
-                    kategori,
-                    deskripsi,
-                    imageUrls: imageUrls
-                });
-
+                await db.collection("galeri_kegiatan").add({ judul, kategori, deskripsi, imageUrls });
                 logAdminActivity(`Admin menambah artikel galeri baru [${judul}] dengan ${imageUrls.length} foto.`);
                 alert(`Berhasil menyimpan artikel galeri dengan ${imageUrls.length} foto!`);
             }
-
             galeriModal.hide();
         } catch (err) {
             alert('Gagal menyimpan: ' + err.message);
@@ -2335,35 +2308,16 @@
     function formatPhoneNumber(inputNum) {
         if (!inputNum || inputNum === '-') return '-';
         let cleaned = inputNum.toString().replace(/[^0-9]/g, '');
-        
-        if (cleaned.startsWith('62')) {
-            cleaned = '0' + cleaned.substring(2);
-        } else if (!cleaned.startsWith('0') && cleaned.length >= 8) {
-            cleaned = '0' + cleaned;
-        }
-
-        if (cleaned.length >= 10) {
-            if (cleaned.length === 10) {
-                return cleaned.slice(0, 4) + '-' + cleaned.slice(4, 7) + '-' + cleaned.slice(7);
-            } else if (cleaned.length === 11) {
-                return cleaned.slice(0, 4) + '-' + cleaned.slice(4, 8) + '-' + cleaned.slice(8);
-            } else if (cleaned.length === 12) {
-                return cleaned.slice(0, 4) + '-' + cleaned.slice(4, 8) + '-' + cleaned.slice(8, 12);
-            } else {
-                return cleaned.slice(0, 4) + '-' + cleaned.slice(4, 8) + '-' + cleaned.slice(8, 12) + '-' + cleaned.slice(12);
-            }
-        }
-        return inputNum;
+        if (cleaned.startsWith('62')) cleaned = '0' + cleaned.substring(2);
+        else if (!cleaned.startsWith('0') && cleaned.length >= 8) cleaned = '0' + cleaned;
+        return cleaned;
     }
     
     function cleanWhatsAppNumber(inputNum) {
         if (!inputNum) return "-";
         let cleaned = inputNum.toString().replace(/[^0-9]/g, '');
-        if (cleaned.startsWith('0')) {
-            cleaned = '62' + cleaned.substring(1);
-        } else if (!cleaned.startsWith('62') && cleaned.length > 5) {
-            cleaned = '62' + cleaned;
-        }
+        if (cleaned.startsWith('0')) cleaned = '62' + cleaned.substring(1);
+        else if (!cleaned.startsWith('62') && cleaned.length > 5) cleaned = '62' + cleaned;
         return cleaned;
     }
 
@@ -2374,65 +2328,14 @@
         const p = document.getElementById('loginPass').value.trim();
 
         let email = userInput;
-        let userDocRef = null;
-        let userData = null;
-
         try {
-            if (userInput.includes('@')) {
-                let querySnapshot = await db.collection("users").where("email", "==", userInputLower).get();
-                if (!querySnapshot.empty) {
-                    userDocRef = querySnapshot.docs[0].ref;
-                    userData = querySnapshot.docs[0].data();
-                    email = userData.email;
-                }
-            } else {
+            if (!userInput.includes('@')) {
                 let allUsersSnapshot = await db.collection("users").get();
-                let matchedDoc = allUsersSnapshot.docs.find(doc => {
-                    let data = doc.data();
-                    return data.username && data.username.toLowerCase() === userInputLower;
-                });
-                if (matchedDoc) {
-                    userDocRef = matchedDoc.ref;
-                    userData = matchedDoc.data();
-                    email = userData.email;
-                }
+                let matchedDoc = allUsersSnapshot.docs.find(doc => doc.data().username && doc.data().username.toLowerCase() === userInputLower);
+                if (matchedDoc) email = matchedDoc.data().email;
             }
-
-            if (userData) {
-                if (userData.lockoutUntil && userData.lockoutUntil > Date.now()) {
-                    const remainingMinutes = Math.ceil((userData.lockoutUntil - Date.now()) / 60000);
-                    alert(`⚠️ Akun Anda dikunci sementara karena salah password 5 kali. Coba lagi dalam ${remainingMinutes} menit.`);
-                    return;
-                }
-            } else {
-                alert('Username atau Email tidak terdaftar dalam sistem!');
-                return;
-            }
-        } catch (err) { console.error(err); }
-
-        try {
             await auth.signInWithEmailAndPassword(email, p);
-            if (userDocRef) {
-                await userDocRef.update({ failedLoginAttempts: 0, lockoutUntil: 0 });
-            }
-        } catch (error) {
-            if (userDocRef) {
-                const currentAttempts = (userData.failedLoginAttempts || 0) + 1;
-                let updatePayload = { failedLoginAttempts: currentAttempts };
-
-                if (currentAttempts >= 5) {
-                    updatePayload.lockoutUntil = Date.now() + (5 * 60 * 1000);
-                    await userDocRef.update(updatePayload);
-                    alert('⚠️ Anda telah salah memasukkan password sebanyak 5 kali. Akses login diblokir selama 5 menit.');
-                    return;
-                } else {
-                    await userDocRef.update(updatePayload);
-                    alert(`❌ Password salah! Percobaan gagal ke-${currentAttempts} dari 5.`);
-                    return;
-                }
-            }
-            alert('Password salah!');
-        }
+        } catch (error) { alert("Login gagal: " + error.message); }
     }
 
     async function handleRegister(e) {
@@ -2440,32 +2343,19 @@
         const nama = document.getElementById('regNama').value.trim();
         const u = document.getElementById('regUser').value.trim();
         const email = document.getElementById('regEmail').value.trim();
-        const waRaw = document.getElementById('regWa').value.trim();
-        const wa = cleanWhatsAppNumber(waRaw);
+        const wa = cleanWhatsAppNumber(document.getElementById('regWa').value.trim());
         const p = document.getElementById('regPass').value.trim();
-
-        if (/\s/.test(u)) { alert('Username tidak boleh mengandung spasi!'); return; }
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) { alert('Format email tidak valid!'); return; }
-        if (usersDb.some(x => x.username && x.username.toLowerCase() === u.toLowerCase())) { alert('Username sudah digunakan!'); return; }
 
         try {
             const userCredential = await auth.createUserWithEmailAndPassword(email, p);
-            const user = userCredential.user;
-            await db.collection("users").doc(user.uid).set({
-                nama: nama, username: u, email: email, wa: wa, role: 'user', uid: user.uid, failedLoginAttempts: 0, lockoutUntil: 0
-            });
+            await db.collection("users").doc(userCredential.user.uid).set({ nama, username: u, email, wa, role: 'user', uid: userCredential.user.uid });
             alert('Pendaftaran berhasil! Akun Anda telah aktif.');
-            document.getElementById('registerForm').reset();
             document.getElementById('login-tab').click();
-            loadUsersFromFirestore();
         } catch (error) { alert("Gagal daftar: " + error.message); }
     }
 
     async function handleLogout(msg = '') {
         try {
-            if (sessionUnsubscribe) sessionUnsubscribe();
-            clearAfkTracker();
             await auth.signOut(); 
             currentUser = null;
             checkAuthStatus();
@@ -2475,7 +2365,7 @@
 
     async function showSettingsModal() {
         const user = auth.currentUser;
-        if (!user) { alert("Anda belum login!"); return; }
+        if (!user) return;
         try {
             const docRef = await db.collection("users").doc(user.uid).get();
             if (docRef.exists) currentUser = docRef.data();
@@ -2484,16 +2374,13 @@
             document.getElementById('setProfileUser').innerText = currentUser.username || '-';
             document.getElementById('setProfileEmail').innerText = currentUser.email || '-';
         } catch (error) { console.error(error); }
-        document.getElementById('newAccountPass').value = '';
-        document.getElementById('logoSettingsCard').style.display = (currentUser && currentUser.role === 'admin') ? 'block' : 'none';
         settingsModal.show();
     }
 
     async function handleUpdateProfile(e) {
         e.preventDefault();
         const newNama = document.getElementById('editProfileNama').value.trim();
-        const newWaRaw = document.getElementById('editProfileWa').value.trim();
-        const newWa = cleanWhatsAppNumber(newWaRaw);
+        const newWa = cleanWhatsAppNumber(document.getElementById('editProfileWa').value.trim());
         const user = auth.currentUser;
         if (!user) return;
 
@@ -2503,7 +2390,6 @@
             currentUser.wa = newWa;
             document.getElementById('userNameDisplay').innerText = newNama;
             document.getElementById('userDropdownName').innerText = newNama;
-            await logAdminActivity(`User [${newNama}] memperbarui informasi profil mereka.`);
             alert('Profil berhasil diperbarui!');
             settingsModal.hide();
         } catch (err) { alert('Gagal memperbarui profil: ' + err.message); }
@@ -2516,9 +2402,8 @@
         if (user) {
             try {
                 await user.updatePassword(newPass);
-                await logAdminActivity(`User [${currentUser.nama}] mengubah sandi akun mereka.`);
                 settingsModal.hide();
-                handleLogout('Password berhasil diperbarui! Silakan masuk kembali menggunakan password baru Anda.');
+                handleLogout('Password berhasil diperbarui! Silakan masuk kembali.');
             } catch (error) { alert("Gagal memperbarui password: " + error.message); }
         }
     }
@@ -2548,14 +2433,11 @@
             tbody.innerHTML = '';
             snapshot.forEach(doc => {
                 const data = doc.data();
-                let timeStr = '-';
-                if (data.timestamp && data.timestamp.toDate) {
-                    timeStr = data.timestamp.toDate().toLocaleString('id-ID');
-                }
+                let timeStr = data.timestamp && data.timestamp.toDate ? data.timestamp.toDate().toLocaleString('id-ID') : '-';
                 tbody.innerHTML += `<tr><td class="font-monospace small text-nowrap">${timeStr}</td><td class="fw-bold">${data.user || 'System'}</td><td>${data.activity}</td></tr>`;
             });
         } catch (err) {
-            tbody.innerHTML = `<tr><td colspan="3" class="text-center text-danger">Gagal memuat log aktivitas. Pastikan aturan Firestore mengizinkan koleksi admin_logs.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="3" class="text-center text-danger">Gagal memuat log aktivitas.</td></tr>`;
         }
     }
 
@@ -2580,42 +2462,6 @@
         document.body.appendChild(downloadLink);
         downloadLink.click();
         document.body.removeChild(downloadLink);
-        logAdminActivity(`Admin mengekspor data tabel [${currentActiveView}] ke Excel/CSV.`);
-    }
-
-    function handleLogoUpload(event, position) {
-        if (!currentUser || currentUser.role !== 'admin') return alert('Akses Ditolak!');
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const base64Image = e.target.result;
-                if(position === 'left') {
-                    document.getElementById('headerLogoLeft').src = base64Image;
-                    localStorage.setItem('obr_custom_logo_left', base64Image);
-                } else if(position === 'right') {
-                    document.getElementById('headerLogoRight').src = base64Image;
-                    localStorage.setItem('obr_custom_logo_right', base64Image);
-                }
-                logAdminActivity(`Admin mengubah logo [${position}].`);
-                alert('Logo berhasil diperbarui!');
-            };
-            reader.readAsDataURL(file);
-        }
-    }
-
-    function handleFaviconUpload(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const base64Image = e.target.result;
-                document.getElementById('browserFavicon').href = base64Image;
-                localStorage.setItem('obr_custom_favicon', base64Image);
-                alert('Logo browser berhasil diperbarui!');
-            };
-            reader.readAsDataURL(file);
-        }
     }
 
     function formatRupiah(angka) {
@@ -2649,42 +2495,27 @@
 
     function parseIndonesianDate(dateStr) {
         if (!dateStr || dateStr === '-') return null;
-        
         let directDate = new Date(dateStr);
         if (!isNaN(directDate)) return directDate;
-
-        const months = {
-            'januari': 0, 'februari': 1, 'maret': 2, 'april': 3, 'mei': 4, 'juni': 5,
-            'juli': 6, 'agustus': 7, 'september': 8, 'oktober': 9, 'november': 10, 'desember': 11
-        };
-
+        const months = { 'januari': 0, 'februari': 1, 'maret': 2, 'april': 3, 'mei': 4, 'juni': 5, 'juli': 6, 'agustus': 7, 'september': 8, 'oktober': 9, 'november': 10, 'desember': 11 };
         let parts = dateStr.trim().toLowerCase().split(/\s+/);
         if (parts.length >= 3) {
             let day = parseInt(parts[0], 10);
             let monthName = parts[1].replace(/[^a-z]/g, '');
             let year = parseInt(parts[2], 10);
-
-            if (!isNaN(day) && months[monthName] !== undefined && !isNaN(year)) {
-                return new Date(year, months[monthName], day);
-            }
+            if (!isNaN(day) && months[monthName] !== undefined && !isNaN(year)) return new Date(year, months[monthName], day);
         }
         return null;
     }
 
     function getRealtimeExpiryBadge(berlakuStr) {
         if (!berlakuStr || berlakuStr === '-') return `<span class="badge bg-secondary ms-1 font-monospace" style="font-size:0.7rem;">-</span>`;
-        
         let targetDate = parseIndonesianDate(berlakuStr);
         if (!targetDate) return `<span class="badge bg-secondary ms-1 font-monospace" style="font-size:0.7rem;">${berlakuStr}</span>`;
-        
-        let today = new Date();
-        today.setHours(0, 0, 0, 0);
+        let today = new Date(); today.setHours(0, 0, 0, 0);
 
-        if (targetDate < today) {
-            return `<div class="masa-berlaku-wrapper"><span class="fw-medium">${berlakuStr}</span> <span class="badge-status-expired"><i class="bi bi-x-circle-fill"></i> EXPIRED</span></div>`;
-        } else {
-            return `<div class="masa-berlaku-wrapper"><span class="fw-medium">${berlakuStr}</span> <span class="badge-status-aktif"><i class="bi bi-check-circle-fill"></i> AKTIF</span></div>`;
-        }
+        if (targetDate < today) return `<div class="masa-berlaku-wrapper"><span class="fw-medium">${berlakuStr}</span> <span class="badge-status-expired"><i class="bi bi-x-circle-fill"></i> EXPIRED</span></div>`;
+        else return `<div class="masa-berlaku-wrapper"><span class="fw-medium">${berlakuStr}</span> <span class="badge-status-aktif"><i class="bi bi-check-circle-fill"></i> AKTIF</span></div>`;
     }
 
     function renderTable(data = members) {
@@ -2741,10 +2572,7 @@
 
         data.forEach((item, index) => {
             let statusKtaBadge = (item.statusKta === 'PERPANJANGAN') ? `<span class="badge bg-secondary shadow-sm px-3 py-1.5">PERPANJANGAN</span>` : `<span class="badge bg-primary shadow-sm px-3 py-1.5">PENDAFTARAN</span>`;
-            let statusBadge = "";
-            if (item.status === 'SUDAH LUNAS') statusBadge = `<span class="badge bg-success shadow-sm px-3 py-1.5">LUNAS</span>`;
-            else if (item.status === 'CICIL') statusBadge = `<span class="badge bg-warning text-dark shadow-sm px-3 py-1.5">CICIL</span>`;
-            else statusBadge = `<span class="badge bg-danger shadow-sm px-3 py-1.5">BELUM</span>`;
+            let statusBadge = item.status === 'SUDAH LUNAS' ? `<span class="badge bg-success shadow-sm px-3 py-1.5">LUNAS</span>` : item.status === 'CICIL' ? `<span class="badge bg-warning text-dark shadow-sm px-3 py-1.5">CICIL</span>` : `<span class="badge bg-danger shadow-sm px-3 py-1.5">BELUM</span>`;
 
             let displayWa = formatPhoneNumber(item.wa);
             if (!isAdmin) displayWa = item.wa && item.wa.length >= 4 ? "******" + item.wa.slice(-4) : "******";
@@ -2757,10 +2585,10 @@
             let aksiCol = isAdmin ? `
                 <td class="text-center no-print">
                     <div class="d-flex flex-column align-items-center gap-1">
-                        <button class="btn btn-outline-success btn-sm rounded-pill px-2.5 py-1 fw-semibold shadow-sm w-100" onclick="moveToAnggota('${item.id}')" title="Pindahkan ke Daftar Anggota Aktif" style="font-size: 0.72rem;"><i class="bi bi-box-arrow-right me-1"></i> Pindahkan</button>
+                        <button class="btn btn-outline-success btn-sm rounded-pill px-2.5 py-1 fw-semibold shadow-sm w-100" onclick="moveToAnggota('${item.id}')" style="font-size: 0.72rem;"><i class="bi bi-box-arrow-right me-1"></i> Pindahkan</button>
                         <div class="d-flex align-items-center justify-content-center gap-1">
-                            <button class="btn btn-outline-warning btn-sm rounded-circle p-1.5 lh-1 shadow-sm" onclick="editProsesKta('${item.id}')" title="Edit"><i class="bi bi-pencil-fill small"></i></button>
-                            <button class="btn btn-outline-danger btn-sm rounded-circle p-1.5 lh-1 shadow-sm" onclick="deleteProsesKta('${item.id}')" title="Hapus"><i class="bi bi-trash-fill small"></i></button>
+                            <button class="btn btn-outline-warning btn-sm rounded-circle p-1.5 lh-1 shadow-sm" onclick="editProsesKta('${item.id}')"><i class="bi bi-pencil-fill small"></i></button>
+                            <button class="btn btn-outline-danger btn-sm rounded-circle p-1.5 lh-1 shadow-sm" onclick="deleteProsesKta('${item.id}')"><i class="bi bi-trash-fill small"></i></button>
                         </div>
                     </div>
                 </td>
@@ -2790,21 +2618,12 @@
 
         let noKtaInput = prompt(`Masukkan Nomor Anggota (KTA) resmi untuk [${item.nama}]:`, "JB.13.01");
         if (noKtaInput === null) return;
-        let masaBerlakuInput = prompt(`Masukkan Masa Berlaku KTA (Contoh: 01 Juni 2027 atau -):`, "01 Juni 2028");
+        let masaBerlakuInput = prompt(`Masukkan Masa Berlaku KTA:`, "01 Juni 2028");
         if (masaBerlakuInput === null) return;
 
-        const newMemberData = {
-            nama: item.nama.toUpperCase(),
-            kta: noKtaInput.trim(),
-            berlaku: masaBerlakuInput.trim(),
-            ket: "SUB WILAYAH BOJONG",
-            hp: item.wa || "-"
-        };
-
         try {
-            await db.collection("kta_aktif").add(newMemberData);
+            await db.collection("kta_aktif").add({ nama: item.nama.toUpperCase(), kta: noKtaInput.trim(), berlaku: masaBerlakuInput.trim(), ket: "SUB WILAYAH BOJONG", hp: item.wa || "-" });
             await db.collection("kta_proses").doc(id).delete();
-            logAdminActivity(`Admin memindahkan pengajuan [${item.nama}] ke Daftar Anggota Aktif.`);
             alert(`Berhasil! Data [${item.nama}] telah dipindahkan.`);
         } catch (error) { alert("Terjadi kesalahan: " + error.message); }
     }
@@ -2812,12 +2631,10 @@
     function filterData() {
         const query = document.getElementById('searchInput').value.toLowerCase();
         const statusFilter = document.getElementById('statusFilter').value;
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
+        const today = new Date(); today.setHours(0, 0, 0, 0);
 
         const filtered = members.filter(m => {
-            const matchQuery = (m.nama && m.nama.toLowerCase().includes(query)) || (m.kta && m.kta.toLowerCase().includes(query)) || (m.ket && m.ket.toLowerCase().includes(query)) || (m.hp && m.hp.toLowerCase().includes(query));
-            
+            const matchQuery = (m.nama && m.nama.toLowerCase().includes(query)) || (m.kta && m.kta.toLowerCase().includes(query)) || (m.hp && m.hp.toLowerCase().includes(query));
             let targetDate = parseIndonesianDate(m.berlaku);
             let isExpired = targetDate ? (targetDate < today) : false;
 
@@ -2825,7 +2642,6 @@
             if (statusFilter === 'expired') return matchQuery && isExpired;
             return matchQuery;
         });
-        filtered.sort((a, b) => a.nama.localeCompare(b.nama));
         renderTable(filtered);
     }
 
@@ -2840,7 +2656,6 @@
             const matchStatus = (statusVal === 'all') || (m.status === statusVal);
             return matchQuery && matchStatusKta && matchStatus;
         });
-        filtered.sort((a, b) => a.nama.localeCompare(b.nama));
         renderProsesTable(filtered);
     }
 
@@ -2855,32 +2670,13 @@
         document.getElementById('editDocId').value = '';
         document.getElementById('modalTitle').innerHTML = '<i class="bi bi-person-plus-fill me-1"></i>Tambah 1 Anggota';
         document.getElementById('memberForm').reset();
-        document.getElementById('inputMasaBerlakuDate').value = '';
         document.getElementById('inputKeterangan').value = 'SUB WILAYAH BOJONG';
         modal.show();
     }
 
-    function openBulkAddModal() {
-        selectAddModeModal.hide();
-        document.getElementById('bulkMemberForm').reset();
-        bulkMemberModal.show();
-    }
-
-    function openSingleProsesAddModal() {
-        selectAddProsesModeModal.hide();
-        document.getElementById('editProsesDocId').value = '';
-        document.getElementById('prosesModalTitle').innerHTML = '<i class="bi bi-plus-circle-fill me-1"></i>Tambah Pengajuan Proses KTA';
-        document.getElementById('prosesForm').reset();
-        document.getElementById('cicilContainer').style.display = 'none';
-        document.getElementById('inputProsesTanggal').valueAsDate = new Date();
-        prosesModal.show();
-    }
-
-    function openBulkProsesAddModal() {
-        selectAddProsesModeModal.hide();
-        document.getElementById('bulkProsesForm').reset();
-        bulkProsesModal.show();
-    }
+    function openBulkAddModal() { selectAddModeModal.hide(); document.getElementById('bulkMemberForm').reset(); bulkMemberModal.show(); }
+    function openSingleProsesAddModal() { selectAddProsesModeModal.hide(); document.getElementById('editProsesDocId').value = ''; document.getElementById('prosesForm').reset(); document.getElementById('cicilContainer').style.display = 'none'; document.getElementById('inputProsesTanggal').valueAsDate = new Date(); prosesModal.show(); }
+    function openBulkProsesAddModal() { selectAddProsesModeModal.hide(); document.getElementById('bulkProsesForm').reset(); bulkProsesModal.show(); }
 
     document.getElementById('bulkMemberForm').addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -2889,22 +2685,13 @@
         const lines = text.split('\n');
         let count = 0;
         try {
-            const batchPromises = lines.map(async (line) => {
+            for (const line of lines) {
                 const parts = line.split(/,|\t/).map(p => p.trim());
-                if (parts.length >= 1 && parts[0]) {
-                    const memberData = {
-                        nama: parts[0].toUpperCase(),
-                        kta: parts[1] || '-',
-                        berlaku: parts[2] || '-',
-                        ket: parts[3] || 'SUB WILAYAH BOJONG',
-                        hp: cleanWhatsAppNumber(parts[4]) || '-'
-                    };
-                    await db.collection("kta_aktif").add(memberData);
+                if (parts[0]) {
+                    await db.collection("kta_aktif").add({ nama: parts[0].toUpperCase(), kta: parts[1] || '-', berlaku: parts[2] || '-', ket: parts[3] || 'SUB WILAYAH BOJONG', hp: cleanWhatsAppNumber(parts[4]) || '-' });
                     count++;
                 }
-            });
-            await Promise.all(batchPromises);
-            logAdminActivity(`Admin menambah ${count} data anggota secara massal.`);
+            }
             bulkMemberModal.hide();
             alert(`Berhasil menambahkan ${count} anggota baru sekaligus!`);
         } catch (error) { alert("Terjadi kesalahan: " + error.message); }
@@ -2918,24 +2705,13 @@
         let count = 0;
         const todayStr = new Date().toISOString().split('T')[0];
         try {
-            const batchPromises = lines.map(async (line) => {
+            for (const line of lines) {
                 const parts = line.split(/,|\t/).map(p => p.trim());
-                if (parts.length >= 1 && parts[0]) {
-                    const prosesData = {
-                        nama: parts[0].toUpperCase(),
-                        statusKta: parts[1] ? parts[1].toUpperCase() : 'PENDAFTARAN',
-                        tipe: parts[2] ? parts[2].toUpperCase() : 'REGULER',
-                        tgl: todayStr,
-                        status: parts[3] ? parts[3].toUpperCase() : 'SUDAH LUNAS',
-                        cicil: 0,
-                        wa: cleanWhatsAppNumber(parts[4]) || '-'
-                    };
-                    await db.collection("kta_proses").add(prosesData);
+                if (parts[0]) {
+                    await db.collection("kta_proses").add({ nama: parts[0].toUpperCase(), statusKta: parts[1] ? parts[1].toUpperCase() : 'PENDAFTARAN', tipe: parts[2] ? parts[2].toUpperCase() : 'REGULER', tgl: todayStr, status: parts[3] ? parts[3].toUpperCase() : 'SUDAH LUNAS', cicil: 0, wa: cleanWhatsAppNumber(parts[4]) || '-' });
                     count++;
                 }
-            });
-            await Promise.all(batchPromises);
-            logAdminActivity(`Admin menambah ${count} pengajuan KTA secara massal.`);
+            }
             bulkProsesModal.hide();
             alert(`Berhasil menambahkan ${count} pengajuan KTA baru sekaligus!`);
         } catch (error) { alert("Terjadi kesalahan: " + error.message); }
@@ -2945,11 +2721,9 @@
         const item = members.find(x => x.id === id);
         if(!item) return;
         document.getElementById('editDocId').value = id;
-        document.getElementById('modalTitle').innerHTML = '<i class="bi bi-pencil-square me-1"></i>Edit Data Anggota';
         document.getElementById('inputNama').value = item.nama;
         document.getElementById('inputNoKta').value = item.kta;
         document.getElementById('inputMasaBerlaku').value = item.berlaku;
-        document.getElementById('inputMasaBerlakuDate').value = '';
         document.getElementById('inputKeterangan').value = item.ket;
         document.getElementById('inputHp').value = item.hp;
         modal.show();
@@ -2959,7 +2733,6 @@
         const item = prosesKtaData.find(x => x.id === id);
         if(!item) return;
         document.getElementById('editProsesDocId').value = id;
-        document.getElementById('prosesModalTitle').innerHTML = '<i class="bi bi-pencil-square me-1"></i>Edit Pengajuan Proses KTA';
         document.getElementById('inputProsesNama').value = item.nama;
         document.getElementById('inputProsesStatusKta').value = item.statusKta || 'PENDAFTARAN';
         document.getElementById('inputProsesTipe').value = item.tipe;
@@ -2974,18 +2747,9 @@
     document.getElementById('memberForm').addEventListener('submit', function(e) {
         e.preventDefault();
         const docId = document.getElementById('editDocId').value;
-        const newData = {
-            nama: document.getElementById('inputNama').value.toUpperCase(),
-            kta: document.getElementById('inputNoKta').value,
-            berlaku: document.getElementById('inputMasaBerlaku').value,
-            ket: document.getElementById('inputKeterangan').value,
-            hp: cleanWhatsAppNumber(document.getElementById('inputHp').value)
-        };
-        if(docId === '') {
-            db.collection("kta_aktif").add(newData).then(() => { logAdminActivity(`Admin menambah anggota [${newData.nama}].`); modal.hide(); });
-        } else {
-            db.collection("kta_aktif").doc(docId).update(newData).then(() => { logAdminActivity(`Admin memperbarui data anggota [${newData.nama}].`); modal.hide(); });
-        }
+        const newData = { nama: document.getElementById('inputNama').value.toUpperCase(), kta: document.getElementById('inputNoKta').value, berlaku: document.getElementById('inputMasaBerlaku').value, ket: document.getElementById('inputKeterangan').value, hp: cleanWhatsAppNumber(document.getElementById('inputHp').value) };
+        if(docId === '') db.collection("kta_aktif").add(newData).then(() => modal.hide());
+        else db.collection("kta_aktif").doc(docId).update(newData).then(() => modal.hide());
     });
 
     document.getElementById('prosesForm').addEventListener('submit', function(e) {
@@ -2993,45 +2757,20 @@
         const docId = document.getElementById('editProsesDocId').value;
         const statusVal = document.getElementById('inputProsesStatus').value;
         const cicilVal = (statusVal === 'CICIL') ? parseFloat(document.getElementById('inputProsesCicil').value) || 0 : 0;
-        const newData = {
-            nama: document.getElementById('inputProsesNama').value.toUpperCase(),
-            statusKta: document.getElementById('inputProsesStatusKta').value,
-            tipe: document.getElementById('inputProsesTipe').value,
-            tgl: document.getElementById('inputProsesTanggal').value,
-            status: statusVal,
-            cicil: cicilVal,
-            wa: cleanWhatsAppNumber(document.getElementById('inputProsesWa').value)
-        };
-        if(docId === '') {
-            db.collection("kta_proses").add(newData).then(() => { logAdminActivity(`Admin menambah pengajuan [${newData.nama}].`); prosesModal.hide(); });
-        } else {
-            db.collection("kta_proses").doc(docId).update(newData).then(() => { logAdminActivity(`Admin memperbarui pengajuan [${newData.nama}].`); prosesModal.hide(); });
-        }
+        const newData = { nama: document.getElementById('inputProsesNama').value.toUpperCase(), statusKta: document.getElementById('inputProsesStatusKta').value, tipe: document.getElementById('inputProsesTipe').value, tgl: document.getElementById('inputProsesTanggal').value, status: statusVal, cicil: cicilVal, wa: cleanWhatsAppNumber(document.getElementById('inputProsesWa').value) };
+        if(docId === '') db.collection("kta_proses").add(newData).then(() => prosesModal.hide());
+        else db.collection("kta_proses").doc(docId).update(newData).then(() => prosesModal.hide());
     });
 
-    function deleteMember(id) {
-        if(confirm("Hapus data anggota ini dari database?")) {
-            db.collection("kta_aktif").doc(id).delete().then(() => logAdminActivity(`Admin menghapus data anggota ID: ${id}`));
-        }
-    }
-
-    function deleteProsesKta(id) {
-        if(confirm("Hapus pengajuan KTA ini dari database?")) {
-            db.collection("kta_proses").doc(id).delete().then(() => logAdminActivity(`Admin menghapus pengajuan KTA ID: ${id}`));
-        }
-    }
-
-    function showForgotPasswordModal() {
-        document.getElementById('forgotContactInput').value = '';
-        forgotModal.show();
-    }
-
+    function deleteMember(id) { if(confirm("Hapus data anggota ini?")) db.collection("kta_aktif").doc(id).delete(); }
+    function deleteProsesKta(id) { if(confirm("Hapus pengajuan KTA ini?")) db.collection("kta_proses").doc(id).delete(); }
+    function showForgotPasswordModal() { document.getElementById('forgotContactInput').value = ''; forgotModal.show(); }
     async function requestResetViaEmail() {
         const emailInput = document.getElementById('forgotContactInput').value.trim();
-        if (!emailInput) { alert('Silakan masukkan email terdaftar Anda!'); return; }
+        if (!emailInput) return alert('Masukkan email terdaftar Anda!');
         try {
             await auth.sendPasswordResetEmail(emailInput);
-            alert('Link reset password berhasil dikirim! Periksa Inbox atau Spam email Anda.');
+            alert('Link reset password berhasil dikirim ke email!');
             forgotModal.hide();
         } catch (error) { alert('Gagal mengirim email reset: ' + error.message); }
     }
