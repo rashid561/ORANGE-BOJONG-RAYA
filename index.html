@@ -14,9 +14,180 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800;900&family=Teko:wght@600;700&display=swap" rel="stylesheet">
     
     <!-- Firebase SDK v9 -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js">
+    function togglePasswordVisibility(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        if (!input || !icon) return;
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        }
+    }
+
+    function checkPasswordStrength(password, barId, textId) {
+        const bar = document.getElementById(barId);
+        const text = document.getElementById(textId);
+        if (!bar || !text) return;
+
+        let strength = 0;
+        if (password.length >= 6) strength += 25;
+        if (password.length >= 10) strength += 25;
+        if (/[A-Z]/.test(password)) strength += 25;
+        if (/[0-9!@#$%^&*]/.test(password)) strength += 25;
+
+        bar.style.width = strength + '%';
+        if (strength === 0) {
+            bar.style.backgroundColor = 'transparent';
+            text.innerText = '';
+        } else if (strength <= 25) {
+            bar.style.backgroundColor = '#dc3545';
+            text.innerText = 'Kekuatan: Sangat Lemah';
+            text.className = 'text-danger fw-semibold';
+        } else if (strength <= 50) {
+            bar.style.backgroundColor = '#fd7e14';
+            text.innerText = 'Kekuatan: Sedang';
+            text.className = 'text-warning fw-semibold';
+        } else if (strength <= 75) {
+            bar.style.backgroundColor = '#ffc107';
+            text.innerText = 'Kekuatan: Baik';
+            text.className = 'text-warning fw-semibold';
+        } else {
+            bar.style.backgroundColor = '#198754';
+            text.innerText = 'Kekuatan: Sangat Kuat';
+            text.className = 'text-success fw-semibold';
+        }
+    }
+
+    function openSingleImagePreview(imgUrl, title) {
+        document.getElementById('previewModalTitle').innerHTML = `<i class="bi bi-image me-1"></i> ${title}`;
+        const innerContainer = document.getElementById('modalCarouselInner');
+        innerContainer.innerHTML = `<div class="carousel-item active"><img src="${imgUrl}" class="d-block mx-auto rounded shadow" style="max-height: 75vh; object-fit: contain; width: 100%;"></div>`;
+        imagePreviewModal.show();
+    }
+
+</script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js">
+    function togglePasswordVisibility(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        if (!input || !icon) return;
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        }
+    }
+
+    function checkPasswordStrength(password, barId, textId) {
+        const bar = document.getElementById(barId);
+        const text = document.getElementById(textId);
+        if (!bar || !text) return;
+
+        let strength = 0;
+        if (password.length >= 6) strength += 25;
+        if (password.length >= 10) strength += 25;
+        if (/[A-Z]/.test(password)) strength += 25;
+        if (/[0-9!@#$%^&*]/.test(password)) strength += 25;
+
+        bar.style.width = strength + '%';
+        if (strength === 0) {
+            bar.style.backgroundColor = 'transparent';
+            text.innerText = '';
+        } else if (strength <= 25) {
+            bar.style.backgroundColor = '#dc3545';
+            text.innerText = 'Kekuatan: Sangat Lemah';
+            text.className = 'text-danger fw-semibold';
+        } else if (strength <= 50) {
+            bar.style.backgroundColor = '#fd7e14';
+            text.innerText = 'Kekuatan: Sedang';
+            text.className = 'text-warning fw-semibold';
+        } else if (strength <= 75) {
+            bar.style.backgroundColor = '#ffc107';
+            text.innerText = 'Kekuatan: Baik';
+            text.className = 'text-warning fw-semibold';
+        } else {
+            bar.style.backgroundColor = '#198754';
+            text.innerText = 'Kekuatan: Sangat Kuat';
+            text.className = 'text-success fw-semibold';
+        }
+    }
+
+    function openSingleImagePreview(imgUrl, title) {
+        document.getElementById('previewModalTitle').innerHTML = `<i class="bi bi-image me-1"></i> ${title}`;
+        const innerContainer = document.getElementById('modalCarouselInner');
+        innerContainer.innerHTML = `<div class="carousel-item active"><img src="${imgUrl}" class="d-block mx-auto rounded shadow" style="max-height: 75vh; object-fit: contain; width: 100%;"></div>`;
+        imagePreviewModal.show();
+    }
+
+</script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js">
+    function togglePasswordVisibility(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        if (!input || !icon) return;
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        }
+    }
+
+    function checkPasswordStrength(password, barId, textId) {
+        const bar = document.getElementById(barId);
+        const text = document.getElementById(textId);
+        if (!bar || !text) return;
+
+        let strength = 0;
+        if (password.length >= 6) strength += 25;
+        if (password.length >= 10) strength += 25;
+        if (/[A-Z]/.test(password)) strength += 25;
+        if (/[0-9!@#$%^&*]/.test(password)) strength += 25;
+
+        bar.style.width = strength + '%';
+        if (strength === 0) {
+            bar.style.backgroundColor = 'transparent';
+            text.innerText = '';
+        } else if (strength <= 25) {
+            bar.style.backgroundColor = '#dc3545';
+            text.innerText = 'Kekuatan: Sangat Lemah';
+            text.className = 'text-danger fw-semibold';
+        } else if (strength <= 50) {
+            bar.style.backgroundColor = '#fd7e14';
+            text.innerText = 'Kekuatan: Sedang';
+            text.className = 'text-warning fw-semibold';
+        } else if (strength <= 75) {
+            bar.style.backgroundColor = '#ffc107';
+            text.innerText = 'Kekuatan: Baik';
+            text.className = 'text-warning fw-semibold';
+        } else {
+            bar.style.backgroundColor = '#198754';
+            text.innerText = 'Kekuatan: Sangat Kuat';
+            text.className = 'text-success fw-semibold';
+        }
+    }
+
+    function openSingleImagePreview(imgUrl, title) {
+        document.getElementById('previewModalTitle').innerHTML = `<i class="bi bi-image me-1"></i> ${title}`;
+        const innerContainer = document.getElementById('modalCarouselInner');
+        innerContainer.innerHTML = `<div class="carousel-item active"><img src="${imgUrl}" class="d-block mx-auto rounded shadow" style="max-height: 75vh; object-fit: contain; width: 100%;"></div>`;
+        imagePreviewModal.show();
+    }
+
+</script>
 
     <style>
         :root {
@@ -781,6 +952,38 @@
             .persija-footer-bottom { flex-direction: column; text-align: center; }
             .persija-footer-bottom a { margin: 0 6px; }
         }
+    
+        /* PERBAIKAN FUNGSI & KEGUNAAN E-KTA (E-MONEY MANDIRI) DI MODE GELAP */
+        [data-theme="dark"] .emoney-icon-box {
+            background-color: #222222 !important;
+            border: 1px solid #3d3d3d !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        [data-theme="dark"] .emoney-icon-box span,
+        [data-theme="dark"] .emoney-icon-box .small {
+            color: #ffffff !important;
+        }
+        [data-theme="dark"] .emoney-icon-box i {
+            color: #ff9900 !important;
+        }
+
+        /* OVERLAY PREVIEW BAJU */
+        .baju-hover-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            border-radius: 12px;
+        }
+        .position-relative:hover .baju-hover-overlay {
+            opacity: 1;
+        }
+
     </style>
 </head>
 <body>
@@ -1264,25 +1467,39 @@
                     <div class="row g-3 mb-4">
                         <div class="col-md-6">
                             <div class="baju-preview-box shadow-sm">
-                                <div>
-                                    <img src="BAJU KTA PENDAFTARAN BARU.jpeg" alt="Baju KTA Pendaftaran Baru" class="baju-img" onerror="this.src='LOGO OBR.png'">
+                                <div class="position-relative overflow-hidden rounded-3 mb-2" style="cursor: pointer;" onclick="openSingleImagePreview('BAJU KTA PENDAFTARAN BARU.jpeg', 'BAJU KTA PENDAFTARAN BARU')">
+                                    <img src="BAJU KTA PENDAFTARAN BARU.jpeg" alt="Baju KTA Pendaftaran Baru" class="baju-img mb-0" onerror="this.src='LOGO OBR.png'">
+                                    <div class="baju-hover-overlay">
+                                        <span class="badge bg-warning text-dark shadow"><i class="bi bi-zoom-in me-1"></i>Klik untuk memperbesar</span>
+                                    </div>
                                 </div>
-                                <div>
+                                <div class="text-center pt-2">
                                     <span class="badge bg-warning text-dark font-monospace mb-1">REGULER & PELAJAR</span>
                                     <h6 class="fw-bold text-white mb-1">BAJU KTA PENDAFTARAN BARU</h6>
-                                    <small class="text-white-50 d-block">Sablon Depan: <b>"GUE ANAK JAKARTA"</b></small>
+                                    <small class="text-white-50 d-block mb-3">Sablon Depan: <b>"GUE ANAK JAKARTA"</b></small>
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <button class="btn btn-warning btn-sm rounded-pill fw-bold text-dark px-3" onclick="openSingleImagePreview('BAJU KTA PENDAFTARAN BARU.jpeg', 'BAJU KTA PENDAFTARAN BARU')"><i class="bi bi-eye-fill me-1"></i> Lihat Full</button>
+                                        <a href="BAJU KTA PENDAFTARAN BARU.jpeg" download="BAJU KTA PENDAFTARAN BARU.jpeg" target="_blank" class="btn btn-outline-light btn-sm rounded-pill px-3 fw-semibold"><i class="bi bi-download me-1"></i> Unduh Desain</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="baju-preview-box shadow-sm">
-                                <div>
-                                    <img src="BAJU KTA PERPANJANGAN.jpeg" alt="Baju KTA Perpanjangan" class="baju-img" onerror="this.src='LOGO OBR.png'">
+                                <div class="position-relative overflow-hidden rounded-3 mb-2" style="cursor: pointer;" onclick="openSingleImagePreview('BAJU KTA PERPANJANGAN.jpeg', 'BAJU KTA PERPANJANGAN')">
+                                    <img src="BAJU KTA PERPANJANGAN.jpeg" alt="Baju KTA Perpanjangan" class="baju-img mb-0" onerror="this.src='LOGO OBR.png'">
+                                    <div class="baju-hover-overlay">
+                                        <span class="badge bg-warning text-dark shadow"><i class="bi bi-zoom-in me-1"></i>Klik untuk memperbesar</span>
+                                    </div>
                                 </div>
-                                <div>
+                                <div class="text-center pt-2">
                                     <span class="badge bg-info text-dark font-monospace mb-1">RENEWAL</span>
                                     <h6 class="fw-bold text-white mb-1">BAJU KTA PERPANJANGAN</h6>
-                                    <small class="text-white-50 d-block">Sablon Belakang: <b>"SATU JAKARTA SATU"</b></small>
+                                    <small class="text-white-50 d-block mb-3">Sablon Belakang: <b>"SATU JAKARTA SATU"</b></small>
+                                    <div class="d-flex justify-content-center gap-2">
+                                        <button class="btn btn-warning btn-sm rounded-pill fw-bold text-dark px-3" onclick="openSingleImagePreview('BAJU KTA PERPANJANGAN.jpeg', 'BAJU KTA PERPANJANGAN')"><i class="bi bi-eye-fill me-1"></i> Lihat Full</button>
+                                        <a href="BAJU KTA PERPANJANGAN.jpeg" download="BAJU KTA PERPANJANGAN.jpeg" target="_blank" class="btn btn-outline-light btn-sm rounded-pill px-3 fw-semibold"><i class="bi bi-download me-1"></i> Unduh Desain</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1461,13 +1678,8 @@
             </div>
         </div>
 
-        <div class="persija-footer-bottom">
+        <div class="persija-footer-bottom text-center justify-content-center">
             <div>&copy; 2026 SUB KORWIL CENGKARENG - ORANGE BOJONG RAYA. ALL RIGHTS RESERVED.</div>
-            <div>
-                <a href="#">SYARAT & KETENTUAN</a>
-                <a href="#">KEBIJAKAN PRIVASI</a>
-                <a href="#">HUBUNGI KAMI</a>
-            </div>
         </div>
     </div>
 </footer>
@@ -1876,7 +2088,64 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+    function togglePasswordVisibility(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        if (!input || !icon) return;
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        }
+    }
+
+    function checkPasswordStrength(password, barId, textId) {
+        const bar = document.getElementById(barId);
+        const text = document.getElementById(textId);
+        if (!bar || !text) return;
+
+        let strength = 0;
+        if (password.length >= 6) strength += 25;
+        if (password.length >= 10) strength += 25;
+        if (/[A-Z]/.test(password)) strength += 25;
+        if (/[0-9!@#$%^&*]/.test(password)) strength += 25;
+
+        bar.style.width = strength + '%';
+        if (strength === 0) {
+            bar.style.backgroundColor = 'transparent';
+            text.innerText = '';
+        } else if (strength <= 25) {
+            bar.style.backgroundColor = '#dc3545';
+            text.innerText = 'Kekuatan: Sangat Lemah';
+            text.className = 'text-danger fw-semibold';
+        } else if (strength <= 50) {
+            bar.style.backgroundColor = '#fd7e14';
+            text.innerText = 'Kekuatan: Sedang';
+            text.className = 'text-warning fw-semibold';
+        } else if (strength <= 75) {
+            bar.style.backgroundColor = '#ffc107';
+            text.innerText = 'Kekuatan: Baik';
+            text.className = 'text-warning fw-semibold';
+        } else {
+            bar.style.backgroundColor = '#198754';
+            text.innerText = 'Kekuatan: Sangat Kuat';
+            text.className = 'text-success fw-semibold';
+        }
+    }
+
+    function openSingleImagePreview(imgUrl, title) {
+        document.getElementById('previewModalTitle').innerHTML = `<i class="bi bi-image me-1"></i> ${title}`;
+        const innerContainer = document.getElementById('modalCarouselInner');
+        innerContainer.innerHTML = `<div class="carousel-item active"><img src="${imgUrl}" class="d-block mx-auto rounded shadow" style="max-height: 75vh; object-fit: contain; width: 100%;"></div>`;
+        imagePreviewModal.show();
+    }
+
+</script>
 <script>
     const firebaseConfig = {
         apiKey: "AIzaSyA-MXfRfLqrRfRlAcCSOcr-FgXWni5ai5I",
@@ -2606,6 +2875,63 @@
         downloadLink.href = window.URL.createObjectURL(new Blob([csv.join("\n")], { type: "text/csv" }));
         downloadLink.click();
     }
+
+    function togglePasswordVisibility(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+        if (!input || !icon) return;
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        }
+    }
+
+    function checkPasswordStrength(password, barId, textId) {
+        const bar = document.getElementById(barId);
+        const text = document.getElementById(textId);
+        if (!bar || !text) return;
+
+        let strength = 0;
+        if (password.length >= 6) strength += 25;
+        if (password.length >= 10) strength += 25;
+        if (/[A-Z]/.test(password)) strength += 25;
+        if (/[0-9!@#$%^&*]/.test(password)) strength += 25;
+
+        bar.style.width = strength + '%';
+        if (strength === 0) {
+            bar.style.backgroundColor = 'transparent';
+            text.innerText = '';
+        } else if (strength <= 25) {
+            bar.style.backgroundColor = '#dc3545';
+            text.innerText = 'Kekuatan: Sangat Lemah';
+            text.className = 'text-danger fw-semibold';
+        } else if (strength <= 50) {
+            bar.style.backgroundColor = '#fd7e14';
+            text.innerText = 'Kekuatan: Sedang';
+            text.className = 'text-warning fw-semibold';
+        } else if (strength <= 75) {
+            bar.style.backgroundColor = '#ffc107';
+            text.innerText = 'Kekuatan: Baik';
+            text.className = 'text-warning fw-semibold';
+        } else {
+            bar.style.backgroundColor = '#198754';
+            text.innerText = 'Kekuatan: Sangat Kuat';
+            text.className = 'text-success fw-semibold';
+        }
+    }
+
+    function openSingleImagePreview(imgUrl, title) {
+        document.getElementById('previewModalTitle').innerHTML = `<i class="bi bi-image me-1"></i> ${title}`;
+        const innerContainer = document.getElementById('modalCarouselInner');
+        innerContainer.innerHTML = `<div class="carousel-item active"><img src="${imgUrl}" class="d-block mx-auto rounded shadow" style="max-height: 75vh; object-fit: contain; width: 100%;"></div>`;
+        imagePreviewModal.show();
+    }
+
 </script>
 </body>
 </html>
