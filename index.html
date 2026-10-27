@@ -83,6 +83,59 @@
             --guide-box-border: #333333;
         }
 
+        /* PERBAIKAN TEKS & JUDUL MODE GELAP */
+        [data-theme="dark"] .text-secondary {
+            color: #b0bec5 !important;
+        }
+        [data-theme="dark"] h1, 
+        [data-theme="dark"] h2, 
+        [data-theme="dark"] h3, 
+        [data-theme="dark"] h4, 
+        [data-theme="dark"] h5, 
+        [data-theme="dark"] h6 {
+            color: #ffffff !important;
+        }
+        [data-theme="dark"] h4.text-uppercase, 
+        [data-theme="dark"] h5.text-uppercase {
+            color: #ff9900 !important;
+            text-shadow: 0px 1px 3px rgba(0,0,0,0.8);
+        }
+        [data-theme="dark"] .text-dark {
+            color: #f8f9fa !important;
+        }
+        [data-theme="dark"] .btn-warning.text-dark,
+        [data-theme="dark"] .badge.bg-warning.text-dark {
+            color: #111111 !important;
+        }
+
+        /* PERBAIKAN SIZE CHART TABEL DI MODE GELAP */
+        [data-theme="dark"] .size-chart-table {
+            background-color: #1a1a1a !important;
+            color: #ffffff !important;
+            border: 1px solid #333333 !important;
+        }
+        [data-theme="dark"] .size-chart-table th {
+            background-color: #262626 !important;
+            color: #ff9900 !important;
+            border-bottom: 2px solid #ff9900 !important;
+            border-color: #333333 !important;
+        }
+        [data-theme="dark"] .size-chart-table td {
+            background-color: #1e1e1e !important;
+            color: #ffffff !important;
+            border-color: #333333 !important;
+        }
+        [data-theme="dark"] .size-chart-table tr:nth-of-type(even) td {
+            background-color: #242424 !important;
+        }
+
+        /* PERBAIKAN CARDS BAJU & SIZE CHART BOX */
+        [data-theme="dark"] .baju-preview-box {
+            background: #141414 !important;
+            border: 2px solid #ff9900 !important;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+
         body { 
             background: var(--bg-body); 
             font-family: 'Poppins', sans-serif; 
@@ -1212,7 +1265,7 @@
                         <div class="col-md-6">
                             <div class="baju-preview-box shadow-sm">
                                 <div>
-                                    <img src="BAJU_PENDAFTARAN.png" alt="Baju KTA Pendaftaran Baru" class="baju-img" onerror="this.src='LOGO OBR.png'">
+                                    <img src="BAJU KTA PENDAFTARAN BARU.jpeg" alt="Baju KTA Pendaftaran Baru" class="baju-img" onerror="this.src='LOGO OBR.png'">
                                 </div>
                                 <div>
                                     <span class="badge bg-warning text-dark font-monospace mb-1">REGULER & PELAJAR</span>
@@ -1224,7 +1277,7 @@
                         <div class="col-md-6">
                             <div class="baju-preview-box shadow-sm">
                                 <div>
-                                    <img src="BAJU_PERPANJANGAN.png" alt="Baju KTA Perpanjangan" class="baju-img" onerror="this.src='LOGO OBR.png'">
+                                    <img src="BAJU KTA PERPANJANGAN.jpeg" alt="Baju KTA Perpanjangan" class="baju-img" onerror="this.src='LOGO OBR.png'">
                                 </div>
                                 <div>
                                     <span class="badge bg-info text-dark font-monospace mb-1">RENEWAL</span>
