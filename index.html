@@ -1280,11 +1280,11 @@
                     </div>
                     <div class="col-12 col-md-3">
                         <select id="pageSizeSelect" class="form-select form-select-sm shadow-sm rounded-pill px-3 py-2" onchange="filterData()">
-                            <option value="10">📄 10 Baris (Default)</option>
+                            <option value="all" selected>📄 Semua Data</option>
+                            <option value="10">📄 10 Baris</option>
                             <option value="20">📄 20 Baris</option>
                             <option value="50">📄 50 Baris</option>
                             <option value="100">📄 100 Baris</option>
-                            <option value="all">📄 Semua Data</option>
                         </select>
                     </div>
                     <div class="col-12 col-md-2 text-md-end text-center">
@@ -1329,7 +1329,7 @@
                     </div>
                     <div class="col-12 col-md-3">
                         <select id="statusKtaFilter" class="form-select form-select-sm shadow-sm rounded-pill px-3 py-2" onchange="filterProsesData()">
-                            <option value="all">🔍 Semua Status (Pendaftaran/Perpanjangan)</option>
+                            <option value="all">🔍 Semua Status</option>
                             <option value="PENDAFTARAN">📁 Pendaftaran</option>
                             <option value="PERPANJANGAN">🔄 Perpanjangan</option>
                         </select>
@@ -1344,11 +1344,11 @@
                     </div>
                     <div class="col-12 col-md-3">
                         <select id="prosesPageSizeSelect" class="form-select form-select-sm shadow-sm rounded-pill px-3 py-2" onchange="filterProsesData()">
-                            <option value="10">📄 10 Baris (Default)</option>
+                            <option value="all" selected>📄 Semua Data</option>
+                            <option value="10">📄 10 Baris</option>
                             <option value="20">📄 20 Baris</option>
                             <option value="50">📄 50 Baris</option>
                             <option value="100">📄 100 Baris</option>
-                            <option value="all">📄 Semua Data</option>
                         </select>
                     </div>
                 </div>
@@ -2774,7 +2774,7 @@
     function filterData() {
         const query = document.getElementById('searchInput').value.toLowerCase();
         const statusFilter = document.getElementById('statusFilter').value;
-        const pageSizeVal = document.getElementById('pageSizeSelect')?.value || '10';
+        const pageSizeVal = document.getElementById('pageSizeSelect')?.value || 'all';
         const today = new Date(); today.setHours(0, 0, 0, 0);
 
         const filtered = members.filter(m => {
@@ -2798,7 +2798,7 @@
         const query = document.getElementById('searchProsesInput').value.toLowerCase();
         const statusKtaVal = document.getElementById('statusKtaFilter').value;
         const statusVal = document.getElementById('statusBayarFilter').value;
-        const pageSizeVal = document.getElementById('prosesPageSizeSelect')?.value || '10';
+        const pageSizeVal = document.getElementById('prosesPageSizeSelect')?.value || 'all';
 
         const filtered = prosesKtaData.filter(m => {
             const matchQuery = (m.nama && m.nama.toLowerCase().includes(query)) || (m.wa && m.wa.toLowerCase().includes(query));
