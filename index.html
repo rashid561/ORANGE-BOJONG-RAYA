@@ -1406,7 +1406,7 @@
                                     <span class="badge bg-dark text-warning">KASUB</span>
                                 </div>
                                 <h5 class="font-monospace fw-bold my-1">4790479829</h5>
-                                <div class="small text-secondary">a/n <b>KASUB</b></div>
+                                <div class="small text-secondary">a/n <b>ANDRIYANTO</b></div>
                                 <button class="btn btn-sm btn-outline-primary rounded-pill mt-2 py-1 px-3" onclick="copyRek('4790479829')"><i class="bi bi-copy me-1"></i>Salin No Rekening</button>
                             </div>
                         </div>
@@ -1417,7 +1417,7 @@
                                     <span class="badge bg-dark text-warning">SEKERTARIS</span>
                                 </div>
                                 <h5 class="font-monospace fw-bold my-1">4790457469</h5>
-                                <div class="small text-secondary">a/n <b>SEKERTARIS</b></div>
+                                <div class="small text-secondary">a/n <b>RASHID AL ARSHAD</b></div>
                                 <button class="btn btn-sm btn-outline-primary rounded-pill mt-2 py-1 px-3" onclick="copyRek('4790457469')"><i class="bi bi-copy me-1"></i>Salin No Rekening</button>
                             </div>
                         </div>
@@ -1745,6 +1745,10 @@
                 
                 <div class="p-3 bg-light rounded-3 text-start border small">
                     <div class="mb-2 pb-2 border-bottom">
+                        <span class="text-secondary d-block">Nama Lengkap:</span>
+                        <strong class="text-dark text-uppercase" id="profileViewNamaLengkap">-</strong>
+                    </div>
+                    <div class="mb-2 pb-2 border-bottom">
                         <span class="text-secondary d-block">Username:</span>
                         <strong class="text-dark font-monospace" id="profileViewUsername">-</strong>
                     </div>
@@ -1796,8 +1800,8 @@
             <div class="modal-body text-center p-4">
                 <img id="detailPengurusImg" src="" class="rounded-circle border border-warning border-3 mb-3 shadow" style="width: 120px; height: 120px; object-fit: cover;">
                 <span class="badge bg-warning text-dark fw-bold font-monospace d-block mx-auto mb-2" id="detailPengurusRoleBadge" style="width: max-content;">-</span>
-                <h4 class="fw-bold text-uppercase text-white mb-0" id="detailPengurusName">-</h4>
-                <p class="font-monospace text-warning small mb-3" id="detailPengurusKta">-</p>
+                <div class="font-monospace fw-bold text-white fs-5 mb-1" id="detailPengurusKta">-</div>
+                <h4 class="fw-bold text-uppercase text-warning mb-3" id="detailPengurusName">-</h4>
                 <div class="p-3 bg-black rounded-3 mb-3 border border-secondary text-start small">
                     <div class="d-flex justify-content-between border-bottom border-secondary pb-1 mb-1">
                         <span class="text-secondary">Jabatan Resmi:</span>
@@ -1840,12 +1844,12 @@
                     </div>
                     <div class="row g-2 mb-2.5">
                         <div class="col-6">
-                            <label class="form-label fw-semibold text-secondary mb-1">Nama Depan (Kecil) <span class="text-danger">*</span></label>
-                            <input type="text" id="inputPengurusNameSmall" class="form-control form-control-sm rounded-3 py-2" required placeholder="ANDRIYANTO">
+                            <label class="form-label fw-semibold text-secondary mb-1">Nomer KTA (Kecil) <span class="text-danger">*</span></label>
+                            <input type="text" id="inputPengurusNameSmall" class="form-control form-control-sm rounded-3 py-2" required placeholder="JB.13.0077572.10.20">
                         </div>
                         <div class="col-6">
-                            <label class="form-label fw-semibold text-secondary mb-1">Nama Belakang (Besar) <span class="text-danger">*</span></label>
-                            <input type="text" id="inputPengurusNameLarge" class="form-control form-control-sm rounded-3 py-2" required placeholder="KASUB">
+                            <label class="form-label fw-semibold text-secondary mb-1">Nama Lengkap (Besar) <span class="text-danger">*</span></label>
+                            <input type="text" id="inputPengurusNameLarge" class="form-control form-control-sm rounded-3 py-2" required placeholder="RASHID AL ARSHAD">
                         </div>
                     </div>
                     <div class="mb-2.5">
@@ -2282,6 +2286,7 @@
     function showMyProfileModal() {
         if (!currentUser) return;
         document.getElementById('profileViewNama').innerText = currentUser.nama || '-';
+        document.getElementById('profileViewNamaLengkap').innerText = currentUser.nama || '-';
         document.getElementById('profileViewRole').innerText = (currentUser.role || 'USER').toUpperCase();
         document.getElementById('profileViewUsername').innerText = currentUser.username || '-';
         document.getElementById('profileViewEmail').innerText = currentUser.email || '-';
@@ -2537,14 +2542,15 @@
 
         document.getElementById('detailPengurusImg').src = item.imageUrl || 'LOGO OBR.png';
         document.getElementById('detailPengurusRoleBadge').innerText = item.role || 'PENGURUS';
-        document.getElementById('detailPengurusName').innerText = `${item.nameSmall} ${item.nameLarge}`;
-        document.getElementById('detailPengurusKta').style.display = 'none';
+        document.getElementById('detailPengurusKta').style.display = 'block';
+        document.getElementById('detailPengurusKta').innerText = item.nameSmall || '-';
+        document.getElementById('detailPengurusName').innerText = item.nameLarge || '-';
         document.getElementById('detailPengurusJabatan').innerText = item.role || '-';
         document.getElementById('detailPengurusDivisi').innerText = item.kategori || '-';
 
         let cleanWa = item.wa ? item.wa.replace(/[^0-9]/g, '') : '';
         if (cleanWa.startsWith('0')) cleanWa = '62' + cleanWa.substring(1);
-        document.getElementById('detailPengurusWaBtn').href = cleanWa ? `https://wa.me/${cleanWa}?text=Halo%20${encodeURIComponent(item.nameSmall)},%20saya%20anggota%20Orange%20Bojong%20Raya` : '#';
+        document.getElementById('detailPengurusWaBtn').href = cleanWa ? `https://wa.me/${cleanWa}?text=Halo%20${encodeURIComponent(item.nameLarge || item.nameSmall)},%20saya%20anggota%20Orange%20Bojong%20Raya` : '#';
         detailPengurusModal.show();
     }
 
