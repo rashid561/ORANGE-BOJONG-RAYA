@@ -254,6 +254,30 @@
             --guide-box-border: #333333;
         }
 
+                /* STYLING DETAIL PROFIL SAYA (MODE GELAP & TERANG) */
+        .profile-details-card {
+            background-color: #f8f9fa;
+            color: #2c3e50;
+            border: 1px solid #dee2e6;
+        }
+        .profile-details-card strong {
+            color: #111111;
+        }
+        .profile-details-card .profile-label {
+            color: #6c757d;
+        }
+        [data-theme="dark"] .profile-details-card {
+            background-color: #222222 !important;
+            color: #ffffff !important;
+            border-color: #3d3d3d !important;
+        }
+        [data-theme="dark"] .profile-details-card strong {
+            color: #ff9900 !important;
+        }
+        [data-theme="dark"] .profile-details-card .profile-label {
+            color: #b0bec5 !important;
+        }
+
         /* PERBAIKAN TEKS & JUDUL MODE GELAP */
         [data-theme="dark"] .text-secondary {
             color: #b0bec5 !important;
@@ -1241,20 +1265,29 @@
                 </div>
 
                 <div class="row mb-3 align-items-center g-2">
-                    <div class="col-12 col-md-5">
+                    <div class="col-12 col-md-4">
                         <div class="input-group shadow-sm">
                             <span class="input-group-text bg-white border-end-0 text-secondary search-box"><i class="bi bi-search"></i></span>
                             <input type="text" id="searchInput" class="form-control border-start-0 search-box form-control-sm py-2" placeholder="Cari Nama, No KTA, HP..." onkeyup="filterData()">
                         </div>
                     </div>
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-3">
                         <select id="statusFilter" class="form-select form-select-sm shadow-sm rounded-pill px-3 py-2" onchange="filterData()">
                             <option value="all">🔍 Semua Status KTA</option>
                             <option value="active">🟢 Masa Berlaku Aktif</option>
                             <option value="expired">🔴 Masa Berlaku Expired</option>
                         </select>
                     </div>
-                    <div class="col-12 col-md-3 text-md-end text-center">
+                    <div class="col-12 col-md-3">
+                        <select id="pageSizeSelect" class="form-select form-select-sm shadow-sm rounded-pill px-3 py-2" onchange="filterData()">
+                            <option value="10">📄 10 Baris (Default)</option>
+                            <option value="20">📄 20 Baris</option>
+                            <option value="50">📄 50 Baris</option>
+                            <option value="100">📄 100 Baris</option>
+                            <option value="all">📄 Semua Data</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-2 text-md-end text-center">
                         <div class="counter-badge-box small">
                             <i class="bi bi-people-fill text-warning me-2"></i>
                             <span class="fw-bold" id="totalCount">Total: 0 Anggota</span>
@@ -1288,25 +1321,34 @@
                 </div>
 
                 <div class="row mb-3 align-items-center g-2">
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-3">
                         <div class="input-group shadow-sm">
                             <span class="input-group-text bg-white border-end-0 text-secondary search-box"><i class="bi bi-search"></i></span>
                             <input type="text" id="searchProsesInput" class="form-control border-start-0 search-box form-control-sm py-2" placeholder="Cari Nama, WA..." onkeyup="filterProsesData()">
                         </div>
                     </div>
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-3">
                         <select id="statusKtaFilter" class="form-select form-select-sm shadow-sm rounded-pill px-3 py-2" onchange="filterProsesData()">
                             <option value="all">🔍 Semua Status (Pendaftaran/Perpanjangan)</option>
                             <option value="PENDAFTARAN">📁 Pendaftaran</option>
                             <option value="PERPANJANGAN">🔄 Perpanjangan</option>
                         </select>
                     </div>
-                    <div class="col-12 col-md-4">
+                    <div class="col-12 col-md-3">
                         <select id="statusBayarFilter" class="form-select form-select-sm shadow-sm rounded-pill px-3 py-2" onchange="filterProsesData()">
                             <option value="all">🔍 Semua Pembayaran</option>
                             <option value="SUDAH LUNAS">🟢 Sudah Lunas</option>
                             <option value="BELUM LUNAS">🔴 Belum Lunas</option>
                             <option value="CICIL">🟡 Cicil</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <select id="prosesPageSizeSelect" class="form-select form-select-sm shadow-sm rounded-pill px-3 py-2" onchange="filterProsesData()">
+                            <option value="10">📄 10 Baris (Default)</option>
+                            <option value="20">📄 20 Baris</option>
+                            <option value="50">📄 50 Baris</option>
+                            <option value="100">📄 100 Baris</option>
+                            <option value="all">📄 Semua Data</option>
                         </select>
                     </div>
                 </div>
@@ -1706,10 +1748,10 @@
             <div class="col-6 col-md-3 persija-footer-col">
                 <h6>ORGANISASI</h6>
                 <ul>
-                    <li><a href="#" onclick="switchView('strukturOrganisasi')">Pengurus Harian</a></li>
-                    <li><a href="#" onclick="switchView('strukturOrganisasi')">Humas & Media</a></li>
-                    <li><a href="#" onclick="switchView('strukturOrganisasi')">Korlap & Keamanan</a></li>
-                    <li><a href="#" onclick="switchView('strukturOrganisasi')">Divisi OBR Sport</a></li>
+                    <li><a href="#" onclick="goToStrukturCategory('harian')">Pengurus Harian</a></li>
+                    <li><a href="#" onclick="goToStrukturCategory('humas')">Humas & Media</a></li>
+                    <li><a href="#" onclick="goToStrukturCategory('korlap')">Korlap & Keamanan</a></li>
+                    <li><a href="#" onclick="goToStrukturCategory('sport')">Divisi OBR Sport</a></li>
                 </ul>
             </div>
             <div class="col-6 col-md-3 persija-footer-col">
@@ -1738,27 +1780,23 @@
             </div>
             <div class="modal-body p-4 text-center">
                 <div class="mb-3">
-                    <img src="LOGO OBR.png" alt="Avatar" class="rounded-circle border border-warning border-3 shadow-sm" style="width: 90px; height: 90px; object-fit: cover;">
+                    <img id="myProfileAvatar" src="LOGO OBR.png" alt="Foto Profil" class="rounded-circle border border-warning border-3 shadow-sm" style="width: 95px; height: 95px; object-fit: cover;">
                 </div>
                 <h5 class="fw-bold text-uppercase mb-1" id="profileViewNama">-</h5>
                 <span class="badge bg-warning text-dark font-monospace mb-3 px-3 py-1" id="profileViewRole">-</span>
                 
-                <div class="p-3 bg-light rounded-3 text-start border small">
-                    <div class="mb-2 pb-2 border-bottom">
-                        <span class="text-secondary d-block">Nama Lengkap:</span>
-                        <strong class="text-dark text-uppercase" id="profileViewNamaLengkap">-</strong>
+                <div class="p-3 profile-details-card rounded-3 text-start small">
+                    <div class="mb-2 pb-2 border-bottom border-secondary border-opacity-25">
+                        <span class="profile-label d-block">Username:</span>
+                        <strong class="font-monospace" id="profileViewUsername">-</strong>
                     </div>
-                    <div class="mb-2 pb-2 border-bottom">
-                        <span class="text-secondary d-block">Username:</span>
-                        <strong class="text-dark font-monospace" id="profileViewUsername">-</strong>
-                    </div>
-                    <div class="mb-2 pb-2 border-bottom">
-                        <span class="text-secondary d-block">Email Terdaftar:</span>
-                        <strong class="text-dark" id="profileViewEmail">-</strong>
+                    <div class="mb-2 pb-2 border-bottom border-secondary border-opacity-25">
+                        <span class="profile-label d-block">Email Terdaftar:</span>
+                        <strong id="profileViewEmail">-</strong>
                     </div>
                     <div>
-                        <span class="text-secondary d-block">Nomor WhatsApp:</span>
-                        <strong class="text-dark font-monospace" id="profileViewWa">-</strong>
+                        <span class="profile-label d-block">Nomor WhatsApp:</span>
+                        <strong class="font-monospace" id="profileViewWa">-</strong>
                     </div>
                 </div>
             </div>
@@ -2080,8 +2118,18 @@
             </div>
             <div class="modal-body p-4 small">
                 <form id="updateProfileForm" onsubmit="handleUpdateProfile(event)">
-                    <div class="mb-2"><label class="form-label text-secondary small mb-1">Nama Lengkap</label><input type="text" id="editProfileNama" class="form-control form-control-sm py-2" required></div>
-                    <div class="mb-2.5"><label class="form-label text-secondary small mb-1">Nomor WhatsApp</label><input type="text" id="editProfileWa" class="form-control form-control-sm py-2" required></div>
+                    <div class="mb-2">
+                        <label class="form-label text-secondary small mb-1"><i class="bi bi-image me-1 text-warning"></i>Foto Profil User (Opsional)</label>
+                        <input type="file" id="editProfilePhoto" class="form-control form-control-sm py-2" accept="image/*">
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label text-secondary small mb-1">Nama Lengkap</label>
+                        <input type="text" id="editProfileNama" class="form-control form-control-sm py-2" required>
+                    </div>
+                    <div class="mb-2.5">
+                        <label class="form-label text-secondary small mb-1">Nomor WhatsApp</label>
+                        <input type="text" id="editProfileWa" class="form-control form-control-sm py-2" required>
+                    </div>
                     <button type="submit" class="btn btn-dark btn-sm w-100 fw-bold py-2 rounded-pill mb-3">Simpan Perubahan Profil</button>
                 </form>
                 <div class="border-top pt-3">
@@ -2205,12 +2253,12 @@
 
     const defaultPengurusList = [
         { id: 'def1', no: "01", nameSmall: "ANDRIYANTO", nameLarge: "JB.13.0113769.06.24", role: "KETUA SUB KORWIL", kategori: "harian", imageUrl: "LOGO OBR.png", wa: "089625793431" },
-        { id: 'def2', no: "02", nameSmall: "ADYTIA", nameLarge: "IRMANTO", role: "PEMBINA", kategori: "harian", imageUrl: "LOGO OBR.png", wa: "" },
-        { id: 'def3', no: "03", nameSmall: "TIO", nameLarge: "SETIAWAN", role: "WAKIL SUB KORWIL", kategori: "harian", imageUrl: "LOGO OBR.png", wa: "" },
+        { id: 'def3', no: "02", nameSmall: "TIO", nameLarge: "SETIAWAN", role: "WAKIL SUB KORWIL", kategori: "harian", imageUrl: "LOGO OBR.png", wa: "" },
+        { id: 'def2', no: "03", nameSmall: "ADYTIA", nameLarge: "IRMANTO", role: "PEMBINA", kategori: "harian", imageUrl: "LOGO OBR.png", wa: "" },
         { id: 'def4', no: "04", nameSmall: "RASHID AL", nameLarge: "ARSHAD", role: "SEKERTARIS", kategori: "harian", imageUrl: "LOGO OBR.png", wa: "089513766307" },
         { id: 'def5', no: "05", nameSmall: "MUHAMMAD", nameLarge: "FIKRI J", role: "BENDAHARA", kategori: "harian", imageUrl: "LOGO OBR.png", wa: "" },
-        { id: 'def6', no: "06", nameSmall: "SAIPUL", nameLarge: "ANAM", role: "HUMAS", kategori: "humas", imageUrl: "LOGO OBR.png", wa: "" },
-        { id: 'def7', no: "07", nameSmall: "ABDUL", nameLarge: "KHAIR", role: "INFOKOM", kategori: "humas", imageUrl: "LOGO OBR.png", wa: "" }
+        { id: 'def7', no: "06", nameSmall: "ABDUL", nameLarge: "KHAIR", role: "INFOKOM", kategori: "humas", imageUrl: "LOGO OBR.png", wa: "" },
+        { id: 'def6', no: "07", nameSmall: "SAIPUL", nameLarge: "ANAM", role: "HUMAS", kategori: "humas", imageUrl: "LOGO OBR.png", wa: "" }
     ];
 
     let members = [];
@@ -2285,8 +2333,11 @@
 
     function showMyProfileModal() {
         if (!currentUser) return;
+        const avatarImg = document.getElementById('myProfileAvatar');
+        if (avatarImg) {
+            avatarImg.src = currentUser.photoUrl || currentUser.photo || 'LOGO OBR.png';
+        }
         document.getElementById('profileViewNama').innerText = currentUser.nama || '-';
-        document.getElementById('profileViewNamaLengkap').innerText = currentUser.nama || '-';
         document.getElementById('profileViewRole').innerText = (currentUser.role || 'USER').toUpperCase();
         document.getElementById('profileViewUsername').innerText = currentUser.username || '-';
         document.getElementById('profileViewEmail').innerText = currentUser.email || '-';
@@ -2396,7 +2447,7 @@
     }
 
     // RENDER TABEL ANGGOTA
-    function renderTable(data = members) {
+    function renderTable(data = members, totalFilteredCount = members.length) {
         const tbody = document.getElementById('tableBody');
         tbody.innerHTML = '';
         const isAdmin = currentUser && currentUser.role === 'admin';
@@ -2440,10 +2491,10 @@
                 </tr>
             `;
         });
-        document.getElementById('totalCount').innerText = `Total: ${data.length} Anggota`;
+        document.getElementById('totalCount').innerText = (totalFilteredCount && totalFilteredCount !== data.length) ? `Menampilkan ${data.length} dari ${totalFilteredCount} Anggota` : `Total: ${data.length} Anggota`;
     }
 
-    function renderProsesTable(data = prosesKtaData) {
+    function renderProsesTable(data = prosesKtaData, totalFilteredCount = prosesKtaData.length) {
         const tbody = document.getElementById('tableProsesBody');
         tbody.innerHTML = '';
         const isAdmin = currentUser && currentUser.role === 'admin';
@@ -2486,7 +2537,19 @@
                 </tr>
             `;
         });
-        document.getElementById('totalProsesCount').innerText = `Total: ${data.length} Pengajuan`;
+        document.getElementById('totalProsesCount').innerText = (totalFilteredCount && totalFilteredCount !== data.length) ? `Menampilkan ${data.length} dari ${totalFilteredCount} Pengajuan` : `Total: ${data.length} Pengajuan`;
+    }
+
+    function getPengurusRank(item) {
+        const role = (item.role || '').toUpperCase();
+        if (role.includes('KETUA') && !role.includes('WAKIL')) return 1;
+        if (role.includes('WAKIL')) return 2;
+        if (role.includes('PEMBINA')) return 3;
+        if (role.includes('SEKER') || role.includes('SEKRE')) return 4;
+        if (role.includes('BENDAHARA')) return 5;
+        if (role.includes('INFOKOM')) return 6;
+        if (role.includes('HUMAS')) return 7;
+        return 99;
     }
 
     /* RENDER STRUKTUR PENGURUS */
@@ -2494,7 +2557,8 @@
         const container = document.getElementById('pengurusContainer');
         container.innerHTML = '';
         const isAdmin = currentUser && currentUser.role === 'admin';
-        const displayList = (pengurusData && pengurusData.length > 0) ? pengurusData : defaultPengurusList;
+        let displayList = [...((pengurusData && pengurusData.length > 0) ? pengurusData : defaultPengurusList)];
+        displayList.sort((a, b) => getPengurusRank(a) - getPengurusRank(b));
 
         displayList.forEach((item) => {
             const imgPath = item.imageUrl || 'LOGO OBR.png';
@@ -2523,6 +2587,15 @@
                 </div>
             `;
         });
+    }
+
+        function goToStrukturCategory(category) {
+        switchView('strukturOrganisasi');
+        const btns = document.querySelectorAll('.squad-filter-btn');
+        if (category === 'harian' && btns[1]) filterPengurus('harian', btns[1]);
+        else if (category === 'humas' && btns[2]) filterPengurus('humas', btns[2]);
+        else if (category === 'korlap' && btns[3]) filterPengurus('korlap', btns[3]);
+        else if (category === 'sport' && btns[4]) filterPengurus('sport', btns[4]);
     }
 
     function filterPengurus(category, btn) {
@@ -2701,6 +2774,7 @@
     function filterData() {
         const query = document.getElementById('searchInput').value.toLowerCase();
         const statusFilter = document.getElementById('statusFilter').value;
+        const pageSizeVal = document.getElementById('pageSizeSelect')?.value || '10';
         const today = new Date(); today.setHours(0, 0, 0, 0);
 
         const filtered = members.filter(m => {
@@ -2711,13 +2785,20 @@
             if (statusFilter === 'expired') return matchQuery && isExpired;
             return matchQuery;
         });
-        renderTable(filtered);
+
+        let displayData = filtered;
+        if (pageSizeVal !== 'all') {
+            const limit = parseInt(pageSizeVal, 10);
+            displayData = filtered.slice(0, limit);
+        }
+        renderTable(displayData, filtered.length);
     }
 
     function filterProsesData() {
         const query = document.getElementById('searchProsesInput').value.toLowerCase();
         const statusKtaVal = document.getElementById('statusKtaFilter').value;
         const statusVal = document.getElementById('statusBayarFilter').value;
+        const pageSizeVal = document.getElementById('prosesPageSizeSelect')?.value || '10';
 
         const filtered = prosesKtaData.filter(m => {
             const matchQuery = (m.nama && m.nama.toLowerCase().includes(query)) || (m.wa && m.wa.toLowerCase().includes(query));
@@ -2725,7 +2806,13 @@
             const matchStatus = (statusVal === 'all') || (m.status === statusVal);
             return matchQuery && matchStatusKta && matchStatus;
         });
-        renderProsesTable(filtered);
+
+        let displayData = filtered;
+        if (pageSizeVal !== 'all') {
+            const limit = parseInt(pageSizeVal, 10);
+            displayData = filtered.slice(0, limit);
+        }
+        renderProsesTable(displayData, filtered.length);
     }
 
     async function moveToAnggota(id) {
@@ -2931,12 +3018,43 @@
         if(!email) return alert('Masukkan email!');
         try { await auth.sendPasswordResetEmail(email); alert('Link reset password dikirim!'); forgotModal.hide(); } catch(e) { alert(e.message); }
     }
-    function showSettingsModal() { settingsModal.show(); }
+    function showSettingsModal() {
+        if (currentUser) {
+            document.getElementById('editProfileNama').value = currentUser.nama || '';
+            document.getElementById('editProfileWa').value = currentUser.wa || '';
+        }
+        document.getElementById('editProfilePhoto').value = '';
+        settingsModal.show();
+    }
+
     async function handleUpdateProfile(e) {
         e.preventDefault();
-        const nama = document.getElementById('editProfileNama').value.trim(), wa = cleanWhatsAppNumber(document.getElementById('editProfileWa').value.trim());
-        await db.collection("users").doc(auth.currentUser.uid).update({ nama, wa });
-        alert('Profil diperbarui!'); settingsModal.hide();
+        if (!currentUser || !auth.currentUser) return;
+        const nama = document.getElementById('editProfileNama').value.trim();
+        const wa = cleanWhatsAppNumber(document.getElementById('editProfileWa').value.trim());
+        const photoInput = document.getElementById('editProfilePhoto');
+
+        let updateData = { nama, wa };
+
+        if (photoInput && photoInput.files && photoInput.files[0]) {
+            try {
+                const photoDataUrl = await compressAndReadFile(photoInput.files[0], 400, 400, 0.7);
+                updateData.photoUrl = photoDataUrl;
+                currentUser.photoUrl = photoDataUrl;
+            } catch (err) {
+                console.error("Gagal memproses foto profil:", err);
+            }
+        }
+
+        await db.collection("users").doc(auth.currentUser.uid).update(updateData);
+        currentUser.nama = nama;
+        currentUser.wa = wa;
+
+        document.getElementById('userNameDisplay').innerText = currentUser.nama || currentUser.username;
+        document.getElementById('userDropdownName').innerText = currentUser.nama || currentUser.username;
+
+        alert('Profil berhasil diperbarui!');
+        settingsModal.hide();
     }
     async function updateUserPassword() {
         const newPass = document.getElementById('newAccountPass').value.trim();
