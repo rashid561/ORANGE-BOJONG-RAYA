@@ -1,7 +1,7 @@
 {
   "name": "Orange Bojong Raya",
-  "short_name": "OBR Portal",
-  "description": "Portal Manajemen KTA Orange Bojong Raya Sub Korwil Cengkareng",
+  "short_name": "Orange Bojong Raya",
+  "description": "Portal Management KTA Orange Bojong Raya Sub Korwil Cengkareng",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#121212",
