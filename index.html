@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ORANGE BOJONG RAYA - Sub Korwil Cengkareng</title>
     <!-- Favicon dinamis -->
+    
+    <!-- PWA Manifest & Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff9900">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="LOGO OBR.png">
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <link id="browserFavicon" rel="icon" type="image/png" href="LOGO OBR.png">
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -850,6 +861,32 @@
         .position-relative:hover .baju-hover-overlay {
             opacity: 1;
         }
+    
+        /* SKELETON LOADER ANIMATION */
+        .skeleton-box {
+            display: inline-block;
+            height: 1.1em;
+            position: relative;
+            overflow: hidden;
+            background-color: #e2e8f0;
+            border-radius: 6px;
+            width: 100%;
+        }
+        [data-theme="dark"] .skeleton-box {
+            background-color: #2a2a2a !important;
+        }
+        .skeleton-box::after {
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            transform: translateX(-100%);
+            background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0.35) 60%, rgba(255,255,255,0));
+            animation: skeleton-shimmer 1.8s infinite;
+            content: '';
+        }
+        @keyframes skeleton-shimmer {
+            100% { transform: translateX(100%); }
+        }
+
     </style>
 </head>
 <body>
@@ -2979,6 +3016,153 @@
         innerContainer.innerHTML = `<div class="carousel-item active"><img src="${imgUrl}" class="d-block mx-auto rounded shadow" style="max-height: 75vh; object-fit: contain; width: 100%;"></div>`;
         imagePreviewModal.show();
     }
+
+    // REGISTRASI SERVICE WORKER PWA
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('./sw.js')
+                .then(reg => console.log('PWA Service Worker terdaftar:', reg.scope))
+                .catch(err => console.error('PWA SW Registration Error:', err));
+        });
+    }
+
+    // SKELETON LOADER UI
+    function showSkeletonLoader(tbodyId, columns = 6, rows = 5) {
+        const tbody = document.getElementById(tbodyId);
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        for (let i = 0; i < rows; i++) {
+            let cells = '';
+            for (let j = 0; j < columns; j++) {
+                cells += `<td><div class="skeleton-box"></div></td>`;
+            }
+            tbody.innerHTML += `<tr>${cells}</tr>`;
+        }
+    }
+
+    // LISTENER REALTIME SINGLE DEVICE SESSION AT SERVER
+    let singleSessionUnsubscribe = null;
+    function startSingleDeviceSessionListener(uid) {
+        if (singleSessionUnsubscribe) singleSessionUnsubscribe();
+        singleSessionUnsubscribe = db.collection("users").doc(uid).onSnapshot((docSnap) => {
+            if (docSnap.exists) {
+                const data = docSnap.data();
+                const localToken = localStorage.getItem('obr_device_token');
+                if (data.activeDeviceToken && localToken && data.activeDeviceToken !== localToken) {
+                    handleLogout('🚨 KELUAR OTOMATIS: Akun Anda telah digunakan untuk login di perangkat lain. Sesi di perangkat ini diakhiri.');
+                }
+            }
+        });
+    }
+
+    // WA NOTIFIKASI PENGINGAT
+    function sendWaReminderKta(nama, kta, berlaku, hp) {
+        const cleanWa = cleanWhatsAppNumber(hp);
+        if (!cleanWa || cleanWa === '-') return alert("Nomor WhatsApp tidak valid.");
+        const text = `Halo Bro/Sist *${nama}* 👋,\n\nInformasi dari *Orange Bojong Raya (Sub Korwil Cengkareng)*:\n📌 Nomor KTA: *${kta}*\n📅 Masa Berlaku: *${berlaku}*\n\nMohon periksa kembali masa berlaku KTA Anda. Silakan hubungi pengurus untuk perpanjangan KTA jika sudah mendekati expired. Terima kasih! 🧡`;
+        window.open(`https://wa.me/${cleanWa}?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    function sendWaProsesUpdate(nama, statusKta, statusBayar, hp) {
+        const cleanWa = cleanWhatsAppNumber(hp);
+        if (!cleanWa || cleanWa === '-') return alert("Nomor WhatsApp tidak valid.");
+        const text = `Halo Bro/Sist *${nama}* 👋,\n\nUpdate Pengajuan KTA *Orange Bojong Raya*:\n📋 Jenis: *${statusKta}*\n💳 Status Pembayaran: *${statusBayar}*\n\nTerima kasih telah melakukan pengajuan KTA resmi. Hubungi admin jika ada kendala! 🧡`;
+        window.open(`https://wa.me/${cleanWa}?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    // CHART.JS STATISTIK & MODAL
+    let chartKtaObj = null;
+    let chartProsesObj = null;
+    const statistikModal = new bootstrap.Modal(document.getElementById('statistikModal'));
+
+    function showStatikModal() {
+        renderCharts();
+        statistikModal.show();
+    }
+
+    function renderCharts() {
+        const ctxKta = document.getElementById('chartKtaStatus');
+        const ctxProses = document.getElementById('chartProsesStatus');
+        if (!ctxKta || !ctxProses) return;
+
+        const today = new Date(); today.setHours(0,0,0,0);
+        let activeCount = 0, expiredCount = 0;
+        members.forEach(m => {
+            let d = parseIndonesianDate(m.berlaku);
+            if (d && d < today) expiredCount++;
+            else if (m.berlaku && m.berlaku !== '-') activeCount++;
+        });
+
+        if (chartKtaObj) chartKtaObj.destroy();
+        chartKtaObj = new Chart(ctxKta, {
+            type: 'doughnut',
+            data: {
+                labels: ['KTA Aktif', 'KTA Expired'],
+                datasets: [{
+                    data: [activeCount, expiredCount],
+                    backgroundColor: ['#198754', '#dc3545']
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+
+        let lunasCount = 0, belumCount = 0, cicilCount = 0;
+        prosesKtaData.forEach(p => {
+            if (p.status === 'SUDAH LUNAS') lunasCount++;
+            else if (p.status === 'CICIL') cicilCount++;
+            else belumCount++;
+        });
+
+        if (chartProsesObj) chartProsesObj.destroy();
+        chartProsesObj = new Chart(ctxProses, {
+            type: 'pie',
+            data: {
+                labels: ['Sudah Lunas', 'Cicil', 'Belum Lunas'],
+                datasets: [{
+                    data: [lunasCount, cicilCount, belumCount],
+                    backgroundColor: ['#198754', '#ffc107', '#dc3545']
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+    }
+
 </script>
+
+<!-- MODAL GRAFIK STATISTIK & REKAPITULASI -->
+<div class="modal fade" id="statistikModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header bg-dark text-white border-bottom border-warning py-3">
+                <h5 class="modal-title fw-bold fs-6"><i class="bi bi-pie-chart-fill text-warning me-2"></i>Statistik & Rekapitulasi Data KTA</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4 small">
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <div class="card p-3 border-secondary bg-dark text-white rounded-3 shadow-sm text-center">
+                            <h6 class="fw-bold text-warning mb-3"><i class="bi bi-person-vcard me-1"></i>Status Masa Berlaku KTA</h6>
+                            <div style="max-height: 220px; position: relative;">
+                                <canvas id="chartKtaStatus"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card p-3 border-secondary bg-dark text-white rounded-3 shadow-sm text-center">
+                            <h6 class="fw-bold text-warning mb-3"><i class="bi bi-wallet2 me-1"></i>Status Pembayaran Pengajuan KTA</h6>
+                            <div style="max-height: 220px; position: relative;">
+                                <canvas id="chartProsesStatus"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <button class="btn btn-warning text-dark fw-bold rounded-pill px-4 shadow-sm" onclick="window.print()"><i class="bi bi-printer-fill me-1"></i> Cetak Laporan PDF</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
