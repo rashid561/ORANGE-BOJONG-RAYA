@@ -1,4 +1,4 @@
-const CACHE_NAME = 'obr-pwa-v4';
+const CACHE_NAME = 'obr-pwa-v6';
 const urlsToCache = [
   './',
   './index.html',
