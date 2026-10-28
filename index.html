@@ -1090,6 +1090,7 @@
             <span class="persija-nav-link" id="navStruktur" onclick="switchView('strukturOrganisasi')"><i class="bi bi-diagram-3-fill"></i> STRUKTUR PENGURUS</span>
             <span class="persija-nav-link" id="navPanduan" onclick="switchView('panduanKta')"><i class="bi bi-file-earmark-plus"></i> PANDUAN KTA</span>
             <span class="persija-nav-link" id="navGaleri" onclick="switchView('galeriKegiatan')"><i class="bi bi-images"></i> GALERI</span>
+            <span class="persija-nav-link" id="navMatch" onclick="switchView('matchNobar')"><i class="bi bi-trophy-fill"></i> JADWAL & NOBAR</span>
         </div>
         
         <div class="card-body p-3 p-md-4">
@@ -1142,6 +1143,15 @@
                                 <i class="bi bi-images display-6 text-warning mb-2 d-block"></i>
                                 <h6 class="menu-card-title">GALERI KEGIATAN<br>ORANGE BOJONG RAYA</h6>
                                 <p class="menu-card-desc mb-0">Dokumentasi keseruan nonton bareng, futsal, dan kegiatan sosial OBR.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="card menu-card p-3 text-center shadow-sm" onclick="switchView('matchNobar')">
+                            <div class="card-body py-2">
+                                <i class="bi bi-trophy-fill display-6 text-warning mb-2 d-block"></i>
+                                <h6 class="menu-card-title">JADWAL PERSIJA<br>& INFO NOBAR OBR</h6>
+                                <p class="menu-card-desc mb-0">Jadwal BRI Super League, klasemen liga, dan lokasi nobar resmi OBR.</p>
                             </div>
                         </div>
                     </div>
@@ -1609,6 +1619,139 @@
                 <div class="row g-4" id="galeriContainer"></div>
             </div>
 
+
+            <!-- HALAMAN JADWAL PERSIJA & INFO NOBAR OBR -->
+            <div id="viewMatchNobar" style="display: none;">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <button class="btn btn-dark rounded-pill px-3 py-1.5 btn-sm fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-1"></i>Kembali ke Menu Utama</button>
+                    <div class="d-flex align-items-center gap-2">
+                        <h5 class="fw-bold text-uppercase mb-0">Jadwal Persija, Klasemen & Info Nobar OBR</h5>
+                        <button id="btnAdminMatch" class="btn btn-warning btn-sm rounded-pill fw-bold px-3 py-1.5 shadow-sm text-dark d-none" onclick="openAdminMatchModal()"><i class="bi bi-gear-fill me-1"></i> Mode Admin (Edit Laga)</button>
+                    </div>
+                </div>
+
+                <!-- HERO NEXT MATCH BANNER (Persija.id style) -->
+                <div class="hero-nobar-card mb-4 text-white p-4 rounded-4 position-relative overflow-hidden shadow" style="background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=80') no-repeat center center; background-size: cover; border: 2px solid #ff9900;">
+                    <div class="text-center mb-3">
+                        <span class="badge bg-danger text-white px-3 py-1 fw-bold text-uppercase" style="letter-spacing: 1.5px;">NEXT MATCH • BRI SUPER LEAGUE 2026/2027</span>
+                    </div>
+                    <div class="row align-items-center justify-content-center text-center my-3 g-3">
+                        <div class="col-4 col-md-4 d-flex flex-column align-items-center">
+                            <div class="bg-dark p-3 rounded-circle border border-warning shadow mb-2" style="width: 75px; height: 75px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-shield-fill text-warning fs-2"></i>
+                            </div>
+                            <h5 id="heroHomeTeam" class="fw-bold text-uppercase m-0" style="font-size: clamp(0.85rem, 2vw, 1.2rem);">DEWA UNITED BANTEN FC</h5>
+                            <small class="text-white-50">HOME</small>
+                        </div>
+                        <div class="col-4 col-md-2 text-center">
+                            <h1 class="fw-black text-warning m-0 font-monospace" style="font-size: clamp(2rem, 5vw, 3.5rem); text-shadow: 0 3px 10px rgba(0,0,0,0.8);">VS</h1>
+                            <span class="badge bg-black text-light font-monospace border border-secondary" id="heroKickoffTime">19:00 WIB</span>
+                        </div>
+                        <div class="col-4 col-md-4 d-flex flex-column align-items-center">
+                            <div class="bg-dark p-3 rounded-circle border border-warning shadow mb-2" style="width: 75px; height: 75px; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-star-fill text-warning fs-2"></i>
+                            </div>
+                            <h5 id="heroAwayTeam" class="fw-bold text-uppercase m-0" style="font-size: clamp(0.85rem, 2vw, 1.2rem);">PERSIJA JAKARTA</h5>
+                            <small class="text-white-50">AWAY</small>
+                        </div>
+                    </div>
+
+                    <!-- COUNTDOWN TIMER -->
+                    <div class="d-flex justify-content-center gap-2 my-3 text-center">
+                        <div class="countdown-box bg-dark bg-opacity-75 border border-warning rounded-3 p-2 px-3">
+                            <div id="cdDays" class="font-monospace fw-bold text-warning fs-4">03</div>
+                            <small class="text-uppercase text-light" style="font-size: 0.6rem;">Days</small>
+                        </div>
+                        <div class="countdown-box bg-dark bg-opacity-75 border border-warning rounded-3 p-2 px-3">
+                            <div id="cdHours" class="font-monospace fw-bold text-warning fs-4">02</div>
+                            <small class="text-uppercase text-light" style="font-size: 0.6rem;">Hours</small>
+                        </div>
+                        <div class="countdown-box bg-dark bg-opacity-75 border border-warning rounded-3 p-2 px-3">
+                            <div id="cdMins" class="font-monospace fw-bold text-warning fs-4">55</div>
+                            <small class="text-uppercase text-light" style="font-size: 0.6rem;">Mins</small>
+                        </div>
+                        <div class="countdown-box bg-dark bg-opacity-75 border border-warning rounded-3 p-2 px-3">
+                            <div id="cdSecs" class="font-monospace fw-bold text-warning fs-4">49</div>
+                            <small class="text-uppercase text-light" style="font-size: 0.6rem;">Secs</small>
+                        </div>
+                    </div>
+
+                    <!-- INFO NOBAR OBR CARD -->
+                    <div id="nobarInfoBox" class="mt-4 p-3 rounded-3 bg-black bg-opacity-80 border border-warning border-opacity-50 text-start">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+                            <span id="nobarStatusBadge" class="badge bg-success fw-bold px-3 py-1.5"><i class="bi bi-broadcast me-1"></i> 🟢 NOBAR RESMI OBR</span>
+                            <small class="text-warning font-monospace" id="nobarOpenGate"><i class="bi bi-clock me-1"></i> Open Gate: 18:00 WIB</small>
+                        </div>
+                        <div class="row g-2 align-items-center">
+                            <div class="col-md-8 small">
+                                <div class="mb-1"><i class="bi bi-geo-alt-fill text-warning me-2"></i><b>Lokasi Nobar:</b> <span id="nobarLokasiText">Basecamp OBR (Cengkareng Timur, Jakarta Barat)</span></div>
+                                <div class="mb-1"><i class="bi bi-ticket-fill text-warning me-2"></i><b>HTM / Ketentuan:</b> <span id="nobarHtmText">Minimum Order 1 Minuman / Kas Mandiri Seikhlasnya</span></div>
+                                <div class="text-light opacity-75" id="nobarNoteText"><i class="bi bi-info-circle me-1"></i> Wajib beratribut atribut resmi The Jakmania / Orange Bojong Raya. Dilarang membawa flare/benda berbahaya.</div>
+                            </div>
+                            <div class="col-md-4 text-md-end text-center mt-2 mt-md-0">
+                                <a id="nobarWaBtn" href="https://wa.me/6289625793431?text=Halo%20Admin,%20saya%20konfirmasi%20hadir%20Nobar%20Persija%20di%20Basecamp%20OBR!" target="_blank" class="btn btn-success btn-sm rounded-pill px-4 py-2 fw-bold shadow-sm">
+                                    <i class="bi bi-whatsapp me-1"></i> Konfirmasi Hadir via WA
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SWITCHER TABS: FIXTURES & RESULTS vs STANDINGS -->
+                <div class="d-flex justify-content-center gap-2 mb-4">
+                    <button class="btn btn-dark fw-bold rounded-pill px-4 py-2 active shadow-sm" id="tabBtnFixtures" onclick="switchMatchTab('fixtures')">
+                        <i class="bi bi-calendar-event me-1 text-warning"></i> FIXTURES & RESULTS
+                    </button>
+                    <button class="btn btn-outline-dark fw-bold rounded-pill px-4 py-2 shadow-sm" id="tabBtnStandings" onclick="switchMatchTab('standings')" style="border-color: var(--table-border); color: var(--text-main);">
+                        <i class="bi bi-table me-1 text-warning"></i> KLASEMEN LIGA (STANDINGS)
+                    </button>
+                </div>
+
+                <!-- TAB CONTENT 1: FIXTURES & RESULTS -->
+                <div id="matchFixturesPane">
+                    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                        <div class="d-flex gap-2 flex-wrap">
+                            <button class="btn btn-sm btn-warning rounded-pill fw-bold px-3" onclick="filterMatches('ALL')">SEMUA LAGA</button>
+                            <button class="btn btn-sm btn-outline-warning rounded-pill fw-semibold px-3" onclick="filterMatches('UPCOMING')">LAGA MENDATANG</button>
+                            <button class="btn btn-sm btn-outline-warning rounded-pill fw-semibold px-3" onclick="filterMatches('RESULT')">HASIL LAGA</button>
+                        </div>
+                        <span class="badge bg-dark text-warning font-monospace border border-warning">BRI SUPER LEAGUE 2026/2027</span>
+                    </div>
+
+                    <!-- GRID KARTU PERTANDINGAN -->
+                    <div class="row row-cols-1 row-cols-md-2 g-3" id="matchesGridContainer"></div>
+                </div>
+
+                <!-- TAB CONTENT 2: STANDINGS (ILEAGUE.ID STYLE) -->
+                <div id="matchStandingsPane" style="display: none;">
+                    <div class="card border-0 rounded-4 shadow-sm overflow-hidden" style="background: var(--card-bg);">
+                        <div class="card-header bg-dark text-warning border-bottom border-warning py-3 d-flex justify-content-between align-items-center">
+                            <h6 class="fw-bold m-0"><i class="bi bi-table me-2"></i>BRI SUPER LEAGUE STANDINGS 2026/2027</h6>
+                            <span class="badge bg-danger text-white">SEASON 2026/2027</span>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped align-middle mb-0 text-center" style="font-size: 0.85rem;">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 50px;">#</th>
+                                        <th class="text-start">CLUB</th>
+                                        <th>PL</th>
+                                        <th>W</th>
+                                        <th>D</th>
+                                        <th>L</th>
+                                        <th>GD</th>
+                                        <th>PTS</th>
+                                        <th>LAST 5</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="standingsTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
 </div>
@@ -1632,11 +1775,11 @@
 
         <div class="row g-4 justify-content-between">
             <div class="col-6 col-md-3 persija-footer-col">
-                <h6>MEDIA</h6>
+                <h6>MEDIA & LAGA</h6>
                 <ul>
+                    <li><a href="#" onclick="switchView('matchNobar')">Jadwal & Klasemen Liga</a></li>
+                    <li><a href="#" onclick="switchView('matchNobar')">Info Nobar OBR Resmi</a></li>
                     <li><a href="#" onclick="switchView('galeriKegiatan')">Foto Kegiatan Nobar</a></li>
-                    <li><a href="#" onclick="switchView('galeriKegiatan')">Video Highlights</a></li>
-                    <li><a href="#" onclick="switchView('galeriKegiatan')">Dokumentasi OBR Sport</a></li>
                 </ul>
             </div>
             <div class="col-6 col-md-3 persija-footer-col">
@@ -3305,6 +3448,156 @@
                 <div class="text-end">
                     <button class="btn btn-warning text-dark fw-bold rounded-pill px-4 shadow-sm" onclick="window.print()"><i class="bi bi-printer-fill me-1"></i> Cetak Laporan PDF</button>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL DETAIL PERTANDINGAN (3-TAB PERSIJA.ID STYLE) -->
+<div class="modal fade" id="matchDetailModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 bg-dark text-white rounded-4 overflow-hidden shadow-lg border border-warning">
+            <div class="modal-header border-bottom border-warning py-3 justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="badge bg-danger text-white fw-bold px-2.5 py-1" id="modalMatchStatusBadge">FULL TIME</span>
+                    <span class="text-warning font-monospace small" id="modalMatchCompetition">BRI SUPER LEAGUE 2026/2027</span>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            
+            <!-- HEADER MATCH BANNER -->
+            <div class="p-4 text-center position-relative" style="background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), url('https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=1200&q=80') center/cover;">
+                <div class="row align-items-center justify-content-center g-2">
+                    <div class="col-4 d-flex flex-column align-items-center">
+                        <div class="bg-dark p-2.5 rounded-circle border border-warning shadow mb-1" style="width: 65px; height: 65px; display: flex; align-items: center; justify-content: center;">
+                            <i class="bi bi-shield-fill text-warning fs-3"></i>
+                        </div>
+                        <h6 id="modalHomeName" class="fw-bold text-uppercase m-0" style="font-size: 0.85rem;">BORNEO FC</h6>
+                        <small class="text-white-50" style="font-size: 0.7rem;">HOME</small>
+                    </div>
+                    <div class="col-4 text-center">
+                        <h2 id="modalScoreDisplay" class="fw-black text-warning m-0 font-monospace" style="font-size: 2.2rem;">0 - 1</h2>
+                        <small class="text-light opacity-75 font-monospace" id="modalStadiumName">STADION SEGIRI</small>
+                    </div>
+                    <div class="col-4 d-flex flex-column align-items-center">
+                        <div class="bg-dark p-2.5 rounded-circle border border-warning shadow mb-1" style="width: 65px; height: 65px; display: flex; align-items: center; justify-content: center;">
+                            <i class="bi bi-star-fill text-warning fs-3"></i>
+                        </div>
+                        <h6 id="modalAwayName" class="fw-bold text-uppercase m-0" style="font-size: 0.85rem;">PERSIJA JAKARTA</h6>
+                        <small class="text-white-50" style="font-size: 0.7rem;">AWAY</small>
+                    </div>
+                </div>
+
+                <!-- 3 TABS NAV -->
+                <ul class="nav nav-pills nav-fill mt-3 bg-black bg-opacity-70 p-1 rounded-pill border border-warning border-opacity-50" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active rounded-pill fw-bold py-1.5 small text-white" id="tabInfoBtn" data-bs-toggle="pill" data-bs-target="#paneInfo" type="button"><i class="bi bi-info-circle me-1"></i> INFO</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link rounded-pill fw-bold py-1.5 small text-white" id="tabLineupBtn" data-bs-toggle="pill" data-bs-target="#paneLineups" type="button"><i class="bi bi-people me-1"></i> LINEUPS</button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link rounded-pill fw-bold py-1.5 small text-white" id="tabStatsBtn" data-bs-toggle="pill" data-bs-target="#paneStats" type="button"><i class="bi bi-bar-chart-line me-1"></i> STATISTICS</button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="modal-body p-4 bg-black bg-opacity-90" style="max-height: 55vh; overflow-y: auto;">
+                <div class="tab-content">
+                    <!-- TAB 1: INFO -->
+                    <div class="tab-pane fade show active" id="paneInfo">
+                        <div class="card bg-dark border border-secondary rounded-3 p-3 mb-3">
+                            <h6 class="fw-bold text-warning text-uppercase mb-3"><i class="bi bi-geo-alt-fill me-1"></i> Match Information</h6>
+                            <div class="row g-2 small text-light">
+                                <div class="col-6"><span>Official Stadium:</span><br><strong id="infoStadium" class="text-warning">Stadion Segiri, Samarinda</strong></div>
+                                <div class="col-6"><span>Match Date:</span><br><strong id="infoDate">05 September 2026</strong></div>
+                                <div class="col-6 mt-2"><span>Kick Off Time:</span><br><strong id="infoKickoff">19:00 WIB</strong></div>
+                                <div class="col-6 mt-2"><span>Match Referee:</span><br><strong id="infoReferee">To Be Announced</strong></div>
+                                <div class="col-6 mt-2"><span>Stadium Capacity:</span><br><strong id="infoCapacity">13,000 Seats</strong></div>
+                                <div class="col-6 mt-2"><span>Nobar OBR Status:</span><br><strong id="infoNobarStatus" class="text-success">🟢 Aktif di Basecamp</strong></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 2: LINEUPS -->
+                    <div class="tab-pane fade" id="paneLineups">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="p-3 bg-dark rounded-3 border border-secondary">
+                                    <h6 class="fw-bold text-danger text-uppercase mb-2 text-center" id="lineupHomeTitle">BORNEO FC SAMARINDA</h6>
+                                    <div class="small text-muted text-center mb-2">Starting XI (4-3-3)</div>
+                                    <div id="homeStartingXiList" class="d-flex flex-column gap-1.5 small"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 bg-dark rounded-3 border border-secondary">
+                                    <h6 class="fw-bold text-warning text-uppercase mb-2 text-center" id="lineupAwayTitle">PERSIJA JAKARTA</h6>
+                                    <div class="small text-muted text-center mb-2">Starting XI (4-3-3)</div>
+                                    <div id="awayStartingXiList" class="d-flex flex-column gap-1.5 small"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 3: STATISTICS -->
+                    <div class="tab-pane fade" id="paneStats">
+                        <div class="p-3 bg-dark rounded-3 border border-secondary">
+                            <h6 class="fw-bold text-warning text-uppercase mb-3 text-center">Match Statistics Comparison</h6>
+                            <div id="statsContainer" class="d-flex flex-column gap-3 small"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL ADMIN EDIT LAGA & NOBAR -->
+<div class="modal fade" id="adminMatchModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4 bg-dark text-white border border-warning">
+            <div class="modal-header border-bottom border-warning py-3">
+                <h6 class="modal-title fw-bold text-warning m-0"><i class="bi bi-gear-fill me-1"></i> Admin: Edit Laga & Info Nobar OBR</h6>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4 small">
+                <form id="adminMatchForm" onsubmit="handleSaveAdminMatch(event)">
+                    <div class="mb-2.5">
+                        <label class="form-label text-warning small mb-1">Tim Lawan (Away / Home)</label>
+                        <input type="text" id="adminAwayTeam" class="form-control form-control-sm bg-black text-white border-secondary" required>
+                    </div>
+                    <div class="row g-2 mb-2.5">
+                        <div class="col-6">
+                            <label class="form-label text-warning small mb-1">Tanggal Pertandingan</label>
+                            <input type="text" id="adminMatchDate" class="form-control form-control-sm bg-black text-white border-secondary" required>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label text-warning small mb-1">Jam Kick-off</label>
+                            <input type="text" id="adminMatchTime" class="form-control form-control-sm bg-black text-white border-secondary" required>
+                        </div>
+                    </div>
+                    <div class="mb-2.5">
+                        <label class="form-label text-warning small mb-1">Nama Stadion</label>
+                        <input type="text" id="adminStadium" class="form-control form-control-sm bg-black text-white border-secondary" required>
+                    </div>
+                    <div class="mb-2.5">
+                        <label class="form-label text-warning small mb-1">Status Nobar OBR</label>
+                        <select id="adminNobarStatus" class="form-select form-select-sm bg-black text-white border-secondary" required>
+                            <option value="ACTIVE">🟢 NOBAR RESMI OBR</option>
+                            <option value="INACTIVE">🔴 TIDAK ADA NOBAR (DARI RUMAH)</option>
+                        </select>
+                    </div>
+                    <div class="mb-2.5">
+                        <label class="form-label text-warning small mb-1">Lokasi Basecamp Nobar</label>
+                        <input type="text" id="adminNobarLocation" class="form-control form-control-sm bg-black text-white border-secondary" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-warning small mb-1">HTM / Ketentuan Nobar</label>
+                        <input type="text" id="adminNobarHtm" class="form-control form-control-sm bg-black text-white border-secondary" required>
+                    </div>
+                    <button type="submit" class="btn btn-warning text-dark fw-bold w-100 rounded-pill py-2">Simpan Pengaturan Laga</button>
+                </form>
             </div>
         </div>
     </div>
