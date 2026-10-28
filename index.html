@@ -982,7 +982,8 @@
             </div>
 
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 pt-2 border-top border-white border-opacity-25 mt-3">
-                <div class="dropdown">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="dropdown">
                     <button class="btn btn-dark dropdown-toggle text-warning border-warning d-flex align-items-center gap-2 px-3 py-1.5 rounded-pill shadow-sm" type="button" data-bs-toggle="dropdown" style="font-size: 0.82rem;">
                         <i class="bi bi-person-circle fs-6"></i>
                         <span class="fw-bold" id="userNameDisplay">Profil</span>
@@ -1005,6 +1006,8 @@
                         <li><hr class="dropdown-divider my-1"></li>
                         <li><a class="dropdown-item rounded-2 py-1.5 fw-semibold text-danger" href="#" onclick="handleLogout('Anda telah berhasil keluar.')"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                     </ul>
+                    </div>
+                    <button id="btnPwaInstallHeader" class="btn btn-warning text-dark-override fw-bold btn-sm rounded-pill shadow-sm px-3 py-1.5" onclick="triggerPwaInstall()"><i class="bi bi-download me-1"></i> Instal Aplikasi</button>
                 </div>
 
                 <div class="d-flex gap-2 flex-wrap">
@@ -1087,6 +1090,16 @@
                                 <h6 class="menu-card-title">OBR SPORT<br>&nbsp;</h6>
                                 <p class="menu-card-desc mb-2">Grup WhatsApp khusus anggota yang hobi dan aktif berolahraga bersama.</p>
                                 <span class="badge bg-success px-3 py-1.5 rounded-pill fw-semibold"><i class="bi bi-box-arrow-up-right me-1"></i> Gabung Grup</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                        <div class="card menu-card p-3 text-center shadow-sm" style="border-color: #198754;" onclick="triggerPwaInstall()">
+                            <div class="card-body py-2">
+                                <i class="bi bi-phone-vibrate display-6 text-success mb-2 d-block"></i>
+                                <h6 class="menu-card-title">INSTAL APLIKASI<br>ORANGE BOJONG RAYA</h6>
+                                <p class="menu-card-desc mb-2">Pasang portal ini langsung di layar utama HP/Laptop Anda.</p>
+                                <span class="badge bg-success text-white px-3 py-1.5 rounded-pill fw-semibold"><i class="bi bi-download me-1"></i> Instal Sekarang</span>
                             </div>
                         </div>
                     </div>
@@ -1597,6 +1610,51 @@
         </div>
     </div>
 </footer>
+
+<!-- MODAL PANDUAN INSTAL PWA -->
+<div class="modal fade" id="pwaInstallModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+            <div class="modal-header bg-dark text-white border-bottom border-warning py-3">
+                <h5 class="modal-title fw-bold fs-6"><i class="bi bi-phone-vibrate text-warning me-2"></i>Cara Instal Aplikasi Orange Bojong Raya</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4 small">
+                <div class="text-center mb-3">
+                    <img src="LOGO OBR.png" alt="Logo OBR" class="rounded-circle border border-warning shadow-sm" style="width: 70px; height: 70px;">
+                    <h6 class="fw-bold text-uppercase mt-2 mb-0">Orange Bojong Raya</h6>
+                    <small class="text-secondary">Sub Korwil Cengkareng</small>
+                </div>
+                
+                <div id="pwaAndroidGuide" class="p-3 bg-dark text-white rounded-3 mb-3 border border-secondary">
+                    <h6 class="fw-bold text-warning mb-2"><i class="bi bi-android2 me-1"></i> Pengguna Android / Google Chrome:</h6>
+                    <ol class="ps-3 mb-0 text-start text-light" style="line-height: 1.6;">
+                        <li>Ketuk tombol titik tiga <b>(⋮)</b> di sudut kanan atas browser Chrome.</li>
+                        <li>Pilih menu <b>"Tambahkan ke Layar Utama"</b> atau <b>"Instal Aplikasi"</b>.</li>
+                        <li>Klik <b>Instal</b>. Aplikasi akan langsung muncul di menu HP Anda!</li>
+                    </ol>
+                </div>
+
+                <div id="pwaIosGuide" class="p-3 bg-dark text-white rounded-3 mb-3 border border-secondary">
+                    <h6 class="fw-bold text-warning mb-2"><i class="bi bi-apple me-1"></i> Pengguna iPhone / Safari (iOS):</h6>
+                    <ol class="ps-3 mb-0 text-start text-light" style="line-height: 1.6;">
+                        <li>Ketuk tombol <b>Bagikan (Share)</b> <i class="bi bi-box-arrow-up text-primary"></i> di bagian bawah browser Safari.</li>
+                        <li>Gulir ke bawah lalu pilih menu <b>"Tambah ke Layar Utama" (Add to Home Screen)</b>.</li>
+                        <li>Klik <b>Tambah</b> di pojok kanan atas.</li>
+                    </ol>
+                </div>
+
+                <div id="pwaDesktopGuide" class="p-3 bg-dark text-white rounded-3 border border-secondary">
+                    <h6 class="fw-bold text-warning mb-2"><i class="bi bi-laptop me-1"></i> Pengguna Komputer / Laptop (Chrome / Edge):</h6>
+                    <p class="mb-0 text-light text-start">Klik ikon download komputer <i class="bi bi-download text-warning"></i> di sebelah kanan baris alamat URL browser Anda, lalu klik <b>Instal</b>.</p>
+                </div>
+            </div>
+            <div class="modal-footer bg-dark border-0 pt-0 justify-content-center">
+                <button class="btn btn-warning text-dark fw-bold rounded-pill px-4" data-bs-dismiss="modal">Mengerti</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- MODAL PROFIL SAYA -->
 <div class="modal fade" id="myProfileModal" tabindex="-1">
@@ -3015,6 +3073,32 @@
         const innerContainer = document.getElementById('modalCarouselInner');
         innerContainer.innerHTML = `<div class="carousel-item active"><img src="${imgUrl}" class="d-block mx-auto rounded shadow" style="max-height: 75vh; object-fit: contain; width: 100%;"></div>`;
         imagePreviewModal.show();
+    }
+
+    
+    // LOGIKA DEFERRED INSTALL PROMPT PWA
+    let deferredPwaPrompt = null;
+    const pwaInstallModal = new bootstrap.Modal(document.getElementById('pwaInstallModal'));
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPwaPrompt = e;
+        const btnHeader = document.getElementById('btnPwaInstallHeader');
+        if (btnHeader) btnHeader.classList.add('animate__animated', 'animate__pulse', 'animate__infinite');
+    });
+
+    function triggerPwaInstall() {
+        if (deferredPwaPrompt) {
+            deferredPwaPrompt.prompt();
+            deferredPwaPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    console.log('User menerima instalasi PWA Orange Bojong Raya');
+                }
+                deferredPwaPrompt = null;
+            });
+        } else {
+            pwaInstallModal.show();
+        }
     }
 
     // REGISTRASI SERVICE WORKER PWA
