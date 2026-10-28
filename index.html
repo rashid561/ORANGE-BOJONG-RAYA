@@ -13,181 +13,10 @@
     <!-- Google Fonts Khas Supporter/Persija -->
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600;700;800;900&family=Teko:wght@600;700&display=swap" rel="stylesheet">
     
-    <!-- Firebase SDK v9 -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js">
-    function togglePasswordVisibility(inputId, iconId) {
-        const input = document.getElementById(inputId);
-        const icon = document.getElementById(iconId);
-        if (!input || !icon) return;
-        if (input.type === 'password') {
-            input.type = 'text';
-            icon.classList.remove('bi-eye-slash');
-            icon.classList.add('bi-eye');
-        } else {
-            input.type = 'password';
-            icon.classList.remove('bi-eye');
-            icon.classList.add('bi-eye-slash');
-        }
-    }
-
-    function checkPasswordStrength(password, barId, textId) {
-        const bar = document.getElementById(barId);
-        const text = document.getElementById(textId);
-        if (!bar || !text) return;
-
-        let strength = 0;
-        if (password.length >= 6) strength += 25;
-        if (password.length >= 10) strength += 25;
-        if (/[A-Z]/.test(password)) strength += 25;
-        if (/[0-9!@#$%^&*]/.test(password)) strength += 25;
-
-        bar.style.width = strength + '%';
-        if (strength === 0) {
-            bar.style.backgroundColor = 'transparent';
-            text.innerText = '';
-        } else if (strength <= 25) {
-            bar.style.backgroundColor = '#dc3545';
-            text.innerText = 'Kekuatan: Sangat Lemah';
-            text.className = 'text-danger fw-semibold';
-        } else if (strength <= 50) {
-            bar.style.backgroundColor = '#fd7e14';
-            text.innerText = 'Kekuatan: Sedang';
-            text.className = 'text-warning fw-semibold';
-        } else if (strength <= 75) {
-            bar.style.backgroundColor = '#ffc107';
-            text.innerText = 'Kekuatan: Baik';
-            text.className = 'text-warning fw-semibold';
-        } else {
-            bar.style.backgroundColor = '#198754';
-            text.innerText = 'Kekuatan: Sangat Kuat';
-            text.className = 'text-success fw-semibold';
-        }
-    }
-
-    function openSingleImagePreview(imgUrl, title) {
-        document.getElementById('previewModalTitle').innerHTML = `<i class="bi bi-image me-1"></i> ${title}`;
-        const innerContainer = document.getElementById('modalCarouselInner');
-        innerContainer.innerHTML = `<div class="carousel-item active"><img src="${imgUrl}" class="d-block mx-auto rounded shadow" style="max-height: 75vh; object-fit: contain; width: 100%;"></div>`;
-        imagePreviewModal.show();
-    }
-
-</script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js">
-    function togglePasswordVisibility(inputId, iconId) {
-        const input = document.getElementById(inputId);
-        const icon = document.getElementById(iconId);
-        if (!input || !icon) return;
-        if (input.type === 'password') {
-            input.type = 'text';
-            icon.classList.remove('bi-eye-slash');
-            icon.classList.add('bi-eye');
-        } else {
-            input.type = 'password';
-            icon.classList.remove('bi-eye');
-            icon.classList.add('bi-eye-slash');
-        }
-    }
-
-    function checkPasswordStrength(password, barId, textId) {
-        const bar = document.getElementById(barId);
-        const text = document.getElementById(textId);
-        if (!bar || !text) return;
-
-        let strength = 0;
-        if (password.length >= 6) strength += 25;
-        if (password.length >= 10) strength += 25;
-        if (/[A-Z]/.test(password)) strength += 25;
-        if (/[0-9!@#$%^&*]/.test(password)) strength += 25;
-
-        bar.style.width = strength + '%';
-        if (strength === 0) {
-            bar.style.backgroundColor = 'transparent';
-            text.innerText = '';
-        } else if (strength <= 25) {
-            bar.style.backgroundColor = '#dc3545';
-            text.innerText = 'Kekuatan: Sangat Lemah';
-            text.className = 'text-danger fw-semibold';
-        } else if (strength <= 50) {
-            bar.style.backgroundColor = '#fd7e14';
-            text.innerText = 'Kekuatan: Sedang';
-            text.className = 'text-warning fw-semibold';
-        } else if (strength <= 75) {
-            bar.style.backgroundColor = '#ffc107';
-            text.innerText = 'Kekuatan: Baik';
-            text.className = 'text-warning fw-semibold';
-        } else {
-            bar.style.backgroundColor = '#198754';
-            text.innerText = 'Kekuatan: Sangat Kuat';
-            text.className = 'text-success fw-semibold';
-        }
-    }
-
-    function openSingleImagePreview(imgUrl, title) {
-        document.getElementById('previewModalTitle').innerHTML = `<i class="bi bi-image me-1"></i> ${title}`;
-        const innerContainer = document.getElementById('modalCarouselInner');
-        innerContainer.innerHTML = `<div class="carousel-item active"><img src="${imgUrl}" class="d-block mx-auto rounded shadow" style="max-height: 75vh; object-fit: contain; width: 100%;"></div>`;
-        imagePreviewModal.show();
-    }
-
-</script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js">
-    function togglePasswordVisibility(inputId, iconId) {
-        const input = document.getElementById(inputId);
-        const icon = document.getElementById(iconId);
-        if (!input || !icon) return;
-        if (input.type === 'password') {
-            input.type = 'text';
-            icon.classList.remove('bi-eye-slash');
-            icon.classList.add('bi-eye');
-        } else {
-            input.type = 'password';
-            icon.classList.remove('bi-eye');
-            icon.classList.add('bi-eye-slash');
-        }
-    }
-
-    function checkPasswordStrength(password, barId, textId) {
-        const bar = document.getElementById(barId);
-        const text = document.getElementById(textId);
-        if (!bar || !text) return;
-
-        let strength = 0;
-        if (password.length >= 6) strength += 25;
-        if (password.length >= 10) strength += 25;
-        if (/[A-Z]/.test(password)) strength += 25;
-        if (/[0-9!@#$%^&*]/.test(password)) strength += 25;
-
-        bar.style.width = strength + '%';
-        if (strength === 0) {
-            bar.style.backgroundColor = 'transparent';
-            text.innerText = '';
-        } else if (strength <= 25) {
-            bar.style.backgroundColor = '#dc3545';
-            text.innerText = 'Kekuatan: Sangat Lemah';
-            text.className = 'text-danger fw-semibold';
-        } else if (strength <= 50) {
-            bar.style.backgroundColor = '#fd7e14';
-            text.innerText = 'Kekuatan: Sedang';
-            text.className = 'text-warning fw-semibold';
-        } else if (strength <= 75) {
-            bar.style.backgroundColor = '#ffc107';
-            text.innerText = 'Kekuatan: Baik';
-            text.className = 'text-warning fw-semibold';
-        } else {
-            bar.style.backgroundColor = '#198754';
-            text.innerText = 'Kekuatan: Sangat Kuat';
-            text.className = 'text-success fw-semibold';
-        }
-    }
-
-    function openSingleImagePreview(imgUrl, title) {
-        document.getElementById('previewModalTitle').innerHTML = `<i class="bi bi-image me-1"></i> ${title}`;
-        const innerContainer = document.getElementById('modalCarouselInner');
-        innerContainer.innerHTML = `<div class="carousel-item active"><img src="${imgUrl}" class="d-block mx-auto rounded shadow" style="max-height: 75vh; object-fit: contain; width: 100%;"></div>`;
-        imagePreviewModal.show();
-    }
-
-</script>
+    <!-- Firebase SDK v9 Compat -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
     <style>
         :root {
@@ -254,7 +83,7 @@
             --guide-box-border: #333333;
         }
 
-                /* STYLING DETAIL PROFIL SAYA (MODE GELAP & TERANG) */
+        /* STYLING DETAIL PROFIL SAYA */
         .profile-details-card {
             background-color: #f8f9fa;
             color: #2c3e50;
@@ -278,7 +107,7 @@
             color: #b0bec5 !important;
         }
 
-        /* PERBAIKAN TEKS & JUDUL MODE GELAP */
+        /* MODE GELAP TYPOGRAPHY */
         [data-theme="dark"] .text-secondary {
             color: #b0bec5 !important;
         }
@@ -303,7 +132,7 @@
             color: #111111 !important;
         }
 
-        /* PERBAIKAN SIZE CHART TABEL DI MODE GELAP */
+        /* SIZE CHART TABEL MODE GELAP */
         [data-theme="dark"] .size-chart-table {
             background-color: #1a1a1a !important;
             color: #ffffff !important;
@@ -324,7 +153,7 @@
             background-color: #242424 !important;
         }
 
-        /* PERBAIKAN CARDS BAJU & SIZE CHART BOX */
+        /* BAJU PREVIEW BOX */
         [data-theme="dark"] .baju-preview-box {
             background: #141414 !important;
             border: 2px solid #ff9900 !important;
@@ -393,24 +222,6 @@
             border: 3px solid #e65c00;
             box-shadow: 0 6px 20px rgba(0,0,0,0.3);
             margin-bottom: 12px;
-        }
-
-        .portal-title {
-            font-family: 'Teko', 'Bebas Neue', sans-serif;
-            font-size: clamp(1.8rem, 5vw, 2.4rem);
-            letter-spacing: 1px;
-            line-height: 1.05;
-            color: #111;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        .portal-subtitle {
-            font-family: 'Bebas Neue', sans-serif;
-            font-size: 1.25rem;
-            letter-spacing: 1.5px;
-            color: #e65c00;
-            margin-top: 2px;
         }
 
         .password-group .form-control {
@@ -539,7 +350,6 @@
             transition: transform 0.25s ease;
         }
 
-        /* NAVBAR HEADER BAR ALA PERSIJA */
         .persija-nav-bar {
             background: #111111;
             border-top: 2px solid #ff9900;
@@ -553,8 +363,6 @@
             justify-content: center;
         }
 
-        
-        /* PERBAIKAN LOGO NAVBAR */
         .nav-logo-brand {
             height: 52px !important;
             width: 52px !important;
@@ -582,7 +390,6 @@
             border-bottom-color: #ff9900 !important;
         }
 
-
         .nav-logo-brand:hover {
             transform: scale(1.1);
         }
@@ -608,7 +415,6 @@
             box-shadow: 0 3px 10px rgba(255, 153, 0, 0.4);
         }
 
-        /* STYLING TABEL DIPERBAIKI */
         .table-responsive { 
             max-height: 600px; 
             overflow-y: auto; 
@@ -690,7 +496,6 @@
             align-items: center;
         }
 
-        /* CARD STEP LANGKAH-LANGKAH PENDAFTARAN KTA */
         .step-card {
             background-color: var(--guide-box-bg);
             border: 2px solid var(--step-card-border);
@@ -736,7 +541,6 @@
             line-height: 1.4;
         }
 
-        /* DESAIN BAJU CARDS & SIZE CHART */
         .baju-preview-box {
             background: #000000;
             border: 2px solid #ff9900;
@@ -866,7 +670,6 @@
         .menu-card-title { font-weight: 800; font-size: clamp(0.95rem, 1.8vw, 1.1rem); color: var(--menu-text); text-transform: uppercase; margin-bottom: 8px; }
         .menu-card-desc { color: var(--menu-desc); font-size: 0.88rem; margin-bottom: 0; }
 
-        /* KARTU PENGURUS */
         .squad-filter-btn { background-color: var(--card-bg); color: var(--text-main); border: 1px solid #ff9900; border-radius: 30px; padding: 6px 18px; font-size: 0.82rem; font-weight: 700; text-transform: uppercase; }
         .squad-filter-btn:hover, .squad-filter-btn.active { background-color: #ff9900 !important; color: #111111 !important; }
         
@@ -876,7 +679,6 @@
         .squad-img { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 0.4s ease; }
         .squad-card:hover .squad-img { transform: scale(1.05); }
         .squad-info { background: var(--squad-info-bg); padding: 14px 16px; border-top: 3px solid #ff9900; color: var(--squad-info-text); }
-        .squad-number { font-family: 'Teko', 'Bebas Neue', sans-serif; font-size: 2.4rem; font-weight: 700; line-height: 0.8; color: #ff9900; margin-right: 12px; flex-shrink: 0; }
         .squad-role-badge { background-color: #e65c00; color: #ffffff; font-size: 0.65rem; font-weight: 800; padding: 2px 8px; border-radius: 20px; text-transform: uppercase; display: inline-block; margin-bottom: 2px; }
         .squad-name-small { font-size: 0.75rem; color: #888; text-transform: uppercase; font-weight: 600; line-height: 1; }
         .squad-name-large { font-family: 'Teko', 'Bebas Neue', sans-serif; font-size: 1.65rem; font-weight: 700; line-height: 0.95; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
@@ -887,7 +689,6 @@
 
         .bank-card { background: var(--bank-card-bg); color: var(--text-main); border: 2px dashed #0d6efd; border-radius: 16px; padding: 16px 18px; }
 
-        /* FOOTER MODERN & DIBERSIHKAN (SESUAI PERMINTAAN) */
         .persija-footer {
             background-color: #080808;
             color: #ffffff;
@@ -1021,7 +822,6 @@
             .persija-footer-bottom a { margin: 0 6px; }
         }
     
-        /* PERBAIKAN FUNGSI & KEGUNAAN E-KTA (E-MONEY MANDIRI) DI MODE GELAP */
         [data-theme="dark"] .emoney-icon-box {
             background-color: #222222 !important;
             border: 1px solid #3d3d3d !important;
@@ -1036,7 +836,6 @@
             color: #ff9900 !important;
         }
 
-        /* OVERLAY PREVIEW BAJU */
         .baju-hover-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -1051,7 +850,6 @@
         .position-relative:hover .baju-hover-overlay {
             opacity: 1;
         }
-
     </style>
 </head>
 <body>
@@ -1063,6 +861,10 @@
             <img src="LOGO OBR.png" alt="Logo OBR" class="portal-logo">
             <h3 class="portal-title mb-0">THE JAKMANIA<br>ORANGE BOJONG RAYA</h3>
             <p class="portal-subtitle mb-0">Sub Korwil Cengkareng</p>
+        </div>
+
+        <div id="loginSecurityAlert" class="alert alert-danger py-2 px-3 small rounded-3 mb-3 d-none" role="alert">
+            <i class="bi bi-shield-slash-fill me-1"></i> <span id="loginSecurityMsg"></span>
         </div>
 
         <ul class="nav nav-pills nav-fill mb-3 bg-light p-1 rounded-pill border" id="authTab" role="tablist">
@@ -1091,7 +893,7 @@
                     <div class="text-end mb-3">
                         <a href="#" class="text-warning fw-semibold small text-decoration-none" onclick="showForgotPasswordModal()"><i class="bi bi-key-fill me-1"></i>Lupa Password?</a>
                     </div>
-                    <button type="submit" class="btn btn-warning w-100 fw-bold py-2.5 rounded-pill shadow text-dark-override">MASUK</button>
+                    <button type="submit" id="btnLoginSubmit" class="btn btn-warning w-100 fw-bold py-2.5 rounded-pill shadow text-dark-override">MASUK</button>
                 </form>
             </div>
 
@@ -1142,7 +944,6 @@
                 <img id="headerLogoRight" src="LOGO CKR.jpeg" alt="Logo Jakmania Cengkareng" class="app-logo">
             </div>
 
-            <!-- BUTTON PROFIL USER DENGAN DROPDOWN PROFILE SAYA -->
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 pt-2 border-top border-white border-opacity-25 mt-3">
                 <div class="dropdown">
                     <button class="btn btn-dark dropdown-toggle text-warning border-warning d-flex align-items-center gap-2 px-3 py-1.5 rounded-pill shadow-sm" type="button" data-bs-toggle="dropdown" style="font-size: 0.82rem;">
@@ -1177,9 +978,8 @@
             </div>
         </div>
 
-        <!-- HEADER NAVBAR ALA PERSIJA (LOGO DI SAMPING HOME) -->
+        <!-- HEADER NAVBAR -->
         <div class="persija-nav-bar">
-            <!-- Logo Brand OBR Klik Kembali ke HOME -->
             <img src="LOGO OBR.png" alt="Logo OBR Home" class="nav-logo-brand" onclick="switchView('dashboard')" title="Kembali ke HOME Orange Bojong Raya">
             
             <span class="persija-nav-link active" id="navDash" onclick="switchView('dashboard')"><i class="bi bi-house-door-fill"></i> HOME</span>
@@ -1191,7 +991,6 @@
         </div>
         
         <div class="card-body p-3 p-md-4">
-            
             <!-- DASHBOARD -->
             <div id="viewMenuDashboard" class="py-2">
                 <div class="text-center mb-4">
@@ -1268,7 +1067,8 @@
                     <div class="col-12 col-md-4">
                         <div class="input-group shadow-sm">
                             <span class="input-group-text bg-white border-end-0 text-secondary search-box"><i class="bi bi-search"></i></span>
-                            <input type="text" id="searchInput" class="form-control border-start-0 search-box form-control-sm py-2" placeholder="Cari Nama, No KTA, HP..." onkeyup="filterData()">
+                            <!-- PENCARIAN TERMASUK KOLOM KETERANGAN/JABATAN -->
+                            <input type="text" id="searchInput" class="form-control border-start-0 search-box form-control-sm py-2" placeholder="Cari Nama, No KTA, Jabatan/Ket, HP..." onkeyup="filterData()">
                         </div>
                     </div>
                     <div class="col-12 col-md-3">
@@ -1303,7 +1103,7 @@
                                 <th>NAMA ANGGOTA</th>
                                 <th>NOMOR ANGGOTA</th>
                                 <th>MASA BERLAKU</th>
-                                <th>KETERANGAN</th>
+                                <th>KETERANGAN / JABATAN</th>
                                 <th>NO HP / WA</th>
                                 <th id="thAksi" class="text-center no-print" style="width: 110px;">AKSI</th>
                             </tr>
@@ -1380,7 +1180,7 @@
                 </div>
             </div>
 
-            <!-- HALAMAN STRUKTUR PENGURUS DINAMIS ALA PERSIJA -->
+            <!-- HALAMAN STRUKTUR PENGURUS -->
             <div id="viewStrukturOrganisasi" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                     <button class="btn btn-dark rounded-pill px-3 py-1.5 btn-sm fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-1"></i>Kembali ke Menu Utama</button>
@@ -1401,14 +1201,13 @@
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4" id="pengurusContainer"></div>
             </div>
 
-            <!-- PANDUAN PENDAFTARAN & PERPANJANGAN KTA (TAMPILAN TERBARU SESUAI GAMBAR) -->
+            <!-- PANDUAN PENDAFTARAN & PERPANJANGAN KTA -->
             <div id="viewPanduanKta" style="display: none;">
                 <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
                     <button class="btn btn-dark rounded-pill px-3 py-1.5 btn-sm fw-semibold shadow-sm" onclick="switchView('dashboard')"><i class="bi bi-arrow-left me-1"></i>Kembali ke Menu Utama</button>
                     <h5 class="fw-bold text-uppercase mb-0 text-warning">PENDAFTARAN & PERPANJANGAN E-KTA THE JAKMANIA OBR</h5>
                 </div>
 
-                <!-- BANNER UTAMA APLIKASI PERSIJA & BIAYA -->
                 <div class="card border-0 rounded-4 bg-dark text-white p-3 p-md-4 mb-4 shadow" style="background: linear-gradient(135deg, #111 0%, #2a1200 100%); border-left: 6px solid #fd7e14 !important;">
                     <div class="row align-items-center">
                         <div class="col-md-8">
@@ -1437,7 +1236,6 @@
                     </div>
                 </div>
 
-                <!-- REKENING PEMBAYARAN BERSAMA -->
                 <div class="card border-0 rounded-4 p-3 p-md-4 mb-4 shadow-sm border border-primary border-opacity-25" style="background: var(--card-bg);">
                     <h5 class="fw-bold text-uppercase mb-3"><i class="bi bi-bank text-primary me-2"></i>REKENING PEMBAYARAN RESMI OBR</h5>
                     <div class="row g-3">
@@ -1466,7 +1264,6 @@
                     </div>
                 </div>
 
-                <!-- LANGKAH-LANGKAH PENDAFTARAN KTA (8 CARDS) -->
                 <div class="mb-4">
                     <h5 class="fw-bold text-uppercase mb-3"><i class="bi bi-list-check text-warning me-2"></i>LANGKAH-LANGKAH PENDAFTARAN KTA</h5>
                     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
@@ -1545,7 +1342,6 @@
                     </div>
                 </div>
 
-                <!-- DESAIN BAJU KTA & SIZE CHART T-SHIRT -->
                 <div class="mb-4">
                     <h5 class="fw-bold text-uppercase mb-1"><i class="bi bi-tsherts text-warning me-2"></i>DESAIN BAJU KTA & SIZE CHART T-SHIRT</h5>
                     <p class="text-secondary small mb-3"><i class="bi bi-info-circle me-1"></i>Klik gambar baju di bawah untuk memperbesar tampilan desain secara penuh.</p>
@@ -1591,7 +1387,6 @@
                         </div>
                     </div>
 
-                    <!-- TABEL SIZE CHART T-SHIRT KTA THE JAKMANIA -->
                     <div class="card border-0 rounded-4 p-3 shadow-sm" style="background: var(--card-bg);">
                         <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
                             <h6 class="fw-bold text-uppercase m-0"><i class="bi bi-ruler text-warning me-2"></i>SIZE CHART T-SHIRT KTA THE JAKMANIA (CM)</h6>
@@ -1623,7 +1418,6 @@
                     </div>
                 </div>
 
-                <!-- PROMO PELAJAR & SKEMA CICILAN -->
                 <div class="row g-3 mb-4">
                     <div class="col-md-6">
                         <div class="card h-100 promo-card promo-card-pelajar shadow-sm">
@@ -1668,7 +1462,6 @@
                     </div>
                 </div>
 
-                <!-- FUNGSI & KEGUNAAN E-KTA (E-MONEY MANDIRI) -->
                 <div class="card border-0 rounded-4 p-3 p-md-4 mb-4 shadow-sm" style="background: var(--card-bg);">
                     <h6 class="fw-bold text-uppercase mb-2"><i class="bi bi-credit-card-2-front-fill text-warning me-2"></i>Fungsi & Kegunaan E-KTA (e-Money Mandiri)</h6>
                     <p class="text-secondary small mb-3">Selain sebagai bukti keanggotaan resmi, e-KTA berupa kartu fisik e-Money Mandiri dapat digunakan sebagai uang elektronik untuk berbagai transaksi harian:</p>
@@ -1682,7 +1475,6 @@
                     </div>
                 </div>
 
-                <!-- CALL TO ACTION WHATSAPP -->
                 <div class="card border-0 rounded-4 p-4 text-center shadow-sm mb-3" style="background: var(--card-bg);">
                     <h6 class="fw-bold text-uppercase mb-1">Sudah Mendaftar di Aplikasi atau Ingin Bertanya?</h6>
                     <p class="text-secondary small mb-3">Hubungi tim pengurus Orange Bojong Raya untuk verifikasi & konfirmasi pembayaran:</p>
@@ -1709,7 +1501,7 @@
     </div>
 </div>
 
-<!-- FOOTER MODERN & DIBERSIHKAN (DESAIN PERSIJA.ID) -->
+<!-- FOOTER -->
 <footer class="persija-footer">
     <div class="container-fluid px-4">
         <div class="persija-footer-top">
@@ -1720,7 +1512,6 @@
                     <span class="badge bg-warning text-dark fw-bold" style="font-size: 0.68rem; letter-spacing: 1px;">SUB KORWIL CENGKARENG</span>
                 </div>
             </div>
-            <!-- HANYA IKON INSTAGRAM & TIKTOK RESMI OBR -->
             <div class="persija-footer-socials">
                 <a href="https://www.instagram.com/jak_bojongraya?srtk=MjhyYnpwaDFqZG5k" target="_blank" class="social-link-icon" title="Instagram Resmi Orange Bojong Raya"><i class="bi bi-instagram"></i></a>
                 <a href="https://www.tiktok.com/@orenbojongraya?_r=1&_t=ZS-9AtoV6kisBJ" target="_blank" class="social-link-icon" title="TikTok Resmi Orange Bojong Raya"><i class="bi bi-tiktok"></i></a>
@@ -1963,7 +1754,7 @@
                         <input type="text" id="inputMasaBerlaku" class="form-control form-control-sm rounded-3 py-2" required placeholder="01 Juni 2027 atau -">
                     </div>
                     <div class="mb-2.5">
-                        <label class="form-label fw-semibold text-secondary mb-1">Keterangan <span class="text-danger">*</span></label>
+                        <label class="form-label fw-semibold text-secondary mb-1">Keterangan / Jabatan <span class="text-danger">*</span></label>
                         <input type="text" id="inputKeterangan" class="form-control form-control-sm rounded-3 py-2" required value="SUB WILAYAH BOJONG">
                     </div>
                     <div class="mb-3.5">
@@ -2178,64 +1969,9 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
-    function togglePasswordVisibility(inputId, iconId) {
-        const input = document.getElementById(inputId);
-        const icon = document.getElementById(iconId);
-        if (!input || !icon) return;
-        if (input.type === 'password') {
-            input.type = 'text';
-            icon.classList.remove('bi-eye-slash');
-            icon.classList.add('bi-eye');
-        } else {
-            input.type = 'password';
-            icon.classList.remove('bi-eye');
-            icon.classList.add('bi-eye-slash');
-        }
-    }
+<!-- Bootstrap Bundle JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    function checkPasswordStrength(password, barId, textId) {
-        const bar = document.getElementById(barId);
-        const text = document.getElementById(textId);
-        if (!bar || !text) return;
-
-        let strength = 0;
-        if (password.length >= 6) strength += 25;
-        if (password.length >= 10) strength += 25;
-        if (/[A-Z]/.test(password)) strength += 25;
-        if (/[0-9!@#$%^&*]/.test(password)) strength += 25;
-
-        bar.style.width = strength + '%';
-        if (strength === 0) {
-            bar.style.backgroundColor = 'transparent';
-            text.innerText = '';
-        } else if (strength <= 25) {
-            bar.style.backgroundColor = '#dc3545';
-            text.innerText = 'Kekuatan: Sangat Lemah';
-            text.className = 'text-danger fw-semibold';
-        } else if (strength <= 50) {
-            bar.style.backgroundColor = '#fd7e14';
-            text.innerText = 'Kekuatan: Sedang';
-            text.className = 'text-warning fw-semibold';
-        } else if (strength <= 75) {
-            bar.style.backgroundColor = '#ffc107';
-            text.innerText = 'Kekuatan: Baik';
-            text.className = 'text-warning fw-semibold';
-        } else {
-            bar.style.backgroundColor = '#198754';
-            text.innerText = 'Kekuatan: Sangat Kuat';
-            text.className = 'text-success fw-semibold';
-        }
-    }
-
-    function openSingleImagePreview(imgUrl, title) {
-        document.getElementById('previewModalTitle').innerHTML = `<i class="bi bi-image me-1"></i> ${title}`;
-        const innerContainer = document.getElementById('modalCarouselInner');
-        innerContainer.innerHTML = `<div class="carousel-item active"><img src="${imgUrl}" class="d-block mx-auto rounded shadow" style="max-height: 75vh; object-fit: contain; width: 100%;"></div>`;
-        imagePreviewModal.show();
-    }
-
-</script>
 <script>
     const firebaseConfig = {
         apiKey: "AIzaSyA-MXfRfLqrRfRlAcCSOcr-FgXWni5ai5I",
@@ -2268,6 +2004,12 @@
     let currentUser = null;
     let currentActiveView = 'dashboard';
 
+    // FITUR: Auto Logout AFK & Blokir Keamanan
+    let afkTimer = null;
+    const AFK_LIMIT_MS = 10 * 60 * 1000; // 10 Menit Inactivity
+    const MAX_LOGIN_ATTEMPTS = 5;
+    const LOCKOUT_DURATION_MS = 5 * 60 * 1000; // 5 Menit Blokir
+
     const selectAddModeModal = new bootstrap.Modal(document.getElementById('selectAddModeModal'));
     const selectAddProsesModeModal = new bootstrap.Modal(document.getElementById('selectAddProsesModeModal'));
     const modal = new bootstrap.Modal(document.getElementById('memberModal'));
@@ -2297,15 +2039,101 @@
                         currentUser = { nama: user.email.split('@')[0], username: user.email.split('@')[0], email: user.email, role: 'user', uid: user.uid };
                     }
                     enforceSingleSession(user.uid);
+                    startAfkTracker();
                 } catch (error) { console.error(error); }
             } else {
                 currentUser = null;
+                stopAfkTracker();
             }
             checkAuthStatus();
         });
 
+        checkLoginSecurityUI();
         initRealtimeListeners();
+        setupAfkEventListeners();
     });
+
+    // --- FITUR AUTO LOGOUT AFK (10 MENIT) ---
+    function resetAfkTimer() {
+        if (!currentUser) return;
+        if (afkTimer) clearTimeout(afkTimer);
+        afkTimer = setTimeout(() => {
+            if (currentUser) {
+                handleLogout('Sesi Anda telah berakhir secara otomatis karena tidak ada aktivitas selama 10 menit (AFK).');
+            }
+        }, AFK_LIMIT_MS);
+    }
+
+    function startAfkTracker() {
+        resetAfkTimer();
+    }
+
+    function stopAfkTracker() {
+        if (afkTimer) clearTimeout(afkTimer);
+    }
+
+    function setupAfkEventListeners() {
+        const events = ['mousemove', 'keydown', 'click', 'touchstart', 'scroll'];
+        events.forEach(evt => {
+            window.addEventListener(evt, resetAfkTimer, { passive: true });
+        });
+    }
+
+    // --- FITUR KEAMANAN BLOKIR 5 MENIT (5x SALAH) ---
+    function checkLoginLockout() {
+        const lockoutUntil = parseInt(localStorage.getItem('obr_lockout_until') || '0', 10);
+        const now = Date.now();
+        if (lockoutUntil > now) {
+            const remainingSec = Math.ceil((lockoutUntil - now) / 1000);
+            const mins = Math.floor(remainingSec / 60);
+            const secs = remainingSec % 60;
+            return { isLocked: true, mins, secs, remainingSec };
+        }
+        return { isLocked: false };
+    }
+
+    function checkLoginSecurityUI() {
+        const lockout = checkLoginLockout();
+        const alertBox = document.getElementById('loginSecurityAlert');
+        const alertMsg = document.getElementById('loginSecurityMsg');
+        const btnSubmit = document.getElementById('btnLoginSubmit');
+
+        if (lockout.isLocked) {
+            alertBox.classList.remove('d-none');
+            alertMsg.innerText = `Akses login diblokir sementara karena 5x kesalahan login. Silakan tunggu ${lockout.mins}m ${lockout.secs}s.`;
+            if (btnSubmit) btnSubmit.disabled = true;
+            setTimeout(checkLoginSecurityUI, 1000);
+        } else {
+            if (btnSubmit) btnSubmit.disabled = false;
+            const attempts = parseInt(localStorage.getItem('obr_failed_login_attempts') || '0', 10);
+            if (attempts > 0 && attempts < MAX_LOGIN_ATTEMPTS) {
+                alertBox.classList.remove('d-none');
+                alertMsg.innerText = `Peringatan: ${attempts}/${MAX_LOGIN_ATTEMPTS} kali percoban salah login. ${MAX_LOGIN_ATTEMPTS - attempts}x lagi sebelum diblokir 5 menit.`;
+            } else {
+                alertBox.classList.add('d-none');
+            }
+        }
+    }
+
+    function recordFailedLoginAttempt() {
+        let attempts = parseInt(localStorage.getItem('obr_failed_login_attempts') || '0', 10) + 1;
+        localStorage.setItem('obr_failed_login_attempts', attempts.toString());
+
+        if (attempts >= MAX_LOGIN_ATTEMPTS) {
+            const lockoutUntil = Date.now() + LOCKOUT_DURATION_MS;
+            localStorage.setItem('obr_lockout_until', lockoutUntil.toString());
+            alert('🚨 KEAMANAN: Anda telah 5 kali salah memasukkan username/password! Akses login Anda diblokir sementara selama 5 menit.');
+        } else {
+            alert(`❌ Username/Email atau Password salah! (Percobaan ${attempts}/${MAX_LOGIN_ATTEMPTS}). Sisa ${MAX_LOGIN_ATTEMPTS - attempts} kesempatan sebelum diblokir 5 menit.`);
+        }
+        checkLoginSecurityUI();
+    }
+
+    function resetLoginAttempts() {
+        localStorage.removeItem('obr_failed_login_attempts');
+        localStorage.removeItem('obr_lockout_until');
+        checkLoginSecurityUI();
+    }
 
     async function enforceSingleSession(uid) {
         let currentDeviceToken = localStorage.getItem('obr_device_token');
@@ -2396,6 +2224,7 @@
         } else {
             authSec.style.setProperty('display', 'flex', 'important');
             appSec.style.display = 'none';
+            checkLoginSecurityUI();
         }
     }
 
@@ -2446,7 +2275,34 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // RENDER TABEL ANGGOTA
+    // --- FITUR: PENCARIAN KOLOM KETERANGAN (JABATAN PENGURUS) ---
+    function filterData() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const statusFilter = document.getElementById('statusFilter').value;
+        const pageSizeVal = document.getElementById('pageSizeSelect')?.value || 'all';
+        const today = new Date(); today.setHours(0, 0, 0, 0);
+
+        const filtered = members.filter(m => {
+            // TERMASUK PENCARIAN DI KOLOM KETERANGAN / JABATAN (m.ket)
+            const matchQuery = (m.nama && m.nama.toLowerCase().includes(query)) || 
+                               (m.kta && m.kta.toLowerCase().includes(query)) || 
+                               (m.ket && m.ket.toLowerCase().includes(query)) || 
+                               (m.hp && m.hp.toLowerCase().includes(query));
+            let targetDate = parseIndonesianDate(m.berlaku);
+            let isExpired = targetDate ? (targetDate < today) : false;
+            if (statusFilter === 'active') return matchQuery && !isExpired && m.berlaku && m.berlaku !== '-';
+            if (statusFilter === 'expired') return matchQuery && isExpired;
+            return matchQuery;
+        });
+
+        let displayData = filtered;
+        if (pageSizeVal !== 'all') {
+            const limit = parseInt(pageSizeVal, 10);
+            displayData = filtered.slice(0, limit);
+        }
+        renderTable(displayData, filtered.length);
+    }
+
     function renderTable(data = members, totalFilteredCount = members.length) {
         const tbody = document.getElementById('tableBody');
         tbody.innerHTML = '';
@@ -2552,7 +2408,6 @@
         return 99;
     }
 
-    /* RENDER STRUKTUR PENGURUS */
     function renderPengurus() {
         const container = document.getElementById('pengurusContainer');
         container.innerHTML = '';
@@ -2589,7 +2444,7 @@
         });
     }
 
-        function goToStrukturCategory(category) {
+    function goToStrukturCategory(category) {
         switchView('strukturOrganisasi');
         const btns = document.querySelectorAll('.squad-filter-btn');
         if (category === 'harian' && btns[1]) filterPengurus('harian', btns[1]);
@@ -2771,29 +2626,6 @@
         });
     }
 
-    function filterData() {
-        const query = document.getElementById('searchInput').value.toLowerCase();
-        const statusFilter = document.getElementById('statusFilter').value;
-        const pageSizeVal = document.getElementById('pageSizeSelect')?.value || 'all';
-        const today = new Date(); today.setHours(0, 0, 0, 0);
-
-        const filtered = members.filter(m => {
-            const matchQuery = (m.nama && m.nama.toLowerCase().includes(query)) || (m.kta && m.kta.toLowerCase().includes(query)) || (m.hp && m.hp.toLowerCase().includes(query));
-            let targetDate = parseIndonesianDate(m.berlaku);
-            let isExpired = targetDate ? (targetDate < today) : false;
-            if (statusFilter === 'active') return matchQuery && !isExpired && m.berlaku && m.berlaku !== '-';
-            if (statusFilter === 'expired') return matchQuery && isExpired;
-            return matchQuery;
-        });
-
-        let displayData = filtered;
-        if (pageSizeVal !== 'all') {
-            const limit = parseInt(pageSizeVal, 10);
-            displayData = filtered.slice(0, limit);
-        }
-        renderTable(displayData, filtered.length);
-    }
-
     function filterProsesData() {
         const query = document.getElementById('searchProsesInput').value.toLowerCase();
         const statusKtaVal = document.getElementById('statusKtaFilter').value;
@@ -2952,8 +2784,18 @@
         return (targetDate < today) ? `<div class="masa-berlaku-wrapper"><span class="fw-medium">${berlakuStr}</span> <span class="badge-status-expired"><i class="bi bi-x-circle-fill"></i> EXPIRED</span></div>` : `<div class="masa-berlaku-wrapper"><span class="fw-medium">${berlakuStr}</span> <span class="badge-status-aktif"><i class="bi bi-check-circle-fill"></i> AKTIF</span></div>`;
     }
 
+    // --- FITUR LOGIN DENGAN PROTEKSI KEAMANAN BLOKIR ---
     async function handleLogin(e) {
         e.preventDefault();
+
+        // 1. Cek apakah sedang diblokir
+        const lockout = checkLoginLockout();
+        if (lockout.isLocked) {
+            alert(`🚨 AKSES DIBLOKIR SEMENTARA!\n\nAnda telah 5x salah memasukkan login.\nSilakan tunggu ${lockout.mins}m ${lockout.secs}s lagi.`);
+            checkLoginSecurityUI();
+            return;
+        }
+
         const userInput = document.getElementById('loginUser').value.trim();
         const passInput = document.getElementById('loginPass').value.trim();
 
@@ -2964,7 +2806,7 @@
 
         let emailToAuth = userInput;
 
-        // Jika input bukan format email (tidak ada '@'), cari email berdasarkan username di Firestore
+        // Cari email jika user memasukkan Username
         if (!userInput.includes('@')) {
             try {
                 const userSnap = await db.collection("users").where("username", "==", userInput).get();
@@ -2975,7 +2817,7 @@
                     if (!userSnapLower.empty) {
                         emailToAuth = userSnapLower.docs[0].data().email;
                     } else {
-                        alert("Username tidak ditemukan. Silakan periksa kembali username atau gunakan email terdaftar.");
+                        recordFailedLoginAttempt();
                         return;
                     }
                 }
@@ -2988,16 +2830,10 @@
 
         try {
             await auth.signInWithEmailAndPassword(emailToAuth, passInput);
+            // Login sukses -> Reset percobaan salah
+            resetLoginAttempts();
         } catch (error) {
-            if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') {
-                alert("Email / Username atau Password yang Anda masukkan salah.");
-            } else if (error.code === 'auth/wrong-password') {
-                alert("Password yang Anda masukkan salah.");
-            } else if (error.code === 'auth/invalid-email') {
-                alert("Format email atau username tidak valid.");
-            } else {
-                alert("Login gagal: " + error.message);
-            }
+            recordFailedLoginAttempt();
         }
     }
 
@@ -3011,7 +2847,14 @@
         } catch (error) { alert("Gagal daftar: " + error.message); }
     }
 
-    async function handleLogout(msg = '') { await auth.signOut(); currentUser = null; checkAuthStatus(); if (msg) alert(msg); }
+    async function handleLogout(msg = '') { 
+        stopAfkTracker();
+        await auth.signOut(); 
+        currentUser = null; 
+        checkAuthStatus(); 
+        if (msg) alert(msg); 
+    }
+
     function showForgotPasswordModal() { document.getElementById('forgotContactInput').value = ''; forgotModal.show(); }
     async function requestResetViaEmail() {
         const email = document.getElementById('forgotContactInput').value.trim();
@@ -3056,13 +2899,16 @@
         alert('Profil berhasil diperbarui!');
         settingsModal.hide();
     }
+
     async function updateUserPassword() {
         const newPass = document.getElementById('newAccountPass').value.trim();
         if(newPass.length < 6) return alert('Password minimal 6 karakter!');
         await auth.currentUser.updatePassword(newPass);
         handleLogout('Password diperbarui, silakan login kembali.');
     }
+
     async function showActivityLogModal() { activityLogModal.show(); }
+
     function exportTableToExcel() {
         let tableId = (currentActiveView === 'ktaAktif') ? 'tableAnggotaExport' : 'tableProsesExport';
         let csv = [];
@@ -3133,7 +2979,6 @@
         innerContainer.innerHTML = `<div class="carousel-item active"><img src="${imgUrl}" class="d-block mx-auto rounded shadow" style="max-height: 75vh; object-fit: contain; width: 100%;"></div>`;
         imagePreviewModal.show();
     }
-
 </script>
 </body>
 </html>
