@@ -1,11 +1,12 @@
-const CACHE_NAME = 'obr-pwa-v8';
+const CACHE_NAME = 'obr-pwa-v9';
 const urlsToCache = [
   './',
   './index.html',
-  './manifest.json'
+  './manifest.json',
+  './LOGO OBR.png',
+  './LOGO CKR.jpeg'
 ];
 
-// Install Event
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
@@ -13,7 +14,6 @@ self.addEventListener('install', (event) => {
   self.skipWaiting();
 });
 
-// Activate Event
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -29,9 +29,7 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Fetch Event (Hanya cache method GET)
 self.addEventListener('fetch', (event) => {
-  // Abaikan request yang bukan GET (seperti POST, PUT, DELETE)
   if (event.request.method !== 'GET') {
     return;
   }
@@ -39,7 +37,6 @@ self.addEventListener('fetch', (event) => {
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        // Pastikan respons valid sebelum di-cache
         if (!response || response.status !== 200 || response.type !== 'basic') {
           return response;
         }
