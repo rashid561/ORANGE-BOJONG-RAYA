@@ -1,0 +1,21 @@
+{
+  "name": "Orange Bojong Raya",
+  "short_name": "OBR Portal",
+  "description": "Portal Manajemen KTA Orange Bojong Raya Sub Korwil Cengkareng",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#ff9900",
+  "icons": [
+    {
+      "src": "LOGO OBR.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "LOGO OBR.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
