@@ -823,11 +823,73 @@
             color: #ff9900;
         }
 
+        /* PENYESUAIAN RESPONSIF LOGO & HEADER MOBILE/IPAD */
+        @media (max-width: 767.98px) {
+            .app-logo {
+                width: 60px !important;
+                height: 60px !important;
+                border-width: 2px !important;
+            }
+            .nav-logo-brand {
+                height: 42px !important;
+                width: 42px !important;
+            }
+            .brand-title {
+                font-size: 2rem !important;
+            }
+            .brand-subtext {
+                font-size: 0.78rem !important;
+                padding: 3px 12px !important;
+            }
+            .card-header-persija {
+                padding: 16px 12px !important;
+            }
+        }
+
         @media (max-width: 575.98px) {
             body { font-size: 0.86rem; }
-            .brand-title { font-size: 1.85rem; }
-            .brand-subtext { font-size: 0.72rem; }
-            .persija-nav-bar { justify-content: start; }
+            .header-brand-container {
+                gap: 6px !important;
+            }
+            .app-logo {
+                width: 50px !important;
+                height: 50px !important;
+                border-width: 2px !important;
+                box-shadow: 0 3px 8px rgba(0,0,0,0.3) !important;
+            }
+            .nav-logo-brand {
+                height: 36px !important;
+                width: 36px !important;
+                border-width: 1.5px !important;
+            }
+            .brand-title { 
+                font-size: 1.65rem !important;
+                letter-spacing: 0.8px !important;
+            }
+            .brand-subtext { 
+                font-size: 0.7rem !important;
+                letter-spacing: 1px !important;
+                padding: 2px 10px !important;
+                margin-top: 3px !important;
+            }
+            .card-header-persija::after {
+                font-size: 3.2rem !important;
+                right: -5px !important;
+                bottom: -15px !important;
+            }
+            .persija-nav-bar { 
+                justify-content: start; 
+                padding: 5px 8px !important;
+                gap: 6px !important;
+            }
+            .persija-nav-link {
+                font-size: 0.95rem !important;
+                padding: 5px 12px !important;
+            }
+            .portal-logo {
+                width: 75px !important;
+                height: 75px !important;
+            }
             .persija-footer-top { flex-direction: column; align-items: flex-start; gap: 15px; }
             .persija-footer-bottom { flex-direction: column; text-align: center; }
             .persija-footer-bottom a { margin: 0 6px; }
