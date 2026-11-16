@@ -1,0 +1,2920 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <script>
+    /* Tema: ikut pilihan halaman utama (obr_theme). Dipilih sebelum halaman digambar supaya tidak berkedip. */
+    (function () {
+        function apply(t) {
+            t = (t === 'light') ? 'light' : 'dark';
+            var d = document.documentElement;
+            d.setAttribute('data-theme', t);
+            d.setAttribute('data-bs-theme', t);
+            var ic = document.getElementById('themeToggleIcon');
+            if (ic) ic.className = (t === 'light') ? 'bi bi-moon-stars-fill' : 'bi bi-sun-fill';
+        }
+        var saved = null;
+        try { saved = localStorage.getItem('obr_theme'); } catch (e) {}
+        var sys = (window.matchMedia && matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+        apply(saved || sys);
+        window.obrApplyTheme = apply;
+        /* Perubahan tema dari halaman utama (iframe) */
+        window.addEventListener('message', function (e) {
+            if (e.origin !== location.origin) return;
+            if (e.data && e.data.type === 'obr-theme') apply(e.data.theme);
+        });
+        /* Perubahan tema dari tab lain / halaman utama lewat localStorage */
+        window.addEventListener('storage', function (e) {
+            if (e.key === 'obr_theme' && e.newValue) apply(e.newValue);
+        });
+        /* Tombol tema (hanya saat halaman ini dibuka sendiri, di luar aplikasi) */
+        window.toggleThemeLocal = function () {
+            var next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            try { localStorage.setItem('obr_theme', next); } catch (e) {}
+            apply(next);
+        };
+    })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Persija, Info Nobar & Klasemen BRI Super League 2026-27 - Orange Bojong Raya</title>
+    
+    <!-- Bootstrap 5 CSS & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700;800;900&family=Teko:wght@600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-body: #0a0a0a;
+            --card-bg: #141414;
+            --card-border: #262626;
+            --orange-primary: #ff9900;
+            --orange-dark: #e65c00;
+            --orange-glow: rgba(255, 153, 0, 0.22);
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        /* CUSTOM NAVBAR */
+        .obr-navbar {
+            background-color: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--orange-primary);
+        }
+
+        /* HEADER BRANDING */
+        .page-header-box {
+            background: linear-gradient(135deg, #111111 0%, #2b1400 50%, #111111 100%);
+            border-bottom: 4px solid var(--orange-primary);
+            border-top: 2px solid var(--orange-primary);
+            padding: 24px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--orange-glow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header-box::after {
+            content: "PERSIJA DAY";
+            position: absolute;
+            right: -10px;
+            bottom: -20px;
+            font-size: 5.5rem;
+            font-weight: 900;
+            font-family: 'Bebas Neue', sans-serif;
+            color: rgba(255, 153, 0, 0.04);
+            pointer-events: none;
+            letter-spacing: 2px;
+        }
+
+        .header-title {
+            font-family: 'Teko', 'Bebas Neue', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.4rem);
+            line-height: 1;
+            letter-spacing: 1.5px;
+            color: var(--orange-primary);
+            text-transform: uppercase;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .header-subtitle {
+            font-size: clamp(0.85rem, 2vw, 1.05rem);
+            color: #d1d5db;
+            margin-bottom: 0;
+        }
+
+        /* HERO CARD NEXT MATCH */
+        .hero-match-card {
+            background: linear-gradient(145deg, #181818 0%, #0d0d0d 100%);
+            border: 2px solid var(--orange-primary);
+            border-radius: 24px;
+            box-shadow: 0 12px 35px var(--orange-glow);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-badge-top {
+            background-color: var(--orange-primary);
+            color: #111111;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 1.5px;
+            padding: 6px 20px;
+            border-bottom-right-radius: 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: bold;
+        }
+
+        .club-logo-box {
+            width: clamp(75px, 14vw, 105px);
+            height: clamp(75px, 14vw, 105px);
+            border-radius: 50%;
+            background: #202020;
+            border: 3px solid var(--orange-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+            flex-shrink: 0;
+            overflow: hidden;
+            padding: 8px;
+        }
+
+        .club-logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .vs-circle {
+            background: var(--orange-primary);
+            color: #111111;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.3rem;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            box-shadow: 0 0 14px rgba(255, 153, 0, 0.7);
+            flex-shrink: 0;
+        }
+
+        /* TEAM NAME STYLING - FULL UNTRUNCATED TEXT */
+        .team-title-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 800;
+            font-size: clamp(0.9rem, 2.5vw, 1.15rem);
+            line-height: 1.25;
+            white-space: normal !important;
+            word-break: break-word !important;
+            overflow-wrap: break-word !important;
+            max-width: 100%;
+            display: block;
+            margin-top: 6px;
+            margin-bottom: 2px;
+        }
+
+        /* COUNTDOWN TIMER STYLING */
+        .timer-box {
+            background: #111111;
+            border: 1px solid rgba(255, 153, 0, 0.4);
+            border-radius: 14px;
+            padding: 10px 14px;
+            text-align: center;
+            min-width: 65px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.6);
+        }
+
+        .timer-num {
+            font-family: 'Teko', sans-serif;
+            font-size: 2.2rem;
+            line-height: 0.9;
+            font-weight: 700;
+            color: var(--orange-primary);
+        }
+
+        .timer-label {
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            color: #94a3b8;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* NOBAR INFO BOX INSIDE HERO */
+        .nobar-details-box {
+            background: rgba(255, 153, 0, 0.05);
+            border: 1.5px dashed var(--orange-primary);
+            border-radius: 18px;
+            padding: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .nobar-details-box.off-state {
+            background: rgba(220, 53, 69, 0.05);
+            border-color: #dc3545;
+        }
+
+        .nobar-status-badge {
+            background-color: #198754;
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            padding: 6px 16px;
+            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            box-shadow: 0 0 12px rgba(25, 135, 84, 0.5);
+        }
+
+        .nobar-status-badge.off {
+            background-color: #dc3545;
+            box-shadow: 0 0 12px rgba(220, 53, 69, 0.5);
+        }
+
+        .nobar-item-label {
+            color: #94a3b8;
+            font-size: 0.78rem;
+            font-weight: 500;
+        }
+
+        .nobar-item-val {
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* MAIN SECTION VIEW TAB SWITCHER */
+        .main-tab-btn {
+            background-color: #181818;
+            color: #cccccc;
+            border: 2px solid #333333;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+            padding: 8px 24px;
+            border-radius: 30px;
+            transition: all 0.25s ease;
+        }
+
+        .main-tab-btn:hover, .main-tab-btn.active {
+            background-color: var(--orange-primary) !important;
+            color: #111111 !important;
+            border-color: var(--orange-primary) !important;
+            box-shadow: 0 4px 18px rgba(255, 153, 0, 0.4);
+        }
+
+        /* FILTER BUTTONS */
+        .filter-btn {
+            background-color: #1e1e1e;
+            color: #cccccc;
+            border: 1px solid #333333;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.05rem;
+            letter-spacing: 1px;
+            padding: 6px 18px;
+            border-radius: 30px;
+            transition: all 0.25s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--orange-primary) !important;
+            color: #111111 !important;
+            border-color: var(--orange-primary) !important;
+            box-shadow: 0 4px 15px rgba(255, 153, 0, 0.4);
+        }
+
+        /* MATCH LIST CARD */
+        .match-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 18px;
+            transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+            position: relative;
+        }
+
+        .match-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--orange-primary);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+        }
+
+        .small-logo-box {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: #202020;
+            border: 2px solid var(--orange-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            padding: 4px;
+            flex-shrink: 0;
+        }
+
+        .small-logo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .badge-result-win {
+            background-color: rgba(25, 135, 84, 0.2);
+            color: #20c997;
+            border: 1px solid #198754;
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .badge-result-draw {
+            background-color: rgba(108, 117, 125, 0.2);
+            color: #adb5bd;
+            border: 1px solid #6c757d;
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .badge-result-lose {
+            background-color: rgba(220, 53, 69, 0.2);
+            color: #ff6b6b;
+            border: 1px solid #dc3545;
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .score-box {
+            font-family: 'Teko', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1;
+            color: var(--orange-primary);
+            background: #111;
+            padding: 4px 16px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            flex-shrink: 0;
+        }
+
+        /* KLASEMEN TABLE STYLING */
+        .standings-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .standings-table {
+            color: #ffffff;
+            margin-bottom: 0;
+            width: 100%;
+            vertical-align: middle;
+        }
+
+        .standings-table th {
+            background-color: #111111;
+            color: var(--orange-primary);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.15rem;
+            letter-spacing: 1px;
+            padding: 14px 16px;
+            border-bottom: 2px solid var(--orange-primary);
+            text-align: center;
+        }
+
+        .standings-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #222222;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .standings-row-persija {
+            background: linear-gradient(90deg, rgba(255, 153, 0, 0.18) 0%, rgba(20, 20, 20, 0.95) 100%) !important;
+            border-left: 4px solid var(--orange-primary);
+        }
+
+        .form-badge {
+            width: 22px;
+            height: 22px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.7rem;
+            color: #ffffff;
+            margin: 0 1.5px;
+        }
+        .form-w { background-color: #198754; }
+        .form-l { background-color: #dc3545; }
+        .form-d { background-color: #6c757d; }
+
+        /* PULSE ANIMATION */
+        .pulse-dot {
+            width: 9px;
+            height: 9px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+            animation: pulse 1.6s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(255, 255, 255, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+        }
+
+        /* STATS COMPARISON BAR */
+        .stat-bar-container {
+            height: 10px;
+            background-color: #222222;
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+        }
+        .stat-bar-home {
+            background-color: var(--orange-primary);
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+        .stat-bar-away {
+            background-color: #0d6efd;
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+
+        /* LINEUP LIST STYLING */
+        .player-number {
+            width: 30px;
+            height: 30px;
+            background-color: var(--orange-primary);
+            color: #111111;
+            font-weight: 800;
+            font-family: 'Teko', sans-serif;
+            font-size: 1.2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .player-number.away {
+            background-color: #0d6efd;
+            color: #ffffff;
+        }
+
+        .extra-small {
+            font-size: 0.75rem;
+        }
+
+        /* LOGO PREVIEW THUMBNAILS IN ADMIN */
+        .logo-preview-thumb {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: contain;
+            background: #222;
+            border: 1px solid var(--orange-primary);
+        }
+
+        @media (max-width: 575.98px) {
+            .hero-badge-top { font-size: 0.95rem; padding: 5px 14px; }
+            .timer-box { min-width: 55px; padding: 6px 8px; }
+            .timer-num { font-size: 1.7rem; }
+            .nobar-details-box { padding: 14px; }
+            .standings-table th, .standings-table td { padding: 8px 6px; font-size: 0.8rem; }
+        }
+
+        /* ===== DETAIL LAGA: tombol Kembali / Tutup selalu terlihat ===== */
+        .detail-topbar { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; background: #000; border-bottom: 1px solid #444; }
+        .detail-back-btn { min-height: 42px; display: inline-flex; align-items: center; }
+        .detail-topbar-title { font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px; color: var(--orange-primary); font-size: 1.15rem; white-space: nowrap; }
+        .detail-close-btn { box-sizing: content-box; width: 1.1em; height: 1.1em; padding: 0.6em !important; }
+        #matchDetailTabs { flex-wrap: nowrap; }
+        #matchDetailTabs .nav-link { white-space: nowrap; font-size: 0.8rem; padding-left: 0.3rem; padding-right: 0.3rem; }
+
+        /* ===== TAMPILAN HP & TABLET ===== */
+        @media (max-width: 767.98px) {
+            #matchDetailModal .modal-content { overflow-y: auto !important; border-radius: 0 !important; }
+            #matchDetailModal .modal-body { overflow: visible; }
+            #matchDetailModal .modal-footer { position: sticky; bottom: 0; z-index: 10; }
+            .main-tabs-row .main-tab-btn { flex: 1; font-size: 1.05rem; padding: 10px 8px; }
+            .filter-row { flex-wrap: nowrap !important; overflow-x: auto; width: 100%; padding-bottom: 6px; -webkit-overflow-scrolling: touch; }
+            .filter-row .filter-btn { flex: 0 0 auto; white-space: nowrap; padding: 8px 14px; font-size: 1rem; }
+            .page-header-box { padding: 16px 14px; border-radius: 16px; }
+            .page-header-box::after { font-size: 3.5rem; }
+            .match-card .btn, .hero-match-card .btn { min-height: 40px; }
+        }
+        @media (max-width: 575.98px) {
+            .header-title { font-size: clamp(1.4rem, 6.4vw, 1.9rem); line-height: 1.05; }
+            .col-form { display: none; }
+            .obr-navbar .navbar-brand span { display: none; }
+            #matchDetailTabs .nav-link .bi { display: none; }
+        }
+        /* Di dalam aplikasi OBR, bar atas halaman ini disembunyikan untuk anggota biasa (sudah ada bar aplikasi) */
+        body.in-app:not(.is-admin) .obr-navbar { display: none; }
+
+        /* Pengurangan poin (sanksi) di klasemen */
+        .deduct-badge { font-size: 0.65rem; color: #ff6b6b; font-weight: 700; line-height: 1; margin-top: 2px; }
+
+        /* Kontrol admin disembunyikan untuk anggota biasa */
+        body:not(.is-admin) .admin-only { display: none !important; }
+
+        /* =====================================================================
+           TEMA TERANG / GELAP + TAMPILAN BARU
+           ===================================================================== */
+        :root, [data-theme="dark"] {
+            color-scheme: dark;
+            --bg-body: #0b0b0c;
+            --card-bg: #151516;
+            --card-border: #2a2a2d;
+            --surface-2: #1b1b1d;
+            --surface-3: #242427;
+            --text-main: #f5f5f6;
+            --text-soft: #d4d4d8;
+            --text-muted: #9ca3af;
+            --orange-text: #ffa81f;
+            --win-color: #20c997;
+            --hero-bg: linear-gradient(145deg, #1a1a1c 0%, #0e0e0f 100%);
+            --header-bg: linear-gradient(135deg, #151515 0%, #2b1500 55%, #151515 100%);
+            --nav-bg: rgba(16, 16, 17, 0.92);
+            --topbar-bg: #0e0e0f;
+            --thead-bg: #101011;
+            --row-border: #26262a;
+            --row-hover: rgba(255, 153, 0, 0.07);
+            --persija-row: linear-gradient(90deg, rgba(255,153,0,.20) 0%, rgba(255,153,0,.04) 100%);
+            --timer-bg: #101011;
+            --bar-bg: #2a2a2d;
+            --score-bg: #101011;
+            --shadow-card: 0 10px 28px rgba(0, 0, 0, 0.45);
+            --nobar-bg: rgba(255, 153, 0, 0.06);
+        }
+        [data-theme="light"] {
+            color-scheme: light;
+            --bg-body: #f4f6f9;
+            --card-bg: #ffffff;
+            --card-border: #e4e7ec;
+            --surface-2: #f7f8fa;
+            --surface-3: #eceff3;
+            --text-main: #1f2937;
+            --text-soft: #374151;
+            --text-muted: #667085;
+            --orange-text: #b34a00;
+            --win-color: #0f766e;
+            --orange-glow: rgba(255, 153, 0, 0.20);
+            --hero-bg: linear-gradient(145deg, #ffffff 0%, #fff5ea 100%);
+            --header-bg: linear-gradient(135deg, #ffffff 0%, #fff3e3 55%, #ffe6c8 100%);
+            --nav-bg: rgba(255, 255, 255, 0.96);
+            --topbar-bg: #ffffff;
+            --thead-bg: #1a1a1a;
+            --row-border: #edf0f3;
+            --row-hover: #fff6ec;
+            --persija-row: linear-gradient(90deg, rgba(255,153,0,.22) 0%, rgba(255,153,0,.05) 100%);
+            --timer-bg: #fff;
+            --bar-bg: #e5e7eb;
+            --score-bg: #fff7ed;
+            --shadow-card: 0 8px 24px rgba(16, 24, 40, 0.08);
+            --nobar-bg: #fff8ef;
+        }
+
+        body { background-color: var(--bg-body); color: var(--text-main); }
+        @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+        .min-w-0 { min-width: 0; }
+
+        /* ---------- Navbar atas ---------- */
+        .obr-navbar { background-color: var(--nav-bg); }
+        .theme-toggle-btn {
+            width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0; margin-left: auto; margin-right: 10px;
+            background: var(--surface-3); color: var(--orange-text); border: 1px solid var(--card-border);
+            display: inline-flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer;
+        }
+        .theme-toggle-btn:hover { border-color: var(--orange-primary); }
+        body.in-app .theme-toggle-btn { display: none; }
+
+        /* ---------- Header halaman ---------- */
+        .page-header-box {
+            background: var(--header-bg);
+            border: 1px solid var(--card-border);
+            border-top: 3px solid var(--orange-primary);
+            border-bottom: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 20px 22px;
+            box-shadow: var(--shadow-card);
+        }
+        .page-header-box::after { color: rgba(255, 153, 0, 0.06); }
+        .header-icon {
+            width: 54px; height: 54px; flex-shrink: 0; border-radius: 16px;
+            background: linear-gradient(145deg, var(--orange-primary), var(--orange-dark));
+            color: #111; display: flex; align-items: center; justify-content: center; font-size: 1.6rem;
+            box-shadow: 0 6px 16px var(--orange-glow);
+        }
+        .header-eyebrow {
+            display: inline-block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.14em;
+            color: var(--orange-text); margin-bottom: 4px;
+        }
+        .header-title {
+            font-size: clamp(1.45rem, 3.4vw, 2.3rem); line-height: 1.05; text-shadow: none;
+            color: var(--orange-text); letter-spacing: 1px;
+        }
+        .header-subtitle { color: var(--text-muted); font-size: clamp(0.8rem, 1.8vw, 0.95rem); line-height: 1.5; }
+
+        /* ---------- Kartu laga terdekat ---------- */
+        .hero-match-card {
+            background: var(--hero-bg);
+            border: 1px solid var(--card-border);
+            border-top: 3px solid var(--orange-primary);
+            border-radius: 20px;
+            box-shadow: var(--shadow-card);
+        }
+        .club-logo-box { background: var(--surface-3); box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+        .team-title-text { color: var(--text-main); }
+        .timer-box { background: var(--timer-bg); border: 1px solid var(--card-border); box-shadow: none; }
+        .timer-num { color: var(--orange-text); }
+        .timer-label { color: var(--text-muted); }
+        #countdownContainer { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; max-width: 360px; }
+        #countdownContainer .timer-box { min-width: 0; padding: 10px 6px; }
+        .nobar-details-box { background: var(--nobar-bg); border: 1.5px dashed var(--orange-primary); border-radius: 16px; }
+        .nobar-details-box.off-state { background: rgba(220, 53, 69, 0.06); border-color: #dc3545; }
+        .nobar-item-label { color: var(--text-muted); }
+        .nobar-item-val { color: var(--text-main); }
+        .vs-circle { box-shadow: 0 4px 12px rgba(255, 153, 0, 0.45); }
+
+        /* ---------- Tab utama (segmented) & filter ---------- */
+        .seg-tabs {
+            display: flex; gap: 4px; padding: 4px; max-width: 520px; margin-inline: auto;
+            background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 999px;
+            box-shadow: var(--shadow-card);
+        }
+        .seg-tabs .main-tab-btn {
+            flex: 1; border: 0 !important; background: transparent; color: var(--text-muted);
+            font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.82rem; letter-spacing: 0.04em;
+            padding: 10px 14px; border-radius: 999px; white-space: nowrap;
+        }
+        .seg-tabs .main-tab-btn:hover:not(.active) { background: var(--surface-3) !important; color: var(--text-main) !important; box-shadow: none; }
+        .seg-tabs .main-tab-btn.active { background: var(--orange-primary) !important; color: #111 !important; box-shadow: 0 4px 14px rgba(255,153,0,.4); }
+        .filter-btn {
+            background: var(--surface-2); color: var(--text-soft); border: 1px solid var(--card-border);
+            font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.76rem; letter-spacing: 0.03em;
+            padding: 7px 14px; border-radius: 999px;
+        }
+        .filter-row .filter-btn:hover:not(.active) { background: var(--surface-3) !important; color: var(--text-main) !important; border-color: var(--card-border) !important; box-shadow: none; }
+        .filter-btn.active { background: var(--orange-primary) !important; color: #111 !important; border-color: var(--orange-primary) !important; box-shadow: 0 3px 10px rgba(255,153,0,.35); }
+        .main-tab-btn:focus-visible, .filter-btn:focus-visible, .theme-toggle-btn:focus-visible { outline: 2px solid var(--orange-primary); outline-offset: 2px; }
+
+        /* ---------- Kartu pertandingan ---------- */
+        .match-card {
+            background: var(--card-bg); border: 1px solid var(--card-border); border-left: 4px solid var(--card-border);
+            border-radius: 16px; padding: 16px; box-shadow: var(--shadow-card);
+        }
+        .match-card:hover { transform: translateY(-2px); border-color: var(--orange-primary); box-shadow: var(--shadow-card); }
+        .match-card.is-next { border-left-color: var(--orange-primary); }
+        .match-card.res-win { border-left-color: #198754; }
+        .match-card.res-draw { border-left-color: #6c757d; }
+        .match-card.res-lose { border-left-color: #dc3545; }
+        .match-card .team-title-text { margin: 0; }
+        .match-card .score-box { min-width: 64px; text-align: center; }
+        .score-box { background: var(--score-bg); border: 1px solid var(--card-border); color: var(--orange-text); }
+        .small-logo-box { background: var(--surface-3); }
+        .match-card .border-top > span { min-width: 0; }
+        @media (max-width: 575.98px) {
+            .match-card .border-top.d-flex { flex-wrap: wrap; gap: 4px; }
+            .match-card .border-top .text-truncate { max-width: 100% !important; }
+        }
+        .badge-result-win { color: var(--win-color); }
+        @media (max-width: 575.98px) {
+            .page-header-box::after { display: none; }
+            .standings-table { min-width: 0; table-layout: fixed; }
+            .standings-table th:first-child { width: 36px !important; }
+            .standings-table th:nth-child(3), .standings-table td:nth-child(3) { display: none; } /* MAIN = M+S+K, disembunyikan di HP */
+            .standings-table th:nth-child(n+4):nth-child(-n+7) { width: 34px; }
+            .standings-table th:nth-child(8) { width: 40px; }
+            .standings-table th:nth-child(10) { width: 70px; }
+            .standings-table th, .standings-table td { letter-spacing: 0; font-size: .78rem; }
+            .standings-table td:nth-child(2) .fw-bold { font-size: .78rem !important; line-height: 1.2; word-break: break-word; }
+            .rank-pill { min-width: 24px; height: 24px; font-size: 1rem; }
+            .standings-table th { font-size: .82rem; padding: 10px 2px; }
+            .standings-table td { padding: 8px 2px; }
+            .standings-table .small-logo-box { display: none; }
+            .standings-card .text-warning.fs-5 { font-size: 1.3rem !important; }
+        }
+
+        /* ---------- Klasemen ---------- */
+        .standings-card { background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: var(--shadow-card); border-radius: 18px; }
+        .standings-card .table-responsive { max-height: 72vh; overflow: auto; }
+        .standings-table { color: var(--text-main); --bs-table-bg: transparent; --bs-table-color: var(--text-main); }
+        .standings-table > :not(caption) > * > * { background-color: transparent; color: inherit; box-shadow: none; }
+        .standings-table th { background-color: var(--thead-bg) !important; color: var(--orange-primary) !important; position: sticky; top: 0; z-index: 2; font-size: 1.05rem; padding: 12px 10px; }
+        .standings-card .standings-table thead th,
+        .standings-card .standings-table thead th.text-warning { color: var(--orange-primary) !important; }
+        .standings-table td { border-bottom: 1px solid var(--row-border); padding: 10px 10px; }
+        .standings-table tbody tr:hover > td { background-color: var(--row-hover); }
+        .standings-row-persija { background: var(--persija-row) !important; }
+        .standings-row-persija td:first-child { box-shadow: inset 4px 0 0 var(--orange-primary); }
+        .rank-pill {
+            display: inline-flex; align-items: center; justify-content: center; min-width: 28px; height: 28px; border-radius: 8px;
+            font-family: 'Teko', sans-serif; font-weight: 700; font-size: 1.1rem; line-height: 1;
+            background: var(--surface-3); color: var(--text-soft);
+        }
+        .rank-pill.top { background: var(--orange-primary); color: #111; }
+        @media (min-width: 576px) { .standings-table { min-width: 560px; } }
+        .standings-card .text-warning.fs-5 { font-family: 'Teko', sans-serif; font-size: 1.5rem !important; }
+        .stat-bar-container { background-color: var(--bar-bg); }
+
+        /* ---------- Detail laga, modal, form ---------- */
+        .detail-topbar { background: var(--topbar-bg); border-bottom: 1px solid var(--card-border); }
+
+        /* ---------- MODE TERANG: timpa kelas Bootstrap yang warnanya dikunci gelap ---------- */
+        [data-theme="light"] .bg-black,
+        [data-theme="light"] .bg-dark { background-color: var(--surface-2) !important; }
+        [data-theme="light"] .modal-content.bg-dark { background-color: var(--card-bg) !important; }
+        [data-theme="light"] .modal-header.bg-black,
+        [data-theme="light"] .modal-footer.bg-black,
+        [data-theme="light"] .nav-tabs.bg-black { background-color: var(--surface-2) !important; }
+        [data-theme="light"] .text-white,
+        [data-theme="light"] .text-light { color: var(--text-main) !important; }
+        [data-theme="light"] .text-white-50 { color: var(--text-muted) !important; }
+        [data-theme="light"] .text-secondary,
+        [data-theme="light"] .text-muted { color: var(--text-muted) !important; }
+        [data-theme="light"] .text-warning { color: var(--orange-text) !important; }
+        [data-theme="light"] .btn-warning .text-warning,
+        [data-theme="light"] .badge.bg-warning.text-warning { color: #111 !important; }
+        [data-theme="light"] .border-secondary { border-color: var(--card-border) !important; }
+        [data-theme="light"] .btn-close-white { filter: none; }
+        [data-theme="light"] .obr-navbar .navbar-brand { color: var(--orange-text) !important; }
+        [data-theme="light"] .badge.bg-dark.text-warning.border-warning { border-color: var(--orange-primary) !important; }
+        [data-theme="light"] .nav-tabs .nav-link { color: var(--text-muted); }
+        [data-theme="light"] .nav-tabs .nav-link.active { color: var(--orange-text); background: var(--card-bg); border-color: var(--card-border) var(--card-border) var(--card-bg); }
+        [data-theme="light"] .form-control,
+        [data-theme="light"] .form-select { background-color: #fff; color: var(--text-main); border-color: #d0d5dd; }
+        [data-theme="light"] .form-control:focus,
+        [data-theme="light"] .form-select:focus { border-color: var(--orange-primary); box-shadow: 0 0 0 .2rem rgba(255,153,0,.2); }
+        [data-theme="light"] .form-control.bg-dark,
+        [data-theme="light"] .form-control.text-warning { background-color: #fff !important; }
+        [data-theme="light"] .btn-outline-warning { --bs-btn-color: #b34a00; --bs-btn-border-color: #e07b00; --bs-btn-hover-bg: #ff9900; --bs-btn-hover-border-color: #ff9900; --bs-btn-hover-color: #111; --bs-btn-active-bg: #ff9900; --bs-btn-active-color: #111; }
+        [data-theme="light"] .btn-outline-info { --bs-btn-color: #0b6e8a; --bs-btn-border-color: #0b6e8a; --bs-btn-hover-bg: #0b6e8a; --bs-btn-hover-border-color: #0b6e8a; --bs-btn-hover-color: #fff; --bs-btn-active-bg: #0b6e8a; --bs-btn-active-color: #fff; }
+        [data-theme="light"] .btn-outline-light { --bs-btn-color: #374151; --bs-btn-border-color: #98a2b3; --bs-btn-hover-bg: #374151; --bs-btn-hover-border-color: #374151; --bs-btn-hover-color: #fff; --bs-btn-active-bg: #374151; --bs-btn-active-color: #fff; }
+        [data-theme="light"] .badge-result-draw { color: #475467; }
+        [data-theme="light"] .badge-result-lose { color: #b42318; }
+        [data-theme="light"] .deduct-badge { color: #b42318; }
+        [data-theme="light"] .pulse-dot { background-color: #fff; }
+        [data-theme="light"] .hero-badge-top { color: #111; }
+        [data-theme="light"] .page-header-box::after { color: rgba(255, 153, 0, 0.10); }
+        [data-theme="light"] .modal-content { box-shadow: 0 20px 50px rgba(16,24,40,.25) !important; }
+    </style>
+</head>
+<body>
+
+<!-- STICKY TOP NAVBAR -->
+<nav class="navbar navbar-dark sticky-top obr-navbar mb-3 py-2">
+    <div class="container d-flex justify-content-between align-items-center" style="max-width: 1100px;">
+        <a class="navbar-brand d-flex align-items-center gap-2 fw-bold text-warning font-monospace fs-6" href="#">
+            <i class="bi bi-shield-fill-check text-warning fs-5"></i>
+            <span>OBR SUB KORWIL CENGKARENG</span>
+        </a>
+        <button type="button" class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleThemeLocal()" title="Ganti mode terang / gelap" aria-label="Ganti mode terang atau gelap">
+            <i id="themeToggleIcon" class="bi bi-sun-fill"></i>
+        </button>
+        <div class="d-flex gap-2 admin-only">
+            <button class="btn btn-warning text-dark fw-bold btn-sm rounded-pill px-3 shadow-sm" onclick="openMatchEditModal(null)">
+                <i class="bi bi-plus-lg me-1"></i> Tambah Laga
+            </button>
+            <button class="btn btn-outline-warning btn-sm rounded-pill px-3 fw-bold" onclick="openStandingsEditModal(null)">
+                <i class="bi bi-trophy me-1"></i> Kelola Klasemen
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="container max-w-100" style="max-width: 1100px;">
+
+    <!-- HEADER SECTION -->
+    <div class="page-header-box mb-4">
+        <div class="d-flex align-items-center gap-3">
+            <div class="header-icon">
+                <i class="bi bi-fire"></i>
+            </div>
+            <div class="min-w-0">
+                <span class="header-eyebrow">OFFICIAL &bull; ORANGE BOJONG RAYA</span>
+                <h1 class="header-title mb-1">JADWAL PERSIJA, INFO NOBAR & KLASEMEN BRI SUPER LEAGUE 2026-27</h1>
+                <p class="header-subtitle">Pantau laga terdekat Persija, lokasi &amp; info nobar resmi OBR, serta klasemen terbaru. Semua selalu diperbarui langsung oleh admin.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 1: HERO CARD AUTOMATED NEXT MATCH & NOBAR -->
+    <div class="hero-match-card mb-4">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div class="hero-badge-top">
+                <i class="bi bi-lightning-charge-fill me-1"></i> LAGA TERDEKAT (NEXT MATCH)
+            </div>
+            <div class="d-flex align-items-center gap-2 me-3 my-2" id="heroActionHeader">
+                <span class="badge bg-dark text-warning border border-warning rounded-pill px-3 py-1.5 font-monospace" style="font-size: 0.75rem;" id="heroPekanBadge">BRI SUPER LEAGUE 2026/2027</span>
+                <button class="btn btn-outline-info btn-sm rounded-pill px-2.5 py-1 extra-small fw-bold admin-only" id="heroEditBtn" onclick="openMatchEditModal(currentNextMatch ? currentNextMatch.id : null)" title="Edit Laga Terdekat">
+                    <i class="bi bi-pencil-square me-1"></i> Edit
+                </button>
+                <button class="btn btn-outline-danger btn-sm rounded-pill px-2.5 py-1 extra-small fw-bold admin-only" id="heroDeleteBtn" onclick="promptDeleteMatch(currentNextMatch ? currentNextMatch.id : null)" title="Hapus Laga Terdekat">
+                    <i class="bi bi-trash me-1"></i> Hapus
+                </button>
+            </div>
+        </div>
+
+        <div class="p-3 p-md-4">
+            <div class="row align-items-center g-4" id="heroMatchContent">
+                <!-- SISI KIRI: MATCH INFO, LOGO KLUB & NAMA LENGKAP -->
+                <div class="col-lg-7">
+                    <div class="text-center text-lg-start mb-3">
+                        <span class="text-warning fw-bold small text-uppercase font-monospace d-block mb-1" id="heroStadiumDisplay">
+                            <i class="bi bi-geo-alt-fill me-1"></i> Stadion & Pekan Pertandingan
+                        </span>
+                        <h4 class="fw-bold text-white mt-1 mb-0" style="font-size: 1.3rem;" id="heroDateDisplay">Minggu, 01 Nov 2026 &bull; 19:00 WIB</h4>
+                    </div>
+
+                    <!-- KLUB LOGO & VS (FULL UNTRUNCATED TEAM NAMES) -->
+                    <div class="d-flex align-items-center justify-content-center justify-content-lg-start gap-3 my-4">
+                        <div class="text-center flex-grow-1" style="max-width: 150px;">
+                            <div class="club-logo-box mx-auto mb-2" id="heroHomeLogoContainer">
+                                <!-- Logo rendered dynamically -->
+                            </div>
+                            <span class="team-title-text text-white" id="heroHomeName">DEWA UNITED FC</span>
+                            <small class="text-muted d-block mt-1">Tuan Rumah</small>
+                        </div>
+
+                        <div class="vs-circle mx-1">VS</div>
+
+                        <div class="text-center flex-grow-1" style="max-width: 150px;">
+                            <div class="club-logo-box mx-auto mb-2" id="heroAwayLogoContainer">
+                                <!-- Logo rendered dynamically -->
+                            </div>
+                            <span class="team-title-text text-warning" id="heroAwayName">PERSIJA JAKARTA</span>
+                            <small class="text-muted d-block mt-1">Tim Tamu</small>
+                        </div>
+                    </div>
+
+                    <!-- COUNTDOWN TIMER -->
+                    <div class="mt-4 text-center text-lg-start">
+                        <small class="text-white-50 font-monospace d-block mb-2 text-uppercase fw-semibold" style="letter-spacing: 1px;">
+                            <i class="bi bi-stopwatch text-warning me-1"></i> HITUNG MUNDUR KICK-OFF:
+                        </small>
+                        <div class="d-flex justify-content-center justify-content-lg-start gap-2" id="countdownContainer">
+                            <div class="timer-box">
+                                <div class="timer-num" id="cdDays">00</div>
+                                <div class="timer-label">HARI</div>
+                            </div>
+                            <div class="timer-box">
+                                <div class="timer-num" id="cdHours">00</div>
+                                <div class="timer-label">JAM</div>
+                            </div>
+                            <div class="timer-box">
+                                <div class="timer-num" id="cdMinutes">00</div>
+                                <div class="timer-label">MENIT</div>
+                            </div>
+                            <div class="timer-box">
+                                <div class="timer-num" id="cdSeconds">00</div>
+                                <div class="timer-label">DETIK</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SISI KANAN: KOTAK INFO NOBAR RESMI OBR -->
+                <div class="col-lg-5">
+                    <div class="nobar-details-box shadow-sm" id="nobarCardContainer">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="fw-bold text-uppercase text-warning" style="font-size: 0.95rem;">
+                                <i class="bi bi-tv-fill me-1"></i> INFO NOBAR OBR
+                            </span>
+                            <span class="nobar-status-badge" id="displayNobarStatusBadge">
+                                <span class="pulse-dot"></span> <span id="displayNobarStatusText">NOBAR</span>
+                            </span>
+                        </div>
+
+                        <!-- AREA INFORMASI DYNAMIC CONDITIONAL -->
+                        <div class="vstack gap-2.5 mb-3">
+                            <div id="nobarDetailsActiveGroup">
+                                <div class="mb-2">
+                                    <span class="nobar-item-label d-block"><i class="bi bi-geo-alt text-warning me-1"></i> Lokasi Nobar:</span>
+                                    <span class="nobar-item-val d-block text-warning" id="displayNobarLokasi">Basecamp Orange Bojong Raya</span>
+                                </div>
+                                <div class="row g-2 mb-2">
+                                    <div class="col-6">
+                                        <span class="nobar-item-label d-block"><i class="bi bi-clock me-1 text-warning"></i> Open Gate:</span>
+                                        <span class="nobar-item-val" id="displayNobarGate">18:00 WIB</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span class="nobar-item-label d-block"><i class="bi bi-ticket-perforated me-1 text-warning"></i> HTM / Order:</span>
+                                        <span class="nobar-item-val" id="displayNobarHtm">Min. Order Drink</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- NOTE PANITIA -->
+                            <div class="p-2.5 rounded-3 bg-black border border-secondary border-opacity-50">
+                                <span class="nobar-item-label d-block mb-1"><i class="bi bi-card-text me-1 text-warning"></i> Note:</span>
+                                <span class="small text-light italic d-block" id="displayNobarNote">"Bawa semangat, jaga ketertiban bersama & ramaikan!"</span>
+                            </div>
+                        </div>
+
+                        <!-- TOMBOL GOOGLE MAPS -->
+                        <div class="d-grid gap-2" id="nobarActionButtonsGroup">
+                            <a id="btnGmapsDirections" href="#" target="_blank" class="btn btn-outline-light rounded-pill btn-sm py-2 font-monospace" style="font-size: 0.85rem;">
+                                <i class="bi bi-map-fill me-1 text-warning"></i> Buka Petunjuk Arah Google Maps
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN VIEW MODE SWITCHER TABS (PERTANDINGAN VS KLASEMEN) -->
+    <div class="seg-tabs mb-4 main-tabs-row" role="tablist">
+        <button class="main-tab-btn active" role="tab" id="tabBtnFixtures" onclick="switchMainTab('fixtures')">
+            <i class="bi bi-calendar3 me-1"></i> JADWAL & NOBAR
+        </button>
+        <button class="main-tab-btn" role="tab" id="tabBtnStandings" onclick="switchMainTab('standings')">
+            <i class="bi bi-trophy-fill me-1"></i> KLASEMEN LIGA
+        </button>
+    </div>
+
+    <!-- VIEW 1: DAFTAR PERTANDINGAN PERSIJA -->
+    <div id="viewFixturesSection">
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+            <h4 class="fw-bold text-uppercase m-0" style="font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 1px;">
+                <i class="bi bi-calendar3 text-warning me-2"></i> PERTANDINGAN PERSIJA
+            </h4>
+            
+            <div class="d-flex gap-2 flex-wrap filter-row">
+                <button class="btn filter-btn active" onclick="filterMatch('all', this)">SEMUA LAGA</button>
+                <button class="btn filter-btn" onclick="filterMatch('upcoming', this)">LAGA MENDATANG</button>
+                <button class="btn filter-btn" onclick="filterMatch('results', this)">HASIL LAGA (RESULTS)</button>
+            </div>
+        </div>
+
+        <!-- DAFTAR MATCH CARDS -->
+        <div class="row g-3" id="matchContainer">
+            <!-- Dynamic Cards -->
+        </div>
+    </div>
+
+    <!-- VIEW 2: KLASEMEN LIGA (STANDINGS TABLE - 18 TIM LIGA 1) -->
+    <div id="viewStandingsSection" style="display: none;">
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+            <h4 class="fw-bold text-uppercase m-0" style="font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 1px;">
+                <i class="bi bi-trophy-fill text-warning me-2"></i> KLASEMEN BRI SUPER LEAGUE 2026/2027 (18 KLUB)
+            </h4>
+            <button class="btn btn-warning text-dark btn-sm rounded-pill fw-bold px-3 shadow-sm admin-only" onclick="openStandingsEditModal(null)">
+                <i class="bi bi-plus-lg me-1"></i> Tambah Tim
+            </button>
+        </div>
+
+        <div class="standings-card mb-4">
+            <div class="table-responsive">
+                <table class="table align-middle standings-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 45px;">#</th>
+                            <th class="text-start">KLUB</th>
+                            <th>MAIN</th>
+                            <th>M</th>
+                            <th>S</th>
+                            <th>K</th>
+                            <th>SG</th>
+                            <th class="text-warning">POIN</th>
+                            <th class="col-form">5 LAGA TERAKHIR</th>
+                            <th class="admin-only">AKSI</th>
+                        </tr>
+                    </thead>
+                    <tbody id="standingsTableBody">
+                        <!-- Dynamic Standings Rows -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="extra-small text-muted px-3 pt-2">M = Menang &bull; S = Seri &bull; K = Kalah &bull; SG = Selisih Gol</div>
+            <div id="standingsNotes" class="px-3 pb-3 pt-1"></div>
+        </div>
+    </div>
+
+</div>
+
+<!-- MODAL FORM TAMBAH / EDIT PERTANDINGAN -->
+<div class="modal fade" id="matchEditModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content border-0 bg-dark text-white rounded-4 shadow-lg border border-warning">
+            <div class="modal-header border-bottom border-warning py-3">
+                <h5 class="modal-title fw-bold text-warning m-0" id="matchEditModalTitle">
+                    <i class="bi bi-plus-circle me-2"></i> Kelola Pertandingan
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4 small">
+                <form id="matchForm" onsubmit="handleSaveMatch(event)">
+                    <input type="hidden" id="matchId">
+
+                    <!-- READ-ONLY SUMMARY HEADER FOR COMPLETED MATCHES -->
+                    <div id="completedMatchNotice" class="p-3 bg-black rounded-3 mb-3 border border-warning" style="display:none;">
+                        <div class="d-flex justify-content-between align-items-center mb-2 border-bottom border-secondary pb-2">
+                            <span class="badge bg-warning text-dark font-monospace fw-bold" id="summaryPekan">PEKAN KE-10</span>
+                            <span class="badge bg-danger text-white font-monospace"><i class="bi bi-check-circle-fill me-1"></i> LAGA TELAH SELESAI</span>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-around my-2 text-center">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="small-logo-box" id="summaryHomeLogo"></div>
+                                <span class="fw-bold text-warning text-uppercase" id="summaryHomeName">PERSIJA</span>
+                            </div>
+                            <span class="fw-bold text-muted px-2 fs-5">VS</span>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="fw-bold text-white text-uppercase" id="summaryAwayName">PERSIK</span>
+                                <div class="small-logo-box" id="summaryAwayLogo"></div>
+                            </div>
+                        </div>
+                        <div class="text-center extra-small text-muted border-top border-secondary pt-2 mt-2">
+                            <i class="bi bi-geo-alt text-warning me-1"></i> <span id="summaryStadium">SUGBK Jakarta</span> &bull; 
+                            <i class="bi bi-calendar-event text-warning me-1"></i> <span id="summaryDate">26 Okt 2026</span> (<span id="summaryTime">19:00 WIB</span>)
+                        </div>
+                    </div>
+
+                    <!-- 1. JADWAL & WAKTU REALTIME (FORMAT 24 JAM) -->
+                    <div class="p-3 bg-black rounded-3 mb-3 border border-secondary" id="sectionMainInfo">
+                        <h6 class="fw-bold text-warning mb-2"><i class="bi bi-calendar-event-fill me-1"></i> 1. Tanggal & Waktu Realtime (Format 24 Jam)</h6>
+                        <div class="row g-2 mb-2">
+                            <div class="col-md-7">
+                                <label class="form-label text-secondary mb-1">Pilih Tanggal & Jam Kick-off (24 Jam):</label>
+                                <input type="datetime-local" id="matchDatetime" class="form-control form-control-sm rounded-3 py-2 fw-bold text-warning bg-dark border-warning" required onchange="autoFormatTimeDisplay(this.value)">
+                            </div>
+                            <div class="col-md-5">
+                                <label class="form-label text-secondary mb-1">Format Teks Jam Kick-off (24h):</label>
+                                <input type="text" id="matchTimeDisplay" class="form-control form-control-sm rounded-3 py-2" placeholder="Contoh: 19:00 WIB" required>
+                            </div>
+                        </div>
+
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label class="form-label text-secondary mb-1">Stadion & Kota:</label>
+                                <input type="text" id="matchStadium" class="form-control form-control-sm rounded-3" placeholder="Contoh: Banten International Stadium" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-secondary mb-1">Pekan / Kompetisi:</label>
+                                <input type="text" id="matchPekan" class="form-control form-control-sm rounded-3" placeholder="PEKAN KE-11 • BRI SUPER LEAGUE" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. TIM BERTANDING & UPLOAD LOGO KEDUA TIM -->
+                    <div class="p-3 bg-black rounded-3 mb-3 border border-secondary" id="sectionTeamsInfo">
+                        <h6 class="fw-bold text-warning mb-2"><i class="bi bi-shield-fill-check me-1"></i> 2. Tim Bertanding & Upload Logo</h6>
+                        
+                        <!-- TIM HOME -->
+                        <div class="p-2.5 rounded-3 bg-dark border border-secondary mb-3">
+                            <label class="form-label text-warning fw-bold mb-1">Tim Home (Tuan Rumah):</label>
+                            <input type="text" id="matchHomeTeam" class="form-control form-control-sm rounded-3 mb-2" value="DEWA UNITED BANTEN FC" required>
+                            
+                            <div class="row g-2 align-items-center">
+                                <div class="col-sm-6">
+                                    <label class="form-label text-secondary extra-small mb-1"><i class="bi bi-upload me-1"></i> Upload File Logo Home:</label>
+                                    <input type="file" id="matchHomeLogoFile" accept="image/*" class="form-control form-control-sm rounded-3" onchange="handleLogoFileUpload(this, 'matchHomeLogoUrl', 'previewHomeLogo')">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="form-label text-secondary extra-small mb-1">Atau Paste Link URL Logo:</label>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <input type="url" id="matchHomeLogoUrl" class="form-control form-control-sm rounded-3" placeholder="https://..." oninput="updateLogoPreview('matchHomeLogoUrl', 'previewHomeLogo')">
+                                        <img id="previewHomeLogo" class="logo-preview-thumb flex-shrink-0" src="https://placehold.co/100x100/ff9900/111111?text=H" alt="Preview">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TIM AWAY -->
+                        <div class="p-2.5 rounded-3 bg-dark border border-secondary">
+                            <label class="form-label text-warning fw-bold mb-1">Tim Away (Tamu):</label>
+                            <input type="text" id="matchAwayTeam" class="form-control form-control-sm rounded-3 mb-2" value="PERSIJA JAKARTA" required>
+                            
+                            <div class="row g-2 align-items-center">
+                                <div class="col-sm-6">
+                                    <label class="form-label text-secondary extra-small mb-1"><i class="bi bi-upload me-1"></i> Upload File Logo Away:</label>
+                                    <input type="file" id="matchAwayLogoFile" accept="image/*" class="form-control form-control-sm rounded-3" onchange="handleLogoFileUpload(this, 'matchAwayLogoUrl', 'previewAwayLogo')">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="form-label text-secondary extra-small mb-1">Atau Paste Link URL Logo:</label>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <input type="url" id="matchAwayLogoUrl" class="form-control form-control-sm rounded-3" placeholder="https://..." oninput="updateLogoPreview('matchAwayLogoUrl', 'previewAwayLogo')">
+                                        <img id="previewAwayLogo" class="logo-preview-thumb flex-shrink-0" src="https://placehold.co/100x100/ff9900/111111?text=A" alt="Preview">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. PENGATURAN INFO NOBAR UNTUK LAGA INI -->
+                    <div class="p-3 bg-black rounded-3 mb-3 border border-secondary" id="sectionNobarInfo">
+                        <h6 class="fw-bold text-warning mb-2"><i class="bi bi-tv-fill me-1"></i> 3. Info Nobar OBR per Pertandingan</h6>
+                        <div class="mb-2">
+                            <label class="form-label text-secondary mb-1">Status Kegiatan Nobar:</label>
+                            <select id="nobarStatus" class="form-select form-select-sm rounded-3 py-2 fw-bold" onchange="toggleNobarFields(this.value)">
+                                <option value="NOBAR" class="text-success">🟢 NOBAR (Ada Kegiatan Nobar Resmi)</option>
+                                <option value="TIDAK ADA NOBAR" class="text-danger">🔴 TIDAK ADA NOBAR (Libur / Tidak Ada Event)</option>
+                            </select>
+                        </div>
+
+                        <div id="nobarFieldsContainer">
+                            <div class="mb-2">
+                                <label class="form-label text-secondary mb-1">Lokasi Tempat Nobar:</label>
+                                <input type="text" id="nobarLokasi" class="form-control form-control-sm rounded-3" value="Basecamp Orange Bojong Raya (Jl. Bojong Raya No. 12, Cengkareng)">
+                            </div>
+                            <div class="row g-2 mb-2">
+                                <div class="col-md-6">
+                                    <label class="form-label text-secondary mb-1">Jam Open Gate (24 Jam):</label>
+                                    <input type="text" id="nobarGate" class="form-control form-control-sm rounded-3" value="18:00 WIB">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-secondary mb-1">HTM / Syarat Order:</label>
+                                    <input type="text" id="nobarHtm" class="form-control form-control-sm rounded-3" value="Min. Order Drink">
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label text-secondary mb-1">Note:</label>
+                                <input type="text" id="nobarNote" class="form-control form-control-sm rounded-3" value="Bawa semangat, jaga ketertiban bersama & ramaikan!">
+                            </div>
+                            <div class="mb-2">
+                                <label class="form-label text-secondary mb-1">Link Google Maps:</label>
+                                <input type="text" id="nobarMapsLink" class="form-control form-control-sm rounded-3" value="https://maps.google.com/?q=Bojong+Raya+Cengkareng">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. HASIL LAGA, SKOR & KELOLA STARTING XI PEMAIN -->
+                    <div class="p-3 bg-black rounded-3 mb-3 border border-secondary" id="sectionResultsInfo">
+                        <div class="d-flex justify-content-between align-items-center mb-2" id="toggleCompletedWrapper">
+                            <h6 class="fw-bold text-warning m-0"><i class="bi bi-trophy-fill me-1"></i> Skor, Lineup & Statistik Hasil Laga</h6>
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="matchIsCompleted" onchange="toggleResultFields(this.checked)">
+                                <label class="form-check-label text-secondary fw-semibold" for="matchIsCompleted">Tandai Laga Selesai</label>
+                            </div>
+                        </div>
+
+                        <div id="resultFieldsGroup" style="display: none;">
+                            <div class="row g-2 mb-2">
+                                <div class="col-6">
+                                    <label class="form-label text-secondary mb-1">Skor Home:</label>
+                                    <input type="number" id="matchScoreHome" class="form-control form-control-sm rounded-3 fw-bold text-warning fs-6" value="0" min="0">
+                                </div>
+                                <div class="col-6">
+                                    <label class="form-label text-secondary mb-1">Skor Away:</label>
+                                    <input type="number" id="matchScoreAway" class="form-control form-control-sm rounded-3 fw-bold text-warning fs-6" value="0" min="0">
+                                </div>
+                            </div>
+
+                            <div class="row g-2 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label text-secondary mb-1">Wasit Utama:</label>
+                                    <input type="text" id="matchWasit" class="form-control form-control-sm rounded-3" placeholder="Thoriq Alkatiri (Jakarta)">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-secondary mb-1">Jumlah Penonton:</label>
+                                    <input type="text" id="matchPenonton" class="form-control form-control-sm rounded-3" placeholder="42,850 Penonton (Sold Out)">
+                                </div>
+                            </div>
+
+                            <!-- INPUT STARTING XI LINEUP PEMAIN KEDUA TIM -->
+                            <h6 class="small fw-bold text-warning border-top border-secondary pt-2 mt-2"><i class="bi bi-people-fill me-1"></i> Input Lineup Pemain Starting XI:</h6>
+                            <p class="extra-small text-muted mb-2">Format input per baris: <code>Nomor | Nama Pemain</code> (Contoh: <code>26 | Andritany Ardhiyasa (C/GK)</code>)</p>
+                            
+                            <div class="row g-2 mb-3">
+                                <div class="col-md-6">
+                                    <label class="form-label text-secondary mb-1 fw-bold">Starting XI Tim Home:</label>
+                                    <textarea id="matchHomeLineup" class="form-control form-control-sm font-monospace rounded-3" rows="6" placeholder="26 | Andritany (GK)&#10;74 | Rizky Ridho&#10;9 | Marko Simic"></textarea>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-secondary mb-1 fw-bold">Starting XI Tim Away:</label>
+                                    <textarea id="matchAwayLineup" class="form-control form-control-sm font-monospace rounded-3" rows="6" placeholder="1 | Leo Navacchio (GK)&#10;10 | Renan Silva"></textarea>
+                                </div>
+                            </div>
+
+                            <h6 class="small fw-bold text-secondary text-uppercase border-top border-secondary pt-2 mt-2">Statistik Pertandingan (% / Angka):</h6>
+                            <div class="row g-2">
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Penguasaan Home (%):</label>
+                                    <input type="number" id="statPossHome" class="form-control form-control-sm" value="50" min="0" max="100">
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Penguasaan Away (%):</label>
+                                    <input type="number" id="statPossAway" class="form-control form-control-sm" value="50" min="0" max="100">
+                                </div>
+
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Total Tembakan Home:</label>
+                                    <input type="number" id="statShotsHome" class="form-control form-control-sm" value="10">
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Total Tembakan Away:</label>
+                                    <input type="number" id="statShotsAway" class="form-control form-control-sm" value="8">
+                                </div>
+
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Target Home:</label>
+                                    <input type="number" id="statTargetHome" class="form-control form-control-sm" value="5">
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Target Away:</label>
+                                    <input type="number" id="statTargetAway" class="form-control form-control-sm" value="3">
+                                </div>
+
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Tembakan Tidak Tepat Home:</label>
+                                    <input type="number" id="statOffHome" class="form-control form-control-sm" value="5">
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Tembakan Tidak Tepat Away:</label>
+                                    <input type="number" id="statOffAway" class="form-control form-control-sm" value="5">
+                                </div>
+
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Tendangan Sudut Home:</label>
+                                    <input type="number" id="statCornersHome" class="form-control form-control-sm" value="4">
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Tendangan Sudut Away:</label>
+                                    <input type="number" id="statCornersAway" class="form-control form-control-sm" value="2">
+                                </div>
+
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Pelanggaran Home:</label>
+                                    <input type="number" id="statFoulsHome" class="form-control form-control-sm" value="12">
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Pelanggaran Away:</label>
+                                    <input type="number" id="statFoulsAway" class="form-control form-control-sm" value="15">
+                                </div>
+
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Offside Home:</label>
+                                    <input type="number" id="statOffsideHome" class="form-control form-control-sm" value="2">
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Offside Away:</label>
+                                    <input type="number" id="statOffsideAway" class="form-control form-control-sm" value="1">
+                                </div>
+
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Kartu Kuning Home:</label>
+                                    <input type="number" id="statYellowHome" class="form-control form-control-sm" value="2">
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Kartu Kuning Away:</label>
+                                    <input type="number" id="statYellowAway" class="form-control form-control-sm" value="3">
+                                </div>
+
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Kartu Merah Home:</label>
+                                    <input type="number" id="statRedHome" class="form-control form-control-sm" value="0">
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Kartu Merah Away:</label>
+                                    <input type="number" id="statRedAway" class="form-control form-control-sm" value="0">
+                                </div>
+
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Penalti Home:</label>
+                                    <input type="number" id="statPenaltyHome" class="form-control form-control-sm" value="0">
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <label class="form-label text-muted mb-0 extra-small">Penalti Away:</label>
+                                    <input type="number" id="statPenaltyAway" class="form-control form-control-sm" value="0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-warning text-dark fw-bold w-100 rounded-pill py-2.5 shadow-sm fs-6">
+                        <i class="bi bi-check-circle-fill me-1"></i> Simpan Pertandingan
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EDIT KLASEMEN LIGA -->
+<div class="modal fade" id="standingsEditModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 bg-dark text-white rounded-4 shadow-lg border border-warning">
+            <div class="modal-header border-bottom border-warning py-3">
+                <h5 class="modal-title fw-bold text-warning m-0" id="standingsModalTitle">
+                    <i class="bi bi-trophy-fill me-2"></i> Kelola Tim Klasemen
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4 small">
+                <form id="standingsForm" onsubmit="handleSaveStandings(event)">
+                    <input type="hidden" id="stTeamId">
+
+                    <div class="mb-2">
+                        <label class="form-label text-secondary mb-1">Nama Tim / Klub:</label>
+                        <input type="text" id="stTeamName" class="form-control form-control-sm rounded-3 fw-bold" placeholder="Contoh: PERSIJA JAKARTA" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label text-secondary mb-1">Upload File Logo / Paste Link URL:</label>
+                        <div class="row g-2 align-items-center">
+                            <div class="col-8">
+                                <input type="file" id="stLogoFile" accept="image/*" class="form-control form-control-sm rounded-3 mb-1" onchange="handleLogoFileUpload(this, 'stLogoUrl', 'previewStLogo')">
+                                <input type="url" id="stLogoUrl" class="form-control form-control-sm rounded-3" placeholder="https://..." oninput="updateLogoPreview('stLogoUrl', 'previewStLogo')">
+                            </div>
+                            <div class="col-4 text-center">
+                                <img id="previewStLogo" class="logo-preview-thumb" src="https://placehold.co/100x100/ff9900/111111?text=T" alt="Preview">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-2 mb-2">
+                        <div class="col-4">
+                            <label class="form-label text-secondary mb-1">Main (PL):</label>
+                            <input type="number" id="stPl" class="form-control form-control-sm rounded-3" value="11" min="0" required>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label text-secondary mb-1">Menang (W):</label>
+                            <input type="number" id="stW" class="form-control form-control-sm rounded-3" value="8" min="0" required>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label text-secondary mb-1">Seri (D):</label>
+                            <input type="number" id="stD" class="form-control form-control-sm rounded-3" value="2" min="0" required>
+                        </div>
+                    </div>
+
+                    <div class="row g-2 mb-3">
+                        <div class="col-4">
+                            <label class="form-label text-secondary mb-1">Kalah (L):</label>
+                            <input type="number" id="stL" class="form-control form-control-sm rounded-3" value="1" min="0" required>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label text-secondary mb-1">Gol Masuk (GM):</label>
+                            <input type="number" id="stGf" class="form-control form-control-sm rounded-3" value="24" min="0" required>
+                        </div>
+                        <div class="col-4">
+                            <label class="form-label text-secondary mb-1">Gol Kemasukan (GK):</label>
+                            <input type="number" id="stGa" class="form-control form-control-sm rounded-3" value="9" min="0" required>
+                        </div>
+                    </div>
+
+                    <div class="row g-2 mb-3">
+                        <div class="col-4">
+                            <label class="form-label text-secondary mb-1">Pengurangan Poin:</label>
+                            <input type="number" id="stPotong" class="form-control form-control-sm rounded-3" value="0" min="0">
+                        </div>
+                        <div class="col-8">
+                            <label class="form-label text-secondary mb-1">Alasan Sanksi (Opsional):</label>
+                            <input type="text" id="stAlasanPotong" class="form-control form-control-sm rounded-3" maxlength="120" placeholder="Contoh: Sanksi Komdis PSSI">
+                        </div>
+                        <div class="col-12"><small class="extra-small text-muted">Isi 0 kalau tidak ada sanksi. Poin klub dihitung otomatis: (Menang x 3) + Seri - Pengurangan Poin.</small></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label text-secondary mb-1">Hasil 5 Laga Terakhir (Dipisah Koma):</label>
+                        <input type="text" id="stFormString" class="form-control form-control-sm rounded-3 font-monospace" placeholder="W,W,W,D,W" value="W,W,W,D,W">
+                        <small class="extra-small text-muted">Contoh: <code>W,W,D,L,W</code> (W = Menang, D = Seri, L = Kalah)</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-warning text-dark fw-bold w-100 rounded-pill py-2.5 shadow-sm fs-6">
+                        <i class="bi bi-check-circle-fill me-1"></i> Simpan Tim Klasemen
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DETAIL LAGA (LINE UP DYNAMIC, INFO, & STATISTIK - PERSIJA.ID STYLE) -->
+<div class="modal fade" id="matchDetailModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable modal-fullscreen-md-down">
+        <div class="modal-content border-0 bg-dark text-white rounded-4 overflow-hidden shadow-lg border border-warning">
+            <div class="detail-topbar">
+                <button type="button" class="btn btn-warning fw-bold rounded-pill px-3 detail-back-btn" data-bs-dismiss="modal">
+                    <i class="bi bi-arrow-left me-1"></i> Kembali
+                </button>
+                <span class="detail-topbar-title">DETAIL PERTANDINGAN</span>
+                <button type="button" class="btn-close btn-close-white detail-close-btn" data-bs-dismiss="modal" aria-label="Tutup"></button>
+            </div>
+            <div class="modal-header bg-black border-bottom border-warning p-3 position-relative">
+                <div class="w-100 text-center">
+                    <span class="badge bg-warning text-dark font-monospace mb-2 fw-bold" id="detailMatchPekan">PEKAN KE-10 &bull; BRI SUPER LEAGUE</span>
+                    
+                    <!-- BANNER SCORE & LOGO HASIL PERTANDINGAN -->
+                    <div class="d-flex align-items-center justify-content-around my-2 text-center">
+                        <div class="d-flex flex-column align-items-center" style="max-width: 160px; flex: 1;">
+                            <div class="small-logo-box mb-1" id="detailHomeLogoContainer" style="width: 52px; height: 52px;"></div>
+                            <span class="fw-bold text-warning text-uppercase extra-small leading-tight" id="detailHomeName">PERSIJA</span>
+                        </div>
+                        <div class="px-2">
+                            <div class="score-box px-3 fs-3" id="detailScoreDisplay">3 - 1</div>
+                            <small class="d-block text-white-50 extra-small mt-1 font-monospace" id="detailStatusBadge">FULL TIME</small>
+                        </div>
+                        <div class="d-flex flex-column align-items-center" style="max-width: 160px; flex: 1;">
+                            <div class="small-logo-box mb-1" id="detailAwayLogoContainer" style="width: 52px; height: 52px;"></div>
+                            <span class="fw-bold text-white text-uppercase extra-small leading-tight" id="detailAwayName">PERSIK</span>
+                        </div>
+                    </div>
+
+                    <small class="text-white-50 extra-small d-block mt-2" id="detailMatchSub">Senin, 26 Oktober 2026 &bull; SUGBK Jakarta</small>
+                </div>
+            </div>
+
+            <div class="modal-body p-0">
+                <ul class="nav nav-tabs nav-fill bg-black border-bottom border-secondary" id="matchDetailTabs" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active fw-bold py-2.5 text-uppercase rounded-0 font-monospace" id="info-tab" data-bs-toggle="tab" data-bs-target="#tabInfoLaga" type="button">
+                            <i class="bi bi-info-circle me-1"></i> INFO LAGA
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link fw-bold py-2.5 text-uppercase rounded-0 font-monospace" id="lineup-tab" data-bs-toggle="tab" data-bs-target="#tabLineup" type="button">
+                            <i class="bi bi-people-fill me-1"></i> LINE UP
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link fw-bold py-2.5 text-uppercase rounded-0 font-monospace" id="stats-tab" data-bs-toggle="tab" data-bs-target="#tabStatistik" type="button">
+                            <i class="bi bi-bar-chart-line-fill me-1"></i> STATISTIK
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content p-3 p-md-4" id="matchDetailTabContent">
+                    <div class="tab-pane fade show active" id="tabInfoLaga">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="p-3 bg-black rounded-3 border border-secondary">
+                                    <span class="text-secondary small d-block mb-1"><i class="bi bi-geo-alt text-warning me-1"></i> Stadion & Kota:</span>
+                                    <strong class="text-white fs-6 d-block" id="infoStadion">SUGBK Jakarta</strong>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 bg-black rounded-3 border border-secondary">
+                                    <span class="text-secondary small d-block mb-1"><i class="bi bi-clock text-warning me-1"></i> Waktu Kick-off (24h):</span>
+                                    <strong class="text-white fs-6 d-block" id="infoWaktu">19:00 WIB</strong>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 bg-black rounded-3 border border-secondary">
+                                    <span class="text-secondary small d-block mb-1"><i class="bi bi-person-badge text-warning me-1"></i> Wasit Utama:</span>
+                                    <strong class="text-white fs-6 d-block" id="infoWasit">Yudi Nurcahya (Bandung)</strong>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 bg-black rounded-3 border border-secondary">
+                                    <span class="text-secondary small d-block mb-1"><i class="bi bi-ticket-detailed text-warning me-1"></i> Kehadiran Penonton:</span>
+                                    <strong class="text-white fs-6 d-block" id="infoPenonton">42,850 Penonton</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB LINEUP PEMAIN STARTING XI DYNAMIC -->
+                    <div class="tab-pane fade" id="tabLineup">
+                        <div class="row g-4">
+                            <div class="col-md-6 border-end border-secondary">
+                                <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom border-warning">
+                                    <div class="small-logo-box" id="detailHomeHeaderLogo" style="width: 32px; height: 32px;"></div>
+                                    <span class="badge bg-warning text-dark fw-bold text-uppercase" id="detailHomeHeader">HOME</span>
+                                </div>
+                                <h6 class="small fw-bold text-warning text-uppercase mb-2">STARTING XI:</h6>
+                                <div class="vstack gap-2 mb-4" id="homeLineupContainer">
+                                    <!-- Dynamic list -->
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom border-primary">
+                                    <div class="small-logo-box" id="opponentLineupHeaderLogo" style="width: 32px; height: 32px;"></div>
+                                    <span class="badge bg-primary text-white fw-bold text-uppercase" id="opponentLineupHeader">AWAY</span>
+                                </div>
+                                <h6 class="small fw-bold text-primary text-uppercase mb-2">STARTING XI:</h6>
+                                <div class="vstack gap-2 mb-4" id="awayLineupContainer">
+                                    <!-- Dynamic list -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tabStatistik">
+                        <div class="vstack gap-3" id="statsBarContainer">
+                            <!-- Dynamic stats -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="modal-footer bg-black border-top border-secondary p-2">
+                <button type="button" class="btn btn-warning fw-bold w-100 rounded-pill py-2 detail-back-btn justify-content-center" data-bs-dismiss="modal">
+                    <i class="bi bi-arrow-left me-1"></i> Kembali ke Jadwal
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- IN-APP CONFIRMATION MODAL -->
+<div class="modal fade" id="confirmModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content bg-dark text-white border border-danger rounded-4">
+            <div class="modal-body text-center p-4">
+                <i class="bi bi-exclamation-triangle-fill text-danger fs-1 mb-2 d-block"></i>
+                <h6 class="fw-bold mb-2" id="confirmModalTitle">Konfirmasi Hapus</h6>
+                <p class="small text-secondary mb-4" id="confirmModalText">Apakah Anda yakin ingin menghapus item ini?</p>
+                <div class="d-flex gap-2 justify-content-center">
+                    <button class="btn btn-secondary btn-sm rounded-pill px-3" data-bs-dismiss="modal">Batal</button>
+                    <button class="btn btn-danger btn-sm rounded-pill px-3 fw-bold" id="confirmModalActionBtn">Ya, Hapus</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST NOTIFICATION CONTAINER -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1090;">
+    <div id="appToast" class="toast align-items-center text-bg-warning border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body fw-bold text-dark" id="toastMessage">
+                Pesan Notifikasi
+            </div>
+            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap 5 Bundle JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="site-config.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-check-compat.js"></script>
+
+<script>
+    // DEFAULT LOGOS
+    const LOGO_PERSIJA = 'https://upload.wikimedia.org/wikipedia/id/2/25/Persija_Jakarta_logo.png';
+    const LOGO_DEWA = 'https://upload.wikimedia.org/wikipedia/id/3/30/Dewa_United_FC.png';
+    const LOGO_PERSEBAYA = 'https://upload.wikimedia.org/wikipedia/id/0/07/Persebaya_Surabaya_logo.png';
+    const LOGO_PERSIK = 'https://upload.wikimedia.org/wikipedia/id/2/23/Persik_Kediri_logo.png';
+
+    // SAMPLE MATCHES DATA
+    const defaultMatches = [
+        {
+            id: 'm_dewa',
+            datetime: '2026-10-31T19:00',
+            timeDisplay: '19:00 WIB',
+            homeTeam: 'DEWA UNITED BANTEN FC',
+            homeLogoUrl: LOGO_DEWA,
+            awayTeam: 'PERSIJA JAKARTA',
+            awayLogoUrl: LOGO_PERSIJA,
+            stadium: 'Banten International Stadium',
+            pekan: 'PEKAN KE-11 • BRI SUPER LEAGUE',
+            isCompleted: true,
+            scoreHome: 1,
+            scoreAway: 2,
+            wasit: 'Thoriq Alkatiri (Jakarta)',
+            penonton: '22.150 Penonton',
+            nobar: {
+                status: 'NOBAR',
+                lokasi: 'Basecamp Orange Bojong Raya (Jl. Bojong Raya No. 12, Cengkareng)',
+                gate: '18:00 WIB',
+                htm: 'Min. Order Drink',
+                note: 'Kemenangan tandang manis 2-1 di Banten!',
+                mapsLink: 'https://maps.google.com/?q=Bojong+Raya+Cengkareng'
+            },
+            homeLineup: "1 | Sonny Stevens (GK)\n5 | Risto Mitrevski (C)\n14 | Brian Fatari\n39 | Alex Martins ⚽",
+            awayLineup: "26 | Andritany Ardhiyasa (C/GK)\n74 | Rizky Ridho\n22 | Ryo Matsumura ⚽\n9 | Marko Simic ⚽",
+            stats: { 
+                possHome: 48, possAway: 52, 
+                shotsHome: 11, shotsAway: 14, 
+                targetHome: 4, targetAway: 7,
+                offHome: 7, offAway: 7,
+                cornersHome: 5, cornersAway: 6,
+                foulsHome: 14, foulsAway: 10,
+                offsideHome: 2, offsideAway: 1,
+                yellowHome: 3, yellowAway: 2,
+                redHome: 0, redAway: 0,
+                penaltyHome: 0, penaltyAway: 0
+            }
+        },
+        {
+            id: 'm_persebaya',
+            datetime: '2026-11-09T15:00',
+            timeDisplay: '15:00 WIB',
+            homeTeam: 'PERSIJA JAKARTA',
+            homeLogoUrl: LOGO_PERSIJA,
+            awayTeam: 'PERSEBAYA SURABAYA',
+            awayLogoUrl: LOGO_PERSEBAYA,
+            stadium: 'SUGBK Jakarta',
+            pekan: 'PEKAN KE-12 • BRI SUPER LEAGUE',
+            isCompleted: false,
+            scoreHome: 0,
+            scoreAway: 0,
+            wasit: 'Yudi Nurcahya (Bandung)',
+            penonton: 'Estimasi 50.000 Penonton',
+            nobar: {
+                status: 'NOBAR',
+                lokasi: 'Tribun SUGBK & Basecamp OBR',
+                gate: '13:30 WIB',
+                htm: 'Tiket Resmi / Free Basecamp',
+                note: 'Laga Klasik Indonesia, Wajib Orenkan!',
+                mapsLink: 'https://maps.google.com/?q=Bojong+Raya+Cengkareng'
+            },
+            homeLineup: "26 | Andritany (C/GK)\n74 | Rizky Ridho\n17 | Ondrej Kudela\n41 | Muhammad Ferarri\n8 | Maciej Gajos\n22 | Ryo Matsumura\n9 | Marko Simic",
+            awayLineup: "1 | Ernando Ari (GK)\n23 | Kadek Raditya\n2 | Arief Catur\n6 | Gilson Costa\n10 | Bruno Moreira (C)\n17 | Flavio Silva",
+            stats: { possHome: 50, possAway: 50, shotsHome: 10, shotsAway: 8, targetHome: 5, targetAway: 3 }
+        },
+        {
+            id: 'm_persik',
+            datetime: '2026-10-26T19:00',
+            timeDisplay: '19:00 WIB',
+            homeTeam: 'PERSIJA JAKARTA',
+            homeLogoUrl: LOGO_PERSIJA,
+            awayTeam: 'PERSIK KEDIRI',
+            awayLogoUrl: LOGO_PERSIK,
+            stadium: 'SUGBK Jakarta',
+            pekan: 'PEKAN KE-10 • BRI SUPER LEAGUE',
+            isCompleted: true,
+            scoreHome: 3,
+            scoreAway: 1,
+            wasit: 'Yudi Nurcahya (Bandung)',
+            penonton: '42.850 Penonton (Sold Out)',
+            nobar: {
+                status: 'NOBAR',
+                lokasi: 'Basecamp Orange Bojong Raya',
+                gate: '18:00 WIB',
+                htm: 'Min. Order Drink',
+                note: 'Kemenangan Manis 3-1 di SUGBK!',
+                mapsLink: 'https://maps.google.com/?q=Bojong+Raya+Cengkareng'
+            },
+            homeLineup: "26 | Andritany Ardhiyasa (C/GK)\n74 | Rizky Ridho\n17 | Ondrej Kudela\n41 | M. Ferarri\n8 | Maciej Gajos\n10 | Ramon Bueno\n11 | Firza Andika\n22 | Ryo Matsumura ⚽⚽\n9 | Marko Simic ⚽\n77 | Dony Tri Pamungkas\n7 | Riko Simanjuntak",
+            awayLineup: "1 | Leo Navacchio (GK)\n2 | Anderson Nascimento\n16 | Al Hamra Hehanussa\n7 | Yusuf Meilana\n32 | Rohit Chand\n10 | Renan Silva ⚽\n77 | Flavio Silva",
+            stats: { 
+                possHome: 58, possAway: 42, 
+                shotsHome: 16, shotsAway: 8, 
+                targetHome: 9, targetAway: 3,
+                offHome: 7, offAway: 5,
+                cornersHome: 6, cornersAway: 2,
+                foulsHome: 11, foulsAway: 14,
+                offsideHome: 3, offsideAway: 1,
+                yellowHome: 2, yellowAway: 3,
+                redHome: 0, redAway: 0,
+                penaltyHome: 1, penaltyAway: 0
+            }
+        }
+    ];
+
+    // DEFAULT KLASEMEN DATA (FULL 18 TEAMS - LIGA 1 FORMAT)
+    const defaultStandings = [
+        { id: 'st_persija', teamName: 'PERSIJA JAKARTA', logoUrl: LOGO_PERSIJA, pl: 11, w: 8, d: 2, l: 1, gf: 24, ga: 9, pts: 26, form: ['W', 'W', 'W', 'D', 'W'] },
+        { id: 'st_borneo', teamName: 'BORNEO FC SAMARINDA', logoUrl: 'https://upload.wikimedia.org/wikipedia/id/d/d4/Borneo_FC_Samarinda_logo.png', pl: 11, w: 7, d: 3, l: 1, gf: 20, ga: 8, pts: 24, form: ['W', 'D', 'W', 'W', 'L'] },
+        { id: 'st_dewa', teamName: 'DEWA UNITED BANTEN FC', logoUrl: LOGO_DEWA, pl: 11, w: 7, d: 2, l: 2, gf: 21, ga: 12, pts: 23, form: ['W', 'L', 'W', 'W', 'D'] },
+        { id: 'st_persebaya', teamName: 'PERSEBAYA SURABAYA', logoUrl: LOGO_PERSEBAYA, pl: 11, w: 6, d: 3, l: 2, gf: 18, ga: 11, pts: 21, form: ['D', 'W', 'W', 'L', 'W'] },
+        { id: 'st_bali', teamName: 'BALI UNITED FC', logoUrl: 'https://upload.wikimedia.org/wikipedia/id/a/a2/Bali_United_FC_Logo.png', pl: 11, w: 5, d: 4, l: 2, gf: 17, ga: 12, pts: 19, form: ['D', 'D', 'W', 'L', 'W'] },
+        { id: 'st_persib', teamName: 'PERSIB BANDUNG', logoUrl: 'https://upload.wikimedia.org/wikipedia/id/0/06/Persib_Bandung_Logo.png', pl: 11, w: 5, d: 3, l: 3, gf: 16, ga: 14, pts: 18, form: ['W', 'D', 'L', 'W', 'L'] },
+        { id: 'st_persik', teamName: 'PERSIK KEDIRI', logoUrl: LOGO_PERSIK, pl: 11, w: 5, d: 2, l: 4, gf: 16, ga: 15, pts: 17, form: ['L', 'W', 'L', 'D', 'W'] },
+        { id: 'st_psm', teamName: 'PSM MAKASSAR', logoUrl: 'https://upload.wikimedia.org/wikipedia/id/0/03/Logo_PSM_Makassar.png', pl: 11, w: 4, d: 4, l: 3, gf: 14, ga: 13, pts: 16, form: ['D', 'W', 'L', 'D', 'W'] },
+        { id: 'st_persita', teamName: 'PERSITA TANGERANG', logoUrl: 'https://upload.wikimedia.org/wikipedia/id/1/1a/Persita_Tangerang_logo.png', pl: 11, w: 4, d: 3, l: 4, gf: 13, ga: 14, pts: 15, form: ['L', 'L', 'W', 'W', 'D'] },
+        { id: 'st_arema', teamName: 'AREMA FC', logoUrl: 'https://upload.wikimedia.org/wikipedia/id/4/41/Arema_FC_logo.png', pl: 11, w: 4, d: 2, l: 5, gf: 15, ga: 18, pts: 14, form: ['L', 'W', 'L', 'W', 'L'] },
+        { id: 'st_psbs', teamName: 'PSBS BIAK', logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/e/e0/PSBS_Biak.png', pl: 11, w: 3, d: 4, l: 4, gf: 12, ga: 15, pts: 13, form: ['D', 'L', 'W', 'D', 'L'] },
+        { id: 'st_malut', teamName: 'MALUT UNITED FC', logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/77/Malut_United_FC_logo.png', pl: 11, w: 3, d: 3, l: 5, gf: 11, ga: 14, pts: 12, form: ['W', 'D', 'L', 'L', 'D'] },
+        { id: 'st_barito', teamName: 'BARITO PUTERA', logoUrl: 'https://upload.wikimedia.org/wikipedia/id/7/7c/Logo_Barito_Putera.png', pl: 11, w: 3, d: 2, l: 6, gf: 12, ga: 17, pts: 11, form: ['L', 'D', 'W', 'L', 'L'] },
+        { id: 'st_semenpadang', teamName: 'SEMEN PADANG FC', logoUrl: 'https://upload.wikimedia.org/wikipedia/id/d/d8/Semen_Padang_FC_logo.png', pl: 11, w: 2, d: 4, l: 5, gf: 10, ga: 16, pts: 10, form: ['D', 'L', 'L', 'W', 'D'] },
+        { id: 'st_pss', teamName: 'PSS SLEMAN', logoUrl: 'https://upload.wikimedia.org/wikipedia/id/8/87/PSS_Sleman_logo.png', pl: 11, w: 2, d: 3, l: 6, gf: 9, ga: 15, pts: 9, form: ['L', 'W', 'D', 'L', 'L'] },
+        { id: 'st_madura', teamName: 'MADURA UNITED FC', logoUrl: 'https://upload.wikimedia.org/wikipedia/id/3/36/Madura_United_logo.png', pl: 11, w: 2, d: 2, l: 7, gf: 10, ga: 19, pts: 8, form: ['L', 'L', 'D', 'W', 'L'] },
+        { id: 'st_psis', teamName: 'PSIS SEMARANG', logoUrl: 'https://upload.wikimedia.org/wikipedia/id/8/82/Logo_PSIS_Semarang.png', pl: 11, w: 1, d: 4, l: 6, gf: 8, ga: 17, pts: 7, form: ['D', 'L', 'L', 'D', 'L'] },
+        { id: 'st_bhayangkara', teamName: 'BHAYANGKARA PRESISI FC', logoUrl: 'https://upload.wikimedia.org/wikipedia/id/2/28/Bhayangkara_FC_Logo.png', pl: 11, w: 1, d: 2, l: 8, gf: 7, ga: 20, pts: 5, form: ['L', 'D', 'L', 'L', 'L'] }
+    ];
+
+    // GLOBAL MODAL INSTANCES & STATE
+    let matchEditModal, matchDetailModal, standingsEditModal, confirmModal;
+    let pendingActionId = null;
+    let pendingActionType = null;
+
+    // ================= DATA BERSAMA (FIREBASE) =================
+    // Jadwal laga & klasemen disimpan di Firestore supaya semua anggota melihat data yang sama.
+    // Hanya admin yang boleh mengubah (dijaga juga oleh Firestore Security Rules).
+    const firebaseConfig = {
+        apiKey: "AIzaSyA-MXfRfLqrRfRlAcCSOcr-FgXWni5ai5I",
+        authDomain: "orange-bojong-raya.firebaseapp.com",
+        projectId: "orange-bojong-raya",
+        storageBucket: "orange-bojong-raya.firebasestorage.app",
+        messagingSenderId: "80661547206",
+        appId: "1:80661547206:web:018e8f09ec14707a31efc7",
+        measurementId: "G-QMVZR6NB10"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    // App Check (anti-bot untuk Firestore). Kuncinya diambil dari site-config.js (sama dengan halaman utama). Kosong = tidak aktif.
+    const APPCHECK_SITE_KEY = (window.OBR_CONFIG && window.OBR_CONFIG.APPCHECK_SITE_KEY) || '';
+    if (APPCHECK_SITE_KEY) {
+        try { firebase.appCheck().activate(APPCHECK_SITE_KEY, true); } catch (e) { console.warn('App Check gagal diaktifkan:', e); }
+    }
+
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+
+    let isAdmin = false;
+    let matchesData = [];
+    let standingsData = [];
+    let currentMatchFilter = 'all';
+
+    function cleanForFirestore(obj) {
+        return JSON.parse(JSON.stringify(obj));
+    }
+
+    function requireAdmin() {
+        if (!isAdmin) return Promise.reject(new Error('Hanya admin yang boleh mengubah data.'));
+        return Promise.resolve();
+    }
+
+    function saveMatchDoc(matchObj) {
+        return requireAdmin().then(() => db.collection('jadwal_laga').doc(matchObj.id).set(cleanForFirestore(matchObj)));
+    }
+    function saveStandingDoc(teamObj) {
+        return requireAdmin().then(() => db.collection('klasemen_liga').doc(teamObj.id).set(cleanForFirestore(teamObj)));
+    }
+    function deleteMatchDoc(id) {
+        return requireAdmin().then(() => db.collection('jadwal_laga').doc(id).delete());
+    }
+    function deleteStandingDoc(id) {
+        return requireAdmin().then(() => db.collection('klasemen_liga').doc(id).delete());
+    }
+
+    // ===== PEMBACAAN DATA HEMAT =====
+    // Admin: realtime. Pengunjung biasa: dibaca sekali lalu disimpan 5 menit (cache dibagi dengan halaman utama).
+    const CACHE_TTL_MS = 5 * 60 * 1000;
+    let dataStarted = false;
+    let dataLive = false;
+
+    async function cachedGet(name) {
+        const now = Date.now();
+        try {
+            const raw = sessionStorage.getItem('obr_cache_' + name);
+            if (raw) {
+                const o = JSON.parse(raw);
+                if (o && now - o.t < CACHE_TTL_MS) return o.d;
+            }
+        } catch (e) { /* abaikan */ }
+        const snap = await db.collection(name).get();
+        const rows = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+        try { sessionStorage.setItem('obr_cache_' + name, JSON.stringify({ t: now, d: rows })); } catch (e) { /* abaikan */ }
+        return rows;
+    }
+
+    function watchData(name, live, onData, onErr) {
+        if (live) {
+            db.collection(name).onSnapshot((snap) => onData(snap.docs.map((d) => ({ id: d.id, ...d.data() }))), onErr);
+        } else {
+            cachedGet(name).then(onData).catch(onErr);
+        }
+    }
+
+    function startData(live) {
+        watchData('jadwal_laga', live, (rows) => {
+            matchesData = rows;
+            try { renderHeroNextMatch(); } catch (e) { console.error('Hero gagal dirender:', e); }
+            try { renderMatchCards(currentMatchFilter); } catch (e) { console.error('Kartu laga gagal dirender:', e); }
+        }, (err) => {
+            console.error('Gagal memuat jadwal:', err);
+            showToastNotification('Gagal memuat jadwal: ' + (err.code || err.message));
+        });
+
+        watchData('klasemen_liga', live, (rows) => {
+            standingsData = rows;
+            renderStandingsTable();
+        }, (err) => {
+            console.error('Gagal memuat klasemen:', err);
+            showToastNotification('Gagal memuat klasemen: ' + (err.code || err.message));
+        });
+    }
+
+    function startRealtimeData() {
+        // Cek apakah yang membuka halaman ini admin (data baru dibaca setelah tahu perannya)
+        auth.onAuthStateChanged(async (user) => {
+            isAdmin = false;
+            if (user) {
+                try {
+                    const snap = await db.collection('users').doc(user.uid).get();
+                    isAdmin = snap.exists && snap.data().role === 'admin';
+                } catch (e) { console.error('Cek role gagal:', e); }
+            }
+            document.body.classList.toggle('is-admin', isAdmin);
+            if (!dataStarted || (isAdmin && !dataLive)) { dataStarted = true; dataLive = isAdmin; startData(isAdmin); }
+            try { renderHeroNextMatch(); } catch (e) { console.error(e); }
+            try { renderStandingsTable(); } catch (e) { console.error(e); }
+        });
+
+        // Kalau dibuka di dalam aplikasi OBR, laporkan aktivitas supaya tidak dianggap AFK
+        ['click', 'keydown', 'touchstart', 'mousemove', 'scroll'].forEach((ev) => {
+            document.addEventListener(ev, () => {
+                try { if (window.parent && window.parent !== window && window.parent.resetAfkTimer) window.parent.resetAfkTimer(); } catch (e) {}
+            }, { passive: true });
+        });
+    }
+    let currentNextMatch = null;
+    let countdownInterval = null;
+
+    // HELPER: FORMAT TANGGAL INDONESIA
+    function formatDateIndo(isoStr) {
+        if (!isoStr) return '';
+        const date = new Date(isoStr);
+        if (isNaN(date.getTime())) return isoStr;
+
+        const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+
+        return `${days[date.getDay()]}, ${String(date.getDate()).padStart(2, '0')} ${months[date.getMonth()]} ${date.getFullYear()}`;
+    }
+
+    // HELPER: RENDER LOGO
+    function renderLogoHtml(logoUrl, teamName, isHero = false) {
+        const initial = teamName ? teamName.charAt(0).toUpperCase() : '?';
+        if (logoUrl && logoUrl.trim() !== '') {
+            return `<img src="${escHtml(safeUrl(logoUrl))}" alt="${escHtml(teamName)}" onerror="this.style.display='none'; if (this.nextElementSibling) this.nextElementSibling.style.display='flex';" style="width:100%; height:100%; object-fit:contain;">
+                    <span class="fw-bold text-warning font-monospace" style="display:none; font-size:${isHero ? '2rem' : '1.2rem'}; align-items:center; justify-content:center; width:100%; height:100%;">${escHtml(initial)}</span>`;
+        }
+        return `<span class="fw-bold text-warning font-monospace" style="display:flex; font-size:${isHero ? '2rem' : '1.2rem'}; align-items:center; justify-content:center; width:100%; height:100%;">${escHtml(initial)}</span>`;
+    }
+
+    // HELPER: COUNTDOWN TIMER
+    function startCountdownTimer(datetimeIso) {
+        if (countdownInterval) clearInterval(countdownInterval);
+
+        function update() {
+            if (!datetimeIso) return;
+            const target = new Date(datetimeIso).getTime();
+            const now = new Date().getTime();
+            const diff = target - now;
+
+            const cdDays = document.getElementById('cdDays');
+            const cdHours = document.getElementById('cdHours');
+            const cdMinutes = document.getElementById('cdMinutes');
+            const cdSeconds = document.getElementById('cdSeconds');
+
+            if (!cdDays || !cdHours || !cdMinutes || !cdSeconds) return;
+
+            if (diff <= 0) {
+                cdDays.innerText = '00';
+                cdHours.innerText = '00';
+                cdMinutes.innerText = '00';
+                cdSeconds.innerText = '00';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            cdDays.innerText = String(days).padStart(2, '0');
+            cdHours.innerText = String(hours).padStart(2, '0');
+            cdMinutes.innerText = String(minutes).padStart(2, '0');
+            cdSeconds.innerText = String(seconds).padStart(2, '0');
+        }
+
+        update();
+        countdownInterval = setInterval(update, 1000);
+    }
+
+    // AUTOMATIC NEXT MATCH SELECTOR
+    function getAutomaticNextMatch() {
+        const upcomingMatches = matchesData
+            .filter(m => !m.isCompleted)
+            .sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
+
+        return upcomingMatches.length > 0 ? upcomingMatches[0] : null;
+    }
+
+    function isMatchFinished(match) {
+        return match.isCompleted === true;
+    }
+
+    // RENDER HERO NEXT MATCH CARD
+    let heroTemplateHtml = null;
+
+    function renderHeroNextMatch() {
+        currentNextMatch = getAutomaticNextMatch();
+        const heroContainer = document.getElementById('heroMatchContent');
+        // Simpan kerangka hero asli sekali saja. Kerangka ini bisa tertimpa pesan
+        // "Belum ada jadwal", jadi dipulihkan lagi begitu ada laga terdekat.
+        if (heroTemplateHtml === null) heroTemplateHtml = heroContainer.innerHTML;
+        const heroEditBtn = document.getElementById('heroEditBtn');
+        const heroDeleteBtn = document.getElementById('heroDeleteBtn');
+
+        if (!currentNextMatch) {
+            if (heroEditBtn) heroEditBtn.style.display = 'none';
+            if (heroDeleteBtn) heroDeleteBtn.style.display = 'none';
+            if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; }
+
+            heroContainer.innerHTML = `
+                <div class="col-12 text-center py-4">
+                    <i class="bi bi-calendar-check text-warning fs-1 mb-2 d-block"></i>
+                    <h5 class="fw-bold text-white mb-1">Belum Ada Jadwal Laga Mendatang</h5>
+                    <p class="small text-secondary mb-3">${isAdmin ? 'Klik tombol "Tambah Laga" untuk menambahkan jadwal pertandingan pertama.' : 'Jadwal pertandingan akan segera diperbarui oleh admin.'}</p>
+                </div>
+            `;
+            return;
+        }
+
+        if (!document.getElementById('heroStadiumDisplay')) heroContainer.innerHTML = heroTemplateHtml;
+
+        if (heroEditBtn) {
+            heroEditBtn.style.display = 'inline-block';
+            heroEditBtn.onclick = function() { openMatchEditModal(currentNextMatch.id); };
+        }
+        if (heroDeleteBtn) {
+            heroDeleteBtn.style.display = 'inline-block';
+            heroDeleteBtn.onclick = function() { promptDeleteMatch(currentNextMatch.id); };
+        }
+
+        const formattedDate = formatDateIndo(currentNextMatch.datetime);
+
+        document.getElementById('heroPekanBadge').innerText = currentNextMatch.pekan;
+        document.getElementById('heroStadiumDisplay').innerHTML = `<i class="bi bi-geo-alt-fill me-1"></i> ${escHtml(currentNextMatch.stadium)} &bull; ${escHtml(currentNextMatch.pekan)}`;
+        document.getElementById('heroDateDisplay').innerText = `${formattedDate} • ${currentNextMatch.timeDisplay}`;
+
+        document.getElementById('heroHomeName').innerText = currentNextMatch.homeTeam;
+        document.getElementById('heroAwayName').innerText = currentNextMatch.awayTeam;
+
+        document.getElementById('heroHomeLogoContainer').innerHTML = renderLogoHtml(currentNextMatch.homeLogoUrl, currentNextMatch.homeTeam, true);
+        document.getElementById('heroAwayLogoContainer').innerHTML = renderLogoHtml(currentNextMatch.awayLogoUrl, currentNextMatch.awayTeam, true);
+
+        const nobar = currentNextMatch.nobar || {};
+        const statusBadge = document.getElementById('displayNobarStatusBadge');
+        const statusText = document.getElementById('displayNobarStatusText');
+        const cardContainer = document.getElementById('nobarCardContainer');
+        const activeGroup = document.getElementById('nobarDetailsActiveGroup');
+        const actionGroup = document.getElementById('nobarActionButtonsGroup');
+
+        document.getElementById('displayNobarLokasi').innerText = nobar.lokasi || 'Basecamp Orange Bojong Raya';
+        document.getElementById('displayNobarGate').innerText = nobar.gate || '18:00 WIB';
+        document.getElementById('displayNobarHtm').innerText = nobar.htm || 'Min. Order Drink';
+        document.getElementById('displayNobarNote').innerText = `"${nobar.note || 'Bawa semangat & ramaikan!'}"`;
+
+        if (nobar.mapsLink) document.getElementById('btnGmapsDirections').href = safeHref(nobar.mapsLink);
+
+        if (nobar.status === 'NOBAR') {
+            statusBadge.className = 'nobar-status-badge';
+            statusText.innerText = 'NOBAR';
+            cardContainer.classList.remove('off-state');
+            activeGroup.style.display = 'block';
+            actionGroup.style.display = 'grid';
+        } else {
+            statusBadge.className = 'nobar-status-badge off';
+            statusText.innerText = 'TIDAK ADA NOBAR';
+            cardContainer.classList.add('off-state');
+            activeGroup.style.display = 'none';
+            actionGroup.style.display = 'none';
+        }
+
+        startCountdownTimer(currentNextMatch.datetime);
+    }
+
+    // SWITCH BETWEEN DAFTAR PERTANDINGAN & KLASEMEN
+    function switchMainTab(tab) {
+        const btnFix = document.getElementById('tabBtnFixtures');
+        const btnStd = document.getElementById('tabBtnStandings');
+        const secFix = document.getElementById('viewFixturesSection');
+        const secStd = document.getElementById('viewStandingsSection');
+
+        if (tab === 'fixtures') {
+            btnFix.classList.add('active');
+            btnStd.classList.remove('active');
+            secFix.style.display = 'block';
+            secStd.style.display = 'none';
+        } else {
+            btnStd.classList.add('active');
+            btnFix.classList.remove('active');
+            secStd.style.display = 'block';
+            secFix.style.display = 'none';
+            renderStandingsTable();
+        }
+    }
+
+    // RENDER KLASEMEN TABLE (18 TIM)
+    function escHtml(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    }
+
+    // ID dokumen untuk atribut onclick: hanya huruf/angka/_/-
+    function safeId(id) { return String(id == null ? '' : id).replace(/[^A-Za-z0-9_-]/g, ''); }
+    // URL gambar: tolak javascript:, vbscript:, dan data: selain gambar
+    function safeUrl(u) {
+        const x = String(u == null ? '' : u).trim();
+        return /^(javascript|vbscript|data:(?!image\/))/i.test(x) ? '' : x;
+    }
+    // Tautan yang boleh dibuka (Maps, dll): hanya http/https
+    function safeHref(u) {
+        const x = String(u == null ? '' : u).trim();
+        return /^https?:\/\//i.test(x) ? x : '#';
+    }
+
+    function renderStandingsNotes(list) {
+        const notesEl = document.getElementById('standingsNotes');
+        if (!notesEl) return;
+        const penalized = list.filter((t) => (Number(t.potongPoin) || 0) > 0);
+        notesEl.innerHTML = penalized.length
+            ? '<div class="extra-small text-muted mb-1">Keterangan: poin pada tabel sudah termasuk pengurangan poin (sanksi).</div>' +
+              penalized.map((t) => `<div class="small text-danger d-flex align-items-start gap-2 mb-1"><i class="bi bi-exclamation-triangle-fill"></i><span><strong>${escHtml(t.teamName)}</strong> dikurangi ${Number(t.potongPoin)} poin${t.alasanPotong ? ' &mdash; ' + escHtml(t.alasanPotong) : ''}.</span></div>`).join('')
+            : '';
+    }
+
+    function renderStandingsTable() {
+        const tbody = document.getElementById('standingsTableBody');
+        if (!tbody) return;
+
+        // Auto-sort by PTS desc, GD desc, GF desc
+        const sorted = [...standingsData].sort((a, b) => {
+            if (b.pts !== a.pts) return b.pts - a.pts;
+            const gdA = a.gf - a.ga;
+            const gdB = b.gf - b.ga;
+            if (gdB !== gdA) return gdB - gdA;
+            return b.gf - a.gf;
+        });
+
+        renderStandingsNotes(sorted);
+
+        if (sorted.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="10" class="text-muted py-4">${isAdmin ? 'Belum ada data klasemen. Klik "+ Tambah Tim" untuk menambahkan.' : 'Klasemen akan segera diperbarui oleh admin.'}</td></tr>`;
+            return;
+        }
+
+        let html = '';
+        sorted.forEach((team, idx) => {
+            const rank = idx + 1;
+            const isPersija = team.teamName.toUpperCase().includes('PERSIJA');
+            const rowClass = isPersija ? 'standings-row-persija' : '';
+            const gd = team.gf - team.ga;
+            const gdDisplay = gd > 0 ? `+${gd}` : `${gd}`;
+            const potong = Number(team.potongPoin) || 0;
+
+            const formArray = Array.isArray(team.form) ? team.form : (team.form || 'W,W,W,D,W').split(',');
+            const formBadges = formArray.map(f => {
+                const cleanF = String(f).trim().toUpperCase();
+                if (cleanF === 'W') return `<span class="form-badge form-w" title="Menang">W</span>`;
+                if (cleanF === 'L') return `<span class="form-badge form-l" title="Kalah">L</span>`;
+                return `<span class="form-badge form-d" title="Seri">D</span>`;
+            }).join('');
+
+            html += `
+                <tr class="${rowClass}">
+                    <td><span class="rank-pill ${rank <= 3 ? 'top' : ''}">${rank}</span></td>
+                    <td class="text-start">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="small-logo-box" style="width: 34px; height: 34px;">
+                                ${renderLogoHtml(team.logoUrl, team.teamName)}
+                            </div>
+                            <span class="fw-bold ${isPersija ? 'text-warning fs-6' : 'text-white'}">${escHtml(team.teamName)}</span>
+                        </div>
+                    </td>
+                    <td class="font-monospace fw-semibold">${escHtml(team.pl)}</td>
+                    <td class="font-monospace">${escHtml(team.w)}</td>
+                    <td class="font-monospace">${escHtml(team.d)}</td>
+                    <td class="font-monospace">${escHtml(team.l)}</td>
+                    <td class="font-monospace fw-bold ${gd > 0 ? 'text-success' : (gd < 0 ? 'text-danger' : 'text-muted')}">${gdDisplay}</td>
+                    <td class="font-monospace fw-bold text-warning fs-5">${team.pts}${potong > 0 ? `<div class="deduct-badge" title="Dikurangi ${potong} poin${team.alasanPotong ? ' - ' + escHtml(team.alasanPotong) : ''}">-${potong}</div>` : ''}</td>
+                    <td class="col-form">${formBadges}</td>
+                    <td class="admin-only">
+                        <div class="d-flex justify-content-center gap-1">
+                            <button class="btn btn-outline-info btn-sm rounded-circle p-1 extra-small" onclick="openStandingsEditModal('${safeId(team.id)}')" title="Edit Tim">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>
+                            <button class="btn btn-outline-danger btn-sm rounded-circle p-1 extra-small" onclick="promptDeleteStandings('${safeId(team.id)}')" title="Hapus Tim">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        });
+
+        tbody.innerHTML = html;
+    }
+
+    // Kelas warna kartu laga: win / draw / lose (laga selesai) atau next (belum main)
+    function matchStateClass(m) {
+        if (!m.isCompleted) return 'is-next';
+        const isPersijaHome = String(m.homeTeam).toUpperCase().includes('PERSIJA');
+        const p = isPersijaHome ? m.scoreHome : m.scoreAway;
+        const o = isPersijaHome ? m.scoreAway : m.scoreHome;
+        return 'is-done ' + (p > o ? 'res-win' : (p < o ? 'res-lose' : 'res-draw'));
+    }
+
+    // RENDER MATCH CARDS
+    function renderMatchCards(filterCategory = 'all') {
+        const container = document.getElementById('matchContainer');
+        if (!container) return;
+
+        let filtered = matchesData;
+        if (filterCategory === 'upcoming') {
+            filtered = matchesData.filter(m => !m.isCompleted);
+        } else if (filterCategory === 'results') {
+            filtered = matchesData.filter(m => m.isCompleted);
+        }
+
+        filtered.sort((a, b) => {
+            if (!a.isCompleted && !b.isCompleted) return new Date(a.datetime) - new Date(b.datetime);
+            if (a.isCompleted && b.isCompleted) return new Date(b.datetime) - new Date(a.datetime);
+            return a.isCompleted ? 1 : -1;
+        });
+
+        if (filtered.length === 0) {
+            container.innerHTML = `
+                <div class="col-12 text-center py-5">
+                    <i class="bi bi-inbox text-secondary fs-1 d-block mb-2"></i>
+                    <span class="text-secondary">Tidak ada pertandingan untuk kategori ini.</span>
+                </div>
+            `;
+            return;
+        }
+
+        let html = '';
+        filtered.forEach(m => {
+            const finished = isMatchFinished(m);
+            const formattedDate = formatDateIndo(m.datetime);
+
+            let badgeHtml = '';
+            if (finished) {
+                let resultBadge = 'badge-result-draw';
+                let statusText = 'SERI';
+                const isPersijaHome = m.homeTeam.toUpperCase().includes('PERSIJA');
+                const persijaScore = isPersijaHome ? m.scoreHome : m.scoreAway;
+                const opponentScore = isPersijaHome ? m.scoreAway : m.scoreHome;
+
+                if (persijaScore > opponentScore) {
+                    resultBadge = 'badge-result-win';
+                    statusText = 'MENANG';
+                } else if (persijaScore < opponentScore) {
+                    resultBadge = 'badge-result-lose';
+                    statusText = 'KALAH';
+                }
+
+                badgeHtml = `<span class="${resultBadge}"><i class="bi bi-trophy-fill me-1"></i> ${statusText} (${escHtml(m.scoreHome)}-${escHtml(m.scoreAway)})</span>`;
+            } else {
+                const hasNobar = m.nobar && m.nobar.status === 'NOBAR';
+                badgeHtml = hasNobar 
+                    ? `<span class="badge bg-success text-white font-monospace extra-small"><i class="bi bi-tv me-1"></i> NOBAR</span>` 
+                    : `<span class="badge bg-secondary font-monospace extra-small"><i class="bi bi-x-circle me-1"></i> TANPA NOBAR</span>`;
+            }
+
+            html += `
+                <div class="col-md-6 col-lg-6">
+                    <div class="match-card ${matchStateClass(m)}">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-dark text-warning border border-warning font-monospace extra-small">${escHtml(m.pekan)}</span>
+                            ${badgeHtml}
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-between my-2 gap-2">
+                            <div class="d-flex align-items-center gap-2" style="flex: 1; min-width: 0;">
+                                <div class="small-logo-box">${renderLogoHtml(m.homeLogoUrl, m.homeTeam)}</div>
+                                <span class="team-title-text extra-small ${m.homeTeam.toUpperCase().includes('PERSIJA') ? 'text-warning' : 'text-white'}">${escHtml(m.homeTeam)}</span>
+                            </div>
+
+                            <div class="score-box text-center px-2 py-1 fs-5 mx-1" style="flex-shrink: 0;">
+                                ${finished ? `${m.scoreHome} - ${m.scoreAway}` : 'VS'}
+                            </div>
+
+                            <div class="d-flex align-items-center justify-content-end gap-2 text-end" style="flex: 1; min-width: 0;">
+                                <span class="team-title-text extra-small ${m.awayTeam.toUpperCase().includes('PERSIJA') ? 'text-warning' : 'text-white'}">${escHtml(m.awayTeam)}</span>
+                                <div class="small-logo-box">${renderLogoHtml(m.awayLogoUrl, m.awayTeam)}</div>
+                            </div>
+                        </div>
+
+                        <div class="border-top border-secondary pt-2 mt-3 d-flex justify-content-between align-items-center extra-small text-muted">
+                            <span class="text-truncate" style="max-width: 60%;"><i class="bi bi-geo-alt text-warning me-1"></i> ${escHtml(m.stadium)}</span>
+                            <span><i class="bi bi-clock text-warning me-1"></i> ${escHtml(formattedDate)} (${escHtml(m.timeDisplay)})</span>
+                        </div>
+
+                        <div class="d-flex gap-2 mt-3 pt-2 border-top border-secondary border-opacity-50">
+                            <button class="btn btn-outline-warning btn-sm rounded-pill flex-grow-1 extra-small fw-bold" onclick="openMatchDetailModal('${safeId(m.id)}')">
+                                <i class="bi bi-info-circle me-1"></i> Detail
+                            </button>
+                            <button class="btn btn-outline-info btn-sm rounded-pill extra-small fw-bold admin-only" onclick="openMatchEditModal('${safeId(m.id)}')" title="Edit">
+                                <i class="bi bi-pencil-square me-1"></i> Edit
+                            </button>
+                            <button class="btn btn-outline-danger btn-sm rounded-pill extra-small fw-bold admin-only" onclick="promptDeleteMatch('${safeId(m.id)}')" title="Hapus">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+    }
+
+    // MODAL EDIT/TAMBAH KLASEMEN
+    function openStandingsEditModal(id = null) {
+        if (!isAdmin) return;
+        const title = document.getElementById('standingsModalTitle');
+        const form = document.getElementById('standingsForm');
+        form.reset();
+
+        if (id) {
+            const team = standingsData.find(t => t.id === id);
+            if (team) {
+                title.innerHTML = `<i class="bi bi-pencil-square me-2"></i> Edit Tim Klasemen`;
+                document.getElementById('stTeamId').value = team.id;
+                document.getElementById('stTeamName').value = team.teamName;
+                document.getElementById('stLogoUrl').value = team.logoUrl || '';
+                updateLogoPreview('stLogoUrl', 'previewStLogo');
+                document.getElementById('stPl').value = team.pl;
+                document.getElementById('stW').value = team.w;
+                document.getElementById('stD').value = team.d;
+                document.getElementById('stL').value = team.l;
+                document.getElementById('stGf').value = team.gf;
+                document.getElementById('stGa').value = team.ga;
+                document.getElementById('stPotong').value = Number(team.potongPoin) || 0;
+                document.getElementById('stAlasanPotong').value = team.alasanPotong || '';
+                document.getElementById('stFormString').value = (Array.isArray(team.form) ? team.form.join(',') : team.form) || 'W,W,W,D,W';
+            }
+        } else {
+            title.innerHTML = `<i class="bi bi-plus-circle me-2"></i> Tambah Tim Klasemen`;
+            document.getElementById('stTeamId').value = '';
+            document.getElementById('stTeamName').value = '';
+            document.getElementById('stLogoUrl').value = '';
+            updateLogoPreview('stLogoUrl', 'previewStLogo');
+            document.getElementById('stPl').value = 11;
+            document.getElementById('stW').value = 5;
+            document.getElementById('stD').value = 3;
+            document.getElementById('stL').value = 3;
+            document.getElementById('stGf').value = 15;
+            document.getElementById('stGa').value = 12;
+            document.getElementById('stPotong').value = 0;
+            document.getElementById('stAlasanPotong').value = '';
+            document.getElementById('stFormString').value = 'W,D,L,W,D';
+        }
+
+        if (!standingsEditModal) {
+            standingsEditModal = new bootstrap.Modal(document.getElementById('standingsEditModal'));
+        }
+        standingsEditModal.show();
+    }
+
+    function handleSaveStandings(e) {
+        e.preventDefault();
+
+        const id = document.getElementById('stTeamId').value;
+        const teamName = document.getElementById('stTeamName').value.trim();
+        const logoUrl = document.getElementById('stLogoUrl').value.trim();
+        const pl = parseInt(document.getElementById('stPl').value) || 0;
+        const w = parseInt(document.getElementById('stW').value) || 0;
+        const d = parseInt(document.getElementById('stD').value) || 0;
+        const l = parseInt(document.getElementById('stL').value) || 0;
+        const gf = parseInt(document.getElementById('stGf').value) || 0;
+        const ga = parseInt(document.getElementById('stGa').value) || 0;
+        const formStr = document.getElementById('stFormString').value.trim();
+        const form = formStr ? formStr.split(',').map(s => s.trim().toUpperCase()) : ['W', 'W', 'W'];
+
+        const potongPoin = Math.max(0, parseInt(document.getElementById('stPotong').value) || 0);
+        const alasanPotong = document.getElementById('stAlasanPotong').value.trim();
+
+        // Poin otomatis: (Menang x 3) + Seri - Pengurangan Poin
+        const pts = (w * 3) + d - potongPoin;
+
+        const teamObj = {
+            id: id || 'st_' + Date.now(),
+            teamName,
+            logoUrl,
+            pl,
+            w,
+            d,
+            l,
+            gf,
+            ga,
+            pts,
+            potongPoin,
+            alasanPotong,
+            form
+        };
+
+        saveStandingDoc(teamObj).then(() => {
+            if (standingsEditModal) standingsEditModal.hide();
+            showToastNotification('Data Tim Klasemen berhasil disimpan!');
+        }).catch((err) => showToastNotification('Gagal menyimpan: ' + (err.code || err.message)));
+    }
+
+    function promptDeleteStandings(id) {
+        if (!isAdmin) return;
+        if (!id) return;
+        pendingActionId = id;
+        pendingActionType = 'deleteStandings';
+
+        document.getElementById('confirmModalTitle').innerText = 'Konfirmasi Hapus Tim';
+        document.getElementById('confirmModalText').innerText = 'Apakah Anda yakin ingin menghapus tim ini dari Klasemen?';
+        document.getElementById('confirmModalActionBtn').onclick = executePendingAction;
+
+        if (!confirmModal) {
+            confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+        }
+        confirmModal.show();
+    }
+
+    // MODAL FORM TAMBAH / EDIT PERTANDINGAN
+    function openMatchEditModal(id = null) {
+        if (!isAdmin) return;
+        const modalTitle = document.getElementById('matchEditModalTitle');
+        const form = document.getElementById('matchForm');
+        form.reset();
+
+        let match = null;
+        if (id) {
+            match = matchesData.find(m => m.id === id);
+        }
+
+        const completedNotice = document.getElementById('completedMatchNotice');
+        const secMain = document.getElementById('sectionMainInfo');
+        const secTeams = document.getElementById('sectionTeamsInfo');
+        const secNobar = document.getElementById('sectionNobarInfo');
+        const toggleCompletedWrapper = document.getElementById('toggleCompletedWrapper');
+        const resultFieldsGroup = document.getElementById('resultFieldsGroup');
+        const matchIsCompleted = document.getElementById('matchIsCompleted');
+
+        if (match && match.isCompleted) {
+            modalTitle.innerHTML = `<i class="bi bi-trophy-fill me-2"></i> Edit Hasil Laga & Lineup`;
+            
+            document.getElementById('matchId').value = match.id;
+            
+            document.getElementById('summaryPekan').innerText = match.pekan;
+            document.getElementById('summaryHomeName').innerText = match.homeTeam;
+            document.getElementById('summaryAwayName').innerText = match.awayTeam;
+            document.getElementById('summaryHomeLogo').innerHTML = renderLogoHtml(match.homeLogoUrl, match.homeTeam);
+            document.getElementById('summaryAwayLogo').innerHTML = renderLogoHtml(match.awayLogoUrl, match.awayTeam);
+            document.getElementById('summaryStadium').innerText = match.stadium;
+            document.getElementById('summaryDate').innerText = formatDateIndo(match.datetime);
+            document.getElementById('summaryTime').innerText = match.timeDisplay;
+            
+            completedNotice.style.display = 'block';
+            secMain.style.display = 'none';
+            secTeams.style.display = 'none';
+            secNobar.style.display = 'none';
+            toggleCompletedWrapper.style.display = 'none';
+            resultFieldsGroup.style.display = 'block';
+
+            document.getElementById('matchDatetime').removeAttribute('required');
+            document.getElementById('matchTimeDisplay').removeAttribute('required');
+            document.getElementById('matchStadium').removeAttribute('required');
+            document.getElementById('matchPekan').removeAttribute('required');
+            document.getElementById('matchHomeTeam').removeAttribute('required');
+            document.getElementById('matchAwayTeam').removeAttribute('required');
+
+            document.getElementById('matchDatetime').value = match.datetime;
+            document.getElementById('matchTimeDisplay').value = match.timeDisplay;
+            document.getElementById('matchStadium').value = match.stadium;
+            document.getElementById('matchPekan').value = match.pekan;
+            document.getElementById('matchHomeTeam').value = match.homeTeam;
+            document.getElementById('matchHomeLogoUrl').value = match.homeLogoUrl || '';
+            document.getElementById('matchAwayTeam').value = match.awayTeam;
+            document.getElementById('matchAwayLogoUrl').value = match.awayLogoUrl || '';
+
+            const nobar = match.nobar || {};
+            document.getElementById('nobarStatus').value = nobar.status || 'NOBAR';
+            document.getElementById('nobarLokasi').value = nobar.lokasi || '';
+            document.getElementById('nobarGate').value = nobar.gate || '';
+            document.getElementById('nobarHtm').value = nobar.htm || '';
+            document.getElementById('nobarNote').value = nobar.note || '';
+            document.getElementById('nobarMapsLink').value = nobar.mapsLink || '';
+
+            matchIsCompleted.checked = true;
+            document.getElementById('matchScoreHome').value = match.scoreHome ?? 0;
+            document.getElementById('matchScoreAway').value = match.scoreAway ?? 0;
+            document.getElementById('matchWasit').value = match.wasit || '';
+            document.getElementById('matchPenonton').value = match.penonton || '';
+            document.getElementById('matchHomeLineup').value = match.homeLineup || '';
+            document.getElementById('matchAwayLineup').value = match.awayLineup || '';
+
+            const stats = match.stats || {};
+            document.getElementById('statPossHome').value = stats.possHome ?? 50;
+            document.getElementById('statPossAway').value = stats.possAway ?? 50;
+            document.getElementById('statShotsHome').value = stats.shotsHome ?? 10;
+            document.getElementById('statShotsAway').value = stats.shotsAway ?? 8;
+            document.getElementById('statTargetHome').value = stats.targetHome ?? 5;
+            document.getElementById('statTargetAway').value = stats.targetAway ?? 3;
+            document.getElementById('statOffHome').value = stats.offHome ?? 5;
+            document.getElementById('statOffAway').value = stats.offAway ?? 5;
+            document.getElementById('statCornersHome').value = stats.cornersHome ?? 4;
+            document.getElementById('statCornersAway').value = stats.cornersAway ?? 2;
+            document.getElementById('statFoulsHome').value = stats.foulsHome ?? 12;
+            document.getElementById('statFoulsAway').value = stats.foulsAway ?? 15;
+            document.getElementById('statOffsideHome').value = stats.offsideHome ?? 2;
+            document.getElementById('statOffsideAway').value = stats.offsideAway ?? 1;
+            document.getElementById('statYellowHome').value = stats.yellowHome ?? 2;
+            document.getElementById('statYellowAway').value = stats.yellowAway ?? 3;
+            document.getElementById('statRedHome').value = stats.redHome ?? 0;
+            document.getElementById('statRedAway').value = stats.redAway ?? 0;
+            document.getElementById('statPenaltyHome').value = stats.penaltyHome ?? 0;
+            document.getElementById('statPenaltyAway').value = stats.penaltyAway ?? 0;
+
+        } else {
+            modalTitle.innerHTML = match 
+                ? `<i class="bi bi-pencil-square me-2"></i> Edit Pertandingan`
+                : `<i class="bi bi-plus-circle me-2"></i> Tambah Pertandingan Baru`;
+
+            completedNotice.style.display = 'none';
+            secMain.style.display = 'block';
+            secTeams.style.display = 'block';
+            secNobar.style.display = 'block';
+            toggleCompletedWrapper.style.display = 'flex';
+
+            document.getElementById('matchDatetime').setAttribute('required', 'required');
+            document.getElementById('matchTimeDisplay').setAttribute('required', 'required');
+            document.getElementById('matchStadium').setAttribute('required', 'required');
+            document.getElementById('matchPekan').setAttribute('required', 'required');
+            document.getElementById('matchHomeTeam').setAttribute('required', 'required');
+            document.getElementById('matchAwayTeam').setAttribute('required', 'required');
+
+            if (match) {
+                document.getElementById('matchId').value = match.id;
+                document.getElementById('matchDatetime').value = match.datetime;
+                document.getElementById('matchTimeDisplay').value = match.timeDisplay;
+                document.getElementById('matchStadium').value = match.stadium;
+                document.getElementById('matchPekan').value = match.pekan;
+
+                document.getElementById('matchHomeTeam').value = match.homeTeam;
+                document.getElementById('matchHomeLogoUrl').value = match.homeLogoUrl || '';
+                updateLogoPreview('matchHomeLogoUrl', 'previewHomeLogo');
+
+                document.getElementById('matchAwayTeam').value = match.awayTeam;
+                document.getElementById('matchAwayLogoUrl').value = match.awayLogoUrl || '';
+                updateLogoPreview('matchAwayLogoUrl', 'previewAwayLogo');
+
+                const nobar = match.nobar || {};
+                document.getElementById('nobarStatus').value = nobar.status || 'NOBAR';
+                document.getElementById('nobarLokasi').value = nobar.lokasi || '';
+                document.getElementById('nobarGate').value = nobar.gate || '';
+                document.getElementById('nobarHtm').value = nobar.htm || '';
+                document.getElementById('nobarNote').value = nobar.note || '';
+                document.getElementById('nobarMapsLink').value = nobar.mapsLink || '';
+
+                toggleNobarFields(nobar.status || 'NOBAR');
+
+                matchIsCompleted.checked = false;
+                resultFieldsGroup.style.display = 'none';
+            } else {
+                document.getElementById('matchId').value = '';
+                
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                tomorrow.setHours(19, 0, 0, 0);
+                const isoString = tomorrow.toISOString().slice(0, 16);
+                document.getElementById('matchDatetime').value = isoString;
+                document.getElementById('matchTimeDisplay').value = '19:00 WIB';
+
+                document.getElementById('matchStadium').value = 'SUGBK Jakarta';
+                document.getElementById('matchPekan').value = 'PEKAN KE-13 • BRI SUPER LEAGUE';
+                document.getElementById('matchHomeTeam').value = 'PERSIJA JAKARTA';
+                document.getElementById('matchHomeLogoUrl').value = LOGO_PERSIJA;
+                updateLogoPreview('matchHomeLogoUrl', 'previewHomeLogo');
+
+                document.getElementById('matchAwayTeam').value = 'PERSEBAYA SURABAYA';
+                document.getElementById('matchAwayLogoUrl').value = LOGO_PERSEBAYA;
+                updateLogoPreview('matchAwayLogoUrl', 'previewAwayLogo');
+
+                document.getElementById('nobarStatus').value = 'NOBAR';
+                toggleNobarFields('NOBAR');
+
+                matchIsCompleted.checked = false;
+                resultFieldsGroup.style.display = 'none';
+            }
+        }
+
+        matchEditModal.show();
+    }
+
+    // SIMPAN PERTANDINGAN
+    function handleSaveMatch(e) {
+        e.preventDefault();
+        if (!isAdmin) return;
+
+        const id = document.getElementById('matchId').value;
+        const datetime = document.getElementById('matchDatetime').value;
+        const timeDisplay = document.getElementById('matchTimeDisplay').value;
+        const stadium = document.getElementById('matchStadium').value;
+        const pekan = document.getElementById('matchPekan').value;
+
+        const homeTeam = document.getElementById('matchHomeTeam').value;
+        const homeLogoUrl = document.getElementById('matchHomeLogoUrl').value;
+        const awayTeam = document.getElementById('matchAwayTeam').value;
+        const awayLogoUrl = document.getElementById('matchAwayLogoUrl').value;
+
+        const nobarStatus = document.getElementById('nobarStatus').value;
+        const nobarLokasi = document.getElementById('nobarLokasi').value;
+        const nobarGate = document.getElementById('nobarGate').value;
+        const nobarHtm = document.getElementById('nobarHtm').value;
+        const nobarNote = document.getElementById('nobarNote').value;
+        const nobarMapsLink = document.getElementById('nobarMapsLink').value;
+
+        let isCompleted = document.getElementById('matchIsCompleted').checked;
+        
+        if (datetime) {
+            const matchTime = new Date(datetime).getTime();
+            if (matchTime <= new Date().getTime()) {
+                isCompleted = true;
+            }
+        }
+
+        const scoreHome = parseInt(document.getElementById('matchScoreHome').value) || 0;
+        const scoreAway = parseInt(document.getElementById('matchScoreAway').value) || 0;
+        const wasit = document.getElementById('matchWasit').value;
+        const penonton = document.getElementById('matchPenonton').value;
+        const homeLineup = document.getElementById('matchHomeLineup').value;
+        const awayLineup = document.getElementById('matchAwayLineup').value;
+
+        const stats = {
+            possHome: parseInt(document.getElementById('statPossHome').value) || 50,
+            possAway: parseInt(document.getElementById('statPossAway').value) || 50,
+            shotsHome: parseInt(document.getElementById('statShotsHome').value) || 0,
+            shotsAway: parseInt(document.getElementById('statShotsAway').value) || 0,
+            targetHome: parseInt(document.getElementById('statTargetHome').value) || 0,
+            targetAway: parseInt(document.getElementById('statTargetAway').value) || 0,
+            offHome: parseInt(document.getElementById('statOffHome').value) || 0,
+            offAway: parseInt(document.getElementById('statOffAway').value) || 0,
+            cornersHome: parseInt(document.getElementById('statCornersHome').value) || 0,
+            cornersAway: parseInt(document.getElementById('statCornersAway').value) || 0,
+            foulsHome: parseInt(document.getElementById('statFoulsHome').value) || 0,
+            foulsAway: parseInt(document.getElementById('statFoulsAway').value) || 0,
+            offsideHome: parseInt(document.getElementById('statOffsideHome').value) || 0,
+            offsideAway: parseInt(document.getElementById('statOffsideAway').value) || 0,
+            yellowHome: parseInt(document.getElementById('statYellowHome').value) || 0,
+            yellowAway: parseInt(document.getElementById('statYellowAway').value) || 0,
+            redHome: parseInt(document.getElementById('statRedHome').value) || 0,
+            redAway: parseInt(document.getElementById('statRedAway').value) || 0,
+            penaltyHome: parseInt(document.getElementById('statPenaltyHome').value) || 0,
+            penaltyAway: parseInt(document.getElementById('statPenaltyAway').value) || 0,
+        };
+
+        const matchObj = {
+            id: id || 'm_' + Date.now(),
+            datetime,
+            timeDisplay,
+            stadium,
+            pekan,
+            homeTeam,
+            homeLogoUrl,
+            awayTeam,
+            awayLogoUrl,
+            isCompleted,
+            scoreHome,
+            scoreAway,
+            wasit,
+            penonton,
+            homeLineup,
+            awayLineup,
+            nobar: {
+                status: nobarStatus,
+                lokasi: nobarLokasi,
+                gate: nobarGate,
+                htm: nobarHtm,
+                note: nobarNote,
+                mapsLink: nobarMapsLink
+            },
+            stats
+        };
+
+        saveMatchDoc(matchObj).then(() => {
+            matchEditModal.hide();
+            showToastNotification('Pertandingan berhasil disimpan!');
+        }).catch((err) => showToastNotification('Gagal menyimpan: ' + (err.code || err.message)));
+    }
+
+    // KONFIRMASI HAPUS LAGA
+    function promptDeleteMatch(id) {
+        if (!isAdmin) return;
+        if (!id) return;
+        pendingActionId = id;
+        pendingActionType = 'deleteMatch';
+
+        document.getElementById('confirmModalTitle').innerText = 'Konfirmasi Hapus Laga';
+        document.getElementById('confirmModalText').innerText = 'Apakah Anda yakin ingin menghapus pertandingan ini?';
+        document.getElementById('confirmModalActionBtn').onclick = executePendingAction;
+
+        if (!confirmModal) {
+            confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+        }
+        confirmModal.show();
+    }
+
+    // HANDLERS FILE UPLOAD LOGO & PREVIEW
+    function handleLogoFileUpload(input, targetUrlInputId, previewImgId) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    // Logo dikecilkan (maks 160px) supaya ringan disimpan di database
+                    const maxSide = 160;
+                    const scale = Math.min(1, maxSide / Math.max(img.width, img.height));
+                    const canvas = document.createElement('canvas');
+                    canvas.width = Math.max(1, Math.round(img.width * scale));
+                    canvas.height = Math.max(1, Math.round(img.height * scale));
+                    canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+                    document.getElementById(targetUrlInputId).value = canvas.toDataURL('image/png');
+                    updateLogoPreview(targetUrlInputId, previewImgId);
+                };
+                img.onerror = function() { showToastNotification('File gambar tidak bisa dibaca.'); };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function updateLogoPreview(inputId, previewImgId) {
+        const url = document.getElementById(inputId).value;
+        const preview = document.getElementById(previewImgId);
+        if (preview) {
+            preview.src = url || 'https://placehold.co/100x100/ff9900/111111?text=Logo';
+        }
+    }
+
+    function toggleNobarFields(status) {
+        const container = document.getElementById('nobarFieldsContainer');
+        if (container) container.style.display = status === 'NOBAR' ? 'block' : 'none';
+    }
+
+    function toggleResultFields(checked) {
+        const group = document.getElementById('resultFieldsGroup');
+        if (group) group.style.display = checked ? 'block' : 'none';
+    }
+
+    function autoFormatTimeDisplay(datetimeIso) {
+        if (!datetimeIso) return;
+        const dt = new Date(datetimeIso);
+        if (isNaN(dt.getTime())) return;
+        const hours = String(dt.getHours()).padStart(2, '0');
+        const minutes = String(dt.getMinutes()).padStart(2, '0');
+        document.getElementById('matchTimeDisplay').value = `${hours}:${minutes} WIB`;
+    }
+
+    async function executePendingAction() {
+        const type = pendingActionType;
+        const id = pendingActionId;
+        if (confirmModal) confirmModal.hide();
+        pendingActionId = null;
+        pendingActionType = null;
+        try {
+            if (type === 'deleteMatch' && id) {
+                await deleteMatchDoc(id);
+                showToastNotification('Pertandingan berhasil dihapus!');
+            } else if (type === 'deleteStandings' && id) {
+                await deleteStandingDoc(id);
+                showToastNotification('Tim berhasil dihapus dari Klasemen!');
+            }
+        } catch (err) {
+            showToastNotification('Gagal: ' + (err.code || err.message));
+        }
+    }
+
+    function renderLineupHtml(lineupText, isAway = false) {
+        if (!lineupText || lineupText.trim() === '') {
+            return `<span class="small text-muted italic">Belum ada data susunan pemain.</span>`;
+        }
+
+        const lines = lineupText.split('\n');
+        let html = '';
+
+        lines.forEach(line => {
+            const trimmed = line.trim();
+            if (!trimmed) return;
+
+            let num = '?';
+            let name = trimmed;
+
+            if (trimmed.includes('|')) {
+                const parts = trimmed.split('|');
+                num = parts[0].trim();
+                name = parts[1].trim();
+            }
+
+            html += `
+                <div class="d-flex align-items-center gap-2.5 small mb-1">
+                    <span class="player-number ${isAway ? 'away' : ''}">${escHtml(num)}</span>
+                    <span class="fw-semibold">${escHtml(name)}</span>
+                </div>
+            `;
+        });
+
+        return html;
+    }
+
+    function filterMatch(category, btn) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentMatchFilter = category;
+        renderMatchCards(category);
+    }
+
+    let detailHistoryPushed = false;
+    let ignoreNextPop = false;
+    let detailScrollY = 0;
+
+    function openMatchDetailModal(id) {
+        const match = matchesData.find(m => m.id === id);
+        if (!match) return;
+
+        const formattedDate = formatDateIndo(match.datetime);
+        const finished = isMatchFinished(match);
+
+        document.getElementById('detailMatchPekan').innerText = match.pekan;
+        document.getElementById('detailHomeName').innerText = match.homeTeam;
+        document.getElementById('detailAwayName').innerText = match.awayTeam;
+
+        document.getElementById('detailHomeLogoContainer').innerHTML = renderLogoHtml(match.homeLogoUrl, match.homeTeam);
+        document.getElementById('detailAwayLogoContainer').innerHTML = renderLogoHtml(match.awayLogoUrl, match.awayTeam);
+
+        if (finished) {
+            document.getElementById('detailScoreDisplay').innerText = `${match.scoreHome} - ${match.scoreAway}`;
+            document.getElementById('detailScoreDisplay').style.color = 'var(--win-color)';
+            document.getElementById('detailStatusBadge').innerText = 'FULL TIME (HASIL LAGA)';
+        } else {
+            document.getElementById('detailScoreDisplay').innerText = 'VS';
+            document.getElementById('detailScoreDisplay').style.color = 'var(--orange-primary)';
+            document.getElementById('detailStatusBadge').innerText = 'LAGA MENDATANG';
+        }
+
+        document.getElementById('detailMatchSub').innerText = `${formattedDate} • ${match.stadium}`;
+        document.getElementById('infoStadion').innerText = match.stadium;
+        document.getElementById('infoWaktu').innerText = `${match.timeDisplay} • ${formattedDate}`;
+        document.getElementById('infoWasit').innerText = match.wasit || 'Dalam Konfirmasi';
+        document.getElementById('infoPenonton').innerText = match.penonton || 'Estimasi Penonton';
+        
+        document.getElementById('detailHomeHeader').innerText = match.homeTeam;
+        document.getElementById('opponentLineupHeader').innerText = match.awayTeam;
+
+        if (document.getElementById('detailHomeHeaderLogo')) {
+            document.getElementById('detailHomeHeaderLogo').innerHTML = renderLogoHtml(match.homeLogoUrl, match.homeTeam);
+        }
+        if (document.getElementById('opponentLineupHeaderLogo')) {
+            document.getElementById('opponentLineupHeaderLogo').innerHTML = renderLogoHtml(match.awayLogoUrl, match.awayTeam);
+        }
+
+        document.getElementById('homeLineupContainer').innerHTML = renderLineupHtml(match.homeLineup, false);
+        document.getElementById('awayLineupContainer').innerHTML = renderLineupHtml(match.awayLineup, true);
+
+        const stats = match.stats || { 
+            possHome: 50, possAway: 50, 
+            shotsHome: 10, shotsAway: 8, 
+            targetHome: 5, targetAway: 3,
+            offHome: 5, offAway: 5,
+            cornersHome: 4, cornersAway: 2,
+            foulsHome: 12, foulsAway: 15,
+            offsideHome: 2, offsideAway: 1,
+            yellowHome: 2, yellowAway: 3,
+            redHome: 0, redAway: 0,
+            penaltyHome: 0, penaltyAway: 0
+        };
+
+        function calcBarWidth(val1, val2) {
+            const total = val1 + val2;
+            if (total === 0) return 50;
+            return Math.round((val1 / total) * 100);
+        }
+
+        function createStatRowHtml(label, valHome, valAway, suffix = '') {
+            const wHome = calcBarWidth(valHome, valAway);
+            const wAway = 100 - wHome;
+            return `
+                <div>
+                    <div class="d-flex justify-content-between small fw-bold mb-1">
+                        <span class="text-warning">${valHome}${suffix}</span>
+                        <span class="text-uppercase text-secondary">${label}</span>
+                        <span class="text-primary">${valAway}${suffix}</span>
+                    </div>
+                    <div class="stat-bar-container">
+                        <div class="stat-bar-home" style="width: ${wHome}%;"></div>
+                        <div class="stat-bar-away" style="width: ${wAway}%;"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        const statsContainer = document.getElementById('statsBarContainer');
+        
+        statsContainer.innerHTML = `
+            ${createStatRowHtml('Penguasaan Bola', stats.possHome, stats.possAway, '%')}
+            ${createStatRowHtml('Total Tembakan', stats.shotsHome, stats.shotsAway)}
+            ${createStatRowHtml('Tembakan Tepat Sasaran', stats.targetHome, stats.targetAway)}
+            ${createStatRowHtml('Tembakan Tidak Tepat Sasaran', stats.offHome ?? 0, stats.offAway ?? 0)}
+            ${createStatRowHtml('Tendangan Sudut', stats.cornersHome ?? 0, stats.cornersAway ?? 0)}
+            ${createStatRowHtml('Pelanggaran (Fouls)', stats.foulsHome ?? 0, stats.foulsAway ?? 0)}
+            ${createStatRowHtml('Offside', stats.offsideHome ?? 0, stats.offsideAway ?? 0)}
+            ${createStatRowHtml('Kartu Kuning', stats.yellowHome ?? 0, stats.yellowAway ?? 0)}
+            ${createStatRowHtml('Kartu Merah', stats.redHome ?? 0, stats.redAway ?? 0)}
+            ${createStatRowHtml('Penalti', stats.penaltyHome ?? 0, stats.penaltyAway ?? 0)}
+        `;
+
+        document.getElementById('info-tab').click();
+        detailScrollY = window.scrollY;
+        matchDetailModal.show();
+        // Tombol Back di HP/iPad/laptop menutup detail, bukan keluar dari halaman
+        try { history.pushState({ obrDetail: true }, ''); detailHistoryPushed = true; } catch (e) { detailHistoryPushed = false; }
+    }
+
+    function showToastNotification(msg) {
+        document.getElementById('toastMessage').innerText = msg;
+        const toastEl = document.getElementById('appToast');
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+    }
+
+    // INITIALIZATION
+    // Buka bagian tertentu: 'jadwal', 'nobar', atau 'klasemen' (dipakai menu di bagian bawah aplikasi)
+    function openSection(section) {
+        if (section === 'klasemen') {
+            switchMainTab('standings');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (section === 'nobar') {
+            switchMainTab('fixtures');
+            setTimeout(() => {
+                const el = document.getElementById('nobarCardContainer');
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 150);
+        } else if (section === 'jadwal') {
+            switchMainTab('fixtures');
+            setTimeout(() => {
+                const el = document.getElementById('matchContainer');
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 150);
+        }
+    }
+    window.openSection = openSection;
+    window.addEventListener('hashchange', () => openSection(location.hash.replace('#', '')));
+
+    document.addEventListener('DOMContentLoaded', function() {
+        matchEditModal = new bootstrap.Modal(document.getElementById('matchEditModal'));
+        matchDetailModal = new bootstrap.Modal(document.getElementById('matchDetailModal'));
+        standingsEditModal = new bootstrap.Modal(document.getElementById('standingsEditModal'));
+        confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'));
+
+        renderHeroNextMatch();
+        renderMatchCards();
+        renderStandingsTable();
+        startRealtimeData();
+        if (window.parent !== window) document.body.classList.add('in-app');
+
+        const detailEl = document.getElementById('matchDetailModal');
+        detailEl.addEventListener('hidden.bs.modal', () => {
+            window.scrollTo(0, detailScrollY);
+            if (detailHistoryPushed) {
+                detailHistoryPushed = false;
+                ignoreNextPop = true;
+                history.back();
+            }
+        });
+        window.addEventListener('popstate', () => {
+            if (ignoreNextPop) { ignoreNextPop = false; return; }
+            if (detailHistoryPushed) { detailHistoryPushed = false; matchDetailModal.hide(); }
+        });
+
+        if (location.hash) openSection(location.hash.replace('#', ''));
+    });
+
+    // EXPOSE TO WINDOW SCOPE
+    window.openMatchEditModal = openMatchEditModal;
+    window.handleSaveMatch = handleSaveMatch;
+    window.promptDeleteMatch = promptDeleteMatch;
+    window.openStandingsEditModal = openStandingsEditModal;
+    window.handleSaveStandings = handleSaveStandings;
+    window.promptDeleteStandings = promptDeleteStandings;
+    window.switchMainTab = switchMainTab;
+    window.executePendingAction = executePendingAction;
+    window.filterMatch = filterMatch;
+    window.openMatchDetailModal = openMatchDetailModal;
+    window.handleLogoFileUpload = handleLogoFileUpload;
+    window.updateLogoPreview = updateLogoPreview;
+    window.autoFormatTimeDisplay = autoFormatTimeDisplay;
+    window.toggleNobarFields = toggleNobarFields;
+    window.toggleResultFields = toggleResultFields;
+</script>
+</body>
+</html>
